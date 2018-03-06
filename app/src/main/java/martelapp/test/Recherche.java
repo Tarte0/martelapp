@@ -13,9 +13,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
+import java.util.Map;
 
 public class Recherche extends AppCompatActivity {
 
@@ -43,12 +42,17 @@ public class Recherche extends AppCompatActivity {
     Tree arbre;
     String  numero,
             essence,
-            etat;
+            etat,
+            noteEcologique;
+
+    Map<String, String> arbresMarteles;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recherche);
+
 
 
         // Reference des arbres
@@ -188,6 +192,7 @@ public class Recherche extends AppCompatActivity {
                         numero = arbre.getNumero();
                         essence = arbre.getEssence();
                         etat = arbre.getEtat();
+                        noteEcologique = arbre.getNoteEcologique();
 
                         //mTextView.setText("Numéro : " + numero + " , Essence : " + essence + " , Etat : " + etat);
 
@@ -196,6 +201,7 @@ public class Recherche extends AppCompatActivity {
                         intent.putExtra("numero", numero);
                         intent.putExtra("essence", essence);
                         intent.putExtra("etat", etat);
+                        intent.putExtra("noteEcologique", noteEcologique);
                         startActivity(intent);
                     }
 
@@ -228,5 +234,8 @@ public class Recherche extends AppCompatActivity {
 
             }
         });
+
+
     }
+
 }

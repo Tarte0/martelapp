@@ -66,4 +66,6 @@ public class Tree {
         public String getEtat(){
             return etat;
         }
+
+        public String getNoteEcologique(){return noteEcologique;}
 }

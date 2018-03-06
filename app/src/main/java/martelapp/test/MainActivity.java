@@ -13,8 +13,8 @@ import com.google.firebase.database.FirebaseDatabase;
 public class MainActivity extends AppCompatActivity {
 
     EditText editTextTeamName;
-    Button buttonStart;
 
+    Button buttonStart;
 
     String nomEquipe;
 
@@ -33,10 +33,7 @@ public class MainActivity extends AppCompatActivity {
         editTextTeamName = (EditText)findViewById(R.id.editTextTeamName);
         buttonStart = (Button)findViewById(R.id.buttonStart);
 
-
         nomEquipe = editTextTeamName.getText().toString();
-
-
 
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
 
     }
 }

@@ -23,5 +23,53 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView" />
+
+        <Button
+            android:id="@+id/buttonMarteler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="10"
+            android:text="Marteler" />
+
+        <RadioGroup
+            android:id="@+id/RadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="9">>
+            <RadioButton android:id="@+id/arbreMur"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Arbre Mûr"/>
+            <RadioButton android:id="@+id/Eclaircie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Eclaircie au profit d'un arbre d'avenir"/>
+            <RadioButton android:id="@+id/sanitaire"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sanitaire"/>
+            <RadioButton android:id="@+id/Régénération"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pour la Régénération"/>
+            <RadioButton android:id="@+id/Exploitation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pour l'Exploitation"/>
+            <RadioButton android:id="@+id/Stabilité"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pour la stabilité"/>
+        </RadioGroup>
+
+        <ToggleButton
+            android:id="@+id/toggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="8"
+            android:text="ToggleButton" />
     </GridLayout>
 </android.support.constraint.ConstraintLayout>
