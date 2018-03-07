@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="martelapp.test.MessageErreurArbreMartele">
+    tools:context="martelapp.test.MessageErreurArbreMartele"
+    android:background="@color/colorBackground">
 
-    <GridLayout
+    <RelativeLayout
         android:layout_width="576dp"
         android:layout_height="295dp"
         android:layout_marginBottom="8dp"
@@ -20,14 +21,18 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_alignParentTop="true"
+            android:text="TextView"/>
 
         <Button
             android:id="@+id/button"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
             android:layout_column="0"
             android:layout_row="10"
-            android:text="Marteler" />
-    </GridLayout>
+            android:text="J'ai compris !"/>
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

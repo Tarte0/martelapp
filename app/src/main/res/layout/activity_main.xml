@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="martelapp.test.MainActivity">
+    tools:context="martelapp.test.MainActivity"
+    android:background="@color/colorBackground"
+    >
 
-    <GridLayout
+    <RelativeLayout
         android:layout_width="576dp"
         android:layout_height="295dp"
         android:layout_marginBottom="8dp"
@@ -20,18 +22,23 @@
 
         <EditText
             android:id="@+id/editTextTeamName"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:ems="10"
             android:inputType="textPersonName"
+            android:textColor="@color/colorAccent"
             android:text="Nom Equipe" />
 
         <Button
             android:id="@+id/buttonStart"
-            android:layout_width="match_parent"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
             android:layout_column="0"
             android:layout_row="5"
             android:text="Commencer" />
-    </GridLayout>
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

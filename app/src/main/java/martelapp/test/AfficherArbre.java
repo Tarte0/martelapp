@@ -36,6 +36,11 @@ public class AfficherArbre extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_afficher_arbre);
 
+        // Bouton retour sur Barre
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+
         mTextView = (TextView) findViewById(R.id.textView);
 
         mToggleButton = (ToggleButton) findViewById(R.id.toggleButton);
@@ -58,6 +63,9 @@ public class AfficherArbre extends AppCompatActivity {
 
             noteEcologique = Integer.parseInt(getNoteEcologique);
 
+            // Affiche le numéro de l'arbre dans la barre supérieure
+            getSupportActionBar().setTitle("Arbre n°" + numero);
+
         }
         /*
         numero = (String) getIntent().getExtras().getString("numero");
@@ -68,7 +76,7 @@ public class AfficherArbre extends AppCompatActivity {
     */
 
 
-        mTextView.setText("Numéro : " + numero + " , Essence : " + essence + " , Etat : " + etat + " , Note Ecologique : " + getNoteEcologique);
+        mTextView.setText("Numéro : " + numero + " ,\nEssence : " + essence + " ,\nEtat : " + etat + " ,\nNote Ecologique : " + getNoteEcologique);
 
         mToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

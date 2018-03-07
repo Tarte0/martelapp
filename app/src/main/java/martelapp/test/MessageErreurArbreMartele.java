@@ -19,7 +19,7 @@ public class MessageErreurArbreMartele extends AppCompatActivity {
         mButton = (Button) findViewById(R.id.button);
 
 
-        mTextView.setText("MAUVAIS ARBRE!!!");
+        mTextView.setText("Il ne fallait pas couper cet Arbre !!!");
 
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override

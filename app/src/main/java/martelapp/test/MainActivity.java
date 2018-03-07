@@ -1,6 +1,9 @@
 package martelapp.test;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         editTextTeamName = (EditText)findViewById(R.id.editTextTeamName);
         buttonStart = (Button)findViewById(R.id.buttonStart);
 
+
+
         nomEquipe = editTextTeamName.getText().toString();
 
         buttonStart.setOnClickListener(new View.OnClickListener() {
@@ -43,5 +48,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        editTextTeamName.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                editTextTeamName.setText("");
+
+            }
+        });
     }
 }

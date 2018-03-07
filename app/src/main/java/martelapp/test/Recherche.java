@@ -31,10 +31,15 @@ public class Recherche extends AppCompatActivity {
             mButton9,
             mButtonClear,
             mButtonDel,
-            mButtonOk;
+            mButtonOk,
+            mButtonConsignes,
+            mButtonListeArbre,
+            mButtonTerminer;
 
 
     TextView mTextView;
+
+    boolean estTrouve;
 
     //Get Database Reference
     DatabaseReference mRefArbre;
@@ -52,6 +57,9 @@ public class Recherche extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recherche);
+
+        // Bouton retour sur Barre
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
 
@@ -71,10 +79,15 @@ public class Recherche extends AppCompatActivity {
         mButtonClear = (Button)findViewById(R.id.buttonClear);
         mButtonDel = (Button)findViewById(R.id.buttonDel);
         mButtonOk = (Button)findViewById(R.id.buttonOk);
+        mButtonConsignes = (Button)findViewById(R.id.buttonConsignes);
+        mButtonListeArbre = (Button)findViewById(R.id.buttonListeArbre);
+        mButtonTerminer = (Button)findViewById(R.id.buttonTerminer);
 
         mEditText = (EditText)findViewById(R.id.editText);
 
         mTextView = (TextView) findViewById(R.id.textView);
+        mTextView.setVisibility(View.INVISIBLE);
+
 
 
         // Bouton 0
@@ -180,7 +193,8 @@ public class Recherche extends AppCompatActivity {
                 String numEntree = mEditText.getText().toString();
 
 
-                // Traiter cas où pas trouvé !!!
+
+                // Traiter cas où pas trouvé !!! + boutons retour + demander raison modifiable? sinon bloquer creer boutons consignes/consulter arbre marteles/...
 
 
 
@@ -194,8 +208,6 @@ public class Recherche extends AppCompatActivity {
                         etat = arbre.getEtat();
                         noteEcologique = arbre.getNoteEcologique();
 
-                        //mTextView.setText("Numéro : " + numero + " , Essence : " + essence + " , Etat : " + etat);
-
                         // Pour donner les string a afficher Arbre
                         Intent intent = new Intent(getApplicationContext(),AfficherArbre.class);
                         intent.putExtra("numero", numero);
@@ -203,16 +215,11 @@ public class Recherche extends AppCompatActivity {
                         intent.putExtra("etat", etat);
                         intent.putExtra("noteEcologique", noteEcologique);
                         startActivity(intent);
+
                     }
 
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                        arbre = dataSnapshot.getValue(Tree.class);
-                        numero = arbre.getNumero();
-                        essence = arbre.getEssence();
-                        etat = arbre.getEtat();
-
 
                     }
 
@@ -232,8 +239,18 @@ public class Recherche extends AppCompatActivity {
                     }
                 });
 
+
+                /* Si un arbre n'est pas trouvé, on rend visiblele textView et on affiche un message d'erreur
+                if(!estTrouve){
+                    mTextView.setVisibility(View.VISIBLE);
+                    mTextView.setText("L'arbre n°" + mEditText.getText().toString() +" n'est pas présent dans la parcelle.");
+                }
+                */
+
             }
         });
+
+
 
 
     }

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="martelapp.test.Recherche">
+    tools:context="martelapp.test.Recherche"
+    android:background="@color/colorBackground">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -19,18 +20,21 @@
 
         <EditText
             android:id="@+id/editText"
-            android:layout_width="match_parent"
+            android:layout_width="125dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:enabled="false"
             android:gravity="bottom"
-            android:lines="2"
-            android:maxLines="2"
+            android:lines="1"
+            android:maxLines="1"
             android:textSize="20sp" />
 
         <Button
             android:id="@+id/buttonSeven"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/editText"
             android:text="7"
@@ -39,7 +43,7 @@
         <Button
             android:id="@+id/buttonEight"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/editText"
             android:layout_centerHorizontal="true"
@@ -50,7 +54,7 @@
         <Button
             android:id="@+id/buttonNine"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/editText"
             android:layout_toRightOf="@id/buttonEight"
@@ -61,15 +65,16 @@
         <Button
             android:id="@+id/buttonFour"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/buttonSeven"
             android:text="4"
             android:textSize="20sp" />
+
         <Button
             android:id="@+id/buttonFive"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/buttonEight"
             android:layout_toRightOf="@id/buttonFour"
@@ -79,7 +84,7 @@
         <Button
             android:id="@+id/buttonSix"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/buttonNine"
             android:layout_toRightOf="@id/buttonFive"
@@ -89,24 +94,26 @@
         <Button
             android:id="@+id/buttonOne"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/buttonFour"
             android:text="1"
             android:textSize="20sp" />
+
         <Button
             android:id="@+id/buttonTwo"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/buttonFive"
             android:layout_toRightOf="@id/buttonOne"
             android:text="2"
             android:textSize="20sp" />
+
         <Button
             android:id="@+id/buttonThree"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/buttonSix"
             android:layout_toRightOf="@id/buttonTwo"
@@ -118,7 +125,7 @@
         <Button
             android:id="@+id/buttonZero"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/buttonTwo"
             android:layout_toRightOf="@id/buttonClear"
@@ -126,12 +133,10 @@
             android:textSize="20sp" />
 
 
-
-
         <Button
             android:id="@+id/buttonClear"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/buttonOne"
             android:text="C"
@@ -141,7 +146,7 @@
         <Button
             android:id="@+id/buttonDel"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/buttonThree"
             android:layout_toRightOf="@id/buttonZero"
@@ -151,21 +156,45 @@
         <Button
             android:id="@+id/buttonOk"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/buttonThree"
-            android:layout_toEndOf="@+id/buttonThree"
-            android:layout_toRightOf="@+id/buttonThree"
+            android:layout_toEndOf="@+id/editText"
+            android:layout_toRightOf="@+id/editText"
             android:text="Chercher" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/buttonOk"
-            android:layout_toEndOf="@+id/buttonOk"
-            android:layout_toRightOf="@+id/buttonOk"
+            android:layout_below="@id/buttonClear"
             android:text="TextView" />
+
+        <Button
+            android:id="@+id/buttonConsignes"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Consignes"
+            android:layout_alignParentRight="true"/>
+
+        <Button
+            android:id="@+id/buttonListeArbre"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/buttonConsignes"
+            android:text="Arbres martelés" />
+
+        <Button
+            android:id="@+id/buttonTerminer"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="Terminer"
+            />
 
 
     </RelativeLayout>

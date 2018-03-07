@@ -21,12 +21,14 @@
         </activity>
         <activity
             android:name=".Recherche"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:parentActivityName=".MainActivity">
 
         </activity>
         <activity
             android:name=".AfficherArbre"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:parentActivityName=".Recherche">
 
         </activity>
         <activity android:name=".MessageErreurArbreMartele"
