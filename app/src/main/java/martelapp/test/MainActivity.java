@@ -1,16 +1,12 @@
 package martelapp.test;
 
-import android.app.ActionBar;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,35 +17,36 @@ public class MainActivity extends AppCompatActivity {
 
     String nomEquipe;
 
-    //Get Database Reference
-    //DatabaseReference mRefArbre;
-
+    static {
+        //Rendre bdd dispo quand offline
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Rendre bdd dispo quand offline
-        //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
-        editTextTeamName = (EditText)findViewById(R.id.editTextTeamName);
-        buttonStart = (Button)findViewById(R.id.buttonStart);
+        editTextTeamName = (EditText) findViewById(R.id.editTextTeamName);
+        buttonStart = (Button) findViewById(R.id.buttonStart);
 
 
 
-        nomEquipe = editTextTeamName.getText().toString();
 
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),Recherche.class);
+                nomEquipe = editTextTeamName.getText().toString();
+                Intent intent = new Intent(getApplicationContext(), Recherche.class);
+                intent.putExtra("nomEquipe", nomEquipe);
                 startActivity(intent);
             }
         });
 
     }
 
+    /*
     @Override
     protected void onResume() {
         super.onResume();
@@ -58,8 +55,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 editTextTeamName.setText("");
-
             }
         });
     }
+    */
+
 }
