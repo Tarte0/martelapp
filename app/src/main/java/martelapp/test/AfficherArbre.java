@@ -95,19 +95,19 @@ public class AfficherArbre extends AppCompatActivity {
         mButtonMarteler.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 raisonMartelage = onRadioButtonClicked(mRadioGroup);
+                if(!raisonMartelage.equals("")) {
 
-                // Ajouter arbre + raison aux martelés
-                arbresMarteles.put(numero, raisonMartelage);
+                    // Ajouter arbre + raison aux martelés
+                    arbresMarteles.put(numero, raisonMartelage);
 
 
-                if (noteEcologique > noteEcologiqueMax) {
-                    Intent intent = new Intent(getApplicationContext(), MessageErreurArbreMartele.class);
-                    startActivity(intent);
+                    if (noteEcologique > noteEcologiqueMax) {
+                        Intent intent = new Intent(getApplicationContext(), MessageErreurArbreMartele.class);
+                        startActivity(intent);
+                    }
+                    AfficherArbre.this.finish();
                 }
-                AfficherArbre.this.finish();
-
             }
         });
 
@@ -140,6 +140,6 @@ public class AfficherArbre extends AppCompatActivity {
 
 
         }
-        return null;
+        return "";
     }
 }

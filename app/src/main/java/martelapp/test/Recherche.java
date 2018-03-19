@@ -36,7 +36,6 @@ public class Recherche extends AppCompatActivity {
             mButtonListeArbre,
             mButtonTerminer;
 
-
     TextView mTextView;
 
     boolean estTrouve;
@@ -48,7 +47,8 @@ public class Recherche extends AppCompatActivity {
     String  numero,
             essence,
             etat,
-            noteEcologique;
+            noteEcologique,
+            nomEquipe;
 
     Map<String, String> arbresMarteles;
 
@@ -62,9 +62,11 @@ public class Recherche extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-
         // Reference des arbres
         mRefArbre = FirebaseDatabase.getInstance().getReference().child("parcelles/parcelleMartelapp/arbres");
+
+        // pour que la bdd soit dispo en hors ligne
+        mRefArbre.keepSynced(true);
 
         mButton0 = (Button)findViewById(R.id.buttonZero);
         mButton1 = (Button)findViewById(R.id.buttonOne);
@@ -87,6 +89,18 @@ public class Recherche extends AppCompatActivity {
 
         mTextView = (TextView) findViewById(R.id.textView);
         mTextView.setVisibility(View.INVISIBLE);
+
+
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+            nomEquipe = extras.getString("nomEquipe");
+
+
+            // Affiche le numéro de l'arbre dans la barre supérieure
+            getSupportActionBar().setTitle("MartelApp : " + nomEquipe);
+
+        }
 
 
 
@@ -252,6 +266,12 @@ public class Recherche extends AppCompatActivity {
 
 
 
+
+    }
+
+    protected void onPause() {
+        super.onPause();
+        mTextView.setText("");
 
     }
 
