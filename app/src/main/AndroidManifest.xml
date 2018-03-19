@@ -3,13 +3,13 @@
     package="martelapp.test">
 
     <application
+        android:name=".ArbresMarteles"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".ArbresMarteles">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:screenOrientation="landscape">
@@ -21,19 +21,15 @@
         </activity>
         <activity
             android:name=".Recherche"
-            android:screenOrientation="landscape"
-            android:parentActivityName=".MainActivity">
-
-        </activity>
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name=".AfficherArbre"
-            android:screenOrientation="landscape"
-            android:parentActivityName=".Recherche">
-
-        </activity>
-        <activity android:name=".MessageErreurArbreMartele"
-            android:screenOrientation="landscape">
-        </activity>
+            android:parentActivityName=".Recherche"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".MessageErreurArbreMartele"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>

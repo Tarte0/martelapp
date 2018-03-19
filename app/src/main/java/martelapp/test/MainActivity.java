@@ -10,8 +10,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     String nomEquipe;
 
     //Get Database Reference
-    //DatabaseReference mRefArbre;
+    DatabaseReference mRefArbre;
 
 
     @Override
@@ -30,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mRefArbre = FirebaseDatabase.getInstance().getReference();
         //Rendre bdd dispo quand offline
         //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
@@ -62,4 +68,38 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    public void dataBuilder(){
+        DatabaseHelper dbh = new DatabaseHelper(getApplicationContext());
+
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Parcelle parcelle = dataSnapshot.getValue(Parcelle.class);
+                if(parcelle != null){
+
+                    Hashmap<String, Tree> arbres_parcelle = parcelle.getArbresParcelle();
+                    Iterator it = arbres_parcelle.entrySet().iterator();
+                    (while it.hasNext()){
+
+                    }
+
+                    /*
+
+                    tu itere dans les arbres et tu rempli la bdd sql
+
+                     */
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // errerur a gérer, je ferais quand j'aurais mis un pantalon
+
+            }
+        };
+    }
+
 }
