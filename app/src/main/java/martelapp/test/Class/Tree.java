@@ -1,4 +1,4 @@
-package martelapp.test;
+package martelapp.test.Class;
 
 /**
  * Created by Sancho on 28/02/2018.

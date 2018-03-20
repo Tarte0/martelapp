@@ -1,4 +1,4 @@
-package martelapp.test;
+package martelapp.test.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,9 @@ import android.widget.ToggleButton;
 
 import java.util.Map;
 
-public class AfficherArbre extends AppCompatActivity {
+import martelapp.test.R;
+
+public class AfficherArbreActivity extends AppCompatActivity {
 
     TextView mTextView;
     Button mButtonMarteler;
@@ -50,7 +52,7 @@ public class AfficherArbre extends AppCompatActivity {
         mRadioGroup.setVisibility(View.INVISIBLE);
         mButtonMarteler.setVisibility(View.INVISIBLE);
 
-        arbresMarteles = ((ArbresMarteles) getApplicationContext()).map;
+        //arbresMarteles = ((ArbresMartelesActivity) getApplicationContext()).map;
 
         Bundle extras = getIntent().getExtras();
 
@@ -103,10 +105,10 @@ public class AfficherArbre extends AppCompatActivity {
 
 
                     if (noteEcologique > noteEcologiqueMax) {
-                        Intent intent = new Intent(getApplicationContext(), MessageErreurArbreMartele.class);
+                        Intent intent = new Intent(getApplicationContext(), MessageErreurArbreMarteleActivity.class);
                         startActivity(intent);
                     }
-                    AfficherArbre.this.finish();
+                    AfficherArbreActivity.this.finish();
                 }
             }
         });
@@ -137,7 +139,6 @@ public class AfficherArbre extends AppCompatActivity {
 
             case R.id.Stabilité:
                 return "ST";
-
 
         }
         return "";

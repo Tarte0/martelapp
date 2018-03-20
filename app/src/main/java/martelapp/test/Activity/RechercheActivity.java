@@ -1,12 +1,14 @@
-package martelapp.test;
+package martelapp.test.Activity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -16,7 +18,11 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Map;
 
-public class Recherche extends AppCompatActivity {
+import martelapp.test.Class.DatabaseHelper;
+import martelapp.test.Class.Tree;
+import martelapp.test.R;
+
+public class RechercheActivity extends AppCompatActivity {
 
     EditText mEditText;
     Button mButton0,
@@ -42,6 +48,7 @@ public class Recherche extends AppCompatActivity {
 
     //Get Database Reference
     DatabaseReference mRefArbre;
+    DatabaseHelper dbHelper;
 
     Tree arbre;
     String  numero,
@@ -57,6 +64,9 @@ public class Recherche extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recherche);
+
+        dbHelper = new DatabaseHelper(getApplicationContext());
+
 
         // Bouton retour sur Barre
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -88,8 +98,22 @@ public class Recherche extends AppCompatActivity {
         mEditText = (EditText)findViewById(R.id.editText);
 
         mTextView = (TextView) findViewById(R.id.textView);
-        mTextView.setVisibility(View.INVISIBLE);
+        //mTextView.setVisibility(View.INVISIBLE);
 
+        if(dbHelper.isEmpty(DatabaseHelper.ARBRES_PARCELLE_TABLE)){
+            Toast toast = Toast.makeText(getApplicationContext(), "La table est vide", Toast.LENGTH_LONG);
+            toast.show();
+        }
+        else{
+            Toast toast = Toast.makeText(getApplicationContext(), "Y'a un truc dans la table", Toast.LENGTH_LONG);
+            toast.show();
+        }
+
+
+        Cursor cur = dbHelper.getAllDataFromTable(DatabaseHelper.ARBRES_PARCELLE_TABLE);
+        cur.moveToFirst();
+        String n = cur.getString(cur.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC));
+        mTextView.setText(n);
 
         Bundle extras = getIntent().getExtras();
 
@@ -223,7 +247,7 @@ public class Recherche extends AppCompatActivity {
                         noteEcologique = arbre.getNoteEcologique();
 
                         // Pour donner les string a afficher Arbre
-                        Intent intent = new Intent(getApplicationContext(),AfficherArbre.class);
+                        Intent intent = new Intent(getApplicationContext(),AfficherArbreActivity.class);
                         intent.putExtra("numero", numero);
                         intent.putExtra("essence", essence);
                         intent.putExtra("etat", etat);
@@ -263,6 +287,10 @@ public class Recherche extends AppCompatActivity {
 
             }
         });
+
+
+
+
 
 
 

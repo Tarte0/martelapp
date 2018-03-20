@@ -1,100 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="martelapp.test.AfficherArbre"
-    android:background="@color/colorBackground">
+    android:background="@color/colorBackground"
+    android:weightSum="2"
+    tools:context="martelapp.test.Activity.AfficherArbreActivity">
 
-    <RelativeLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="100"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <TextView
             android:id="@+id/textView"
-            android:layout_width="250dp"
+            android:layout_width="0dp"
             android:layout_height="100dp"
-            android:layout_alignParentTop="true"
+            android:layout_weight="50"
+            android:textSize="20sp"
             android:text="TextView" />
+    </LinearLayout>
 
-        <Button
-            android:id="@+id/buttonMarteler"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_column="0"
-            android:layout_row="10"
-            android:text="Marteler"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:weightSum="100"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <RadioGroup
-            android:id="@+id/RadioGroup"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="50dp"
-            android:layout_column="0"
-            android:layout_row="9">>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="40"
+            android:orientation="horizontal"
+            android:weightSum="100"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <RadioButton
-                android:id="@+id/arbreMur"
-                android:layout_width="wrap_content"
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="50" />
+
+            <ToggleButton
+                android:id="@+id/toggleButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="50"
+                android:soundEffectsEnabled="false"
+                android:text="ToggleButton"
+                android:textOff="Marteler"
+                android:textOn="Annuler" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="20"
+            android:orientation="horizontal"
+            android:weightSum="100"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="40" />
+            <RadioGroup
+                android:id="@+id/RadioGroup"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Arbre Mûr" />
+                android:layout_marginTop="0dp"
+                android:layout_weight="60"
+                android:layout_row="9">>
 
-            <RadioButton
-                android:id="@+id/Eclaircie"
-                android:layout_width="wrap_content"
+                <RadioButton
+                    android:id="@+id/arbreMur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="Arbre Mûr" />
+
+                <RadioButton
+                    android:id="@+id/Eclaircie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="Eclaircie au profit d'un arbre d'avenir" />
+
+                <RadioButton
+                    android:id="@+id/sanitaire"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="Sanitaire" />
+
+                <RadioButton
+                    android:id="@+id/Régénération"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="Pour la Régénération" />
+
+                <RadioButton
+                    android:id="@+id/Exploitation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="Pour l'Exploitation" />
+
+                <RadioButton
+                    android:id="@+id/Stabilité"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="Pour la stabilité" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="40"
+            android:orientation="horizontal"
+            android:weightSum="100"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_gravity="bottom|end"
+                android:layout_weight="50" />
+
+            <Button
+                android:id="@+id/buttonMarteler"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Eclaircie au profit d'un arbre d'avenir" />
+                android:layout_gravity="bottom|end"
+                android:layout_weight="50"
+                android:text="Marteler" />
+        </LinearLayout>
 
-            <RadioButton
-                android:id="@+id/sanitaire"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sanitaire" />
-
-            <RadioButton
-                android:id="@+id/Régénération"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pour la Régénération" />
-
-            <RadioButton
-                android:id="@+id/Exploitation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pour l'Exploitation" />
-
-            <RadioButton
-                android:id="@+id/Stabilité"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pour la stabilité" />
-        </RadioGroup>
-
-        <ToggleButton
-            android:id="@+id/toggleButton"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_column="0"
-            android:layout_row="8"
-            android:soundEffectsEnabled="false"
-            android:text="ToggleButton"
-            android:textOff="Marteler"
-            android:textOn="Annuler" />
-    </RelativeLayout>
-</android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+</LinearLayout>
