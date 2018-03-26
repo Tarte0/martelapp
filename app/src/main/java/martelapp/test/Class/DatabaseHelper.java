@@ -15,7 +15,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     // Table "arbres_parcelle"
     public static final String ARBRES_PARCELLE_TABLE    = "arbres_parcelle_table";
-    public static final String ID_ARBRE_PARC            = "ID";
+    public static final String ID_ARBRE_PARC            = "_id";
     public static final String NUMERO_ARBRE_PARC        = "NUMERO";
     public static final String ESSENCE_ARBRE            = "ESSENCE";
     public static final String DIAMETRE_ARBRE           = "DIAMETRE";
@@ -29,11 +29,14 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     // Table "arbres_marteles"
     public static final String ARBRES_MARTELES_TABLE    = "arbres_marteles_table";
-    public static final String ID_ARBRE_MART            = "ID";
+    public static final String ID_ARBRE_MART            = "_id";
     public static final String NUMERO_ARBRE_MART        = "NUMERO";
-    public static final String RAISON_MARTELAGE         = "RAISON_MARTELAGE";
 
-    //Faire table plusieurs raison
+    // Table "raison"
+    public static final String RAISON_TABLE                 = "raison_table";
+    public static final String ID_RAISON                    = "_id";
+    public static final String NUMERO_ARBRE_MARTELE_RAISON  = "NUMERO_ARBRE_MARTELE_RAISON";
+    public static final String RAISON                       = "RAISON";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -45,7 +48,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         /*
          *  Création de la table "arbres_parcelle"
-         *  PRIMARY KEY : numero
+         *  PRIMARY KEY : ID_ARBRE_PARC
          */
         db.execSQL("CREATE TABLE " + ARBRES_PARCELLE_TABLE + "("
                 + ID_ARBRE_PARC + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -61,16 +64,29 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 + UTIL_BOIS_OEUVRE + " REAL)"
         );
 
+
         /*
          *  Création de la table "arbres_marteles"
-         *  PRIMARY KEY : numero
+         *  PRIMARY KEY : ID_ARBRE_MART
          *  FOREIGN KEY : numero sur le numero de arbres_parcelle
          */
         db.execSQL("CREATE TABLE " + ARBRES_MARTELES_TABLE + "("
-                + ID_ARBRE_PARC + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + ID_ARBRE_MART + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + NUMERO_ARBRE_MART + " TEXT, "
-                + RAISON_MARTELAGE + " TEXT, " +
-                "FOREIGN KEY(" + NUMERO_ARBRE_MART + ") REFERENCES " + ARBRES_PARCELLE_TABLE + "(" + NUMERO_ARBRE_PARC +"))"
+                + "FOREIGN KEY(" + NUMERO_ARBRE_MART + ") REFERENCES " + ARBRES_PARCELLE_TABLE + "(" + NUMERO_ARBRE_PARC + "))"
+        );
+
+
+        /*
+         *  Création de la table "raison"
+         *  PRIMARY KEY : ID_RAISON
+         *  FOREIGN KEY : NUMERO_ARBRE_MARTELE_RAISON sur le NUMERO_ARBRE_MART de arbres_marteles_table
+         */
+        db.execSQL("CREATE TABLE " + RAISON_TABLE + "("
+                + ID_RAISON + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + NUMERO_ARBRE_MARTELE_RAISON + " TEXT, "
+                + RAISON + " TEXT, "
+                + "FOREIGN KEY(" + NUMERO_ARBRE_MARTELE_RAISON + ") REFERENCES " + ARBRES_MARTELES_TABLE + "(" + NUMERO_ARBRE_MART + "))"
         );
     }
 
@@ -78,6 +94,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + ARBRES_PARCELLE_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + ARBRES_MARTELES_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + RAISON_TABLE);
         onCreate(db);
     }
 
@@ -99,28 +116,31 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         contentValues.put(UTIL_BOIS_INDUSTRIE, util_industrie);
         contentValues.put(UTIL_BOIS_OEUVRE, util_oeuvre);
 
-        db.insert(ARBRES_PARCELLE_TABLE, null, contentValues);
+        long res = db.insert(ARBRES_PARCELLE_TABLE, null, contentValues);
 
-        return false;
+        return res != -1;
     }
 
-    public boolean insertArbreMarteles(String numero, String raison){
+    public boolean insertArbreMarteles(String numero){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(NUMERO_ARBRE_MART, numero);
-        contentValues.put(RAISON_MARTELAGE, raison);
 
-        db.insert(ARBRES_MARTELES_TABLE, null, contentValues);
+        long res = db.insert(ARBRES_MARTELES_TABLE, null, contentValues);
 
-        return false;
+        return res != -1;
     }
 
-
-    public Cursor getAllData(String query){
+    public boolean insertRaison(String numero, String raison){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cur = db.rawQuery(query, null);
-        return cur;
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(NUMERO_ARBRE_MARTELE_RAISON, numero);
+        contentValues.put(RAISON, numero);
+
+        long res = db.insert(RAISON_TABLE, null, contentValues);
+        return res != -1;
     }
+
 
     public Cursor executeQuery(String query){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -144,6 +164,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " + ARBRES_PARCELLE_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + ARBRES_MARTELES_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + RAISON_TABLE);
         onCreate(db);
     }
 

@@ -1,6 +1,7 @@
 package martelapp.test.Activity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,8 +11,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import java.util.Map;
 
+import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.R;
 
 public class AfficherArbreActivity extends AppCompatActivity {
@@ -27,21 +28,21 @@ public class AfficherArbreActivity extends AppCompatActivity {
 
     String numero,
             essence,
-            etat,
-            getNoteEcologique,
-            raisonMartelage;
+            etat;
 
-    Map<String, String> arbresMarteles;
+    DatabaseHelper dbHelper;
+    String query;
+    Cursor cur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_afficher_arbre);
 
+        dbHelper = new DatabaseHelper(getApplicationContext());
+
         // Bouton retour sur Barre
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
 
         mTextView = (TextView) findViewById(R.id.textView);
 
@@ -52,33 +53,29 @@ public class AfficherArbreActivity extends AppCompatActivity {
         mRadioGroup.setVisibility(View.INVISIBLE);
         mButtonMarteler.setVisibility(View.INVISIBLE);
 
-        //arbresMarteles = ((ArbresMartelesActivity) getApplicationContext()).map;
 
-        Bundle extras = getIntent().getExtras();
+       Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
 
             numero = extras.getString("numero");
-            essence = extras.getString("essence");
-            etat = extras.getString("etat");
-            getNoteEcologique = extras.getString("noteEcologique");
 
-            noteEcologique = Integer.parseInt(getNoteEcologique);
+            query = "SELECT * FROM " + dbHelper.ARBRES_PARCELLE_TABLE + " WHERE " + dbHelper.NUMERO_ARBRE_PARC + " = " + numero;
+            cur = dbHelper.executeQuery(query);
+            cur.moveToFirst();
+
+            essence = cur.getString(cur.getColumnIndex(dbHelper.ESSENCE_ARBRE));
+            etat = cur.getString(cur.getColumnIndex(dbHelper.ETAT_ARBRE));
+            noteEcologique = cur.getInt(cur.getColumnIndex(dbHelper.NOTE_ECO_ARBRE));
+
 
             // Affiche le numéro de l'arbre dans la barre supérieure
             getSupportActionBar().setTitle("Arbre n°" + numero);
 
         }
-        /*
-        numero = (String) getIntent().getExtras().getString("numero");
-
-        essence = (String) getIntent().getExtras().getString("essence");
-
-        etat = (String) getIntent().getExtras().getString("etat");
-    */
 
 
-        mTextView.setText("Numéro : " + numero + " ,\nEssence : " + essence + " ,\nEtat : " + etat + " ,\nNote Ecologique : " + getNoteEcologique);
+        mTextView.setText("Numéro : " + numero + " ,\nEssence : " + essence + " ,\nEtat : " + etat + " ,\nNote Ecologique : " + noteEcologique);
 
         mToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -97,26 +94,27 @@ public class AfficherArbreActivity extends AppCompatActivity {
         mButtonMarteler.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                raisonMartelage = onRadioButtonClicked(mRadioGroup);
-                if(!raisonMartelage.equals("")) {
+                dbHelper.insertArbreMarteles(numero);
+                //insertRaisonFromCheckBoxes();
 
-                    // Ajouter arbre + raison aux martelés
-                    arbresMarteles.put(numero, raisonMartelage);
-
-
-                    if (noteEcologique > noteEcologiqueMax) {
-                        Intent intent = new Intent(getApplicationContext(), MessageErreurArbreMarteleActivity.class);
-                        startActivity(intent);
-                    }
-                    AfficherArbreActivity.this.finish();
+                if (noteEcologique > noteEcologiqueMax) {
+                    Intent intent = new Intent(getApplicationContext(), MessageErreurArbreMarteleActivity.class);
+                    startActivity(intent);
                 }
+                AfficherArbreActivity.this.finish();
             }
         });
 
     }
 
+    public void insertRaisonFromCheckBoxes(){
+        /*if(checkboxRaison1.isChecked()){
+            dbHelper.insertRaison(numero, "raison1");
+        }*/
+    }
 
-    public String onRadioButtonClicked(RadioGroup rb) {
+
+    /*public String onRadioButtonClicked(RadioGroup rb) {
         // Is the button now checked?
         int buttonChecked = rb.getCheckedRadioButtonId();
 
@@ -142,5 +140,5 @@ public class AfficherArbreActivity extends AppCompatActivity {
 
         }
         return "";
-    }
+    }*/
 }

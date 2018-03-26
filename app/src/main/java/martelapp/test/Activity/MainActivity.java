@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,14 +29,10 @@ public class MainActivity extends AppCompatActivity {
 
     String nomEquipe;
 
-    DatabaseReference mDatabase;
 
+    DatabaseReference firebaseDatabase;
     DatabaseHelper dbHelper;
 
-    static {
-        //Rendre bdd dispo quand offline
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,24 +42,34 @@ public class MainActivity extends AppCompatActivity {
         dbHelper = new DatabaseHelper(getApplicationContext());
         dbHelper.clean();
 
-        editTextTeamName = (EditText) findViewById(R.id.editTextTeamName);
-        buttonStart = (Button) findViewById(R.id.buttonStart);
+        // Récupération de la base de données firebase
+        firebaseDatabase = FirebaseDatabase.getInstance().getReference();
 
-
-//on choppe la reference
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        //on cree un listener pour tout récuperer
+        /*
+         * Listener qui récupère toute la parcelle à partir de la base de données firebase
+         * et enregistre tous les arbres de la parcelle dans la table arbres_parcelle_table
+         */
         ValueEventListener postListener = new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // je prend toute la parcelle dans une classe parcelle
+
+                // Récupération de la parcelle de la base de données firebase dans la classe Parcelle
                 Parcelle parcelle = dataSnapshot.getValue(Parcelle.class);
+
+                // Test de la récupération de la parcelle
                 if(parcelle != null){
+
+                    // Tous les arbres de la parcelle son enregistrer dans une Hashmap
                     HashMap<String, Tree> arbres_parcelle = parcelle.arbres;
 
+                    // Test si il y a bien des arbres dans la parcelle
                     if(!arbres_parcelle.isEmpty()){
 
-
+                        /*
+                         * Parcours de la Hashmap<String, Tree> contenant tous les arbres
+                         * et les enregistres dans la table arbres_parcelle_table
+                         */
                         Iterator it = arbres_parcelle.entrySet().iterator();
                         while (it.hasNext()) {
                             HashMap.Entry pair = (HashMap.Entry)it.next();
@@ -82,22 +87,21 @@ public class MainActivity extends AppCompatActivity {
 
                             it.remove();
                         }
-                        Toast toast = Toast.makeText(getApplicationContext(), "oui", Toast.LENGTH_LONG);
-                        toast.show();
                     }
-
-
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
-
         };
-        //on attache le listener sur la parcelle test (en gros on recupere la parcelle "test" sou forme d'ojet)
-        mDatabase.child("parcelles").child("parcelleMartelapp").addListenerForSingleValueEvent(postListener);
+
+        // On assigne le listener "postListener" à notre parcelle Martelapp de la base de données firebase
+        firebaseDatabase.child("parcelles").child("parcelleMartelapp").addListenerForSingleValueEvent(postListener);
+
+
+        editTextTeamName = (EditText) findViewById(R.id.editTextTeamName);
+        buttonStart = (Button) findViewById(R.id.buttonStart);
 
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
