@@ -183,7 +183,9 @@ public class RechercheActivity extends AppCompatActivity {
         mButtonDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEditText.setText(mEditText.getText().subSequence(0,mEditText.getText().length()-1));
+                if(mEditText.getText().length()>0) {
+                    mEditText.setText(mEditText.getText().subSequence(0, mEditText.getText().length() - 1));
+                }
             }
         });
 
