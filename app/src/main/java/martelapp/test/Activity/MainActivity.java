@@ -40,7 +40,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         dbHelper = new DatabaseHelper(getApplicationContext());
-        dbHelper.clean();
+        dbHelper.cleanTableExercice();
+
+        rempliArbreParcelleTable();
+
+        editTextTeamName = (EditText) findViewById(R.id.editTextTeamName);
+        buttonStart = (Button) findViewById(R.id.buttonStart);
+
+        buttonStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nomEquipe = editTextTeamName.getText().toString();
+                Intent intent = new Intent(getApplicationContext(), RechercheActivity.class);
+                intent.putExtra("nomEquipe", nomEquipe);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    public void rempliArbreParcelleTable(){
 
         // Récupération de la base de données firebase
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
@@ -98,22 +117,8 @@ public class MainActivity extends AppCompatActivity {
 
         // On assigne le listener "postListener" à notre parcelle Martelapp de la base de données firebase
         firebaseDatabase.child("parcelles").child("parcelleMartelapp").addListenerForSingleValueEvent(postListener);
-
-
-        editTextTeamName = (EditText) findViewById(R.id.editTextTeamName);
-        buttonStart = (Button) findViewById(R.id.buttonStart);
-
-        buttonStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                nomEquipe = editTextTeamName.getText().toString();
-                Intent intent = new Intent(getApplicationContext(), RechercheActivity.class);
-                intent.putExtra("nomEquipe", nomEquipe);
-                startActivity(intent);
-            }
-        });
-
     }
+
 
     /*
     @Override

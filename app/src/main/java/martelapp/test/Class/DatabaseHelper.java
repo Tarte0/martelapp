@@ -135,7 +135,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(NUMERO_ARBRE_MARTELE_RAISON, numero);
-        contentValues.put(RAISON, numero);
+        contentValues.put(RAISON, raison);
 
         long res = db.insert(RAISON_TABLE, null, contentValues);
         return res != -1;
@@ -160,9 +160,16 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return cur.getCount() == 0;
     }
 
-    public void clean(){
+    public void cleanAll(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " + ARBRES_PARCELLE_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + ARBRES_MARTELES_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + RAISON_TABLE);
+        onCreate(db);
+    }
+
+    public void cleanTableExercice(){
+        SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " + ARBRES_MARTELES_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + RAISON_TABLE);
         onCreate(db);
