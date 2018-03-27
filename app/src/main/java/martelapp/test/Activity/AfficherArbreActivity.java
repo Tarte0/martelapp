@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -20,7 +21,7 @@ public class AfficherArbreActivity extends AppCompatActivity {
     TextView mTextView;
     Button mButtonMarteler;
     ToggleButton mToggleButton;
-    RadioGroup mRadioGroup;
+    CheckBox arbreMur, eclaircie, sanitaire, regeneration, exploitation, stabilité;
 
     int noteEcologiqueMax = 6;
 
@@ -47,14 +48,28 @@ public class AfficherArbreActivity extends AppCompatActivity {
         mTextView = (TextView) findViewById(R.id.textView);
 
         mToggleButton = (ToggleButton) findViewById(R.id.toggleButton);
-        //mRadioGroup = (RadioGroup) findViewById(R.id.RadioGroup);
+
         mButtonMarteler = (Button) findViewById(R.id.buttonMarteler);
 
-        //mRadioGroup.setVisibility(View.INVISIBLE);
+        arbreMur = (CheckBox) findViewById(R.id.arbreMur);
+        eclaircie = (CheckBox) findViewById(R.id.Eclaircie);
+        sanitaire = (CheckBox) findViewById(R.id.sanitaire);
+        regeneration = (CheckBox) findViewById(R.id.Régénération);
+        exploitation = (CheckBox) findViewById(R.id.Exploitation);
+        stabilité = (CheckBox) findViewById(R.id.Stabilité);
+
+
+        arbreMur.setVisibility(View.INVISIBLE);
+        eclaircie.setVisibility(View.INVISIBLE);
+        sanitaire.setVisibility(View.INVISIBLE);
+        regeneration.setVisibility(View.INVISIBLE);
+        exploitation.setVisibility(View.INVISIBLE);
+        stabilité.setVisibility(View.INVISIBLE);
+
         mButtonMarteler.setVisibility(View.INVISIBLE);
 
 
-       Bundle extras = getIntent().getExtras();
+        Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
 
@@ -81,10 +96,20 @@ public class AfficherArbreActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
-                    mRadioGroup.setVisibility(View.VISIBLE);
+                    arbreMur.setVisibility(View.VISIBLE);
+                    eclaircie.setVisibility(View.VISIBLE);
+                    sanitaire.setVisibility(View.VISIBLE);
+                    regeneration.setVisibility(View.VISIBLE);
+                    exploitation.setVisibility(View.VISIBLE);
+                    stabilité.setVisibility(View.VISIBLE);
                     mButtonMarteler.setVisibility(View.VISIBLE);
                 } else {
-                    mRadioGroup.setVisibility(View.INVISIBLE);
+                    arbreMur.setVisibility(View.INVISIBLE);
+                    eclaircie.setVisibility(View.INVISIBLE);
+                    sanitaire.setVisibility(View.INVISIBLE);
+                    regeneration.setVisibility(View.INVISIBLE);
+                    exploitation.setVisibility(View.INVISIBLE);
+                    stabilité.setVisibility(View.INVISIBLE);
                     mButtonMarteler.setVisibility(View.INVISIBLE);
                 }
             }
@@ -94,23 +119,67 @@ public class AfficherArbreActivity extends AppCompatActivity {
         mButtonMarteler.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dbHelper.insertArbreMarteles(numero);
-                //insertRaisonFromCheckBoxes();
+                if (possedeRaison()) {
+                    dbHelper.insertArbreMarteles(numero);
+                    insertRaisonFromCheckBoxes();
 
-                if (noteEcologique > noteEcologiqueMax) {
-                    Intent intent = new Intent(getApplicationContext(), MessageErreurArbreMarteleActivity.class);
-                    startActivity(intent);
+                    if (noteEcologique > noteEcologiqueMax) {
+                        Intent intent = new Intent(getApplicationContext(), MessageErreurArbreMarteleActivity.class);
+                        startActivity(intent);
+                    }
+                    AfficherArbreActivity.this.finish();
+
                 }
-                AfficherArbreActivity.this.finish();
             }
         });
 
     }
 
-    public void insertRaisonFromCheckBoxes(){
-        /*if(checkboxRaison1.isChecked()){
-            dbHelper.insertRaison(numero, "raison1");
-        }*/
+
+    // Savoir si une raison est bien cochée au minimum
+    public boolean possedeRaison(){
+        if (arbreMur.isChecked()) {
+           return true;
+        }
+        if (eclaircie.isChecked()) {
+            return true;
+        }
+        if (sanitaire.isChecked()) {
+            return true;
+        }
+        if (regeneration.isChecked()) {
+            return true;
+        }
+        if (exploitation.isChecked()) {
+            return true;
+        }
+        if (stabilité.isChecked()) {
+            return true;
+        }
+        return false;
+    }
+
+
+    // Ajouter raison a BDD
+    public void insertRaisonFromCheckBoxes() {
+        if (arbreMur.isChecked()) {
+            dbHelper.insertRaison(numero, "Arbre Mûr");
+        }
+        if (eclaircie.isChecked()) {
+            dbHelper.insertRaison(numero, "Eclaircie au profit d'un arbre d'avenir");
+        }
+        if (sanitaire.isChecked()) {
+            dbHelper.insertRaison(numero, "Sanitaire");
+        }
+        if (regeneration.isChecked()) {
+            dbHelper.insertRaison(numero, "Pour la Régénération");
+        }
+        if (exploitation.isChecked()) {
+            dbHelper.insertRaison(numero, "Pour l'Exploitation");
+        }
+        if (stabilité.isChecked()) {
+            dbHelper.insertRaison(numero, "Pour la stabilité");
+        }
     }
 
 

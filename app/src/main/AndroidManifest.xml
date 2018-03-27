@@ -29,7 +29,8 @@
         <activity
             android:name=".Activity.MessageErreurArbreMarteleActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".Activity.ArbresMartelesActivity"></activity>
+        <activity android:name=".Activity.ArbresMartelesActivity"
+            android:screenOrientation="landscape" ></activity>
     </application>
 
 </manifest>
