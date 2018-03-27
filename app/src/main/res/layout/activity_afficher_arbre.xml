@@ -26,8 +26,8 @@
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="50"
-            android:textSize="20sp"
-            android:text="TextView" />
+            android:text="TextView"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -55,14 +55,14 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="50" />
+                android:layout_weight="40" />
 
             <ToggleButton
                 android:id="@+id/toggleButton"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_weight="50"
+                android:layout_weight="40"
                 android:soundEffectsEnabled="false"
                 android:text="ToggleButton"
                 android:textOff="Marteler"
@@ -75,7 +75,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:layout_weight="20"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:weightSum="100"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -84,56 +84,50 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="40" />
-            <RadioGroup
-                android:id="@+id/RadioGroup"
-                android:layout_width="0dp"
+
+            <CheckBox
+                android:id="@+id/arbreMur"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:layout_weight="60"
-                android:layout_row="9">>
+                android:text="Arbre Mûr"
+                android:textSize="12sp" />
 
-                <RadioButton
-                    android:id="@+id/arbreMur"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:text="Arbre Mûr" />
 
-                <RadioButton
-                    android:id="@+id/Eclaircie"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:text="Eclaircie au profit d'un arbre d'avenir" />
+            <CheckBox
+                android:id="@+id/Eclaircie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Eclaircie au profit d'un arbre d'avenir"
+                android:textSize="12sp" />
 
-                <RadioButton
-                    android:id="@+id/sanitaire"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:text="Sanitaire" />
+            <CheckBox
+                android:id="@+id/sanitaire"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sanitaire"
+                android:textSize="12sp" />
 
-                <RadioButton
-                    android:id="@+id/Régénération"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:text="Pour la Régénération" />
+            <CheckBox
+                android:id="@+id/Régénération"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pour la Régénération"
+                android:textSize="12sp" />
 
-                <RadioButton
-                    android:id="@+id/Exploitation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:text="Pour l'Exploitation" />
+            <CheckBox
+                android:id="@+id/Exploitation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pour l'Exploitation"
+                android:textSize="12sp" />
 
-                <RadioButton
-                    android:id="@+id/Stabilité"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:text="Pour la stabilité" />
-            </RadioGroup>
+            <CheckBox
+                android:id="@+id/Stabilité"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pour la stabilité"
+                android:textSize="12sp" />
+
 
         </LinearLayout>
 

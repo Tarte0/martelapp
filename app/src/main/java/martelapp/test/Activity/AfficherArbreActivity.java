@@ -47,10 +47,10 @@ public class AfficherArbreActivity extends AppCompatActivity {
         mTextView = (TextView) findViewById(R.id.textView);
 
         mToggleButton = (ToggleButton) findViewById(R.id.toggleButton);
-        mRadioGroup = (RadioGroup) findViewById(R.id.RadioGroup);
+        //mRadioGroup = (RadioGroup) findViewById(R.id.RadioGroup);
         mButtonMarteler = (Button) findViewById(R.id.buttonMarteler);
 
-        mRadioGroup.setVisibility(View.INVISIBLE);
+        //mRadioGroup.setVisibility(View.INVISIBLE);
         mButtonMarteler.setVisibility(View.INVISIBLE);
 
 
