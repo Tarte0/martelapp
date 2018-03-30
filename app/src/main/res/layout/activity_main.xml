@@ -1,66 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
-    android:weightSum="2"
     tools:context="martelapp.test.Activity.MainActivity">
 
+    <Button
+        android:id="@+id/nouvel_exercice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Nouvelle Exercice"
+        app:layout_constraintBottom_toTopOf="@+id/continuer_exercice"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        android:layout_weight="1"
-        android:weightSum="100"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <Button
+        android:id="@+id/continuer_exercice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Continuer Exercice"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-
-        <EditText
-            android:id="@+id/editTextTeamName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="50"
-            android:layout_gravity="top|left"
-            android:ems="10"
-            android:hint="Nom Equipe"
-            android:inputType="textPersonName"
-            android:selectAllOnFocus="true"
-            android:textSize="25sp"
-            android:textColor="@color/colorAccent" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        android:layout_weight="1"
-        android:weightSum="100"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="50" />
-        <Button
-            android:id="@+id/buttonStart"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="50"
-            android:layout_gravity="top|right"
-            android:scaleType="fitEnd"
-            android:textSize="20sp"
-            android:text="Commencer" />
-    </LinearLayout>
-
-
-</LinearLayout>
+    <Button
+        android:id="@+id/test_maj_bdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Test mise à jour"
+        app:layout_constraintBottom_toTopOf="@+id/nouvel_exercice"
+        app:layout_constraintEnd_toEndOf="@+id/nouvel_exercice"
+        app:layout_constraintStart_toStartOf="@+id/nouvel_exercice" />
+</android.support.constraint.ConstraintLayout>

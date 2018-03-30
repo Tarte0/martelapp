@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     android:weightSum="2"
-    tools:context="martelapp.test.Activity.MainActivity" android:baselineAligned="false">
+    tools:context="martelapp.test.Activity.NomEquipeActivity" android:baselineAligned="false">
 
 
 

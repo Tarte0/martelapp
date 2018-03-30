@@ -38,6 +38,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String NUMERO_ARBRE_MARTELE_RAISON  = "NUMERO_ARBRE_MARTELE_RAISON";
     public static final String RAISON                       = "RAISON";
 
+    // Table "constantes" (Utilisée pour les calculs dans le détail de la parcelle ainsi que
+    //                     l'analyse en fin d'exercice)
+    // !!!!!!!!!! A FAIRE !!!!!!!!!!!!!!
+    public static final String CONSTANTES_TABLE         = "constantes_table";
+    public static final String ID_CONSTANTE             = "_id";
+    public static final String NOM_EQUIPE               = "NOM_EQUIPE";
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
         SQLiteDatabase db = this.getWritableDatabase();
