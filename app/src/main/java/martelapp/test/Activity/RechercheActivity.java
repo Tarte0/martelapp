@@ -89,6 +89,17 @@ public class RechercheActivity extends AppCompatActivity {
 
         }
 
+        //***************************************************************
+        //Je pete tout, vous aviez qu'à faire un truc qui marche a la base
+        mButtonConsignes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MessageErreurArbreMarteleActivity.class);
+                startActivity(intent);
+            }
+        });
+        //***************************************************************
+
 
 
         // Bouton 0
