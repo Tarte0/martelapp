@@ -11,6 +11,8 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper{
+
+
     public static final String DATABASE_NAME = "info503.db";
 
     // Table "arbres_parcelle"
@@ -128,14 +130,23 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return res != -1;
     }
 
-    public boolean insertArbreMarteles(String numero){
+    public void insertArbreMarteles(String numero){
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
+        String query = "INSERT INTO " + ARBRES_MARTELES_TABLE
+                    + "(" + NUMERO_ARBRE_MART + ")"
+                    + "VALUES((SELECT " + NUMERO_ARBRE_PARC
+                            + " FROM " + ARBRES_PARCELLE_TABLE
+                            + " WHERE " + NUMERO_ARBRE_PARC + " = " + numero
+                            + " LIMIT 1))";
+
+        db.execSQL(query);
+
+        /*ContentValues contentValues = new ContentValues();
         contentValues.put(NUMERO_ARBRE_MART, numero);
 
         long res = db.insert(ARBRES_MARTELES_TABLE, null, contentValues);
 
-        return res != -1;
+        return res != -1;*/
     }
 
     public boolean insertRaison(String numero, String raison){
@@ -175,11 +186,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         onCreate(db);
     }
 
-    public void cleanTableExercice(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DROP TABLE IF EXISTS " + ARBRES_MARTELES_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + RAISON_TABLE);
-        onCreate(db);
+    public void clearTableExercice(){
+        clearTable(ARBRES_MARTELES_TABLE);
+        clearTable(RAISON_TABLE);
     }
 
     public void clearTable(String table) {

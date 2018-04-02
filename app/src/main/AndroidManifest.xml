@@ -12,29 +12,36 @@
         <activity
             android:name=".Activity.NomEquipeActivity"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden"/>
+
+        <activity
+            android:name=".Activity.RechercheActivity"
+            android:parentActivityName=".Activity.NomEquipeActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
+            android:name=".Activity.AfficherArbreActivity"
+            android:parentActivityName=".Activity.RechercheActivity"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".Activity.MessageErreurArbreMarteleActivity"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".Activity.ArbresMartelesActivity"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".Activity.MainActivity"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Activity.RechercheActivity"
-            android:parentActivityName=".Activity.NomEquipeActivity"
-            android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".Activity.AfficherArbreActivity"
-            android:parentActivityName=".Activity.RechercheActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".Activity.MessageErreurArbreMarteleActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".Activity.ArbresMartelesActivity"
-            android:screenOrientation="landscape" />
-        <activity android:name=".Activity.MainActivity"></activity>
     </application>
 
 </manifest>
