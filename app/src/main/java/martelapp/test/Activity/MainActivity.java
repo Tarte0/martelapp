@@ -1,6 +1,7 @@
 package martelapp.test.Activity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +25,7 @@ import martelapp.test.R;
 public class MainActivity extends AppCompatActivity {
 
     DatabaseReference firebaseDatabase;
+    DatabaseReference connectedRef;
     DatabaseHelper dbHelper;
 
     @Override
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         dbHelper = new DatabaseHelper(getApplicationContext());
+
 
         /*
          *  Bouton "Nouvel Exercice"
@@ -45,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         buttonNouvelExercice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dbHelper.cleanTableExercice();
+                dbHelper.clearTableExercice();
                 Intent intent = new Intent(getApplicationContext(), NomEquipeActivity.class);
                 startActivity(intent);
             }
@@ -78,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
          *  depuis une base de données Firebase en testant
          *  premièrement si il y a une connexion à internet
          */
+        connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
         Button buttonTestMAJ = findViewById(R.id.test_maj_bdd);
         buttonTestMAJ.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,20 +89,19 @@ public class MainActivity extends AppCompatActivity {
 
                 /*
                  *  Test d'une connexion internet à Firebase
-                 *  Si il y connexion, <arbre_parcelle_table>
+                 *  Si il y connexion, <arbres_parcelle_table>
                  *  est mise à jour
                  */
-                DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
                 connectedRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
                         boolean connected = snapshot.getValue(Boolean.class);
                         if (connected) {
                             miseAJourArbreParcelleTable();
-                            Toast toast = Toast.makeText(getApplicationContext(), " Connecté à internet, bdd mis à jour", Toast.LENGTH_SHORT);
+                            Toast toast = Toast.makeText(getApplicationContext(), "Connexion à la base de données Firebase reussi, mise à jour des données", Toast.LENGTH_SHORT);
                             toast.show();
                         } else {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Aucune connexion à internet, impossible de mettre à jour la bdd", Toast.LENGTH_SHORT);
+                            Toast toast = Toast.makeText(getApplicationContext(), "Echec de connexion à la base de données Firebase, impossible de mettre à jour", Toast.LENGTH_SHORT);
                             toast.show();
                         }
                     }
