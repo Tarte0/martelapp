@@ -42,10 +42,12 @@ public class NomEquipeActivity extends AppCompatActivity {
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nomEquipe = editTextTeamName.getText().toString();
-                Intent intent = new Intent(getApplicationContext(), RechercheActivity.class);
-                intent.putExtra("nomEquipe", nomEquipe);
-                startActivity(intent);
+                //if(editTextTeamName.getText().length()>0) {
+                    nomEquipe = editTextTeamName.getText().toString();
+                    Intent intent = new Intent(getApplicationContext(), RechercheActivity.class);
+                    intent.putExtra("nomEquipe", nomEquipe);
+                    startActivity(intent);
+
             }
         });
     }

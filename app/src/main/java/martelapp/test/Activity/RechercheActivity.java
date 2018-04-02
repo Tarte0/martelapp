@@ -193,37 +193,38 @@ public class RechercheActivity extends AppCompatActivity {
         mButtonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String numEntree = mEditText.getText().toString();
+
+                if(mEditText.getText().length()>0) {
+                    String numEntree = mEditText.getText().toString();
 
                 /*
                  *  On vérifie si l'arbre selectionné a déjà été martelé
                  *  Si c'est le cas, un message d'alerte est affiché
                  */
-                query = "SELECT * FROM " + dbHelper.ARBRES_MARTELES_TABLE + " WHERE " + dbHelper.NUMERO_ARBRE_MART + " = " + numEntree;
-                cur = dbHelper.executeQuery(query);
-                if(cur.moveToFirst()){
-                    mTextView.setText("L'arbre n°" + mEditText.getText().toString() + " a déjà été martelé.");
-                }
-
-                else {
-                    // Requete de recherche d'arbre par le numéro "numEntree"
-                    query = "SELECT * FROM " + dbHelper.ARBRES_PARCELLE_TABLE + " WHERE " + dbHelper.NUMERO_ARBRE_PARC + " = " + numEntree;
+                    query = "SELECT * FROM " + dbHelper.ARBRES_MARTELES_TABLE + " WHERE " + dbHelper.NUMERO_ARBRE_MART + " = " + numEntree;
                     cur = dbHelper.executeQuery(query);
-
-                    // Si le numéro entrée correspond à un arbre existant dans la parcelle
                     if (cur.moveToFirst()) {
-                        Intent intent = new Intent(getApplicationContext(), AfficherArbreActivity.class);
-                        intent.putExtra("numero", numEntree);
-                        startActivity(intent);
-                    }
+                        mTextView.setText("L'arbre n°" + mEditText.getText().toString() + " a déjà été martelé.");
+                    } else {
+                        // Requete de recherche d'arbre par le numéro "numEntree"
+                        query = "SELECT * FROM " + dbHelper.ARBRES_PARCELLE_TABLE + " WHERE " + dbHelper.NUMERO_ARBRE_PARC + " = " + numEntree;
+                        cur = dbHelper.executeQuery(query);
 
-                    // Si l'arbre cherché n'existe pas, un message d'erreur est affiché
-                    else {
-                        mTextView.setText("L'arbre n°" + mEditText.getText().toString() + " n'est pas présent dans la parcelle.");
+                        // Si le numéro entrée correspond à un arbre existant dans la parcelle
+                        if (cur.moveToFirst()) {
+                            Intent intent = new Intent(getApplicationContext(), AfficherArbreActivity.class);
+                            intent.putExtra("numero", numEntree);
+                            startActivity(intent);
+                        }
+
+                        // Si l'arbre cherché n'existe pas, un message d'erreur est affiché
+                        else {
+                            mTextView.setText("L'arbre n°" + mEditText.getText().toString() + " n'est pas présent dans la parcelle.");
+                        }
                     }
+                    mEditText.setText("");
+                    cur.close();
                 }
-                mEditText.setText("");
-                cur.close();
             }
         });
 

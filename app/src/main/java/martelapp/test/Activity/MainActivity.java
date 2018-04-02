@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         dbHelper = new DatabaseHelper(getApplicationContext());
-
+        //getApplicationContext().deleteDatabase(DatabaseHelper.DATABASE_NAME);
 
         /*
          *  Bouton "Nouvel Exercice"

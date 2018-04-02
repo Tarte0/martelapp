@@ -138,23 +138,8 @@ public class AfficherArbreActivity extends AppCompatActivity {
 
     // Savoir si une raison est bien cochée au minimum
     public boolean possedeRaison(){
-        if (arbreMur.isChecked()) {
+        if (arbreMur.isChecked() | eclaircie.isChecked() | sanitaire.isChecked() | regeneration.isChecked() | exploitation.isChecked() | stabilité.isChecked()) {
            return true;
-        }
-        if (eclaircie.isChecked()) {
-            return true;
-        }
-        if (sanitaire.isChecked()) {
-            return true;
-        }
-        if (regeneration.isChecked()) {
-            return true;
-        }
-        if (exploitation.isChecked()) {
-            return true;
-        }
-        if (stabilité.isChecked()) {
-            return true;
         }
         return false;
     }

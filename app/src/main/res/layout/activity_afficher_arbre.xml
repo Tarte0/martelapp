@@ -23,11 +23,11 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="50"
             android:text="TextView"
-            android:textSize="20sp" />
+            android:textSize="30sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -46,7 +46,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:layout_weight="40"
+            android:layout_weight="42"
             android:orientation="horizontal"
             android:weightSum="100"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +66,8 @@
                 android:soundEffectsEnabled="false"
                 android:text="ToggleButton"
                 android:textOff="Marteler"
-                android:textOn="Annuler" />
+                android:textOn="Annuler"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -74,23 +75,19 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:layout_weight="20"
+            android:layout_weight="18"
             android:orientation="vertical"
             android:weightSum="100"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="40" />
 
             <CheckBox
                 android:id="@+id/arbreMur"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Arbre Mûr"
-                android:textSize="12sp" />
+                android:textSize="20sp" />
 
 
             <CheckBox
@@ -98,35 +95,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Eclaircie au profit d'un arbre d'avenir"
-                android:textSize="12sp" />
+                android:textSize="20sp" />
 
             <CheckBox
                 android:id="@+id/sanitaire"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sanitaire"
-                android:textSize="12sp" />
+                android:textSize="20sp" />
 
             <CheckBox
                 android:id="@+id/Régénération"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pour la Régénération"
-                android:textSize="12sp" />
+                android:textSize="20sp" />
 
             <CheckBox
                 android:id="@+id/Exploitation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pour l'Exploitation"
-                android:textSize="12sp" />
+                android:textSize="20sp" />
 
             <CheckBox
                 android:id="@+id/Stabilité"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pour la stabilité"
-                android:textSize="12sp" />
+                android:textSize="20sp" />
 
 
         </LinearLayout>
@@ -156,6 +153,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
                 android:layout_weight="50"
+                android:textSize="20sp"
                 android:text="Marteler" />
         </LinearLayout>
 
