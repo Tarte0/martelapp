@@ -42,10 +42,23 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     // Table "constantes" (Utilisée pour les calculs dans le détail de la parcelle ainsi que
     //                     l'analyse en fin d'exercice)
-    // !!!!!!!!!! A FAIRE !!!!!!!!!!!!!!
-    public static final String CONSTANTES_TABLE         = "constantes_table";
-    public static final String ID_CONSTANTE             = "_id";
-    public static final String NOM_EQUIPE               = "NOM_EQUIPE";
+    public static final String CONSTANTES_TABLE             = "constantes_table";
+    public static final String ID_CONSTANTE                 = "_id";
+    public static final String NOM_EQUIPE                   = "NOM_EQUIPE";
+    public static final String HAUTEUR_MOYENNE_FEUILLU      = "HAUTEUR_MOYENNE_FEUILLU";
+    public static final String HAUTEUR_MOYENNE_PETIT_BOIS   = "HAUTEUR_MOYENNE_PETIT_BOIS";
+    public static final String HAUTEUR_MOYENNE_RESINEUX     = "HAUTEUR_MOYENNE_RESINEUX";
+    public static final String PRIX_BOIS_CHAUFFAGE_FEUILLU  = "PRIX_BOIS_CHAUFFAGE_FEUILLU";
+    public static final String PRIX_BOIS_CHAUFFAGE_RESINEUX = "PRIX_BOIS_CHAUFFAGE_RESINEUX";
+    public static final String PRIX_BOIS_INDUSTRIE_FEUILLU  = "PRIX_BOIS_INDUSTRIE_FEUILLU";
+    public static final String PRIX_BOIS_INDUSTRIE_RESINEUX = "PRIX_BOIS_INDUSTRIE_RESINEUX";
+    public static final String PRIX_BOIS_OEUVRE_EPICEA      = "PRIX_BOIS_OEUVRE_EPICEA";
+    public static final String PRIX_BOIS_OEUVRE_FEUILLU     = "PRIX_BOIS_OEUVRE_FEUILLU";
+    public static final String PRIX_BOIS_OEUVRE_RESINEUX    = "PRIX_BOIS_OEUVRE_RESINEUX";
+    public static final String PRIX_BOIS_OEUVRE_SAPIN       = "PRIX_BOIS_OEUVRE_SAPIN";
+    public static final String VOLUME_COMMERCIAL_FEUILLU    = "VOLUME_COMMERCIAL_FEUILLU";
+    public static final String VOLUME_COMMERCIAL_RESINEUX   = "VOLUME_COMMERCIAL_RESINEUX";
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -60,17 +73,18 @@ public class DatabaseHelper extends SQLiteOpenHelper{
          *  PRIMARY KEY : ID_ARBRE_PARC
          */
         db.execSQL("CREATE TABLE " + ARBRES_PARCELLE_TABLE + "("
-                + ID_ARBRE_PARC + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + NUMERO_ARBRE_PARC + " TEXT, "
-                + ESSENCE_ARBRE + " TEXT, "
-                + DIAMETRE_ARBRE + " INTEGER, "
-                + NOTE_ECO_ARBRE + " INTEGER, "
-                + ETAT_ARBRE + " TEXT, "
-                + COORD_X_ARBRE + " REAL, "
-                + COORD_Y_ARBRE + " REAL, "
-                + UTIL_BOIS_CHAUFFAGE + " REAL, "
-                + UTIL_BOIS_INDUSTRIE + " REAL, "
-                + UTIL_BOIS_OEUVRE + " REAL)"
+                + ID_ARBRE_PARC         + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + NUMERO_ARBRE_PARC     + " TEXT, "
+                + ESSENCE_ARBRE         + " TEXT, "
+                + DIAMETRE_ARBRE        + " INTEGER, "
+                + NOTE_ECO_ARBRE        + " INTEGER, "
+                + ETAT_ARBRE            + " TEXT, "
+                + COORD_X_ARBRE         + " REAL, "
+                + COORD_Y_ARBRE         + " REAL, "
+                + UTIL_BOIS_CHAUFFAGE   + " REAL, "
+                + UTIL_BOIS_INDUSTRIE   + " REAL, "
+                + UTIL_BOIS_OEUVRE      + " REAL, "
+                + "CONSTRAINT numero_arbre_parc_constraint UNIQUE (" + NUMERO_ARBRE_PARC + "))"
         );
 
 
@@ -80,7 +94,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
          *  FOREIGN KEY : numero sur le numero de arbres_parcelle
          */
         db.execSQL("CREATE TABLE " + ARBRES_MARTELES_TABLE + "("
-                + ID_ARBRE_MART + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + ID_ARBRE_MART     + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + NUMERO_ARBRE_MART + " TEXT, "
                 + "FOREIGN KEY(" + NUMERO_ARBRE_MART + ") REFERENCES " + ARBRES_PARCELLE_TABLE + "(" + NUMERO_ARBRE_PARC + "))"
         );
@@ -92,10 +106,33 @@ public class DatabaseHelper extends SQLiteOpenHelper{
          *  FOREIGN KEY : NUMERO_ARBRE_MARTELE_RAISON sur le NUMERO_ARBRE_MART de arbres_marteles_table
          */
         db.execSQL("CREATE TABLE " + RAISON_TABLE + "("
-                + ID_RAISON + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + NUMERO_ARBRE_MARTELE_RAISON + " TEXT, "
-                + RAISON + " TEXT, "
+                + ID_RAISON                     + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + NUMERO_ARBRE_MARTELE_RAISON   + " TEXT, "
+                + RAISON                        + " TEXT, "
                 + "FOREIGN KEY(" + NUMERO_ARBRE_MARTELE_RAISON + ") REFERENCES " + ARBRES_MARTELES_TABLE + "(" + NUMERO_ARBRE_MART + "))"
+        );
+
+        /*
+         *  Création de la table "constantes"
+         *  PRIMARY KEY : ID_CONSTANTE
+         */
+
+        db.execSQL("CREATE TABLE " + CONSTANTES_TABLE + "("
+                + ID_CONSTANTE                  + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + NOM_EQUIPE                    + " TEXT, "
+                + HAUTEUR_MOYENNE_FEUILLU       + " REAL, "
+                + HAUTEUR_MOYENNE_PETIT_BOIS    + " REAL, "
+                + HAUTEUR_MOYENNE_RESINEUX      + " REAL, "
+                + PRIX_BOIS_CHAUFFAGE_FEUILLU   + " REAL, "
+                + PRIX_BOIS_CHAUFFAGE_RESINEUX  + " REAL, "
+                + PRIX_BOIS_INDUSTRIE_FEUILLU   + " REAL, "
+                + PRIX_BOIS_INDUSTRIE_RESINEUX  + " REAL, "
+                + PRIX_BOIS_OEUVRE_EPICEA       + " REAL, "
+                + PRIX_BOIS_OEUVRE_FEUILLU      + " REAL, "
+                + PRIX_BOIS_OEUVRE_RESINEUX     + " REAL, "
+                + PRIX_BOIS_OEUVRE_SAPIN        + " REAL, "
+                + VOLUME_COMMERCIAL_FEUILLU     + " REAL, "
+                + VOLUME_COMMERCIAL_RESINEUX    + " REAL)"
         );
     }
 
@@ -104,6 +141,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + ARBRES_PARCELLE_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + ARBRES_MARTELES_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + RAISON_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + CONSTANTES_TABLE);
         onCreate(db);
     }
 
@@ -125,7 +163,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         contentValues.put(UTIL_BOIS_INDUSTRIE, util_industrie);
         contentValues.put(UTIL_BOIS_OEUVRE, util_oeuvre);
 
-        long res = db.insert(ARBRES_PARCELLE_TABLE, null, contentValues);
+        long res = db.insertWithOnConflict(ARBRES_PARCELLE_TABLE, null, contentValues, SQLiteDatabase.CONFLICT_IGNORE);
 
         return res != -1;
     }
@@ -140,13 +178,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                             + " LIMIT 1))";
 
         db.execSQL(query);
-
-        /*ContentValues contentValues = new ContentValues();
-        contentValues.put(NUMERO_ARBRE_MART, numero);
-
-        long res = db.insert(ARBRES_MARTELES_TABLE, null, contentValues);
-
-        return res != -1;*/
     }
 
     public boolean insertRaison(String numero, String raison){

@@ -49,7 +49,6 @@ public class ArbresMartelesActivity extends AppCompatActivity {
         cur = dbHelper.executeQuery("SELECT *"
                                     + " FROM " + dbHelper.ARBRES_PARCELLE_TABLE + " ap," + dbHelper.ARBRES_MARTELES_TABLE + " am"
                                     + " WHERE ap." + dbHelper.NUMERO_ARBRE_PARC + " = am." + dbHelper.NUMERO_ARBRE_MART
-                                    + " GROUP BY ap." + dbHelper.NUMERO_ARBRE_PARC
                                     + " ORDER BY ap." + dbHelper.NUMERO_ARBRE_PARC + " ASC");
         cur.moveToFirst();
 
