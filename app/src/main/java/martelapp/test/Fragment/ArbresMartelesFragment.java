@@ -1,0 +1,65 @@
+package martelapp.test.Fragment;
+
+import android.database.Cursor;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import martelapp.test.Activity.ArbresMartelesActivity;
+import martelapp.test.Adapter.ArbreMartelesAdapter;
+import martelapp.test.Class.DatabaseHelper;
+import martelapp.test.R;
+
+/**
+ * Created by cimin on 04/04/2018.
+ */
+
+public class ArbresMartelesFragment extends Fragment {
+    ListView listeArbresMarteles;
+
+    DatabaseHelper dbHelper;
+    Cursor cur;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.view_page_arbresmarteles, null);
+        dbHelper = new DatabaseHelper(view.getContext());
+
+
+        listeArbresMarteles = view.findViewById(R.id.liste_arbres_marteles);
+        listeArbresMarteles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
+                TextView text = view.findViewById(R.id.numero_arbre_martele);
+                String numero = text.getText().toString();
+                cur = dbHelper.executeQuery("Select *"
+                        + " FROM " + DatabaseHelper.RAISON_TABLE
+                        + " WHERE " + DatabaseHelper.NUMERO_ARBRE_MARTELE_RAISON + " = " + numero );
+                cur.moveToFirst();
+                TextView textRaison = view.findViewById(R.id.text_raison);
+                textRaison.setText("Raison : " + cur.getString(cur.getColumnIndex(DatabaseHelper.RAISON)));
+                while(cur.moveToNext()){
+                    textRaison.setText(textRaison.getText() + " | " + cur.getString(cur.getColumnIndex(DatabaseHelper.RAISON)));
+                }
+            }
+        });
+
+        cur = dbHelper.executeQuery("SELECT *"
+                + " FROM " + dbHelper.ARBRES_PARCELLE_TABLE + " ap," + dbHelper.ARBRES_MARTELES_TABLE + " am"
+                + " WHERE ap." + dbHelper.NUMERO_ARBRE_PARC + " = am." + dbHelper.NUMERO_ARBRE_MART
+                + " ORDER BY ap." + dbHelper.NUMERO_ARBRE_PARC + " ASC");
+        cur.moveToFirst();
+
+
+        ArbreMartelesAdapter arbreMartelesAdapter = new ArbreMartelesAdapter(view.getContext(), cur);
+        listeArbresMarteles.setAdapter(arbreMartelesAdapter);
+
+        return view;
+    }
+}

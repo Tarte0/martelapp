@@ -3,4 +3,57 @@
     <string name="angry_response">
         Ca va pas la tête ?!\nOù est-ce que va habiter la faune qui entretient votre forêt si vous coupez des arbres aussi importants ?!
     </string>
+    <string name="app_name_caps">MARTEL\'APP</string>
+    <string name="start">Démarrer</string>
+    <string name="consignes">CONSIGNES</string>
+    <string name="parcelle">PARCELLE</string>
+    <string name="arbres_marteles">ARBRES MARTELÉS</string>
+    <string name="general_caps">GÉNÉRAL</string>
+    <string name="volume_caps">VOLUME</string>
+    <string name="biodiversite_caps">BIODIVERSITÉ</string>
+    <string name="exploitabilite_caps">EXPLOITABILITÉ</string>
+    <string name="rotations_caps">ROTATIONS</string>
+    <string name="consignes_general">
+        A travers l’exercice de martelage, il s’agit de vous :\n\n
+        - Former au martelage et aux modes de gestion favorables à la biodiversité, à la naturalité,
+        et à la production de bois.\n\n
+        - Accompagner dans l’analyse de vos choix et de ses conséquences écologiques et économiques
+        sur le peuplement.\n
+    </string>
+    <string name="consignes_volume">
+        Le volume à prélever doit être ajusté pour préserver durablement la ressource et
+        l’écosystème.\n
+        L’objectif sur la parcelle est un prélèvement de 1/5 et 1/3 du volume soit entre 90 et
+        140 m3 /ha.\n\n\n
+
+        [schéma dynamique propre a la parcelle].\n
+    </string>
+    <string name="consignes_biodiversite">
+        Les arbres de gros diamètres présentent un fort potentiel d’accueil de la biodiversité
+        forestière et favorisent la maturité d’un peuplement.\n
+        Aminima 3 arbres de diamètres > 50 cm/ha seront  conservés.\n\n
+
+        La gestion durable de la forêt est par nature favorable à la préservation de la
+        biodiversité.\n
+        Elle peut être renforcée par la présence d’arbres de gros diamètre, une diversité
+        d’essences, mais également par le maintien d’arbres porteurs de micro-habitats. \n
+        Ils constituent des refuges pour de nombreux oiseaux, chauve-souris ou insectes…. \n
+        Il est intéressant de conserver à l’échelle de la parcelle une diversité de micro-habitats.
+        A minima 2 arbres porteurs de micro-habitats/ha.\n\n
+
+        On veillera également à maintenir une diversité d’essences à l’échelle de la parcelle.\n
+        Les essences rares seront conservées.\n
+    </string>
+    <string name="consignes_exploitabilite">
+        Le diamètre d’exploitabilité est défini selon l’essence et la qualité.\n
+        Pour les principales essences, ils correspondent à :\n\n
+        - Epicéa : de 50 à 70 cm\n- Sapin pectiné : de 45 à 50 cm\n- Hêtre : jusqu’à 50 cm\n
+        - Frêne, érables : à partir de 50 cm.;\n
+    </string>
+    <string name="consignes_rotations">
+        C’est le nombre d’années entre 2 coupes.\n
+        En général, il varie entre 5 et 15 ans mais il peut dépendre de la station
+        (sol, exposition, altitude…), des essences et des évènements extérieurs
+        (sécheresse, attaques parasitaires…).\n
+    </string>
 </resources>

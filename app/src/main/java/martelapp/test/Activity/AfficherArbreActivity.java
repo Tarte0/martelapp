@@ -42,9 +42,6 @@ public class AfficherArbreActivity extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(getApplicationContext());
 
-        // Bouton retour sur Barre
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         mTextView = (TextView) findViewById(R.id.textView);
 
         mToggleButton = (ToggleButton) findViewById(R.id.toggleButton);
@@ -82,10 +79,6 @@ public class AfficherArbreActivity extends AppCompatActivity {
             essence = cur.getString(cur.getColumnIndex(dbHelper.ESSENCE_ARBRE));
             etat = cur.getString(cur.getColumnIndex(dbHelper.ETAT_ARBRE));
             noteEcologique = cur.getInt(cur.getColumnIndex(dbHelper.NOTE_ECO_ARBRE));
-
-
-            // Affiche le numéro de l'arbre dans la barre supérieure
-            getSupportActionBar().setTitle("Arbre n°" + numero);
 
         }
 
