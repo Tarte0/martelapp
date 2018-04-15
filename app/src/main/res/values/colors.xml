@@ -2,8 +2,9 @@
 <resources>
     <color name="colorPrimary">#008f67</color>
     <color name="colorPrimaryDark">#2c3e50</color>
-    <color name="colorAccent">#9C231C</color>
+    <color name="colorAccent">#9c231c</color>
     <color name="colorBackground">#FFFFFF</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorActionBar">@color/colorPrimary</color>
+    <color name="colorTransparentBlack">#32000000</color>
 </resources>

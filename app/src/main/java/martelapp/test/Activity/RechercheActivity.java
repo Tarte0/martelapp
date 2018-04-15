@@ -4,16 +4,16 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import martelapp.test.Fragment.ArbresMartelesFragment;
+import martelapp.test.Fragment.ChoixMartelageFragment;
 import martelapp.test.Fragment.ConsignesFragment;
 import martelapp.test.Fragment.ParcelleFragment;
 import martelapp.test.Fragment.RechercheFragment;
@@ -74,6 +74,16 @@ public class RechercheActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+    }
+
+    public void openMartelagePopup(String numeroArbre){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        ChoixMartelageFragment newFragment = new ChoixMartelageFragment();
+        newFragment.setNumeroArbre(numeroArbre);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.replace(android.R.id.content, newFragment);
+        transaction.addToBackStack(null).commit();
     }
 }
 

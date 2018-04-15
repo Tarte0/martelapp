@@ -18,11 +18,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="72dp"
                 android:minHeight="?attr/actionBarSize"
                 app:tabBackground="@drawable/tab_color_selector"
                 app:tabGravity="fill"

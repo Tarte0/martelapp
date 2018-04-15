@@ -3,15 +3,23 @@ package martelapp.test.Fragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import martelapp.test.Activity.AfficherArbreActivity;
+import martelapp.test.Activity.RechercheActivity;
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.R;
 
@@ -35,6 +43,9 @@ public class RechercheFragment extends Fragment {
             mButtonClear,
             mButtonDel,
             mButtonOk;
+    ImageButton martelerButtonTreeCard;
+
+    ImageView dejaMarteleImage;
 
     TextView mTextView,
             tvNum,
@@ -44,11 +55,12 @@ public class RechercheFragment extends Fragment {
     Cursor cur;
     String query;
 
-    String numero,
-            essence,
-            etat,
+    String numArbreCourant,
             nomEquipe;
-    int noteEcologique;
+
+    Snackbar errorsSnack;
+
+    LinearLayout treeCardNumber;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,6 +80,7 @@ public class RechercheFragment extends Fragment {
         mButtonClear = (Button) view.findViewById(R.id.buttonClear);
         mButtonDel = (Button) view.findViewById(R.id.buttonDel);
         mButtonOk = (Button) view.findViewById(R.id.buttonOk);
+        martelerButtonTreeCard = (ImageButton) view.findViewById(R.id.martelerButtonTreeCard);
         tvNum = (TextView) view.findViewById(R.id.numero_tree_card);
         tvEssence = (TextView) view.findViewById(R.id.essence_tree_card);
         tvEtat = (TextView) view.findViewById(R.id.etat_tree_card);
@@ -76,13 +89,16 @@ public class RechercheFragment extends Fragment {
 
         mTextView = (TextView) view.findViewById(R.id.textView);
 
+        dejaMarteleImage = (ImageView) view.findViewById(R.id.dejaMarteleImage);
+
+        treeCardNumber = view.findViewById(R.id.arbreLayout);
+
         Bundle extras = getActivity().getIntent().getExtras();
 
         dbHelper = new DatabaseHelper(view.getContext());
 
         if (extras != null) {
             nomEquipe = extras.getString("nomEquipe");
-
         }
 
         // Bouton 0
@@ -193,72 +209,82 @@ public class RechercheFragment extends Fragment {
 
                 /*
                  *  On vérifie si l'arbre selectionné a déjà été martelé
-                 *  Si c'est le cas, un message d'alerte est affiché
                  */
                     query = "SELECT * FROM " + dbHelper.ARBRES_MARTELES_TABLE + " WHERE " + dbHelper.NUMERO_ARBRE_MART + " = " + numEntree;
                     cur = dbHelper.executeQuery(query);
                     if (cur.moveToFirst()) {
-                        mTextView.setText("L'arbre n°" + mEditText.getText().toString() + " a déjà été martelé.");
+                        dejaMarteleImage.setVisibility(View.VISIBLE);
+                        dejaMarteleImage.setAlpha(0.5f);
+                        dejaMarteleImage.bringToFront();
+                        treeCardNumber.setVisibility(View.INVISIBLE);
+                        tvEssence.setText("");
+                        tvEtat.setText("");
+                        showSnackbar(view, "Arbre n°"+numEntree+" deja martelé");
                     } else {
+                        dejaMarteleImage.setVisibility(View.INVISIBLE);
+                        treeCardNumber.setVisibility(View.VISIBLE);
                         // Requete de recherche d'arbre par le numéro "numEntree"
                         query = "SELECT * FROM " + dbHelper.ARBRES_PARCELLE_TABLE + " WHERE " + dbHelper.NUMERO_ARBRE_PARC + " = " + numEntree;
                         cur = dbHelper.executeQuery(query);
 
                         // Si le numéro entrée correspond à un arbre existant dans la parcelle
                         if (cur.moveToFirst()) {
-
+                            numArbreCourant = numEntree;
                             //on met a jour l'affichage de l'arbre
                             tvEssence.setText(cur.getString(cur.getColumnIndex(dbHelper.ESSENCE_ARBRE)));
-                            tvEtat.setText(cur.getString(cur.getColumnIndex(dbHelper.ETAT_ARBRE)));
-                            tvNum.setText(cur.getString(cur.getColumnIndex(dbHelper.NUMERO_ARBRE_PARC)));
+                            tvEtat.setText(etatToString(cur.getString(cur.getColumnIndex(dbHelper.ETAT_ARBRE))));
+                            tvNum.setText("Arbre n°"+cur.getString(cur.getColumnIndex(dbHelper.NUMERO_ARBRE_PARC)));
                         }
 
                         // Si l'arbre cherché n'existe pas, un message d'erreur est affiché
                         else {
-                            mTextView.setText("L'arbre n°" + mEditText.getText().toString() + " n'est pas présent dans la parcelle.");
+                            treeCardNumber.setVisibility(View.INVISIBLE);
+                            tvEssence.setText("");
+                            tvEtat.setText("");
+                            showSnackbar(view, "L'arbre n°"+numEntree+" n'existe pas");
                         }
                     }
                     mEditText.setText("");
                     cur.close();
+                    numEntree = "";
                 }
             }
         });
 
 
-        /*
-         *
-         *
-         *
-         *       !!!!!! TEST LISTE ARBRE !!!!!!!
-         *
-         *
-         *
-         *
-         *
-         */
-        /*mButtonListeArbre.setOnClickListener(new View.OnClickListener() {
+        martelerButtonTreeCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), ArbresMartelesActivity.class);
-                startActivity(i);
+                if (numArbreCourant != "") {
+                    ((RechercheActivity)getActivity()).openMartelagePopup(numArbreCourant);
+
+                }
+
             }
-        });*/
+        });
 
-        /*
-         *
-         *
-         *
-         *
-         *         !!!!!!!!!!!! FIN TEST LISTE ARBRE !!!!!!!!!!
-         *
-         *
-         *
-         *
-         */
-
+        treeCardNumber.setVisibility(View.INVISIBLE);
 
         return view;
     }
 
+    private String etatToString(String etat) {
+        switch(etat){
+            case"v":
+                return "Vivant";
+            case "mp":
+                return "Mort sur pied";
+            case "ms":
+                return "Mort sur sol";
+            default:
+                return "";
+        }
+    }
+
+    private void showSnackbar(View view,String text) {
+        errorsSnack = Snackbar.make(view,text,Snackbar.LENGTH_LONG);
+
+        errorsSnack.show();
+    }
 
 }
