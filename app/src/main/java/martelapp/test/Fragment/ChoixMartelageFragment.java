@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -15,6 +16,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import martelapp.test.Activity.MessageErreurArbreMarteleActivity;
 import martelapp.test.Class.DatabaseHelper;
@@ -37,7 +42,7 @@ public class ChoixMartelageFragment extends DialogFragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.view_page_choixmartelage, null);
-
+        final View rechercheFragmentView = inflater.inflate(R.layout.view_page_recherche, null);
 
         dbHelper = new DatabaseHelper(view.getContext());
 
@@ -61,8 +66,8 @@ public class ChoixMartelageFragment extends DialogFragment {
                 boutonMarteler.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (possedeRaison() && numeroArbre != "") {
-                    String query = "SELECT * FROM " + dbHelper.ARBRES_PARCELLE_TABLE + " WHERE " + dbHelper.NUMERO_ARBRE_PARC + " = " + numeroArbre;
+                if (possedeRaison() && !numeroArbre.equals("")) {
+                    String query = "SELECT * FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE + " WHERE " + DatabaseHelper.NUMERO_ARBRE_PARC + " = " + numeroArbre;
                     Cursor cur = dbHelper.executeQuery(query);
 
                     // Si le numéro entrée correspond à un arbre existant dans la parcelle
@@ -70,7 +75,7 @@ public class ChoixMartelageFragment extends DialogFragment {
                         dbHelper.insertArbreMarteles(numeroArbre);
                         insertRaisonFromCheckBoxes();
 
-                        if (cur.getInt(cur.getColumnIndex(dbHelper.NOTE_ECO_ARBRE)) > noteEcologiqueHaute) {
+                        if (cur.getInt(cur.getColumnIndex(DatabaseHelper.NOTE_ECO_ARBRE)) > noteEcologiqueHaute) {
                             Intent intent = new Intent(view.getContext(), MessageErreurArbreMarteleActivity.class);
                             startActivity(intent);
                         }
@@ -79,6 +84,10 @@ public class ChoixMartelageFragment extends DialogFragment {
 
                     dismiss();
 
+                }else if(!possedeRaison()){
+                    Snackbar errorsSnack = Snackbar.make(view,"Il faut choisir au moins une raison",Snackbar.LENGTH_LONG);
+
+                    errorsSnack.show();
                 }
             }
         });
@@ -96,22 +105,22 @@ public class ChoixMartelageFragment extends DialogFragment {
     // Ajouter raison a BDD
     public void insertRaisonFromCheckBoxes() {
         if (arbreMur.isChecked()) {
-            dbHelper.insertRaison(numeroArbre, "Arbre Mûr");
+            dbHelper.insertRaison(numeroArbre, DatabaseHelper.ARBRE_MUR);
         }
         if (eclaircie.isChecked()) {
-            dbHelper.insertRaison(numeroArbre, "eclaircie au profit d'un arbre d'avenir");
+            dbHelper.insertRaison(numeroArbre, DatabaseHelper.ECLAIRCIE);
         }
         if (sanitaire.isChecked()) {
-            dbHelper.insertRaison(numeroArbre, "Sanitaire");
+            dbHelper.insertRaison(numeroArbre, DatabaseHelper.SANITAIRE);
         }
         if (regeneration.isChecked()) {
-            dbHelper.insertRaison(numeroArbre, "Pour la regeneration");
+            dbHelper.insertRaison(numeroArbre, DatabaseHelper.REGENERATION);
         }
         if (exploitation.isChecked()) {
-            dbHelper.insertRaison(numeroArbre, "Pour l'exploitation");
+            dbHelper.insertRaison(numeroArbre, DatabaseHelper.EXPLOITATION);
         }
         if (stabilite.isChecked()) {
-            dbHelper.insertRaison(numeroArbre, "Pour la stabilite");
+            dbHelper.insertRaison(numeroArbre, DatabaseHelper.STABILITE);
         }
     }
 

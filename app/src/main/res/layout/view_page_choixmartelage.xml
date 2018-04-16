@@ -19,49 +19,50 @@
             android:id="@+id/arbreMur"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="false"
             android:text="Arbre Mûr"
-            android:textSize="20sp"
-            android:layout_weight="1"/>
+            android:textSize="24sp" />
 
         <CheckBox
             android:id="@+id/eclaircie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Eclaircie au profit d'un arbre d'avenir"
-            android:textSize="20sp"
-            android:layout_weight="1"/>
+            android:textSize="24sp" />
 
         <CheckBox
             android:id="@+id/sanitaire"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Sanitaire"
-            android:textSize="20sp"
-            android:layout_weight="1"/>
+            android:textSize="24sp" />
 
         <CheckBox
             android:id="@+id/regeneration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Pour la Régénération"
-            android:textSize="20sp"
-            android:layout_weight="1"/>
+            android:textSize="24sp" />
 
         <CheckBox
             android:id="@+id/exploitation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Pour l'Exploitation"
-            android:textSize="20sp"
-            android:layout_weight="1"/>
+            android:textSize="24sp" />
 
         <CheckBox
             android:id="@+id/stabilite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Pour la stabilité"
-            android:textSize="20sp"
-            android:layout_weight="1"/>
+            android:textSize="24sp" />
     </LinearLayout>
 
     <LinearLayout

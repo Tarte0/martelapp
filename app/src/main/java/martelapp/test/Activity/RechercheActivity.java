@@ -20,7 +20,7 @@ import martelapp.test.Fragment.RechercheFragment;
 import martelapp.test.R;
 
 public class RechercheActivity extends AppCompatActivity {
-
+    ViewPager viewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +28,7 @@ public class RechercheActivity extends AppCompatActivity {
 
         //On configure notre ViewPager pour chaque onglet
         //Un fragment pour chaque onglet
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
         //on associe nos onglets avec le viewpager

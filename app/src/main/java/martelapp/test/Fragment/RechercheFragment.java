@@ -214,11 +214,8 @@ public class RechercheFragment extends Fragment {
                     cur = dbHelper.executeQuery(query);
                     if (cur.moveToFirst()) {
                         dejaMarteleImage.setVisibility(View.VISIBLE);
-                        dejaMarteleImage.setAlpha(0.5f);
                         dejaMarteleImage.bringToFront();
-                        treeCardNumber.setVisibility(View.INVISIBLE);
-                        tvEssence.setText("");
-                        tvEtat.setText("");
+                        cleanCard();
                         showSnackbar(view, "Arbre n°"+numEntree+" deja martelé");
                     } else {
                         dejaMarteleImage.setVisibility(View.INVISIBLE);
@@ -238,9 +235,7 @@ public class RechercheFragment extends Fragment {
 
                         // Si l'arbre cherché n'existe pas, un message d'erreur est affiché
                         else {
-                            treeCardNumber.setVisibility(View.INVISIBLE);
-                            tvEssence.setText("");
-                            tvEtat.setText("");
+                            cleanCard();
                             showSnackbar(view, "L'arbre n°"+numEntree+" n'existe pas");
                         }
                     }
@@ -255,9 +250,9 @@ public class RechercheFragment extends Fragment {
         martelerButtonTreeCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (numArbreCourant != "") {
+                if (!numArbreCourant.equals("")) {
                     ((RechercheActivity)getActivity()).openMartelagePopup(numArbreCourant);
-
+                    numArbreCourant = "";
                 }
 
             }
@@ -287,4 +282,15 @@ public class RechercheFragment extends Fragment {
         errorsSnack.show();
     }
 
+    public void cleanCard(){
+        treeCardNumber.setVisibility(View.INVISIBLE);
+        tvEssence.setText("");
+        tvEtat.setText("");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        cleanCard();
+    }
 }
