@@ -1,71 +1,99 @@
 package martelapp.test.Class;
 
+import java.util.HashMap;
+
 /**
  * Created by Sancho on 28/02/2018.
  */
 
 public class Tree {
 
-        public String numero = "",
-                diametre = "",
-                noteEcologique = "",
-                essence = "",
-                etat = "";
+    public String numero = "",
+            diametre = "",
+            noteEcologique = "",
+            essence = "",
+            etat = "";
 
-        public Coord coord;
+    public Coord coord;
 
-        public UtilisationBois utilisationBois;
+    public UtilisationBois utilisationBois;
 
-        public static class Coord{
-            public float x = 0f, y=0f;
+    public String getDiametre() {
+        return diametre;
+    }
 
-            public Coord(){}
+    public static class Coord {
+        public double x = 0d, y = 0d;
 
-            public Coord(float x, float y){
-                this.x = x;
-                this.y = y;
-            }
+        public Coord() {
         }
 
-        public static class UtilisationBois{
-            public String chauffage = "", industrie = "", oeuvre = "";
+        public Coord(double x, double y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
 
-            public UtilisationBois(){}
+    public static class UtilisationBois {
+        public String chauffage = "", industrie = "", oeuvre = "";
 
-            public UtilisationBois(String chauffage, String industrie, String oeuvre){
-                this.chauffage = chauffage;
-                this.industrie = industrie;
-                this.oeuvre = oeuvre;
-            }
+        public UtilisationBois() {
         }
 
-        public Tree(){
+        public UtilisationBois(String chauffage, String industrie, String oeuvre) {
+            this.chauffage = chauffage;
+            this.industrie = industrie;
+            this.oeuvre = oeuvre;
         }
+    }
 
-        public Tree(String numero, String diametre, String noteEcologique, String essence, String etat){
-            this.numero = numero;
-            this.diametre = diametre;
-            this.noteEcologique = noteEcologique;
-            this.essence = essence;
-            this.etat = etat;
-        }
+    public Tree() {
+    }
 
-        public String toString(){
-            return numero + ": " + diametre + ", " + noteEcologique;
-        }
+    public Tree(String numero, String diametre, String noteEcologique, String essence, String etat) {
+        this.numero = numero;
+        this.diametre = diametre;
+        this.noteEcologique = noteEcologique;
+        this.essence = essence;
+        this.etat = etat;
+    }
 
-        public String getNumero(){
-            return numero;
-        }
+    public Tree(String numero, String diametre, String noteEcologique, String essence, String etat,
+                String chauffage, String industrie, String oeuvre, double x, double y) {
+        this.numero = numero;
+        this.diametre = diametre;
+        this.noteEcologique = noteEcologique;
+        this.essence = essence;
+        this.etat = etat;
+        this.utilisationBois = new UtilisationBois(chauffage, industrie, oeuvre);
+        this.coord = new Coord(x, y);
+    }
 
+    public String toString() {
+        return numero + ": " + diametre + ", " + noteEcologique;
+    }
 
-        public String getEssence(){
-            return essence;
-         }
+    public String getNumero() {
+        return numero;
+    }
 
-        public String getEtat(){
-            return etat;
-        }
+    public String getEssence() {
+        return essence;
+    }
 
-        public String getNoteEcologique(){return noteEcologique;}
+    public String getEtat() {
+        return etat;
+    }
+
+    public String getNoteEcologique() {
+        return noteEcologique;
+    }
+
+    public HashMap<String, Double> getUtilBoisAsMap() {
+        HashMap<String, Double> util = new HashMap<>();
+        util.put("oeuvre", Double.parseDouble(utilisationBois.oeuvre));
+        util.put("chauffage", Double.parseDouble(utilisationBois.chauffage));
+        util.put("industrie", Double.parseDouble(utilisationBois.industrie));
+        return util;
+    }
 }
