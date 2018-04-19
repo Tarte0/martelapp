@@ -10,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import martelapp.test.Activity.ArbresMartelesActivity;
 import martelapp.test.Adapter.ArbreMartelesAdapter;
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.R;
@@ -28,11 +27,11 @@ public class ArbresMartelesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.view_page_arbresmarteles, null);
-        dbHelper = new DatabaseHelper(view.getContext());
+        final View mainView = inflater.inflate(R.layout.view_page_arbresmarteles, null);
+        dbHelper = new DatabaseHelper(mainView.getContext());
 
 
-        listeArbresMarteles = view.findViewById(R.id.liste_arbres_marteles);
+        listeArbresMarteles = mainView.findViewById(R.id.liste_arbres_marteles);
         listeArbresMarteles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
@@ -40,26 +39,49 @@ public class ArbresMartelesFragment extends Fragment {
                 String numero = text.getText().toString();
                 cur = dbHelper.executeQuery("Select *"
                         + " FROM " + DatabaseHelper.RAISON_TABLE
-                        + " WHERE " + DatabaseHelper.NUMERO_ARBRE_MARTELE_RAISON + " = " + numero );
+                        + " WHERE " + DatabaseHelper.NUMERO_ARBRE_MARTELE_RAISON + " = " + numero);
                 cur.moveToFirst();
-                TextView textRaison = view.findViewById(R.id.text_raison);
-                textRaison.setText("Raison : " + cur.getString(cur.getColumnIndex(DatabaseHelper.RAISON)));
-                while(cur.moveToNext()){
-                    textRaison.setText(textRaison.getText() + " | " + cur.getString(cur.getColumnIndex(DatabaseHelper.RAISON)));
+                TextView textRaison = mainView.findViewById(R.id.raison_martele_card);
+                textRaison.setText(String.format("Raisons du martelage : \n\n- %s\n",
+                        cur.getString(cur.getColumnIndex(DatabaseHelper.RAISON))));
+                while (cur.moveToNext()) {
+                    textRaison.setText(String.format("%s\n- %s\n", textRaison.getText(),
+                            cur.getString(cur.getColumnIndex(DatabaseHelper.RAISON))));
                 }
+
+                cur = dbHelper.executeQuery("SELECT * FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE + " WHERE " + DatabaseHelper.NUMERO_ARBRE_PARC + " = " + numero);
+                cur.moveToFirst();
+                TextView numCard = mainView.findViewById(R.id.numero_martele_card);
+                TextView detailCard = mainView.findViewById(R.id.details_martele_card);
+                numCard.setText(cur.getString(cur.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC)));
+                detailCard.setText(String.format("%s",
+                        cur.getString(cur.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE))));
             }
         });
 
         cur = dbHelper.executeQuery("SELECT *"
-                + " FROM " + dbHelper.ARBRES_PARCELLE_TABLE + " ap," + dbHelper.ARBRES_MARTELES_TABLE + " am"
-                + " WHERE ap." + dbHelper.NUMERO_ARBRE_PARC + " = am." + dbHelper.NUMERO_ARBRE_MART
-                + " ORDER BY ap." + dbHelper.NUMERO_ARBRE_PARC + " ASC");
+                + " FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_MARTELES_TABLE + " am"
+                + " WHERE ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = am." + DatabaseHelper.NUMERO_ARBRE_MART
+                + " ORDER BY cast(ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " as unsigned)");
         cur.moveToFirst();
 
 
-        ArbreMartelesAdapter arbreMartelesAdapter = new ArbreMartelesAdapter(view.getContext(), cur);
+        ArbreMartelesAdapter arbreMartelesAdapter = new ArbreMartelesAdapter(mainView.getContext(), cur);
         listeArbresMarteles.setAdapter(arbreMartelesAdapter);
 
-        return view;
+        return mainView;
+    }
+
+    private String etatToString(String etat) {
+        switch (etat) {
+            case "v":
+                return "Vivant";
+            case "mp":
+                return "Mort sur pied";
+            case "ms":
+                return "Mort sur sol";
+            default:
+                return "";
+        }
     }
 }

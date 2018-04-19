@@ -1,13 +1,9 @@
 package martelapp.test.Fragment;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import martelapp.test.Activity.AfficherArbreActivity;
 import martelapp.test.Activity.RechercheActivity;
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.R;
@@ -87,8 +82,6 @@ public class RechercheFragment extends Fragment {
 
         mEditText = (EditText) view.findViewById(R.id.editText);
 
-        mTextView = (TextView) view.findViewById(R.id.textView);
-
         dejaMarteleImage = (ImageView) view.findViewById(R.id.dejaMarteleImage);
 
         treeCardNumber = view.findViewById(R.id.arbreLayout);
@@ -105,7 +98,7 @@ public class RechercheFragment extends Fragment {
         mButton0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEditText.setText(mEditText.getText() + "0");
+                mEditText.setText(String.format("%s0", mEditText.getText()));
             }
         });
 
@@ -113,7 +106,7 @@ public class RechercheFragment extends Fragment {
         mButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEditText.setText(mEditText.getText() + "1");
+                mEditText.setText(String.format("%s1", mEditText.getText()));
             }
         });
 
@@ -121,7 +114,7 @@ public class RechercheFragment extends Fragment {
         mButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEditText.setText(mEditText.getText() + "2");
+                mEditText.setText(String.format("%s2", mEditText.getText()));
             }
         });
 
@@ -129,7 +122,7 @@ public class RechercheFragment extends Fragment {
         mButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEditText.setText(mEditText.getText() + "3");
+                mEditText.setText(String.format("%s3", mEditText.getText()));
             }
         });
 
@@ -137,7 +130,7 @@ public class RechercheFragment extends Fragment {
         mButton4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEditText.setText(mEditText.getText() + "4");
+                mEditText.setText(String.format("%s4", mEditText.getText()));
             }
         });
 
@@ -145,7 +138,7 @@ public class RechercheFragment extends Fragment {
         mButton5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEditText.setText(mEditText.getText() + "5");
+                mEditText.setText(String.format("%s5", mEditText.getText()));
             }
         });
 
@@ -153,7 +146,7 @@ public class RechercheFragment extends Fragment {
         mButton6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEditText.setText(mEditText.getText() + "6");
+                mEditText.setText(String.format("%s6", mEditText.getText()));
             }
         });
 
@@ -161,7 +154,7 @@ public class RechercheFragment extends Fragment {
         mButton7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEditText.setText(mEditText.getText() + "7");
+                mEditText.setText(String.format("%s7", mEditText.getText()));
             }
         });
 
@@ -169,7 +162,7 @@ public class RechercheFragment extends Fragment {
         mButton8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEditText.setText(mEditText.getText() + "8");
+                mEditText.setText(String.format("%s8", mEditText.getText()));
             }
         });
 
@@ -177,7 +170,7 @@ public class RechercheFragment extends Fragment {
         mButton9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEditText.setText(mEditText.getText() + "9");
+                mEditText.setText(String.format("%s9", mEditText.getText()));
             }
         });
 
@@ -210,7 +203,8 @@ public class RechercheFragment extends Fragment {
                 /*
                  *  On vérifie si l'arbre selectionné a déjà été martelé
                  */
-                    query = "SELECT * FROM " + dbHelper.ARBRES_MARTELES_TABLE + " WHERE " + dbHelper.NUMERO_ARBRE_MART + " = " + numEntree;
+                    query = "SELECT * FROM " + DatabaseHelper.ARBRES_MARTELES_TABLE + " WHERE " +
+                            DatabaseHelper.NUMERO_ARBRE_MART + " = " + numEntree;
                     cur = dbHelper.executeQuery(query);
                     if (cur.moveToFirst()) {
                         dejaMarteleImage.setVisibility(View.VISIBLE);
@@ -221,16 +215,17 @@ public class RechercheFragment extends Fragment {
                         dejaMarteleImage.setVisibility(View.INVISIBLE);
                         treeCardNumber.setVisibility(View.VISIBLE);
                         // Requete de recherche d'arbre par le numéro "numEntree"
-                        query = "SELECT * FROM " + dbHelper.ARBRES_PARCELLE_TABLE + " WHERE " + dbHelper.NUMERO_ARBRE_PARC + " = " + numEntree;
+                        query = "SELECT * FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE +
+                                " WHERE " + DatabaseHelper.NUMERO_ARBRE_PARC + " = " + numEntree;
                         cur = dbHelper.executeQuery(query);
 
                         // Si le numéro entrée correspond à un arbre existant dans la parcelle
                         if (cur.moveToFirst()) {
                             numArbreCourant = numEntree;
                             //on met a jour l'affichage de l'arbre
-                            tvEssence.setText(cur.getString(cur.getColumnIndex(dbHelper.ESSENCE_ARBRE)));
-                            tvEtat.setText(etatToString(cur.getString(cur.getColumnIndex(dbHelper.ETAT_ARBRE))));
-                            tvNum.setText("Arbre n°"+cur.getString(cur.getColumnIndex(dbHelper.NUMERO_ARBRE_PARC)));
+                            tvEssence.setText(cur.getString(cur.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE)));
+                            tvEtat.setText(etatToString(cur.getString(cur.getColumnIndex(DatabaseHelper.ETAT_ARBRE))));
+                            tvNum.setText(String.format("Arbre n°%s", cur.getString(cur.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC))));
                         }
 
                         // Si l'arbre cherché n'existe pas, un message d'erreur est affiché
@@ -265,7 +260,7 @@ public class RechercheFragment extends Fragment {
 
     private String etatToString(String etat) {
         switch(etat){
-            case"v":
+            case "v":
                 return "Vivant";
             case "mp":
                 return "Mort sur pied";

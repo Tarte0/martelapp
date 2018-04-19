@@ -61,11 +61,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     //constantes pour les raisons
     public static final String ARBRE_MUR = "Arbre Mûr";
-    public static final String ECLAIRCIE = "eclaircie au profit d'un arbre d'avenir";
+    public static final String ECLAIRCIE = "Eclaircie au profit d'un arbre d'avenir";
     public static final String SANITAIRE = "Sanitaire";
-    public static final String REGENERATION =  "Pour la regeneration";
+    public static final String REGENERATION = "Pour la régénération";
     public static final String EXPLOITATION = "Pour l'exploitation";
-    public static final String STABILITE = "Pour la stabilite";
+    public static final String STABILITE = "Pour la stabilité";
 
 
     public DatabaseHelper(Context context) {

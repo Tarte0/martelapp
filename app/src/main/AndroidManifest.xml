@@ -21,16 +21,7 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".Activity.AfficherArbreActivity"
-            android:parentActivityName=".Activity.RechercheActivity"
-            android:screenOrientation="landscape"/>
-
-        <activity
             android:name=".Activity.MessageErreurArbreMarteleActivity"
-            android:screenOrientation="landscape" />
-
-        <activity
-            android:name=".Activity.ArbresMartelesActivity"
             android:screenOrientation="landscape" />
 
         <activity
