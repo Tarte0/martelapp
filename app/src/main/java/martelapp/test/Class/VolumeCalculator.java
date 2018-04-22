@@ -1,5 +1,6 @@
 package martelapp.test.Class;
 
+import java.text.Normalizer;
 import java.util.HashMap;
 
 /**
@@ -11,6 +12,7 @@ import java.util.HashMap;
  * on l'initialise avec les constantes nécéssaires sous forme de HashMap ou de tableau.
  */
 public class VolumeCalculator {
+
     private final String ETAT_VIVANT = "v";
     private final String ETAT_MORT_PIED = "mp";
     private final String ETAT_MORT_SOL = "ms";
@@ -33,7 +35,7 @@ public class VolumeCalculator {
     }
 
     /*
-     * initialise la map des constantes 
+     * initialise la map des constantes
      * tableau de clés (String)
      * tableau de valeurs (double)
      * la valeur de rang i est associée a la clé de rang i
@@ -45,7 +47,7 @@ public class VolumeCalculator {
     }
 
     /*
-     * initialise la map des essences 
+     * initialise la map des essences
      * tableau de clés pour les essences (String)
      * tableau de valeurs pour les types (String)
      * la valeur de rang i est associée a la clé de rang i
@@ -65,21 +67,21 @@ public class VolumeCalculator {
     }
 
     public String getType(Tree tree) {
-        return essences.get(tree.getEssence());
+        return Normalizer.normalize(essences.get((tree.getEssence()).toLowerCase()), Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
     }
 
     public double getHauteurDecoupe(Tree tree) {
         //si l'arbre est un petit bois on renvoie simplement sa constante
         if (Double.parseDouble(tree.getDiametre()) <= 30) {
-            return constants.get("hauteurMoyennePetitBois");
+            return constants.get(DatabaseHelper.HAUTEUR_MOYENNE_PETIT_BOIS);
         }
         //sinon on va chercher la constante correspondant au type de son essence
-        return constants.get("hauteurMoyenne".concat(getType(tree)));
+        return constants.get(("HAUTEUR_MOYENNE_".concat(getType(tree))).toUpperCase());
     }
 
     public double getVolumeCommercial(Tree tree) {
         if (tree.getEtat().equals(ETAT_VIVANT)) {
-            return round(constants.get("volumeCommercial".concat(getType(tree))) *
+            return round(constants.get(("VOLUME_COMMERCIAL_".concat(getType(tree))).toUpperCase()) *
                     Math.pow(Double.parseDouble(tree.getDiametre()) / 100, 2) * getHauteurDecoupe(tree),2);
         }
         //un arbre mort n'a pas de volume commercialisable
@@ -99,10 +101,10 @@ public class VolumeCalculator {
 
     //renvoie le prix pour un des attribut oeuvre, chauffage ou industrie
     private double getPrixBoisFromAttribute(Tree tree, String utilisationBoisAttribute) {
-        Double prixBoisAttribute = constants.get("prixBois".concat(utilisationBoisAttribute).concat(tree.getEssence()));
+        Double prixBoisAttribute = constants.get(("PRIX_BOIS_".concat(utilisationBoisAttribute).concat("_").concat(tree.getEssence())).toUpperCase());
         //si il n'y a pas de constante propre a l'essence, on fait selon le type
         if (prixBoisAttribute == null) {
-            prixBoisAttribute = constants.get("prixBois".concat(utilisationBoisAttribute).concat(getType(tree)));
+            prixBoisAttribute = constants.get(("PRIX_BOIS_".concat(utilisationBoisAttribute).concat("_").concat(getType(tree))).toUpperCase());
         }
         return prixBoisAttribute;
     }

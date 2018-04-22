@@ -5,25 +5,22 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Martel\'app"
+        android:label="Martel\&apos;app"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
             android:name=".Activity.NomEquipeActivity"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateHidden"/>
-
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Activity.RechercheActivity"
             android:parentActivityName=".Activity.NomEquipeActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".Activity.MessageErreurArbreMarteleActivity"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".Activity.MainActivity"
             android:screenOrientation="landscape">
@@ -33,6 +30,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.AnalyseGraphe0Activity" />
+        <activity android:name=".Activity.AnalyseGraphe0bisActivity" />
+        <activity android:name=".Activity.AnalyseGraphe0terActivity" />
+        <activity android:name=".Activity.AnalyseGraphe0quaterActivity" />
+        <activity android:name=".Activity.AnalyseGraphe1Activity" />
+        <activity android:name=".Activity.AnalyseGraphe2Activity"></activity>
     </application>
 
 </manifest>

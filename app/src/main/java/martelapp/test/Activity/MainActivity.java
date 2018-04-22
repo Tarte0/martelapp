@@ -1,7 +1,9 @@
 package martelapp.test.Activity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +22,7 @@ import java.util.Iterator;
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.Class.Parcelle;
 import martelapp.test.Class.Tree;
+import martelapp.test.Class.VolumeCalculator;
 import martelapp.test.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference connectedRef;
     DatabaseHelper dbHelper;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(getApplicationContext());
 
+        //getApplicationContext().deleteDatabase(DatabaseHelper.DATABASE_NAME);
+
+        // Récupération de la base de données firebase
+        firebaseDatabase = FirebaseDatabase.getInstance().getReference();
 
         /*
          *  Bouton "Nouvel Exercice"
@@ -98,12 +104,11 @@ public class MainActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot snapshot) {
                         boolean connected = snapshot.getValue(Boolean.class);
                         if (connected) {
+                            miseAJourConstanteTable();
                             miseAJourArbreParcelleTable();
-                            Toast toast = Toast.makeText(getApplicationContext(), "Connexion à la base de données Firebase reussi, mise à jour des données", Toast.LENGTH_SHORT);
-                            toast.show();
-                        } else {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Echec de connexion à la base de données Firebase, impossible de mettre à jour", Toast.LENGTH_SHORT);
-                            toast.show();
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(), "echec connexion", Toast.LENGTH_SHORT);
                         }
                     }
 
@@ -123,9 +128,6 @@ public class MainActivity extends AppCompatActivity {
         // Suppression des données de la table <arbres_parcelles_table>
         dbHelper.clearTable(DatabaseHelper.ARBRES_PARCELLE_TABLE);
 
-        // Récupération de la base de données firebase
-        firebaseDatabase = FirebaseDatabase.getInstance().getReference();
-
         /*
          *  Listener qui récupère toute la parcelle à partir de la base de données firebase
          *  et enregistre tous les arbres de la parcelle dans la table arbres_parcelle_table
@@ -134,6 +136,21 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                HashMap<String, Double> constants = new HashMap<>();
+                Cursor cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
+                cur.moveToFirst();
+                for(int i = 2; i < cur.getColumnCount(); i++){
+                    constants.put(cur.getColumnName(i), cur.getDouble(i));
+                }
+
+                HashMap<String, String> essence_type = new HashMap<>();
+                cur = dbHelper.getAllDataFromTable(DatabaseHelper.TYPE_ARBRE_TABLE);
+                while(cur.moveToNext()){
+                    essence_type.put(cur.getString(cur.getColumnIndex(DatabaseHelper.ESSENCE_TYPE)), cur.getString(cur.getColumnIndex(DatabaseHelper.TYPE_ARBRE)));
+                }
+
+                VolumeCalculator volumeCalculator = new VolumeCalculator(constants, essence_type);
 
                 // Récupération de la parcelle de la base de données firebase dans la classe Parcelle
                 Parcelle parcelle = dataSnapshot.getValue(Parcelle.class);
@@ -155,7 +172,12 @@ public class MainActivity extends AppCompatActivity {
                         while (it.hasNext()) {
                             HashMap.Entry pair = (HashMap.Entry)it.next();
                             Tree arbre = (Tree) pair.getValue();
-                            dbHelper.insertArbreParcelle(   arbre.numero,
+
+                            Double volumeCom = volumeCalculator.getVolumeCommercial(arbre);
+                            Double valeurEco = volumeCalculator.getValeurEco(arbre);
+
+                            dbHelper.insertArbreParcelle(
+                                    arbre.numero,
                                     arbre.essence,
                                     Integer.parseInt(arbre.diametre),
                                     Integer.parseInt(arbre.noteEcologique),
@@ -164,7 +186,9 @@ public class MainActivity extends AppCompatActivity {
                                     arbre.coord.y,
                                     arbre.utilisationBois.chauffage.equals("")? 0.0 : Double.parseDouble(arbre.utilisationBois.chauffage),
                                     arbre.utilisationBois.industrie.equals("")? 0.0 : Double.parseDouble(arbre.utilisationBois.industrie),
-                                    arbre.utilisationBois.oeuvre.equals("")? 0.0 : Double.parseDouble(arbre.utilisationBois.oeuvre));
+                                    arbre.utilisationBois.oeuvre.equals("")? 0.0 : Double.parseDouble(arbre.utilisationBois.oeuvre),
+                                    volumeCom,
+                                    valeurEco);
 
                             it.remove();
                         }
@@ -179,5 +203,72 @@ public class MainActivity extends AppCompatActivity {
 
         // On assigne le listener "postListener" à notre parcelle Martelapp de la base de données firebase
         firebaseDatabase.child("parcelles").child("parcelleMartelapp").addListenerForSingleValueEvent(postListener);
+    }
+
+
+    public void miseAJourConstanteTable(){
+
+        // Suppression des données de la table <arbres_parcelles_table>
+        dbHelper.clearTable(DatabaseHelper.CONSTANTES_TABLE);
+        dbHelper.clearTable(DatabaseHelper.TYPE_ARBRE_TABLE);
+
+        /*
+         *  Listener qui récupère toute la parcelle à partir de la base de données firebase
+         *  et enregistre tous les arbres de la parcelle dans la table arbres_parcelle_table
+         */
+        ValueEventListener postListener = new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DataSnapshot dataConstantes = dataSnapshot.child("constantes");
+                Double hauteurMoyenneFeuillu = dataConstantes.child("hauteurMoyenne").child("feuillu").getValue(Double.class);
+                Double hauteurMoyennePetitBois = dataConstantes.child("hauteurMoyenne").child("petitBois").getValue(Double.class);
+                Double hauteurMoyenneResineux = dataConstantes.child("hauteurMoyenne").child("résineux").getValue(Double.class);
+
+                Double prixBoisChauffageFeuillu = dataConstantes.child("prix").child("bois").child("chauffage").child("feuillu").getValue(Double.class);
+                Double prixBoisChauffageResineux = dataConstantes.child("prix").child("bois").child("chauffage").child("résineux").getValue(Double.class);
+
+                Double prixBoisIndustrieFeuillu = dataConstantes.child("prix").child("bois").child("industrie").child("feuillu").getValue(Double.class);
+                Double prixBoisIndustrieResineux = dataConstantes.child("prix").child("bois").child("industrie").child("résineux").getValue(Double.class);
+
+                Double prixBoisOeuvreEpicea = dataConstantes.child("prix").child("bois").child("oeuvre").child("epicéa").getValue(Double.class);
+                Double prixBoisOeuvreFeuillu = dataConstantes.child("prix").child("bois").child("oeuvre").child("feuillu").getValue(Double.class);
+                Double prixBoisOeuvreResineux = dataConstantes.child("prix").child("bois").child("oeuvre").child("résineux").getValue(Double.class);
+                Double prixBoisOeuvreSapin = dataConstantes.child("prix").child("bois").child("oeuvre").child("sapin").getValue(Double.class);
+
+                Double volumeCommercialFeuillu = dataConstantes.child("volume").child("commercial").child("feuillu").getValue(Double.class);
+                Double volumeCommercialResineux = dataConstantes.child("volume").child("commercial").child("résineux").getValue(Double.class);
+
+                dbHelper.insertConstante(
+                        hauteurMoyenneFeuillu,
+                        hauteurMoyennePetitBois,
+                        hauteurMoyenneResineux,
+                        prixBoisChauffageFeuillu,
+                        prixBoisChauffageResineux,
+                        prixBoisIndustrieFeuillu,
+                        prixBoisIndustrieResineux,
+                        prixBoisOeuvreEpicea,
+                        prixBoisOeuvreFeuillu,
+                        prixBoisOeuvreResineux,
+                        prixBoisOeuvreSapin,
+                        volumeCommercialFeuillu,
+                        volumeCommercialResineux);
+
+
+                for( DataSnapshot child : dataSnapshot.child("essences").getChildren()){
+                    String essence = child.getKey();
+                    String type = child.getValue(String.class);
+
+                    dbHelper.insertTypeArbre(essence, type);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+
+        // On assigne le listener "postListener" à notre parcelle Martelapp de la base de données firebase
+        firebaseDatabase.child("metadata").addListenerForSingleValueEvent(postListener);
     }
 }

@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import martelapp.test.Activity.AnalyseGraphe0Activity;
+import martelapp.test.Activity.AnalyseGraphe2Activity;
 import martelapp.test.Activity.MessageErreurArbreMarteleActivity;
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.R;
@@ -31,8 +33,9 @@ import martelapp.test.R;
 
 public class ChoixMartelageFragment extends DialogFragment {
     CheckBox arbreMur, eclaircie, sanitaire, regeneration, exploitation, stabilite;
-    Button boutonMarteler,
-            buttonCancel;
+    Button  boutonMarteler,
+            buttonCancel,
+            buttonConserver;
     DatabaseHelper dbHelper;
     int noteEcologiqueHaute = 6;
     private String numeroArbre;
@@ -55,6 +58,7 @@ public class ChoixMartelageFragment extends DialogFragment {
 
         boutonMarteler = (Button) view.findViewById(R.id.boutonMarteler);
         buttonCancel = (Button) view.findViewById(R.id.cancel);
+        buttonConserver = view.findViewById(R.id.conserver);
 
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +76,7 @@ public class ChoixMartelageFragment extends DialogFragment {
 
                     // Si le numéro entrée correspond à un arbre existant dans la parcelle
                     if (cur.moveToFirst()) {
-                        dbHelper.insertArbreMarteles(numeroArbre);
+                        dbHelper.insertArbreMartele(numeroArbre);
                         insertRaisonFromCheckBoxes();
 
                         if (cur.getInt(cur.getColumnIndex(DatabaseHelper.NOTE_ECO_ARBRE)) > noteEcologiqueHaute) {
@@ -89,6 +93,14 @@ public class ChoixMartelageFragment extends DialogFragment {
 
                     errorsSnack.show();
                 }
+            }
+        });
+
+        buttonConserver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), AnalyseGraphe2Activity.class);
+                startActivity(intent);
             }
         });
         return view;

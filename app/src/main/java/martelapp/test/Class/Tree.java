@@ -91,9 +91,9 @@ public class Tree {
 
     public HashMap<String, Double> getUtilBoisAsMap() {
         HashMap<String, Double> util = new HashMap<>();
-        util.put("oeuvre", Double.parseDouble(utilisationBois.oeuvre));
-        util.put("chauffage", Double.parseDouble(utilisationBois.chauffage));
-        util.put("industrie", Double.parseDouble(utilisationBois.industrie));
+        util.put("oeuvre", utilisationBois.oeuvre.equals("")? 0.0 : Double.parseDouble(utilisationBois.oeuvre));
+        util.put("chauffage", utilisationBois.chauffage.equals("")? 0.0 : Double.parseDouble(utilisationBois.chauffage));
+        util.put("industrie", utilisationBois.industrie.equals("")? 0.0 : Double.parseDouble(utilisationBois.industrie));
         return util;
     }
 }
