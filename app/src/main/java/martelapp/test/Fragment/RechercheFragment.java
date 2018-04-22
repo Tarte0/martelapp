@@ -210,7 +210,7 @@ public class RechercheFragment extends Fragment {
                         dejaMarteleImage.setVisibility(View.VISIBLE);
                         dejaMarteleImage.bringToFront();
                         cleanCard();
-                        showSnackbar(view, "Arbre n°"+numEntree+" deja martelé");
+                        showSnackbar(view, "Arbre n°" + numEntree + " deja martelé");
                     } else {
                         dejaMarteleImage.setVisibility(View.INVISIBLE);
                         treeCardNumber.setVisibility(View.VISIBLE);
@@ -231,7 +231,7 @@ public class RechercheFragment extends Fragment {
                         // Si l'arbre cherché n'existe pas, un message d'erreur est affiché
                         else {
                             cleanCard();
-                            showSnackbar(view, "L'arbre n°"+numEntree+" n'existe pas");
+                            showSnackbar(view, "L'arbre n°" + numEntree + " n'existe pas");
                         }
                     }
                     mEditText.setText("");
@@ -246,7 +246,8 @@ public class RechercheFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (!numArbreCourant.equals("")) {
-                    ((RechercheActivity)getActivity()).openMartelagePopup(numArbreCourant);
+                    ((RechercheActivity) getActivity()).openMartelagePopup(numArbreCourant);
+                    cleanCard();
                     numArbreCourant = "";
                 }
 
@@ -259,7 +260,7 @@ public class RechercheFragment extends Fragment {
     }
 
     private String etatToString(String etat) {
-        switch(etat){
+        switch (etat) {
             case "v":
                 return "Vivant";
             case "mp":
@@ -271,13 +272,13 @@ public class RechercheFragment extends Fragment {
         }
     }
 
-    private void showSnackbar(View view,String text) {
-        errorsSnack = Snackbar.make(view,text,Snackbar.LENGTH_LONG);
+    private void showSnackbar(View view, String text) {
+        errorsSnack = Snackbar.make(view, text, Snackbar.LENGTH_LONG);
 
         errorsSnack.show();
     }
 
-    public void cleanCard(){
+    public void cleanCard() {
         treeCardNumber.setVisibility(View.INVISIBLE);
         tvEssence.setText("");
         tvEtat.setText("");
