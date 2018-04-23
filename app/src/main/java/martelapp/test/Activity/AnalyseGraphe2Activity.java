@@ -146,6 +146,9 @@ public class AnalyseGraphe2Activity extends AppCompatActivity {
         // Empêcher zoom
         scatterChart.setScaleEnabled(false);
 
+        // Désactiver le clique
+        scatterChart.setClickable(false);
+
         // Enlever "description label"
         scatterChart.getDescription().setEnabled(false);
 

@@ -1,8 +1,14 @@
 package martelapp.test.Activity;
 
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -15,6 +21,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import martelapp.test.Class.DatabaseHelper;
@@ -32,6 +39,32 @@ public class AnalyseGraphe0quaterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_analyse_graphe0quater);
 
         dbHelper = new DatabaseHelper(getApplicationContext());
+        DecimalFormat df = new DecimalFormat("#0.00");
+
+         /*
+         *  Création de la première ligne du tableau correspondant aux headers.
+         *  Ajout de chaque valeur du tableau de String headers dans chaque
+         *  colonne de cette ligne
+         */
+        TableLayout tableau_coupe_essence = findViewById(R.id.tableau_coupe_volume);
+
+        TableRow tableRow = new TableRow(getApplicationContext());
+        tableau_coupe_essence.addView(tableRow, new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+        tableau_coupe_essence.setBackgroundColor(Color.GRAY);
+
+        String[] headers = {"Diametre", "Avant", "Coupe", "Après"};
+
+        tableRow.setLayoutParams(new TableRow.LayoutParams(headers.length));
+
+        for(int j = 0; j < headers.length; j++){
+            TextView text = createTextView(false, j == headers.length - 1);
+            text.setText(headers[j]);
+            text.setGravity(Gravity.CENTER);
+            text.setTextColor(Color.BLACK);
+            text.setTypeface(null, Typeface.BOLD);
+            tableRow.addView(text, j);
+        }
+
 
         /*
          *
@@ -51,13 +84,15 @@ public class AnalyseGraphe0quaterActivity extends AppCompatActivity {
          *  ArrayList<String> entriesDiametre : Liste des diamètres pour afficher les labels sur chaque barre
          *  int diametre : on récupère le diamètre à chaque itération pour trier les données par diamètre
          *  int i : Défini une nouvelle entrée de données (par essence) sur l'axe x du graphe
-         *  int nbArbreCoupe : Nombre d'arbres martelés par essence
-         *  int nbArbreApresCoupe : Nombre d'arbres restant sur la parcelle après coupe par essence
+         *  float volumeArbreAvant : Volume d'arbre initialement dans la parcelle par diamètre
+         *  float volumeArbreCoupe : Volume d'arbre martelé par diamètre
+         *  float volumeArbreApresCoupe : Volume d'arbre restant sur la parcelle après coupe par diamètre
          */
         ArrayList<BarEntry> entriesVolumeArbre = new ArrayList<>();
         ArrayList<String> entriesDiametre = new ArrayList<>();
         int diametre;
         int i = 0;
+        float volumeArbreAvant;
         float volumeArbreCoupe;
         float volumeArbreApresCoupe;
 
@@ -99,12 +134,12 @@ public class AnalyseGraphe0quaterActivity extends AppCompatActivity {
              */
             cur2 = dbHelper.getDataFromTableWithCondition("*", DatabaseHelper.ARBRES_PARCELLE_TABLE, DatabaseHelper.DIAMETRE_ARBRE + " = " + diametre);
 
-            volumeArbreApresCoupe = 0f;
+            volumeArbreAvant = 0f;
             while(cur2.moveToNext()){
-                volumeArbreApresCoupe += cur2.getDouble(cur2.getColumnIndex(DatabaseHelper.VOLUME_COMMERCIAL));
+                volumeArbreAvant += cur2.getDouble(cur2.getColumnIndex(DatabaseHelper.VOLUME_COMMERCIAL));
             }
 
-            volumeArbreApresCoupe = volumeArbreApresCoupe - volumeArbreCoupe;
+            volumeArbreApresCoupe = volumeArbreAvant - volumeArbreCoupe;
 
             /*
              *  On ajoute dans la liste des données du graphe les deux valeurs que l'on vient
@@ -114,6 +149,27 @@ public class AnalyseGraphe0quaterActivity extends AppCompatActivity {
             entriesVolumeArbre.add(new BarEntry(i, new float[]{volumeArbreApresCoupe, volumeArbreCoupe}));
 
             i++;
+
+            /*
+             *  Création d'une nouvelle ligne dans le tableau
+             *  et ajout de chaque valeur du tableau de String row
+             *  dans chaque colonne du tableau pour cette ligne
+             */
+            tableRow = new TableRow(getApplicationContext());
+            tableau_coupe_essence.addView(tableRow, new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+            String[] row = {Integer.toString(diametre), df.format(volumeArbreAvant), df.format(volumeArbreCoupe), df.format(volumeArbreApresCoupe)};
+
+            for(int j = 0; j < row.length; j++){
+                TextView text = createTextView(i == cur1.getCount(), j == row.length - 1);
+                text.setText(row[j]);
+                if(j == 0){
+                    text.setTypeface(null, Typeface.BOLD);
+                }
+                text.setGravity(Gravity.CENTER);
+                text.setTextColor(Color.BLACK);
+                tableRow.addView(text, j);
+            }
         }
 
 
@@ -218,5 +274,18 @@ public class AnalyseGraphe0quaterActivity extends AppCompatActivity {
 
         // Refresh le graphe
         barChart.invalidate();
+    }
+
+    private TextView createTextView(boolean endline, boolean endcolumn){
+        TextView text = new TextView(getApplicationContext(), null, R.style.frag3HeaderCol);
+        int bottom = endline ? 1 : 0;
+        int right = endcolumn ? 1 : 0;
+
+        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 0.3f);
+        params.setMargins(1, 1, right, bottom);
+        text.setLayoutParams(params);
+        text.setPadding(4, 4, 10, 4);
+        text.setBackgroundColor(Color.WHITE);
+        return text;
     }
 }

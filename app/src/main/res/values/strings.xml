@@ -56,4 +56,23 @@
         (sol, exposition, altitude…), des essences et des évènements extérieurs
         (sécheresse, attaques parasitaires…).\n
     </string>
+    <string name="titre_coupe_essence">
+        Répartition du prélèvement, nombre de tiges/essence
+    </string>
+    <string name="titre_coupe_diametre">
+        Répartition du prélèvement, nombre de tiges/diamètre
+    </string>
+    <string name="titre_coupe_note_eco">
+        Répartition du prélèvement, nombre de tiges/note écologique
+    </string>
+    <string name="titre_coupe_volume">
+        Répartition du prélèvement, volume/diamètre
+    </string>
+    <string name="titre_pourcentage_raison">
+        Nombre et pourcentage des raisons de martelage choisis
+    </string>
+    <string name="titre_volume_categorie_diametre">
+        Répartition du prélèvement du volume par catégorie de diamètre
+    </string>
+
 </resources>

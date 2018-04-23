@@ -1,8 +1,14 @@
 package martelapp.test.Activity;
 
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -33,6 +39,33 @@ public class AnalyseGraphe0bisActivity extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(getApplicationContext());
 
+
+
+        /*
+         *  Création de la première ligne du tableau correspondant aux headers.
+         *  Ajout de chaque valeur du tableau de String headers dans chaque
+         *  colonne de cette ligne
+         */
+        TableLayout tableau_coupe_essence = findViewById(R.id.tableau_coupe_diametre);
+
+        TableRow tableRow = new TableRow(getApplicationContext());
+        tableau_coupe_essence.addView(tableRow, new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+        tableau_coupe_essence.setBackgroundColor(Color.GRAY);
+
+        String[] headers = {"Diamètre", "Avant", "Coupe", "Après"};
+
+        tableRow.setLayoutParams(new TableRow.LayoutParams(headers.length));
+
+        for(int j = 0; j < headers.length; j++){
+            TextView text = createTextView(false, j == headers.length - 1);
+            text.setText(headers[j]);
+            text.setGravity(Gravity.CENTER);
+            text.setTextColor(Color.BLACK);
+            text.setTypeface(null, Typeface.BOLD);
+            tableRow.addView(text, j);
+        }
+
+
         /*
          *
          *
@@ -51,6 +84,7 @@ public class AnalyseGraphe0bisActivity extends AppCompatActivity {
          *  ArrayList<String> entriesDiametre : Liste des diamètres pour afficher les labels sur chaque barre
          *  int diametre : on récupère le diamètre à chaque itération pour trier les données par diamètre
          *  int i : Défini une nouvelle entrée de données (par essence) sur l'axe x du graphe
+         *  int nbArbreAvant : Nombre d'arbres initialement dans la parcelle par diamètre
          *  int nbArbreCoupe : Nombre d'arbres martelés par essence
          *  int nbArbreApresCoupe : Nombre d'arbres restant sur la parcelle après coupe par essence
          */
@@ -58,6 +92,7 @@ public class AnalyseGraphe0bisActivity extends AppCompatActivity {
         ArrayList<String> entriesDiametre = new ArrayList<>();
         int diametre;
         int i = 0;
+        int nbArbreAvant;
         int nbArbreCoupe;
         int nbArbreApresCoupe;
 
@@ -96,7 +131,8 @@ public class AnalyseGraphe0bisActivity extends AppCompatActivity {
              */
             cur2 = dbHelper.getDataFromTableWithCondition("*", DatabaseHelper.ARBRES_PARCELLE_TABLE, DatabaseHelper.DIAMETRE_ARBRE + " = " + diametre);
             cur2.moveToFirst();
-            nbArbreApresCoupe = cur2.getCount() - nbArbreCoupe;
+            nbArbreAvant = cur2.getCount();
+            nbArbreApresCoupe = nbArbreAvant - nbArbreCoupe;
 
             /*
              *  On ajoute dans la liste des données du graphe les deux valeurs que l'on vient
@@ -106,6 +142,28 @@ public class AnalyseGraphe0bisActivity extends AppCompatActivity {
             entriesArbres.add(new BarEntry(i, new float[]{nbArbreApresCoupe, nbArbreCoupe}));
 
             i++;
+
+
+            /*
+             *  Création d'une nouvelle ligne dans le tableau
+             *  et ajout de chaque valeur du tableau de String row
+             *  dans chaque colonne du tableau pour cette ligne
+             */
+            tableRow = new TableRow(getApplicationContext());
+            tableau_coupe_essence.addView(tableRow, new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+            String[] row = {Integer.toString(diametre), Integer.toString(nbArbreAvant), Integer.toString(nbArbreCoupe), Integer.toString(nbArbreApresCoupe)};
+
+            for(int j = 0; j < row.length; j++){
+                TextView text = createTextView(i == cur1.getCount(), j == row.length - 1);
+                if(j == 0){
+                    text.setTypeface(null, Typeface.BOLD);
+                }
+                text.setText(row[j]);
+                text.setGravity(Gravity.CENTER);
+                text.setTextColor(Color.BLACK);
+                tableRow.addView(text, j);
+            }
         }
 
 
@@ -210,5 +268,18 @@ public class AnalyseGraphe0bisActivity extends AppCompatActivity {
 
         // Refresh le graphe
         barChart.invalidate();
+    }
+
+    private TextView createTextView(boolean endline, boolean endcolumn){
+        TextView text = new TextView(getApplicationContext(), null, R.style.frag3HeaderCol);
+        int bottom = endline ? 1 : 0;
+        int right = endcolumn ? 1 : 0;
+
+        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 0.3f);
+        params.setMargins(1, 1, right, bottom);
+        text.setLayoutParams(params);
+        text.setPadding(4, 4, 10, 4);
+        text.setBackgroundColor(Color.WHITE);
+        return text;
     }
 }

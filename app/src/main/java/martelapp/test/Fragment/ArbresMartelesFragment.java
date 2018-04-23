@@ -2,6 +2,7 @@ package martelapp.test.Fragment;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,7 +63,10 @@ public class ArbresMartelesFragment extends Fragment {
         cur = dbHelper.executeQuery("SELECT *"
                 + " FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_MARTELES_TABLE + " am"
                 + " WHERE ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = am." + DatabaseHelper.NUMERO_ARBRE_MART
-                + " ORDER BY cast(ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " as unsigned)");
+                + " UNION"
+                + " SELECT *"
+                + " FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_CONSERVES_TABLE + " ac"
+                + " WHERE ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = ac." + DatabaseHelper.NUMERO_ARBRE_CONS);
         cur.moveToFirst();
 
 

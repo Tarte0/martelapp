@@ -72,12 +72,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String ESSENCE_TYPE             = "ESSENCE_TYPE";
     public static final String TYPE_ARBRE               = "TYPE_ARBRE";
 
-    public static final String ARBRE_MUR = "Arbre Mûr";
-    public static final String ECLAIRCIE = "Eclaircie";
-    public static final String SANITAIRE = "Sanitaire";
-    public static final String REGENERATION = "Régénération";
-    public static final String EXPLOITATION = "Exploitation";
-    public static final String STABILITE = "Stabilité";
+    public static final String ARBRE_MUR        = "Arbre Mûr";
+    public static final String ECLAIRCIE        = "Eclaircie";
+    public static final String SANITAIRE        = "Sanitaire";
+    public static final String REGENERATION     = "Régénération";
+    public static final String EXPLOITATION     = "Exploitation";
+    public static final String STABILITE        = "Stabilité";
+    public static final String BIODIVERSITE     = "Biodiversité";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -355,6 +356,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     public void clearTableExercice(){
         clearTable(ARBRES_MARTELES_TABLE);
+        clearTable(ARBRES_CONSERVES_TABLE);
         clearTable(RAISON_TABLE);
     }
 

@@ -29,9 +29,9 @@ public class ArbreMartelesAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        TextView numeroArbreMartele = (TextView) view.findViewById(R.id.numero_arbre_martele);
-        TextView essenceArbreMartele = (TextView) view.findViewById(R.id.essence_arbre_martele);
-        TextView diameteArbreMartele = (TextView) view.findViewById(R.id.diametre_arbre_martele);
+        TextView numeroArbreMartele =  view.findViewById(R.id.numero_arbre_martele);
+        TextView essenceArbreMartele =  view.findViewById(R.id.essence_arbre_martele);
+        TextView diameteArbreMartele =  view.findViewById(R.id.diametre_arbre_martele);
 
         numeroArbreMartele.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC)));
         essenceArbreMartele.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE)));

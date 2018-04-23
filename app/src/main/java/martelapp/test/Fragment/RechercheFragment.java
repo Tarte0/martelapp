@@ -47,7 +47,7 @@ public class RechercheFragment extends Fragment {
             tvEssence, tvEtat;
 
     DatabaseHelper dbHelper;
-    Cursor cur;
+    Cursor cur1, cur2;
     String query;
 
     String numArbreCourant,
@@ -205,27 +205,36 @@ public class RechercheFragment extends Fragment {
                  */
                     query = "SELECT * FROM " + DatabaseHelper.ARBRES_MARTELES_TABLE + " WHERE " +
                             DatabaseHelper.NUMERO_ARBRE_MART + " = " + numEntree;
-                    cur = dbHelper.executeQuery(query);
-                    if (cur.moveToFirst()) {
+                    cur1 = dbHelper.executeQuery(query);
+
+                    cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_CONSERVES_TABLE,DatabaseHelper.NUMERO_ARBRE_CONS + " = " + numEntree);
+
+                    if (cur1.moveToFirst()) {
                         dejaMarteleImage.setVisibility(View.VISIBLE);
                         dejaMarteleImage.bringToFront();
                         cleanCard();
                         showSnackbar(view, "Arbre n°" + numEntree + " deja martelé");
+                    }
+                    else if(cur2.moveToFirst()) {
+                        dejaMarteleImage.setVisibility(View.VISIBLE);
+                        dejaMarteleImage.bringToFront();
+                        cleanCard();
+                        showSnackbar(view, "Arbre n°" + numEntree + " a été conservé");;
                     } else {
                         dejaMarteleImage.setVisibility(View.INVISIBLE);
                         treeCardNumber.setVisibility(View.VISIBLE);
                         // Requete de recherche d'arbre par le numéro "numEntree"
                         query = "SELECT * FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE +
                                 " WHERE " + DatabaseHelper.NUMERO_ARBRE_PARC + " = " + numEntree;
-                        cur = dbHelper.executeQuery(query);
+                        cur1 = dbHelper.executeQuery(query);
 
                         // Si le numéro entrée correspond à un arbre existant dans la parcelle
-                        if (cur.moveToFirst()) {
+                        if (cur1.moveToFirst()) {
                             numArbreCourant = numEntree;
                             //on met a jour l'affichage de l'arbre
-                            tvEssence.setText(cur.getString(cur.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE)));
-                            tvEtat.setText(etatToString(cur.getString(cur.getColumnIndex(DatabaseHelper.ETAT_ARBRE))));
-                            tvNum.setText(String.format("Arbre n°%s", cur.getString(cur.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC))));
+                            tvEssence.setText(cur1.getString(cur1.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE)));
+                            tvEtat.setText(etatToString(cur1.getString(cur1.getColumnIndex(DatabaseHelper.ETAT_ARBRE))));
+                            tvNum.setText(String.format("Arbre n°%s", cur1.getString(cur1.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC))));
                         }
 
                         // Si l'arbre cherché n'existe pas, un message d'erreur est affiché
@@ -235,7 +244,7 @@ public class RechercheFragment extends Fragment {
                         }
                     }
                     mEditText.setText("");
-                    cur.close();
+                    cur1.close();
                     numEntree = "";
                 }
             }

@@ -2,8 +2,13 @@ package martelapp.test.Activity;
 
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -17,6 +22,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import martelapp.test.Class.DatabaseHelper;
@@ -34,6 +40,32 @@ public class AnalyseGraphe1Activity extends AppCompatActivity {
         setContentView(R.layout.activity_analyse_graphe1);
 
         dbHelper = new DatabaseHelper(getApplicationContext());
+        DecimalFormat df = new DecimalFormat("#0.0");
+
+        /*
+         *  Création de la première ligne du tableau correspondant aux headers.
+         *  Ajout de chaque valeur du tableau de String headers dans chaque
+         *  colonne de cette ligne
+         */
+        TableLayout tableau_coupe_essence = findViewById(R.id.tableau_pourcentage_raison);
+
+        TableRow tableRow = new TableRow(getApplicationContext());
+        tableau_coupe_essence.addView(tableRow, new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+        tableau_coupe_essence.setBackgroundColor(Color.GRAY);
+
+        String[] headers = {"Raisons", "Nombre", "Pourcentage"};
+
+        tableRow.setLayoutParams(new TableRow.LayoutParams(headers.length));
+
+        for(int j = 0; j < headers.length; j++){
+            TextView text = createTextView(false, j == headers.length - 1);
+            text.setText(headers[j]);
+            text.setGravity(Gravity.CENTER);
+            text.setTextColor(Color.BLACK);
+            text.setTypeface(null, Typeface.BOLD);
+            tableRow.addView(text, j);
+        }
+
 
         /*
          *
@@ -53,6 +85,7 @@ public class AnalyseGraphe1Activity extends AppCompatActivity {
          *  ArrayList<String> entriesRaison : Liste des raisons pour afficher les labels sur chaque barre
          *  String raison : On récupère les raisons à chaque itération pour trier les données par raison
          *  int i : Défini une nouvelle entrée de données (par essence) sur l'axe x du graphe
+         *  int nbRaisonActuelle : Nombre d'occurrence pour une certaine raison
          *  int nbRaisonsTotal : On récupère le nombre de raisons total pour calculer le pourcentage
          *  float percentageRaisonActuel : calcul du pourcentage pour une raison donnée
          */
@@ -60,6 +93,7 @@ public class AnalyseGraphe1Activity extends AppCompatActivity {
         ArrayList<String> entriesRaison = new ArrayList<>();
         String raison;
         int i = 0;
+        int nbRaisonActuelle;
         int nbRaisonsTotal;
         float percentageRaisonsActuel;
 
@@ -87,12 +121,34 @@ public class AnalyseGraphe1Activity extends AppCompatActivity {
              */
             cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.RAISON_TABLE, DatabaseHelper.RAISON + " = '" + raison + "'");
             cur2.moveToFirst();
-            percentageRaisonsActuel = ((float)(cur2.getCount()) / nbRaisonsTotal) * 100;
+            nbRaisonActuelle = cur2.getCount();
+            percentageRaisonsActuel = ((float)(nbRaisonActuelle) / nbRaisonsTotal) * 100;
 
             // Ajout dans la liste des données du graphe le pourcentage que l'on vient de calculer
             entriesRaisonPercentage.add(new BarEntry(i, percentageRaisonsActuel));
 
             i++;
+
+            /*
+             *  Création d'une nouvelle ligne dans le tableau
+             *  et ajout de chaque valeur du tableau de String row
+             *  dans chaque colonne du tableau pour cette ligne
+             */
+            tableRow = new TableRow(getApplicationContext());
+            tableau_coupe_essence.addView(tableRow, new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+            String[] row = {raison, Integer.toString(nbRaisonActuelle), df.format(percentageRaisonsActuel) + " %"};
+
+            for(int j = 0; j < row.length; j++){
+                TextView text = createTextView(i == cur1.getCount(), j == row.length - 1);
+                text.setText(row[j]);
+                if(j == 0){
+                    text.setTypeface(null, Typeface.BOLD);
+                }
+                text.setGravity(Gravity.CENTER);
+                text.setTextColor(Color.BLACK);
+                tableRow.addView(text, j);
+            }
         }
 
 
@@ -110,7 +166,7 @@ public class AnalyseGraphe1Activity extends AppCompatActivity {
          *
          */
 
-        BarChart barChartRaisonPercentage = findViewById(R.id.bar_chart_raison_percentage);
+        BarChart barChartRaisonPercentage = findViewById(R.id.bar_chart_pourcentage_raison);
         BarDataSet barDataSet = new BarDataSet(entriesRaisonPercentage, "Pourcentage Raisons");
 
         barDataSet.setColors(ColorTemplate.JOYFUL_COLORS[3]);
@@ -174,5 +230,18 @@ public class AnalyseGraphe1Activity extends AppCompatActivity {
 
         // Refresh le graphe
         barChartRaisonPercentage.invalidate();
+    }
+
+    private TextView createTextView(boolean endline, boolean endcolumn){
+        TextView text = new TextView(getApplicationContext(), null, R.style.frag3HeaderCol);
+        int bottom = endline ? 1 : 0;
+        int right = endcolumn ? 1 : 0;
+
+        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 0.3f);
+        params.setMargins(1, 1, right, bottom);
+        text.setLayoutParams(params);
+        text.setPadding(4, 4, 10, 4);
+        text.setBackgroundColor(Color.WHITE);
+        return text;
     }
 }

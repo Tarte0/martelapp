@@ -22,7 +22,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import martelapp.test.Activity.AnalyseGraphe0Activity;
+import martelapp.test.Activity.AnalyseGraphe0bisActivity;
+import martelapp.test.Activity.AnalyseGraphe0quaterActivity;
+import martelapp.test.Activity.AnalyseGraphe0terActivity;
+import martelapp.test.Activity.AnalyseGraphe1Activity;
 import martelapp.test.Activity.AnalyseGraphe2Activity;
+import martelapp.test.Activity.AnalyseGraphe3Activity;
 import martelapp.test.Activity.MessageErreurArbreMarteleActivity;
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.R;
@@ -73,18 +78,16 @@ public class ChoixMartelageFragment extends DialogFragment {
                 if (possedeRaison() && !numeroArbre.equals("")) {
                     String query = "SELECT * FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE + " WHERE " + DatabaseHelper.NUMERO_ARBRE_PARC + " = " + numeroArbre;
                     Cursor cur = dbHelper.executeQuery(query);
+                    cur.moveToFirst();
+                    dbHelper.insertArbreMartele(numeroArbre);
+                    insertRaisonFromCheckBoxes();
 
-                    // Si le numéro entrée correspond à un arbre existant dans la parcelle
-                    if (cur.moveToFirst()) {
-                        dbHelper.insertArbreMartele(numeroArbre);
-                        insertRaisonFromCheckBoxes();
-
-                        if (cur.getInt(cur.getColumnIndex(DatabaseHelper.NOTE_ECO_ARBRE)) > noteEcologiqueHaute) {
-                            Intent intent = new Intent(view.getContext(), MessageErreurArbreMarteleActivity.class);
-                            startActivity(intent);
-                        }
-
+                    if (cur.getInt(cur.getColumnIndex(DatabaseHelper.NOTE_ECO_ARBRE)) > noteEcologiqueHaute) {
+                        Intent intent = new Intent(view.getContext(), MessageErreurArbreMarteleActivity.class);
+                        startActivity(intent);
                     }
+
+
 
                     dismiss();
 
@@ -99,8 +102,9 @@ public class ChoixMartelageFragment extends DialogFragment {
         buttonConserver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), AnalyseGraphe2Activity.class);
-                startActivity(intent);
+                dbHelper.insertArbreConserve(numeroArbre);
+                dbHelper.insertRaison(numeroArbre, DatabaseHelper.BIODIVERSITE);
+                dismiss();
             }
         });
         return view;

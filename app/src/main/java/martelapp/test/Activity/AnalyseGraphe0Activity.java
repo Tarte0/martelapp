@@ -60,20 +60,6 @@ public class AnalyseGraphe0Activity extends AppCompatActivity {
          */
         TableLayout tableau_coupe_essence = findViewById(R.id.tableau_coupe_essence);
 
-        TableRow tableRow1 = new TableRow(getApplicationContext());
-        tableau_coupe_essence.addView(tableRow1, new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-
-        String[] s = {"", "Nombre de tiges/ha"};
-        tableRow1.setLayoutParams(new TableRow.LayoutParams(2));
-        for(int j = 0; j < s.length; j++){
-            TextView text = createTextView(false, j == s.length - 1);
-            text.setText(s[j]);
-            text.setGravity(Gravity.CENTER);
-            text.setTextColor(Color.BLACK);
-            text.setTypeface(null, Typeface.BOLD);
-            tableRow1.addView(text, j);
-        }
-
         TableRow tableRow = new TableRow(getApplicationContext());
         tableau_coupe_essence.addView(tableRow, new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
         tableau_coupe_essence.setBackgroundColor(Color.GRAY);
@@ -183,6 +169,9 @@ public class AnalyseGraphe0Activity extends AppCompatActivity {
             for(int j = 0; j < row.length; j++){
                 TextView text = createTextView(i == cur1.getCount(), j == row.length - 1);
                 text.setText(row[j]);
+                if(j == 0){
+                    text.setTypeface(null, Typeface.BOLD);
+                }
                 text.setGravity(Gravity.CENTER);
                 text.setTextColor(Color.BLACK);
                 tableRow.addView(text, j);
