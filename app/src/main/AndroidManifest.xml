@@ -35,7 +35,8 @@
         <activity android:name=".Activity.AnalyseGraphe0terActivity" />
         <activity android:name=".Activity.AnalyseGraphe0quaterActivity" />
         <activity android:name=".Activity.AnalyseGraphe1Activity" />
-        <activity android:name=".Activity.AnalyseGraphe2Activity"></activity>
+        <activity android:name=".Activity.AnalyseGraphe2Activity" />
+        <activity android:name=".Activity.AnalyseActivity"></activity>
     </application>
 
 </manifest>

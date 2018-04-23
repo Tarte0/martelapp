@@ -1,12 +1,16 @@
 package martelapp.test.Fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,12 +28,14 @@ public class ArbresMartelesFragment extends Fragment {
     DatabaseHelper dbHelper;
     Cursor cur;
 
+    Button finishButton;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View mainView = inflater.inflate(R.layout.view_page_arbresmarteles, null);
         dbHelper = new DatabaseHelper(mainView.getContext());
-
+        finishButton = (Button) mainView.findViewById(R.id.finish);
 
         listeArbresMarteles = mainView.findViewById(R.id.liste_arbres_marteles);
         listeArbresMarteles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -68,6 +74,30 @@ public class ArbresMartelesFragment extends Fragment {
 
         ArbreMartelesAdapter arbreMartelesAdapter = new ArbreMartelesAdapter(mainView.getContext(), cur);
         listeArbresMarteles.setAdapter(arbreMartelesAdapter);
+
+        finishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(view.getContext(), R.style.AlertDialogCustom));
+                builder.setTitle("Êtes vous sur de vouloir terminer l'exercice ?");
+                builder.setMessage("Vous ne pourrez plus revenir en arrière");
+
+                builder.setPositiveButton("OUI", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                builder.setNegativeButton("NON", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
 
         return mainView;
     }
