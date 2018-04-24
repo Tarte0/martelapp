@@ -87,7 +87,7 @@ public class AnalyseVolumeCategorieFragment extends Fragment {
         ArrayList<PieEntry> entriesVolume = new ArrayList<>();
         ArrayList<String> entriesLabel = new ArrayList<>();
 
-        String[] categorie_bois = {"PB", "BM", "GB", "V/ha(m3)"};
+        String[] categorie_bois = {"PB", "BM", "GB", "V total(m3)"};
 
         /*
          *  float[][] volumeBois

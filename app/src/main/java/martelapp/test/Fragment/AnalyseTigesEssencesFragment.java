@@ -106,7 +106,7 @@ public class AnalyseTigesEssencesFragment extends Fragment {
          *  On trie le graphe par essence donc on parcourt jusqu'à
          *  ce que le cur1 n'ai plus d'essence disponible
          */
-        cur1 = dbHelper.getDataFromTable("DISTINCT " + DatabaseHelper.ESSENCE_ARBRE, DatabaseHelper.ARBRES_PARCELLE_TABLE);
+        cur1 = dbHelper.getDataFromTable("DISTINCT " + DatabaseHelper.ESSENCE_ARBRE, DatabaseHelper.ARBRES_PARCELLE_TABLE + " ORDER BY " + DatabaseHelper.ESSENCE_ARBRE);
         while(cur1.moveToNext()){
 
             // Récupération de l'essence actuelle et ajout dans la liste des essences
@@ -205,6 +205,7 @@ public class AnalyseTigesEssencesFragment extends Fragment {
 
         // Empêcher zoom
         barChart.setScaleEnabled(false);
+        barChart.setTouchEnabled(false);
 
 
         // Afficher toutes les valeurs en X

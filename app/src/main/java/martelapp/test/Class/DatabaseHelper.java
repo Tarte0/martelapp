@@ -81,6 +81,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String STABILITE        = "Stabilité";
     public static final String BIODIVERSITE     = "Biodiversité";
 
+    public static final int MIN_PRELEVEMENT = 90;
+    public static final int MAX_PRELEVEMENT = 140;
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
         SQLiteDatabase db = this.getWritableDatabase();

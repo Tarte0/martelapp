@@ -28,8 +28,6 @@ import martelapp.test.R;
 
 public class ConsignesFragment extends Fragment {
 
-    public static final int MIN_PRELEVEMENT = 90;
-    public static final int MAX_PRELEVEMENT = 140;
 
     BottomNavigationView bottomNavigationView;
     TextView textViewConsignes, textViewTitleConsignes;
@@ -159,8 +157,8 @@ public class ConsignesFragment extends Fragment {
                                 textViewConsignes.setText(R.string.consignes_volume);
                                 textViewConsignes.setText(textViewConsignes.getText() +
                                                 "Notre parcelle fait " + surfaceParcelle + " ha. Il faudra alors prélever un volume entre "
-                                                + (int)(MIN_PRELEVEMENT * surfaceParcelle) + " et "
-                                                + (int)(MAX_PRELEVEMENT * surfaceParcelle) + " m3.\n\n\n");
+                                                + (int)(DatabaseHelper.MIN_PRELEVEMENT * surfaceParcelle) + " et "
+                                                + (int)(DatabaseHelper.MAX_PRELEVEMENT * surfaceParcelle) + " m3.\n\n\n");
                                 textViewTitleConsignes.setText(R.string.volume_caps);
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.VISIBLE);

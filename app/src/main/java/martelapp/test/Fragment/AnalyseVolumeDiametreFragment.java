@@ -211,6 +211,7 @@ public class AnalyseVolumeDiametreFragment extends Fragment {
 
         // Empêcher zoom
         barChart.setScaleEnabled(false);
+        barChart.setTouchEnabled(false);
 
 
         // Afficher toutes les valeurs en X
