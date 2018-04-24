@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.github.mikephil.charting.data.Entry;
 
+import java.text.DecimalFormat;
+
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.R;
 
@@ -218,7 +220,8 @@ public class AnalyseRespectConsignesFragment extends Fragment {
         /*
          * GAIN de tous les arbres
          */
-        tvGainR.setText(String.format("Gains total du martelage : %f€", gainTotal));
+        DecimalFormat df = new DecimalFormat("#0.00");
+        tvGainR.setText("Gains total du martelage : " + df.format(gainTotal) + "€");
 
 
         return view;
