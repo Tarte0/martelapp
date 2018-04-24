@@ -81,5 +81,10 @@ public class AnalyseActivity extends AppCompatActivity {
             return mFragmentTitleList.get(position);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }
 
