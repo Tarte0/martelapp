@@ -73,10 +73,18 @@ public class AnalyseRespectConsignesFragment extends Fragment {
         float limiteSup = surfaceParcelle * maxPrelevement;
 
         // Consigne Volume prélevement respectée**********************************************
-        if (limiteInf < volumeTotalBoisMartele && volumeTotalBoisMartele < limiteSup) {
+        if (limiteInf >= volumeTotalBoisMartele || volumeTotalBoisMartele >= limiteSup) {
             tvPrelevementVolumeR.setTextColor(getResources().getColor(R.color.colorRed));
             ivPrelevementVolumeR.setColorFilter(getResources().getColor(R.color.colorRed));
             ivPrelevementVolumeR.setImageResource(R.drawable.cross);
+            if(volumeTotalBoisMartele < limiteInf){
+                tvPrelevementVolumeR.setText(String.format("%s : %s < %s", tvPrelevementVolumeR.getText(), volumeTotalBoisMartele, Math.floor(limiteInf)));
+            }else{
+                tvPrelevementVolumeR.setText(String.format("%s : %s > %s", tvPrelevementVolumeR.getText(), volumeTotalBoisMartele, Math.floor(limiteSup)));
+            }
+
+        }else {
+            tvPrelevementVolumeR.setText(String.format("%s : %s > %s > %s", tvPrelevementVolumeR.getText(), Math.floor(limiteInf), volumeTotalBoisMartele, Math.floor(limiteSup)));
         }
 
         /*Toast.makeText(view.getContext(),
@@ -125,6 +133,7 @@ public class AnalyseRespectConsignesFragment extends Fragment {
         }
 
         int nbArbreDiamHectare = (int) (nbArbresDiamSup50Base - nbArbresDiamSup50Marteles) / (1 + (int) surfaceParcelle);
+        tvGrosDiametreR.setText(String.format("%s : %s / %s", tvGrosDiametreR.getText(), (nbArbresDiamSup50Base - nbArbresDiamSup50Marteles), (int)Math.round(surfaceParcelle*3)));
         // Moins de 3 * surfaceParcelle arbres de diamètre > 50 à la fin de l'exercice
         if (nbArbreDiamHectare < 3) {
             tvGrosDiametreR.setTextColor(getResources().getColor(R.color.colorRed));
@@ -176,6 +185,7 @@ public class AnalyseRespectConsignesFragment extends Fragment {
 
 
         int nbArbreEcoHectare = (int) (nbArbreEcoBase - nbArbreEcoMarteles) / (1 + (int) surfaceParcelle);
+        tvEcoR.setText(String.format("%s : %s / %s", tvEcoR.getText(), (nbArbreEcoBase - nbArbreEcoMarteles), (int)Math.floor(surfaceParcelle*2)));
         // Moins de 2 * surfaceParcelle arbres ECO à la fin de l'exercice
         if (nbArbreEcoHectare < 2) {
             tvEcoR.setTextColor(getResources().getColor(R.color.colorRed));
@@ -208,7 +218,7 @@ public class AnalyseRespectConsignesFragment extends Fragment {
         /*
          * GAIN de tous les arbres
          */
-        tvGainR.setText(String.format("%f", gainTotal));
+        tvGainR.setText(String.format("Gains total du martelage : %f€", gainTotal));
 
 
         return view;
