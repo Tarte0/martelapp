@@ -42,9 +42,10 @@ public class RechercheFragment extends Fragment {
 
     ImageView dejaMarteleImage;
 
-    TextView mTextView,
-            tvNum,
-            tvEssence, tvEtat;
+    TextView tvNum,
+            tvEssence,
+            tvEtat,
+            tvDiametre;
 
     DatabaseHelper dbHelper;
     Cursor cur1, cur2;
@@ -79,6 +80,7 @@ public class RechercheFragment extends Fragment {
         tvNum = (TextView) view.findViewById(R.id.numero_tree_card);
         tvEssence = (TextView) view.findViewById(R.id.essence_tree_card);
         tvEtat = (TextView) view.findViewById(R.id.etat_tree_card);
+        tvDiametre = (TextView) view.findViewById(R.id.diametre_tree_card);
 
         mEditText = (EditText) view.findViewById(R.id.editText);
 
@@ -234,7 +236,9 @@ public class RechercheFragment extends Fragment {
                             //on met a jour l'affichage de l'arbre
                             tvEssence.setText(cur1.getString(cur1.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE)));
                             tvEtat.setText(etatToString(cur1.getString(cur1.getColumnIndex(DatabaseHelper.ETAT_ARBRE))));
+                            tvDiametre.setText(String.format("Diametre : %s cm", cur1.getString(cur1.getColumnIndex(DatabaseHelper.DIAMETRE_ARBRE))));
                             tvNum.setText(String.format("Arbre n°%s", cur1.getString(cur1.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC))));
+
                         }
 
                         // Si l'arbre cherché n'existe pas, un message d'erreur est affiché

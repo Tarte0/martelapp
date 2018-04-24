@@ -2,6 +2,7 @@ package martelapp.test.Fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -15,6 +16,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import martelapp.test.Activity.AnalyseActivity;
+import martelapp.test.Activity.NomEquipeActivity;
 import martelapp.test.Adapter.ArbreMartelesAdapter;
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.R;
@@ -81,14 +84,15 @@ public class ArbresMartelesFragment extends Fragment {
 
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(view.getContext(), R.style.AlertDialogCustom));
                 builder.setTitle("Êtes vous sur de vouloir terminer l'exercice ?");
                 builder.setMessage("Vous ne pourrez plus revenir en arrière");
 
                 builder.setPositiveButton("OUI", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-
+                        Intent intent = new Intent(view.getContext(), AnalyseActivity.class);
+                        startActivity(intent);
                     }
                 });
 

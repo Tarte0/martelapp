@@ -80,7 +80,6 @@
     <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">30sp</item>
-        <item name="android:windowTitleSize">30sp</item>
     </style>
 
 </resources>
