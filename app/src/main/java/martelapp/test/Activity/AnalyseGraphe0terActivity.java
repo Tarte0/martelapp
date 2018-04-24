@@ -127,7 +127,7 @@ public class AnalyseGraphe0terActivity extends AppCompatActivity {
              *  nbArbreApresCoupe
              *
              *  nbArbreApresCoupe prend le nombre d'arbre total dans la
-             *  parcelle moins le nbArbreCoupe pour la note actuelle actuelle
+             *  parcelle moins le nbArbreCoupe pour la note actuelle
              */
             cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE, DatabaseHelper.NOTE_ECO_ARBRE + " = " + noteEco);
             cur2.moveToFirst();
@@ -238,12 +238,13 @@ public class AnalyseGraphe0terActivity extends AppCompatActivity {
          */
         // Récupération de la légende du graphe
         Legend legende = barChart.getLegend();
+
         // Forme de la légende
         legende.setForm(Legend.LegendForm.SQUARE);
         // Taille de la forme de la légende
-        legende.setFormSize(10f);
+        legende.setFormSize(15f);
         // Taille du texte de la légende
-        legende.setTextSize(12f);
+        legende.setTextSize(20f);
 
         // Position de la légende (changer si besoin)
         //legende.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
@@ -267,6 +268,7 @@ public class AnalyseGraphe0terActivity extends AppCompatActivity {
 
         // Set la légende avec les entrées
         legende.setCustom(legendeEntrees);
+
 
         // Refresh le graphe
         barChart.invalidate();

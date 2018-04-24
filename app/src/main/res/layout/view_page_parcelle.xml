@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.github.mikephil.charting.charts.BubbleChart
-        android:id="@+id/bubbleChart"
+    <com.github.mikephil.charting.charts.ScatterChart
+        android:id="@+id/scatter_chart_parcelle"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </com.github.mikephil.charting.charts.BubbleChart>
+    </com.github.mikephil.charting.charts.ScatterChart>
 </LinearLayout>

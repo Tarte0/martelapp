@@ -172,6 +172,9 @@ public class AnalyseGraphe2Activity extends AppCompatActivity {
         // Forme de la légende
         legende.setForm(Legend.LegendForm.CIRCLE);
 
+        legende.setFormSize(20f);
+        legende.setTextSize(20f);
+
         // Refresh le graphe
         scatterChart.invalidate();
     }

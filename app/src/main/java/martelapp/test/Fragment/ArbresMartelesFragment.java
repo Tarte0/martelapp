@@ -52,13 +52,19 @@ public class ArbresMartelesFragment extends Fragment {
                         + " WHERE " + DatabaseHelper.NUMERO_ARBRE_MARTELE_RAISON + " = " + numero);
                 cur.moveToFirst();
                 TextView textRaison = mainView.findViewById(R.id.raison_martele_card);
-                textRaison.setText(String.format("Raisons du martelage : \n\n- %s\n",
-                        cur.getString(cur.getColumnIndex(DatabaseHelper.RAISON))));
-                while (cur.moveToNext()) {
-                    textRaison.setText(String.format("%s\n- %s\n", textRaison.getText(),
-                            cur.getString(cur.getColumnIndex(DatabaseHelper.RAISON))));
-                }
 
+                String raison = cur.getString(cur.getColumnIndex(DatabaseHelper.RAISON));
+
+                if(raison.equals(DatabaseHelper.BIODIVERSITE)){
+                    textRaison.setText("Arbre conservé pour la Biodiversité");
+                }
+                else {
+                    textRaison.setText(String.format("Raisons du Martelage : \n\n- %s\n", raisonToString(raison)));
+                    while (cur.moveToNext()) {
+                        textRaison.setText(String.format("%s\n- %s\n", textRaison.getText(),
+                                raisonToString(cur.getString(cur.getColumnIndex(DatabaseHelper.RAISON)))));
+                    }
+                }
                 cur = dbHelper.executeQuery("SELECT * FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE + " WHERE " + DatabaseHelper.NUMERO_ARBRE_PARC + " = " + numero);
                 cur.moveToFirst();
                 TextView numCard = mainView.findViewById(R.id.numero_martele_card);
@@ -121,5 +127,13 @@ public class ArbresMartelesFragment extends Fragment {
             default:
                 return "";
         }
+    }
+
+    private String raisonToString(String raison){
+        if(raison.equals(DatabaseHelper.ECLAIRCIE)) {
+            return "Eclaircie au profit d'un arbre d'avenir";
+        }
+        return raison;
+
     }
 }
