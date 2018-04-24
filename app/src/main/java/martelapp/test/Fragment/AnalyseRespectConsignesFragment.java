@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.data.Entry;
@@ -21,6 +23,8 @@ import martelapp.test.R;
 public class AnalyseRespectConsignesFragment extends Fragment {
     Cursor cur;
     DatabaseHelper dbHelper;
+    TextView tvPrelevementVolumeR, tvGrosDiametreR, tvEcoR, tvGainR;
+    ImageView ivPrelevementVolumeR, ivGrosDiametreR, ivEcoR;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,6 +32,15 @@ public class AnalyseRespectConsignesFragment extends Fragment {
         View view = inflater.inflate(R.layout.view_page_respect_consignes, null);
 
         dbHelper = new DatabaseHelper(view.getContext());
+
+        tvPrelevementVolumeR = view.findViewById(R.id.tvPrelevementVolumeR);
+        tvGrosDiametreR = view.findViewById(R.id.tvGrosDiametreR);
+        tvEcoR = view.findViewById(R.id.tvEcoR);
+        tvGainR = view.findViewById(R.id.tvGainR);
+
+        ivPrelevementVolumeR = view.findViewById(R.id.ivPrelevementVolumeR);
+        ivGrosDiametreR = view.findViewById(R.id.ivGrosDiametreR);
+        ivEcoR = view.findViewById(R.id.ivEcoR);
 
         cur = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap, " + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
                 "ap." + dbHelper.NUMERO_ARBRE_PARC + " = am." + dbHelper.NUMERO_ARBRE_MART);
@@ -61,7 +74,9 @@ public class AnalyseRespectConsignesFragment extends Fragment {
 
         // Consigne Volume prélevement respectée**********************************************
         if (limiteInf < volumeTotalBoisMartele && volumeTotalBoisMartele < limiteSup) {
-
+            tvPrelevementVolumeR.setTextColor(getResources().getColor(R.color.colorRed));
+            ivPrelevementVolumeR.setColorFilter(getResources().getColor(R.color.colorRed));
+            ivPrelevementVolumeR.setImageResource(R.drawable.cross);
         }
 
         /*Toast.makeText(view.getContext(),
@@ -109,16 +124,17 @@ public class AnalyseRespectConsignesFragment extends Fragment {
 
         }
 
-        int nbArbreDiamHectare = (int) (nbArbresDiamSup50Base - nbArbresDiamSup50Marteles)/(1+(int)surfaceParcelle);
+        int nbArbreDiamHectare = (int) (nbArbresDiamSup50Base - nbArbresDiamSup50Marteles) / (1 + (int) surfaceParcelle);
         // Moins de 3 * surfaceParcelle arbres de diamètre > 50 à la fin de l'exercice
-        if(nbArbreDiamHectare<3){
-            //CONSIGNE PAS RESPECTEE ***********************************************************************************
+        if (nbArbreDiamHectare < 3) {
+            tvGrosDiametreR.setTextColor(getResources().getColor(R.color.colorRed));
+            ivGrosDiametreR.setColorFilter(getResources().getColor(R.color.colorRed));
+            ivGrosDiametreR.setImageResource(R.drawable.cross);
         }
 
         /*******************
          * CONSIGNE il doit rester au moins 3 Arbres a diam > 50/ha
          */
-
 
 
         /*******************
@@ -159,12 +175,12 @@ public class AnalyseRespectConsignesFragment extends Fragment {
         }
 
 
-
-
-        int nbArbreEcoHectare = (int) (nbArbreEcoBase - nbArbreEcoMarteles)/(1+(int)surfaceParcelle);
+        int nbArbreEcoHectare = (int) (nbArbreEcoBase - nbArbreEcoMarteles) / (1 + (int) surfaceParcelle);
         // Moins de 2 * surfaceParcelle arbres ECO à la fin de l'exercice
-        if(nbArbreEcoHectare<2){
-            //CONSIGNE PAS RESPECTEE ***********************************************************************************
+        if (nbArbreEcoHectare < 2) {
+            tvEcoR.setTextColor(getResources().getColor(R.color.colorRed));
+            ivEcoR.setColorFilter(getResources().getColor(R.color.colorRed));
+            ivEcoR.setImageResource(R.drawable.cross);
         }
 
 
@@ -192,6 +208,7 @@ public class AnalyseRespectConsignesFragment extends Fragment {
         /*
          * GAIN de tous les arbres
          */
+        tvGainR.setText(String.format("%f", gainTotal));
 
 
         return view;

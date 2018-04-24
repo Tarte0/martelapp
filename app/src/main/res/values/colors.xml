@@ -11,5 +11,6 @@
     <color name="colorBarBlue">#4b64c8</color>
     <color name="colorBarOrange">#e1af4b</color>
     <color name="colorBarViolet">#9664af</color>
-    <color name="colorBarRed">#e14b4b</color>
+    <color name="colorRed">#e14b4b</color>
+    <color name="colorGreen">#64fa32</color>
 </resources>

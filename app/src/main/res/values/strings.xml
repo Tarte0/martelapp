@@ -69,5 +69,14 @@
     <string name="titre_volume_categorie_diametre">
         Répartition du prélèvement du volume par catégorie de diamètre
     </string>
+    <string name="prelevement_volume_consigne">
+        Prelevement entre 1/5 et 1/3 du volume présent sur la parcelle
+    </string>
+    <string name="gros_diametre">
+        A gardé au moins 3 arbres de gros diamètre par hectare
+    </string>
+    <string name="eco_respect">
+        A gardé au moins 2 arbres porteurs de mircos-habitats
+    </string>
 
 </resources>
