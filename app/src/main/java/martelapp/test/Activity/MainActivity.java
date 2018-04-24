@@ -142,8 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
                 HashMap<String, Double> constants = new HashMap<>();
                 Cursor cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
-                Boolean b = cur.moveToFirst();
-                Toast.makeText(getApplicationContext(), Boolean.toString(b), Toast.LENGTH_SHORT).show();
+                cur.moveToFirst();
                 for(int i = 3; i < cur.getColumnCount(); i++){
                     constants.put(cur.getColumnName(i), cur.getDouble(i));
                 }

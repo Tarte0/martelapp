@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -93,12 +94,16 @@ public class ArbresMartelesFragment extends Fragment {
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
+                cur = dbHelper.getAllDataFromTable(DatabaseHelper.ARBRES_MARTELES_TABLE);
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(view.getContext(), R.style.AlertDialogCustom));
                 builder.setTitle("Êtes vous sur de vouloir terminer l'exercice ?");
                 builder.setMessage("Vous ne pourrez plus revenir en arrière");
 
                 builder.setPositiveButton("OUI", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        dbHelper.close();
+                        cur.close();
                         Intent intent = new Intent(view.getContext(), AnalyseActivity.class);
                         startActivity(intent);
                     }
@@ -110,8 +115,13 @@ public class ArbresMartelesFragment extends Fragment {
                     }
                 });
 
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                if(cur.moveToFirst()) {
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
+                else{
+                    Snackbar.make(view, "Mais vous n'avez rien martelé !", Snackbar.LENGTH_LONG).show();
+                }
             }
         });
 

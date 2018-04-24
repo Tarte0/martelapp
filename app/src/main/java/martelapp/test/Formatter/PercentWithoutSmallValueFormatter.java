@@ -1,4 +1,4 @@
-package martelapp.test.Class;
+package martelapp.test.Formatter;
 
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.data.Entry;

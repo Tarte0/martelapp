@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +18,13 @@ import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import martelapp.test.Class.ChartHelper;
 import martelapp.test.Class.DatabaseHelper;
-import martelapp.test.Class.PercentWithoutSmallValueFormatter;
+import martelapp.test.Formatter.PercentWithoutSmallValueFormatter;
 import martelapp.test.R;
 
 /**
@@ -205,6 +203,10 @@ public class AnalyseVolumeCategorieFragment extends Fragment {
             entriesLabel.add(categorie_bois[i]);
         }
 
+        cur1.close();
+        dbHelper.close();
+
+
 
         /*
          *
@@ -239,6 +241,7 @@ public class AnalyseVolumeCategorieFragment extends Fragment {
 
         // Enlever "description label"
         pieChart.getDescription().setEnabled(false);
+        pieChart.setTouchEnabled(false);
 
         // Désactiver le trou du pie chart
         pieChart.setDrawHoleEnabled(false);

@@ -8,6 +8,10 @@
         android:id="@+id/scatter_chart_parcelle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_weight="0.2">
     </com.github.mikephil.charting.charts.ScatterChart>
 

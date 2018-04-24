@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,14 +20,13 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
 import martelapp.test.Class.ChartHelper;
 import martelapp.test.Class.DatabaseHelper;
-import martelapp.test.Class.StackedBarFormatter;
+import martelapp.test.Formatter.IndexAxisValueLimitCharacterFormatter;
+import martelapp.test.Formatter.StackedBarFormatter;
 import martelapp.test.R;
 
 /**
@@ -167,7 +165,9 @@ public class AnalyseTigesEssencesFragment extends Fragment {
                 tableRow.addView(text, j);
             }
         }
-
+        cur1.close();
+        cur2.close();
+        dbHelper.close();
 
 
         /*
@@ -212,7 +212,7 @@ public class AnalyseTigesEssencesFragment extends Fragment {
         xAxis.setLabelCount(entriesEssences.size());
 
         // Axe des X affiche les essences
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(entriesEssences));
+        xAxis.setValueFormatter(new IndexAxisValueLimitCharacterFormatter(entriesEssences, 5));
         // Axe des X en bas du graphe
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 

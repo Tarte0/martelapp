@@ -29,6 +29,7 @@ import java.util.ArrayList;
 
 import martelapp.test.Class.ChartHelper;
 import martelapp.test.Class.DatabaseHelper;
+import martelapp.test.Formatter.IndexAxisValueLimitCharacterFormatter;
 import martelapp.test.R;
 
 /**
@@ -151,7 +152,9 @@ public class AnalyseRaisonsFragment extends Fragment {
                 tableRow.addView(text, j);
             }
         }
-
+        cur1.close();
+        cur2.close();
+        dbHelper.close();
 
 
 
@@ -205,7 +208,7 @@ public class AnalyseRaisonsFragment extends Fragment {
         // Afficher les valeurs en X
         xAxis.setLabelCount(entriesRaison.size());
         // Axe des X affiche les raisons
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(entriesRaison));
+        xAxis.setValueFormatter(new IndexAxisValueLimitCharacterFormatter(entriesRaison, 10));
 
 
         // Axe des X en bas du graphe

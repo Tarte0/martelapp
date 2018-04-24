@@ -112,6 +112,9 @@ public class AnalyseParcelleFragment extends Fragment {
 
             entriesPositionArbreConserve.add(new Entry(x, y));
         }
+        cur.close();
+        dbHelper.close();
+
 
         /*
          *
@@ -148,7 +151,6 @@ public class AnalyseParcelleFragment extends Fragment {
         scatterDataSetMartele.setScatterShape(ScatterChart.ScatterShape.X);
         // Forme des arbres conservés = cercle
         scatterDataSetConserve.setScatterShape(ScatterChart.ScatterShape.CIRCLE);
-        scatterDataSetConserve.setScatterShapeSize(20f);
 
         listScatterData.add(scatterDataSetNonMartele);
         listScatterData.add(scatterDataSetNonMarteleEco);

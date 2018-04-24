@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,14 +21,13 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import martelapp.test.Class.ChartHelper;
 import martelapp.test.Class.DatabaseHelper;
-import martelapp.test.Class.StackedBarFormatter;
+import martelapp.test.Formatter.StackedBarFormatter;
 import martelapp.test.R;
 
 /**
@@ -174,7 +172,9 @@ public class AnalyseVolumeDiametreFragment extends Fragment {
                 tableRow.addView(text, j);
             }
         }
-
+        cur1.close();
+        cur2.close();
+        dbHelper.close();
 
 
         /*
