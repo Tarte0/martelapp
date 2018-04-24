@@ -295,6 +295,7 @@ public class RechercheFragment extends Fragment {
         treeCardNumber.setVisibility(View.INVISIBLE);
         tvEssence.setText("");
         tvEtat.setText("");
+        tvDiametre.setText("");
     }
 
     @Override
