@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -13,11 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import martelapp.test.Activity.AnalyseActivity;
-import martelapp.test.Activity.NomEquipeActivity;
 import martelapp.test.Adapter.ArbreMartelesAdapter;
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.R;
@@ -31,6 +30,7 @@ public class ArbresMartelesFragment extends Fragment {
 
     DatabaseHelper dbHelper;
     Cursor cur;
+    LinearLayout treeCardNumber;
 
     Button finishButton;
 
@@ -41,6 +41,7 @@ public class ArbresMartelesFragment extends Fragment {
         dbHelper = new DatabaseHelper(mainView.getContext());
         finishButton = (Button) mainView.findViewById(R.id.finish);
 
+        treeCardNumber = (LinearLayout) mainView.findViewById(R.id.arbreLayout);
         listeArbresMarteles = mainView.findViewById(R.id.liste_arbres_marteles);
         listeArbresMarteles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -113,8 +114,13 @@ public class ArbresMartelesFragment extends Fragment {
             }
         });
 
+        if(listeArbresMarteles.getCount() <= 0){
+            treeCardNumber.setVisibility(View.INVISIBLE);
+        }
+
         return mainView;
     }
+
 
     private String etatToString(String etat) {
         switch (etat) {

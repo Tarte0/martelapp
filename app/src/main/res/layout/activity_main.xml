@@ -9,7 +9,7 @@
     <Button
         android:id="@+id/nouvel_exercice"
         android:layout_width="500dp"
-        android:layout_height="75dp"
+        android:layout_height="153dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -34,10 +34,11 @@
         android:id="@+id/test_maj_bdd"
         android:layout_width="500dp"
         android:layout_height="58dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="72dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="Test mise à jour"
+        android:background="@color/colorWhite"
+        android:text="                "
         app:layout_constraintBottom_toTopOf="@+id/nouvel_exercice"
         app:layout_constraintEnd_toEndOf="@+id/nouvel_exercice"
         app:layout_constraintStart_toStartOf="@+id/nouvel_exercice" />

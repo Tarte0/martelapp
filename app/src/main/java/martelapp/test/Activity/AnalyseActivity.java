@@ -75,15 +75,18 @@ public class AnalyseActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewPager.setCurrentItem((viewPager.getCurrentItem()+1)%tabs.getTabCount());
+                int step = (viewPager.getCurrentItem()+1)%tabs.getTabCount();
+                viewPager.setCurrentItem(step);
             }
         });
 
         previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(viewPager.getCurrentItem()>0){
-                    viewPager.setCurrentItem((viewPager.getCurrentItem()-1)%tabs.getTabCount());
+                    int step = (viewPager.getCurrentItem()-1)%tabs.getTabCount();
+                    viewPager.setCurrentItem(step);
                 }
             }
         });
