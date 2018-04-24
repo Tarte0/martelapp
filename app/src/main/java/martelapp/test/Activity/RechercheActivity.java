@@ -35,6 +35,8 @@ public class RechercheActivity extends AppCompatActivity {
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
+        viewPager.setCurrentItem(1);
+
     }
 
     // ajout et associations des Fragments aux onglets
