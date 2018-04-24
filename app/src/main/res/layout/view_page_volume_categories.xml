@@ -28,6 +28,13 @@
             android:orientation="horizontal"
             android:weightSum="1">
 
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pie_chart_volume_categorie_diametre"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                />
+
             <TableLayout
                 android:id="@+id/tableau_volume_categorie_diametre"
                 android:layout_width="match_parent"
@@ -43,13 +50,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
-
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/pie_chart_volume_categorie_diametre"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                />
         </LinearLayout>
     </LinearLayout>
 

@@ -27,6 +27,12 @@
             android:orientation="horizontal"
             android:weightSum="1">
 
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/bar_chart_volume"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"/>
+
             <TableLayout
                 android:id="@+id/tableau_coupe_volume"
                 android:layout_width="match_parent"
@@ -42,12 +48,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
-
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/bar_chart_volume"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"/>
         </LinearLayout>
     </LinearLayout>
 
