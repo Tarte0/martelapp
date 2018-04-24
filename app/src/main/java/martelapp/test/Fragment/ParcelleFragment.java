@@ -25,8 +25,10 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IScatterDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.EntryXComparator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import martelapp.test.Class.DatabaseHelper;
@@ -102,12 +104,14 @@ public class ParcelleFragment extends Fragment implements OnChartValueSelectedLi
          *
          */
 
+        Collections.sort(entriesPositionArbre, new EntryXComparator());
 
         ScatterDataSet scatterDataSet = new ScatterDataSet(entriesPositionArbre, "Arbres parcelle");
 
         // Couleur des arbres
         scatterDataSet.setColor(ColorTemplate.JOYFUL_COLORS[3]);
 
+        scatterDataSet.setDrawValues(false);
 
         // Forme des arbres non martelés = cercle
         scatterDataSet.setScatterShape(ScatterChart.ScatterShape.CIRCLE);

@@ -16,8 +16,10 @@ import com.github.mikephil.charting.data.ScatterData;
 import com.github.mikephil.charting.data.ScatterDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IScatterDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.EntryXComparator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.R;
@@ -128,6 +130,10 @@ public class AnalyseParcelleFragment extends Fragment {
          *
          */
 
+        Collections.sort(entriesPositionArbreNonMartele, new EntryXComparator());
+        Collections.sort(entriesPositionArbreEco, new EntryXComparator());
+        Collections.sort(entriesPositionArbreMartele, new EntryXComparator());
+        Collections.sort(entriesPositionArbreConserve, new EntryXComparator());
 
         ArrayList<IScatterDataSet> listScatterData = new ArrayList<>();
         ScatterDataSet scatterDataSetNonMartele = new ScatterDataSet(entriesPositionArbreNonMartele, "Arbres non martelés");
@@ -141,6 +147,11 @@ public class AnalyseParcelleFragment extends Fragment {
         scatterDataSetNonMarteleEco.setColor(ColorTemplate.JOYFUL_COLORS[1]);
         scatterDataSetMartele.setColor(Color.RED);
         scatterDataSetConserve.setColor(ColorTemplate.JOYFUL_COLORS[4]);
+
+        scatterDataSetNonMartele.setDrawValues(false);
+        scatterDataSetNonMarteleEco.setDrawValues(false);
+        scatterDataSetMartele.setDrawValues(false);
+        scatterDataSetConserve.setDrawValues(false);
 
 
         // Forme des arbres non martelés = cercle
