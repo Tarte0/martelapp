@@ -133,25 +133,25 @@ public class AnalyseParcelleFragment extends Fragment {
         Collections.sort(entriesPositionArbreNonMartele, new EntryXComparator());
         Collections.sort(entriesPositionArbreEco, new EntryXComparator());
         Collections.sort(entriesPositionArbreMartele, new EntryXComparator());
-        Collections.sort(entriesPositionArbreConserve, new EntryXComparator());
+
 
         ArrayList<IScatterDataSet> listScatterData = new ArrayList<>();
         ScatterDataSet scatterDataSetNonMartele = new ScatterDataSet(entriesPositionArbreNonMartele, "Arbres non martelés");
         ScatterDataSet scatterDataSetNonMarteleEco = new ScatterDataSet(entriesPositionArbreEco, "Arbres ecologiques");
         ScatterDataSet scatterDataSetMartele = new ScatterDataSet(entriesPositionArbreMartele, "Arbres martelés (X)");
-        ScatterDataSet scatterDataSetConserve = new ScatterDataSet(entriesPositionArbreConserve, "Arbres conservés");
+
 
 
         // Couleur des arbres
         scatterDataSetNonMartele.setColor(ColorTemplate.JOYFUL_COLORS[3]);
         scatterDataSetNonMarteleEco.setColor(ColorTemplate.JOYFUL_COLORS[1]);
         scatterDataSetMartele.setColor(Color.RED);
-        scatterDataSetConserve.setColor(ColorTemplate.JOYFUL_COLORS[4]);
+
 
         scatterDataSetNonMartele.setDrawValues(false);
         scatterDataSetNonMarteleEco.setDrawValues(false);
         scatterDataSetMartele.setDrawValues(false);
-        scatterDataSetConserve.setDrawValues(false);
+
 
 
         // Forme des arbres non martelés = cercle
@@ -161,12 +161,20 @@ public class AnalyseParcelleFragment extends Fragment {
         // Forme des arbres martelés = X
         scatterDataSetMartele.setScatterShape(ScatterChart.ScatterShape.X);
         // Forme des arbres conservés = cercle
-        scatterDataSetConserve.setScatterShape(ScatterChart.ScatterShape.CIRCLE);
+
 
         listScatterData.add(scatterDataSetNonMartele);
         listScatterData.add(scatterDataSetNonMarteleEco);
         listScatterData.add(scatterDataSetMartele);
-        listScatterData.add(scatterDataSetConserve);
+
+        if(!(entriesPositionArbreConserve.isEmpty())) {
+            Collections.sort(entriesPositionArbreConserve, new EntryXComparator());
+            ScatterDataSet scatterDataSetConserve = new ScatterDataSet(entriesPositionArbreConserve, "Arbres conservés");
+            scatterDataSetConserve.setColor(ColorTemplate.JOYFUL_COLORS[4]);
+            scatterDataSetConserve.setDrawValues(false);
+            scatterDataSetConserve.setScatterShape(ScatterChart.ScatterShape.CIRCLE);
+            listScatterData.add(scatterDataSetConserve);
+        }
 
         ScatterData scatterData = new ScatterData(listScatterData);
 
