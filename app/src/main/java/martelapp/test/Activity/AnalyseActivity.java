@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,7 @@ import martelapp.test.R;
 
 public class AnalyseActivity extends AppCompatActivity {
     ViewPager viewPager;
+    ImageButton previous, next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +38,55 @@ public class AnalyseActivity extends AppCompatActivity {
         setupViewPager(viewPager);
 
         //on associe nos onglets avec le viewpager
-        TabLayout tabs = (TabLayout) findViewById(R.id.tabsAnalyse);
+        final TabLayout tabs = (TabLayout) findViewById(R.id.tabsAnalyse);
         tabs.setupWithViewPager(viewPager);
+
+        previous = (ImageButton) findViewById(R.id.previousAnalyse);
+        next = (ImageButton) findViewById(R.id.nextAnalyse);
+
+        previous.setVisibility(View.INVISIBLE);
+
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if(tab.getPosition() == 0){
+                    previous.setVisibility(View.INVISIBLE);
+                    next.setVisibility(View.VISIBLE);
+                }else if(tab.getPosition() == tabs.getTabCount()-1){
+                    previous.setVisibility(View.VISIBLE);
+                    next.setVisibility(View.INVISIBLE);
+                }else{
+                    previous.setVisibility(View.VISIBLE);
+                    next.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewPager.setCurrentItem((viewPager.getCurrentItem()+1)%tabs.getTabCount());
+            }
+        });
+
+        previous.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(viewPager.getCurrentItem()>0){
+                    viewPager.setCurrentItem((viewPager.getCurrentItem()-1)%tabs.getTabCount());
+                }
+            }
+        });
     }
 
     // ajout et associations des Fragments aux onglets

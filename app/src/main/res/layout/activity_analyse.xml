@@ -30,11 +30,41 @@
                 app:tabMode="fixed"
                 app:tabSelectedTextColor="@android:color/white" />
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewpagerAnalyse"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@id/appbarAnalyse" />
+                android:orientation="horizontal"
+                android:weightSum="7">
+
+                <ImageButton
+                    android:id="@+id/previousAnalyse"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:scaleX="-1"
+                    android:tint="@color/colorPrimary"
+                    app:srcCompat="@drawable/arrow" />
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewpagerAnalyse"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_above="@id/appbarAnalyse"
+                    android:layout_weight="5" />
+
+                <ImageButton
+                    android:id="@+id/nextAnalyse"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:tint="@color/colorPrimary"
+                    app:srcCompat="@drawable/arrow" />
+
+            </LinearLayout>
 
         </android.support.design.widget.AppBarLayout>
     </RelativeLayout>

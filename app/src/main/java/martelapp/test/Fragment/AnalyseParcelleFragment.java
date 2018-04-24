@@ -130,14 +130,14 @@ public class AnalyseParcelleFragment extends Fragment {
         ScatterDataSet scatterDataSetNonMartele = new ScatterDataSet(entriesPositionArbreNonMartele, "Arbres non martelés");
         ScatterDataSet scatterDataSetNonMarteleEco = new ScatterDataSet(entriesPositionArbreEco, "Arbres ecologiques");
         ScatterDataSet scatterDataSetMartele = new ScatterDataSet(entriesPositionArbreMartele, "Arbres martelés (X)");
-        ScatterDataSet scatterDataSetConserve = new ScatterDataSet(entriesPositionArbreConserve, "Arbres conservés (+)");
+        ScatterDataSet scatterDataSetConserve = new ScatterDataSet(entriesPositionArbreConserve, "Arbres conservés");
 
 
         // Couleur des arbres
         scatterDataSetNonMartele.setColor(ColorTemplate.JOYFUL_COLORS[3]);
         scatterDataSetNonMarteleEco.setColor(ColorTemplate.JOYFUL_COLORS[1]);
         scatterDataSetMartele.setColor(Color.RED);
-        scatterDataSetConserve.setColor(Color.MAGENTA);
+        scatterDataSetConserve.setColor(ColorTemplate.JOYFUL_COLORS[4]);
 
 
         // Forme des arbres non martelés = cercle
@@ -146,8 +146,8 @@ public class AnalyseParcelleFragment extends Fragment {
         scatterDataSetNonMarteleEco.setScatterShape(ScatterChart.ScatterShape.CIRCLE);
         // Forme des arbres martelés = X
         scatterDataSetMartele.setScatterShape(ScatterChart.ScatterShape.X);
-        // Forme des arbres conservés = +
-        scatterDataSetConserve.setScatterShape(ScatterChart.ScatterShape.CROSS);
+        // Forme des arbres conservés = cercle
+        scatterDataSetConserve.setScatterShape(ScatterChart.ScatterShape.CIRCLE);
         scatterDataSetConserve.setScatterShapeSize(20f);
 
         listScatterData.add(scatterDataSetNonMartele);
