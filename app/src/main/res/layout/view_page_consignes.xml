@@ -58,7 +58,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="10"
                     android:text=""
-                    android:textSize="22sp" />
+                    android:textSize="22sp"
+                    android:textColor="@color/colorBlack"/>
 
                 <ImageButton
                     android:id="@+id/nextConsignes"

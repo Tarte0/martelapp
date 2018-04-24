@@ -7,4 +7,8 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorActionBar">@color/colorPrimary</color>
     <color name="colorTransparentBlack">#32000000</color>
+    <color name="colorBlack">#484848</color>
+    <color name="colorBarBlue">#003fff</color>
+    <color name="colorBarOrange">#ff9b32</color>
+    <color name="colorBarViolet">#d982ff</color>
 </resources>

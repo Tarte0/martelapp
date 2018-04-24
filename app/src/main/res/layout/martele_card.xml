@@ -35,6 +35,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:paddingLeft="10dp"
+                    android:textColor="@color/colorBlack"
                     android:textSize="30sp" />
             </LinearLayout>
 

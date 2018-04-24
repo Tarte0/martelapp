@@ -65,8 +65,6 @@ public class AnalyseRaisonsFragment extends Fragment {
         for(int j = 0; j < headers.length; j++){
             TextView text = ChartHelper.createTextView(false, j == headers.length - 1, view);
             text.setText(headers[j]);
-            text.setGravity(Gravity.CENTER);
-            text.setTextColor(Color.BLACK);
             text.setTypeface(null, Typeface.BOLD);
             tableRow.addView(text, j);
         }
@@ -113,7 +111,7 @@ public class AnalyseRaisonsFragment extends Fragment {
          *  On trie le graphe par raison donc on parcourt jusqu'à
          *  ce que le cur1 n'ai plus de raisons disponible
          */
-        cur1 = dbHelper.getDataFromTable("DISTINCT " + DatabaseHelper.RAISON, DatabaseHelper.RAISON_TABLE);
+        cur1 = dbHelper.getDataFromTable("DISTINCT " + DatabaseHelper.RAISON, DatabaseHelper.RAISON_TABLE + " ORDER BY " + DatabaseHelper.RAISON);
         while(cur1.moveToNext()){
 
             // Récupération de la raison actuelle et ajout dans la liste des raisons
@@ -150,8 +148,6 @@ public class AnalyseRaisonsFragment extends Fragment {
                 if(j == 0){
                     text.setTypeface(null, Typeface.BOLD);
                 }
-                text.setGravity(Gravity.CENTER);
-                text.setTextColor(Color.BLACK);
                 tableRow.addView(text, j);
             }
         }
@@ -174,23 +170,17 @@ public class AnalyseRaisonsFragment extends Fragment {
         BarChart barChartRaisonPercentage = view.findViewById(R.id.bar_chart_pourcentage_raison);
         BarDataSet barDataSet = new BarDataSet(entriesRaisonPercentage, "Pourcentage Raisons");
 
-        barDataSet.setColors(ColorTemplate.JOYFUL_COLORS[3]);
+        barDataSet.setColors(getResources().getColor(R.color.colorBarBlue));
 
-        //For pinch zoom
-        barChartRaisonPercentage.setPinchZoom(false);
 
-        //To enable/disable barChart scaling upon 2 fingers expansion on the chart
-        barChartRaisonPercentage.setScaleXEnabled(false);
-        barChartRaisonPercentage.setScaleYEnabled(false);
-
-        //To disable double tap zoom
-        barChartRaisonPercentage.setDoubleTapToZoomEnabled(false);
-
-        barChartRaisonPercentage.animateY(3000);
+        barChartRaisonPercentage.setTouchEnabled(false);
 
         XAxis xAxis = barChartRaisonPercentage.getXAxis();
         YAxis yAxisL = barChartRaisonPercentage.getAxisLeft();
         YAxis yAxisR = barChartRaisonPercentage.getAxisRight();
+
+
+        yAxisL.setTextSize(13f);
 
         yAxisL.setAxisMinimum(0f);
         yAxisL.setAxisMaximum(100f);
@@ -217,9 +207,10 @@ public class AnalyseRaisonsFragment extends Fragment {
         // Axe des X affiche les raisons
         xAxis.setValueFormatter(new IndexAxisValueFormatter(entriesRaison));
 
+
         // Axe des X en bas du graphe
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-
+        xAxis.setTextSize(13f);
         // Enlever "description label"
         barChartRaisonPercentage.getDescription().setEnabled(false);
 
@@ -233,6 +224,7 @@ public class AnalyseRaisonsFragment extends Fragment {
         // Axe des Y droit désactivé
         barChartRaisonPercentage.getAxisRight().setEnabled(false);
 
+        barChartRaisonPercentage.setExtraBottomOffset(15f);
         // Refresh le graphe
         barChartRaisonPercentage.invalidate();
 

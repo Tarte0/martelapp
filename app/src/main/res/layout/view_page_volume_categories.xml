@@ -3,21 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="martelapp.test.Activity.AnalyseGraphe3Activity">
+    android:layout_height="match_parent">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/text_titre_volume_categorie_diametre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:textSize="18sp"
+            android:textSize="30sp"
             android:textStyle="bold"
             android:textColor="@color/colorPrimaryDark"
             android:text="@string/titre_volume_categorie_diametre" />
@@ -26,12 +30,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
             android:weightSum="1">
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/pie_chart_volume_categorie_diametre"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginRight="2dp"
                 android:layout_weight="0.5"
                 />
 
@@ -43,6 +51,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginLeft="2dp"
                 android:layout_weight="0.5"
                 android:shrinkColumns="*"
                 android:stretchColumns="*"

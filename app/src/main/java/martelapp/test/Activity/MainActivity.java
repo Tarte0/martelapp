@@ -137,10 +137,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                Double surfaceParcelle = dataSnapshot.child("surface").getValue(Double.class);
+                dbHelper.updateSurfaceParcelleConstante(surfaceParcelle);
+
                 HashMap<String, Double> constants = new HashMap<>();
                 Cursor cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
-                cur.moveToFirst();
-                for(int i = 2; i < cur.getColumnCount(); i++){
+                Boolean b = cur.moveToFirst();
+                Toast.makeText(getApplicationContext(), Boolean.toString(b), Toast.LENGTH_SHORT).show();
+                for(int i = 3; i < cur.getColumnCount(); i++){
                     constants.put(cur.getColumnName(i), cur.getDouble(i));
                 }
 

@@ -27,6 +27,10 @@ import martelapp.test.R;
  */
 
 public class ConsignesFragment extends Fragment {
+
+    public static final int MIN_PRELEVEMENT = 90;
+    public static final int MAX_PRELEVEMENT = 140;
+
     BottomNavigationView bottomNavigationView;
     TextView textViewConsignes, textViewTitleConsignes;
     ImageButton previous, next;
@@ -50,9 +54,9 @@ public class ConsignesFragment extends Fragment {
         previous = (ImageButton) view.findViewById(R.id.previousConsignes);
         next = (ImageButton) view.findViewById(R.id.nextConsignes);
 
-        cur = dbHelper.getDataFromTable("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL + ")", DatabaseHelper.ARBRES_PARCELLE_TABLE);
+        cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
         cur.moveToFirst();
-        final float totalVolumeBoisParcelle = cur.getFloat(0);
+        final float surfaceParcelle = cur.getFloat(cur.getColumnIndex(DatabaseHelper.SURFACE_PARCELLE));
 
         //on gere le swipe gauche et droite (un peu brute)
         view.setOnTouchListener(new OnSwipeTouchListener(view.getContext()) {
@@ -154,9 +158,9 @@ public class ConsignesFragment extends Fragment {
                             case R.id.action_volume:
                                 textViewConsignes.setText(R.string.consignes_volume);
                                 textViewConsignes.setText(textViewConsignes.getText() +
-                                                "Notre parcelle fait XXXXXXX ha. Il faudra alors prélever un volume entre "
-                                                + (int) (totalVolumeBoisParcelle/5) + " et "
-                                                + (int) (totalVolumeBoisParcelle/3) + " m3.\n\n\n");
+                                                "Notre parcelle fait " + surfaceParcelle + " ha. Il faudra alors prélever un volume entre "
+                                                + (int)(MIN_PRELEVEMENT * surfaceParcelle) + " et "
+                                                + (int)(MAX_PRELEVEMENT * surfaceParcelle) + " m3.\n\n\n");
                                 textViewTitleConsignes.setText(R.string.volume_caps);
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.VISIBLE);

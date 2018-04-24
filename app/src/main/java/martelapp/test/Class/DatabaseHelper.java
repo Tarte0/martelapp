@@ -52,6 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String CONSTANTES_TABLE             = "constantes_table";
     public static final String ID_CONSTANTE                 = "_id";
     public static final String NOM_EQUIPE                   = "NOM_EQUIPE";
+    public static final String SURFACE_PARCELLE             = "SURFACE_PARCELLE";
     public static final String HAUTEUR_MOYENNE_FEUILLU      = "HAUTEUR_MOYENNE_FEUILLU";
     public static final String HAUTEUR_MOYENNE_PETIT_BOIS   = "HAUTEUR_MOYENNE_PETIT_BOIS";
     public static final String HAUTEUR_MOYENNE_RESINEUX     = "HAUTEUR_MOYENNE_RESINEUX";
@@ -154,6 +155,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL("CREATE TABLE " + CONSTANTES_TABLE + "("
                 + ID_CONSTANTE                  + " INTEGER PRIMARY KEY, "
                 + NOM_EQUIPE                    + " TEXT, "
+                + SURFACE_PARCELLE              + " REAL, "
                 + HAUTEUR_MOYENNE_FEUILLU       + " REAL, "
                 + HAUTEUR_MOYENNE_PETIT_BOIS    + " REAL, "
                 + HAUTEUR_MOYENNE_RESINEUX      + " REAL, "
@@ -275,6 +277,15 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         long res = db.insert(CONSTANTES_TABLE, null, contentValues);
 
         return res != -1;
+    }
+
+    public void updateSurfaceParcelleConstante(Double surfaceParcelle){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + CONSTANTES_TABLE
+                + " SET " + SURFACE_PARCELLE + " = " + surfaceParcelle
+                + " WHERE " + ID_CONSTANTE + " = 0";
+
+        db.execSQL(query);
     }
 
     public boolean insertTypeArbre(String essence, String type){

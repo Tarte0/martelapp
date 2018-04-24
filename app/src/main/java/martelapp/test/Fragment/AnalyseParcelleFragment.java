@@ -53,12 +53,14 @@ public class AnalyseParcelleFragment extends Fragment {
         /*
          *  ArrayList<Entry> entriesPositionArbreNonMartele : Liste des position des arbres NON MARTELES pour le graphe
          *  ArrayList<Entry> entriesPositionArbreMartele : Liste des position des arbres MARTELES pour le graphe
+         *  ArrayList<Entry> entriesPositionArbreConserve : Liste des position des arbres CONSERVES pour le graphe
          *  ArrayList<Entry> entriesPositionArbreEco : Liste des position des arbres ECOLOGIQUE pour le graphe
          *  float x, y : variable intermédiaire pour enregistrer la position dans les listes
          *  int noteEco : note écologique d'un arbre pour savoir dans quelle liste l'enregistrer
          */
         ArrayList<Entry> entriesPositionArbreNonMartele = new ArrayList<>();
         ArrayList<Entry> entriesPositionArbreMartele = new ArrayList<>();
+        ArrayList<Entry> entriesPositionArbreConserve = new ArrayList<>();
         ArrayList<Entry> entriesPositionArbreEco = new ArrayList<>();
         float x, y;
         int noteEco;
@@ -99,7 +101,17 @@ public class AnalyseParcelleFragment extends Fragment {
             entriesPositionArbreMartele.add(new Entry(x, y));
         }
 
+        /*
+         *  Récupération de la position x, y des arbres CONSERVES
+         */
+        cur = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap, " + DatabaseHelper.ARBRES_CONSERVES_TABLE + " ac",
+                "ap." + dbHelper.NUMERO_ARBRE_PARC + " = ac." + dbHelper.NUMERO_ARBRE_CONS);
+        while(cur.moveToNext()){
+            x = (float) cur.getDouble(cur.getColumnIndex(DatabaseHelper.COORD_X_ARBRE));
+            y = (float) cur.getDouble(cur.getColumnIndex(DatabaseHelper.COORD_Y_ARBRE));
 
+            entriesPositionArbreConserve.add(new Entry(x, y));
+        }
 
         /*
          *
@@ -116,27 +128,32 @@ public class AnalyseParcelleFragment extends Fragment {
 
         ArrayList<IScatterDataSet> listScatterData = new ArrayList<>();
         ScatterDataSet scatterDataSetNonMartele = new ScatterDataSet(entriesPositionArbreNonMartele, "Arbres non martelés");
-        ScatterDataSet scatterDataSetNonMarteleEco = new ScatterDataSet(entriesPositionArbreEco, "Arbres Ecologiques");
+        ScatterDataSet scatterDataSetNonMarteleEco = new ScatterDataSet(entriesPositionArbreEco, "Arbres ecologiques");
         ScatterDataSet scatterDataSetMartele = new ScatterDataSet(entriesPositionArbreMartele, "Arbres martelés (X)");
+        ScatterDataSet scatterDataSetConserve = new ScatterDataSet(entriesPositionArbreConserve, "Arbres conservés (+)");
 
 
         // Couleur des arbres
         scatterDataSetNonMartele.setColor(ColorTemplate.JOYFUL_COLORS[3]);
         scatterDataSetNonMarteleEco.setColor(ColorTemplate.JOYFUL_COLORS[1]);
         scatterDataSetMartele.setColor(Color.RED);
+        scatterDataSetConserve.setColor(Color.MAGENTA);
 
 
         // Forme des arbres non martelés = cercle
         scatterDataSetNonMartele.setScatterShape(ScatterChart.ScatterShape.CIRCLE);
         // Forme des arbres non martelés Eco = cercle
         scatterDataSetNonMarteleEco.setScatterShape(ScatterChart.ScatterShape.CIRCLE);
-        // Forme des arbres martelés = croix
+        // Forme des arbres martelés = X
         scatterDataSetMartele.setScatterShape(ScatterChart.ScatterShape.X);
+        // Forme des arbres conservés = +
+        scatterDataSetConserve.setScatterShape(ScatterChart.ScatterShape.CROSS);
+        scatterDataSetConserve.setScatterShapeSize(20f);
 
         listScatterData.add(scatterDataSetNonMartele);
         listScatterData.add(scatterDataSetNonMarteleEco);
         listScatterData.add(scatterDataSetMartele);
-
+        listScatterData.add(scatterDataSetConserve);
 
         ScatterData scatterData = new ScatterData(listScatterData);
 
@@ -147,7 +164,7 @@ public class AnalyseParcelleFragment extends Fragment {
         scatterChart.setScaleEnabled(false);
 
         // Désactiver le clique
-        scatterChart.setClickable(false);
+        scatterChart.setTouchEnabled(false);
 
         // Enlever "description label"
         scatterChart.getDescription().setEnabled(false);
@@ -171,6 +188,8 @@ public class AnalyseParcelleFragment extends Fragment {
 
         // Forme de la légende
         legende.setForm(Legend.LegendForm.CIRCLE);
+        legende.setTextSize(20f);
+        legende.setFormSize(12f);
 
         // Refresh le graphe
         scatterChart.invalidate();

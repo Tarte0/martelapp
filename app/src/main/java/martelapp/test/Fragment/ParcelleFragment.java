@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BubbleChart;
 import com.github.mikephil.charting.charts.ScatterChart;
@@ -36,9 +37,9 @@ import martelapp.test.R;
  */
 
 public class ParcelleFragment extends Fragment implements OnChartValueSelectedListener {
-    private BubbleChart mChart; //faux graph pour tester l'aspect
-    BubbleDataSet dataset;      // on n'utilisera pas de bubbleChart si possible
-    BubbleData datasets;
+
+    DatabaseHelper dbHelper;
+    Cursor cur;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,8 +47,8 @@ public class ParcelleFragment extends Fragment implements OnChartValueSelectedLi
         View view = inflater.inflate(R.layout.view_page_parcelle, null);
 
 
-        Cursor cur;
-        DatabaseHelper dbHelper;
+        int nbArbreParcelle;
+        float surfaceParcelle;
 
         dbHelper = new DatabaseHelper(view.getContext());
 
@@ -89,7 +90,6 @@ public class ParcelleFragment extends Fragment implements OnChartValueSelectedLi
 
 
 
-
         /*
          *
          *
@@ -121,7 +121,7 @@ public class ParcelleFragment extends Fragment implements OnChartValueSelectedLi
         scatterChart.setScaleEnabled(false);
 
         // Désactiver le clique
-        scatterChart.setClickable(false);
+        scatterChart.setTouchEnabled(false);
 
         // Enlever "description label"
         scatterChart.getDescription().setEnabled(false);
@@ -145,9 +145,22 @@ public class ParcelleFragment extends Fragment implements OnChartValueSelectedLi
 
         // Forme de la légende
         legende.setForm(Legend.LegendForm.CIRCLE);
+        legende.setTextSize(20f);
+        legende.setFormSize(12f);
 
         // Refresh le graphe
         scatterChart.invalidate();
+
+
+        nbArbreParcelle = cur.getCount();
+
+        cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
+        cur.moveToFirst();
+        surfaceParcelle = cur.getFloat(cur.getColumnIndex(DatabaseHelper.SURFACE_PARCELLE));
+
+        TextView textInfoParcelle = view.findViewById(R.id.text_info_parcelle);
+        textInfoParcelle.setText("Surface\n" + Float.toString(surfaceParcelle) + " ha\n\n"
+                                + "Nombre d'arbres\n" + Integer.toString(nbArbreParcelle));
 
         return view;
 }

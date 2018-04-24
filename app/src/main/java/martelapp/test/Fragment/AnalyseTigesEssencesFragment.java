@@ -65,8 +65,6 @@ public class AnalyseTigesEssencesFragment extends Fragment {
         for(int j = 0; j < headers.length; j++){
             TextView text = ChartHelper.createTextView(false, j == headers.length - 1, view);
             text.setText(headers[j]);
-            text.setGravity(Gravity.CENTER);
-            text.setTextColor(Color.BLACK);
             text.setTypeface(null, Typeface.BOLD);
             tableRow.addView(text, j);
         }
@@ -166,8 +164,6 @@ public class AnalyseTigesEssencesFragment extends Fragment {
                 if(j == 0){
                     text.setTypeface(null, Typeface.BOLD);
                 }
-                text.setGravity(Gravity.CENTER);
-                text.setTextColor(Color.BLACK);
                 tableRow.addView(text, j);
             }
         }
@@ -190,8 +186,8 @@ public class AnalyseTigesEssencesFragment extends Fragment {
 
         //add colors to dataset
         ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(ColorTemplate.JOYFUL_COLORS[3]);
-        colors.add(ColorTemplate.JOYFUL_COLORS[2]);
+        colors.add(getResources().getColor(R.color.colorBarBlue));
+        colors.add(getResources().getColor(R.color.colorBarOrange));
 
         barDataSet.setColors(colors);
 
@@ -219,6 +215,9 @@ public class AnalyseTigesEssencesFragment extends Fragment {
         // Axe des X en bas du graphe
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
+        xAxis.setTextSize(11f);
+        yAxisLeft.setTextSize(13f);
+
         // Axe des Y droit désactivé
         barChart.getAxisRight().setEnabled(false);
 
@@ -245,10 +244,8 @@ public class AnalyseTigesEssencesFragment extends Fragment {
         Legend legende = barChart.getLegend();
         // Forme de la légende
         legende.setForm(Legend.LegendForm.SQUARE);
-        // Taille de la forme de la légende
-        legende.setFormSize(10f);
-        // Taille du texte de la légende
-        legende.setTextSize(12f);
+        legende.setTextSize(20f);
+        legende.setFormSize(12f);
 
         // Position de la légende (changer si besoin)
         //legende.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);

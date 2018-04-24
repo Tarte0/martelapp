@@ -66,8 +66,6 @@ public class AnalyseVolumeCategorieFragment extends Fragment {
         for (int j = 0; j < headers.length; j++) {
             TextView text = ChartHelper.createTextView(false, j == headers.length - 1, view);
             text.setText(headers[j]);
-            text.setGravity(Gravity.CENTER);
-            text.setTextColor(Color.BLACK);
             text.setTypeface(null, Typeface.BOLD);
             tableRow.addView(text, j);
         }
@@ -198,8 +196,6 @@ public class AnalyseVolumeCategorieFragment extends Fragment {
                 if (j == 0) {
                     text.setTypeface(null, Typeface.BOLD);
                 }
-                text.setGravity(Gravity.CENTER);
-                text.setTextColor(Color.BLACK);
                 tableRow.addView(text, j);
             }
         }
@@ -227,9 +223,9 @@ public class AnalyseVolumeCategorieFragment extends Fragment {
 
         //add colors to dataset
         ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(ColorTemplate.JOYFUL_COLORS[4]);
-        colors.add(ColorTemplate.JOYFUL_COLORS[3]);
-        colors.add(ColorTemplate.JOYFUL_COLORS[2]);
+        colors.add(getResources().getColor(R.color.colorBarBlue));
+        colors.add(getResources().getColor(R.color.colorBarOrange));
+        colors.add(getResources().getColor(R.color.colorBarViolet));
 
         pieDataSet.setColors(colors);
 
@@ -257,11 +253,10 @@ public class AnalyseVolumeCategorieFragment extends Fragment {
         // Récupération de la légende du graphe
         Legend legende = pieChart.getLegend();
         // Forme de la légende
+        legende.setYOffset(20f);
         legende.setForm(Legend.LegendForm.SQUARE);
-        // Taille de la forme de la légende
-        legende.setFormSize(10f);
-        // Taille du texte de la légende
-        legende.setTextSize(12f);
+        legende.setTextSize(20f);
+        legende.setFormSize(12f);
 
 
         // Listes des Entrées de la légende
@@ -278,6 +273,7 @@ public class AnalyseVolumeCategorieFragment extends Fragment {
 
         // Set la légende avec les entrées
         legende.setCustom(legendeEntrees);
+
 
         // Refresh le graphe
         pieChart.invalidate();
