@@ -1,13 +1,16 @@
 package martelapp.test.Fragment;
 
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.BubbleChart;
+import com.github.mikephil.charting.charts.ScatterChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -15,13 +18,17 @@ import com.github.mikephil.charting.data.BubbleData;
 import com.github.mikephil.charting.data.BubbleDataSet;
 import com.github.mikephil.charting.data.BubbleEntry;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.ScatterData;
+import com.github.mikephil.charting.data.ScatterDataSet;
 import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.IScatterDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.Random;
 
+import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.R;
 
 /**
@@ -38,58 +45,112 @@ public class ParcelleFragment extends Fragment implements OnChartValueSelectedLi
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.view_page_parcelle, null);
 
-        mChart  = (BubbleChart) view.findViewById(R.id.bubbleChart);
-        mChart.getDescription().setEnabled(false);
-        mChart.setOnChartValueSelectedListener(this);
-        mChart.setDrawGridBackground(false);
-        mChart.setTouchEnabled(true);
-        // enable scaling and dragging
-        mChart.setDragEnabled(true);
-        mChart.setScaleEnabled(true);
-        mChart.setMaxVisibleValueCount(200);
-        mChart.setPinchZoom(true);
 
-        Legend l = mChart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.VERTICAL);
-        l.setDrawInside(false);
+        Cursor cur;
+        DatabaseHelper dbHelper;
 
-        YAxis yl = mChart.getAxisLeft();
-        yl.setSpaceTop(30f);
-        yl.setSpaceBottom(30f);
-        yl.setDrawZeroLine(false);
+        dbHelper = new DatabaseHelper(view.getContext());
 
-        mChart.getAxisRight().setEnabled(false);
 
-        XAxis xl = mChart.getXAxis();
-        xl.setPosition(XAxis.XAxisPosition.BOTTOM);
+        /*
+         *
+         *
+         *
+         *######################################################################
+         *################### GESTION DES DONNEES DU GRAPHES ###################
+         *######################################################################
+         *
+         *
+         *
+         */
 
-        ArrayList<BubbleEntry> data = new ArrayList<BubbleEntry>();
-        Random rand = new Random();
-        BubbleEntry be;
-        for(int i=0; i< 200; i++){
-            float val = (float) (Math.random() * 100f);
-            float size = (float) (Math.random() * 15f);
-            be = new BubbleEntry(i,val,size);
-            data.add(be);
+        /*
+         *  ArrayList<Entry> entriesPositionArbreNonMartele : Liste des position des arbres NON MARTELES pour le graphe
+         *  ArrayList<Entry> entriesPositionArbreMartele : Liste des position des arbres MARTELES pour le graphe
+         *  ArrayList<Entry> entriesPositionArbreEco : Liste des position des arbres ECOLOGIQUE pour le graphe
+         *  float x, y : variable intermédiaire pour enregistrer la position dans les listes
+         *  int noteEco : note écologique d'un arbre pour savoir dans quelle liste l'enregistrer
+         */
+        ArrayList<Entry> entriesPositionArbre = new ArrayList<>();
+        float x, y;
+
+        /*
+         *  Récupération de la position x, y des arbres NON MARTELES
+         *  et vérification de la note écologique pour différencier les
+         *  arbres écologiques et les autres
+         */
+        cur = dbHelper.getAllDataFromTable(DatabaseHelper.ARBRES_PARCELLE_TABLE);
+        while (cur.moveToNext()) {
+            x = (float) cur.getDouble(cur.getColumnIndex(DatabaseHelper.COORD_X_ARBRE));
+            y = (float) cur.getDouble(cur.getColumnIndex(DatabaseHelper.COORD_Y_ARBRE));
+
+            entriesPositionArbre.add(new Entry(x, y));
         }
 
-        dataset = new BubbleDataSet(data, "arbres");
-        dataset.setDrawIcons(false);
-        dataset.setColor(ColorTemplate.COLORFUL_COLORS[0], 130);
-        dataset.setDrawValues(true);
 
-        datasets = new BubbleData(dataset);
-        datasets.setValueTextSize(0f);
-        datasets.setValueTextColor(Color.WHITE);
-        datasets.setHighlightCircleWidth(0.25f);
 
-        mChart.setData(datasets);
-        mChart.invalidate();
+
+        /*
+         *
+         *
+         *
+         *#######################################################################
+         *#################### GESTION DE LA FORME DU GRAPHE ####################
+         *#######################################################################
+         *
+         *
+         *
+         */
+
+
+        ScatterDataSet scatterDataSet = new ScatterDataSet(entriesPositionArbre, "Arbres parcelle");
+
+        // Couleur des arbres
+        scatterDataSet.setColor(ColorTemplate.JOYFUL_COLORS[3]);
+
+
+        // Forme des arbres non martelés = cercle
+        scatterDataSet.setScatterShape(ScatterChart.ScatterShape.CIRCLE);
+
+        ScatterData scatterData = new ScatterData(scatterDataSet);
+
+        ScatterChart scatterChart = view.findViewById(R.id.scatter_chart_parcelle);
+        scatterChart.setData(scatterData);
+
+        // Empêcher zoom
+        scatterChart.setScaleEnabled(false);
+
+        // Désactiver le clique
+        scatterChart.setClickable(false);
+
+        // Enlever "description label"
+        scatterChart.getDescription().setEnabled(false);
+
+        // Axe des X en bas du graphe
+        scatterChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        // Axe des Y droit désactivé
+        scatterChart.getAxisRight().setEnabled(false);
+
+        // Enlever espace entre axe des X et les stack bars
+        scatterChart.getAxisLeft().setDrawZeroLine(true);
+        scatterChart.getAxisLeft().setAxisMinimum(0f);
+
+        // Ne pas dessiner la grille de fond
+        scatterChart.getAxisLeft().setDrawGridLines(false);
+        scatterChart.getXAxis().setDrawGridLines(false);
+
+        // Récupération de la légende du graphe
+        Legend legende = scatterChart.getLegend();
+
+        // Forme de la légende
+        legende.setForm(Legend.LegendForm.CIRCLE);
+
+        // Refresh le graphe
+        scatterChart.invalidate();
 
         return view;
-    }
+}
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {
@@ -100,4 +161,11 @@ public class ParcelleFragment extends Fragment implements OnChartValueSelectedLi
     public void onNothingSelected() {
 
     }
+
+
 }
+
+
+/* tri données pour le zoom
+https://github.com/PhilJay/MPAndroidChart/issues/718
+ */

@@ -1,5 +1,6 @@
 package martelapp.test.Fragment;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -15,6 +16,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+
+import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.Class.OnSwipeTouchListener;
 import martelapp.test.R;
 
@@ -27,17 +31,28 @@ public class ConsignesFragment extends Fragment {
     TextView textViewConsignes, textViewTitleConsignes;
     ImageButton previous, next;
 
+    DatabaseHelper dbHelper;
+    Cursor cur;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.view_page_consignes, null);
 
+
+        dbHelper = new DatabaseHelper(view.getContext());
+
+        DecimalFormat df = new DecimalFormat("#0.00");
+
         textViewConsignes = (TextView) view.findViewById(R.id.textViewConsignes);
         textViewTitleConsignes = (TextView) view.findViewById(R.id.titleConsignes);
         bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation_consignes);
         previous = (ImageButton) view.findViewById(R.id.previousConsignes);
         next = (ImageButton) view.findViewById(R.id.nextConsignes);
+
+        cur = dbHelper.getDataFromTable("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL + ")", DatabaseHelper.ARBRES_PARCELLE_TABLE);
+        cur.moveToFirst();
+        final float totalVolumeBoisParcelle = cur.getFloat(0);
 
         //on gere le swipe gauche et droite (un peu brute)
         view.setOnTouchListener(new OnSwipeTouchListener(view.getContext()) {
@@ -138,6 +153,10 @@ public class ConsignesFragment extends Fragment {
                                 break;
                             case R.id.action_volume:
                                 textViewConsignes.setText(R.string.consignes_volume);
+                                textViewConsignes.setText(textViewConsignes.getText() +
+                                                "Notre parcelle fait XXXXXXX ha. Il faudra alors prélever un volume entre "
+                                                + (int) (totalVolumeBoisParcelle/5) + " et "
+                                                + (int) (totalVolumeBoisParcelle/3) + " m3.\n\n\n");
                                 textViewTitleConsignes.setText(R.string.volume_caps);
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.VISIBLE);
