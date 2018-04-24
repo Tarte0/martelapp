@@ -73,6 +73,7 @@ public class ArbresMartelesFragment extends Fragment {
                 numCard.setText(cur.getString(cur.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC)));
                 detailCard.setText(String.format("%s",
                         cur.getString(cur.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE))));
+                treeCardNumber.setVisibility(View.VISIBLE);
             }
         });
 
@@ -114,9 +115,7 @@ public class ArbresMartelesFragment extends Fragment {
             }
         });
 
-        if(listeArbresMarteles.getCount() <= 0){
-            treeCardNumber.setVisibility(View.INVISIBLE);
-        }
+        treeCardNumber.setVisibility(View.INVISIBLE);
 
         return mainView;
     }
