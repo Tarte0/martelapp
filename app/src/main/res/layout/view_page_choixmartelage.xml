@@ -22,7 +22,9 @@
             android:layout_weight="1"
             android:checked="false"
             android:text="Arbre Mûr"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:layoutDirection="rtl"
+            android:gravity="right|center"/>
 
         <CheckBox
             android:id="@+id/eclaircie"
@@ -30,7 +32,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Eclaircie au profit d'un arbre d'avenir"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:layoutDirection="rtl"
+            android:gravity="right|center"/>
 
         <CheckBox
             android:id="@+id/sanitaire"
@@ -38,7 +42,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Sanitaire"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:layoutDirection="rtl"
+            android:gravity="right|center"/>
 
         <CheckBox
             android:id="@+id/regeneration"
@@ -46,7 +52,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Pour la Régénération"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:layoutDirection="rtl"
+            android:gravity="right|center"/>
 
         <CheckBox
             android:id="@+id/exploitation"
@@ -54,7 +62,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Pour l'Exploitation"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:layoutDirection="rtl"
+            android:gravity="right|center"/>
 
         <CheckBox
             android:id="@+id/stabilite"
@@ -62,7 +72,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Pour la stabilité"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:layoutDirection="rtl"
+            android:gravity="right|center"/>
     </LinearLayout>
 
     <LinearLayout

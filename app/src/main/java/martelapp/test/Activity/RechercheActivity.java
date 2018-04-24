@@ -85,5 +85,10 @@ public class RechercheActivity extends AppCompatActivity {
         transaction.replace(android.R.id.content, newFragment);
         transaction.addToBackStack(null).commit();
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }
 

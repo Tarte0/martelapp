@@ -30,13 +30,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.AnalyseGraphe0Activity" />
-        <activity android:name=".Activity.AnalyseGraphe0bisActivity" />
-        <activity android:name=".Activity.AnalyseGraphe0terActivity" />
-        <activity android:name=".Activity.AnalyseGraphe0quaterActivity" />
-        <activity android:name=".Activity.AnalyseGraphe1Activity" />
-        <activity android:name=".Activity.AnalyseGraphe2Activity" />
-        <activity android:name=".Activity.AnalyseGraphe3Activity"></activity>
         <activity android:name=".Activity.AnalyseActivity"
             android:screenOrientation="landscape">
 
