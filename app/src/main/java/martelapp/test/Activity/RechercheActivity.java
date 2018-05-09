@@ -22,6 +22,10 @@ import martelapp.test.R;
 
 public class RechercheActivity extends AppCompatActivity {
     ViewPager viewPager;
+    InfosFragment infosf;
+    ConsignesFragment cf;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,9 +36,11 @@ public class RechercheActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
+
         //on associe nos onglets avec le viewpager
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
+
 
         viewPager.setCurrentItem(0);
 
@@ -42,9 +48,13 @@ public class RechercheActivity extends AppCompatActivity {
 
     // ajout et associations des Fragments aux onglets
     private void setupViewPager(ViewPager viewPager) {
+        cf = new ConsignesFragment();
+        cf.setVp(viewPager);
+        infosf = new InfosFragment();
+        infosf.setVp(viewPager);
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new ConsignesFragment(), "Consignes");
-        adapter.addFragment(new InfosFragment(), "Info");
+        adapter.addFragment(cf, "Consignes");
+        adapter.addFragment(infosf, "Info");
         adapter.addFragment(new ParcelleFragment(), "Carte");
         adapter.addFragment(new RechercheFragment(), "Sélection");
         adapter.addFragment(new ArbresMartelesFragment(), "Arbres sélectionnés");

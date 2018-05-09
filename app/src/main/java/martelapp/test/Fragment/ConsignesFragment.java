@@ -1,11 +1,14 @@
 package martelapp.test.Fragment;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.view.menu.MenuItemImpl;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,6 +16,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -28,17 +32,22 @@ import martelapp.test.R;
 
 public class ConsignesFragment extends Fragment {
 
+    ViewPager viewPager;
+
 
     BottomNavigationView bottomNavigationView;
     TextView textViewConsignes, textViewTitleConsignes;
     ImageButton previous, next;
+    Button buttonGoToInfos;
 
     DatabaseHelper dbHelper;
     Cursor cur;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.view_page_consignes, null);
 
 
@@ -51,6 +60,7 @@ public class ConsignesFragment extends Fragment {
         bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation_consignes);
         previous = (ImageButton) view.findViewById(R.id.previousConsignes);
         next = (ImageButton) view.findViewById(R.id.nextConsignes);
+        buttonGoToInfos = (Button) view.findViewById(R.id.button_go_to_info);
 
         cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
         cur.moveToFirst();
@@ -116,6 +126,7 @@ public class ConsignesFragment extends Fragment {
                                 textViewTitleConsignes.setText(R.string.general_caps);
                                 previous.setVisibility(View.INVISIBLE);
                                 next.setVisibility(View.VISIBLE);
+                                buttonGoToInfos.setVisibility((View.INVISIBLE));
                                 break;
                             case R.id.action_objectif:
                                 textViewConsignes.setText(R.string.consignes_objectif);
@@ -126,6 +137,15 @@ public class ConsignesFragment extends Fragment {
                                 textViewTitleConsignes.setText(R.string.objectif_caps);
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.INVISIBLE);
+                                buttonGoToInfos.setVisibility((View.VISIBLE));
+
+                                buttonGoToInfos.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
+
+                                    }
+                                });
                                 break;
                         }
                         return true;
@@ -133,6 +153,10 @@ public class ConsignesFragment extends Fragment {
                 });
 
         return view;
+    }
+
+    public void setVp(ViewPager viewPager) {
+        this.viewPager = viewPager;
     }
 
     @Override

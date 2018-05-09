@@ -111,4 +111,10 @@
         A gardé au moins 2 arbres porteurs de micros-habitats
     </string>
 
+    <string name="button_go_to_info">
+        Caractéristiques de la parcelle
+    </string>
+    <string name="button_go_to_carte">
+        Carte de la parcelle
+    </string>
 </resources>

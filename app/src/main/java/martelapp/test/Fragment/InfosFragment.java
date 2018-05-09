@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -21,9 +23,12 @@ import martelapp.test.R;
 
 public class InfosFragment extends Fragment {
 
+    ViewPager viewPager;
+
     BottomNavigationView bottomNavigationView;
     TextView textViewInfos, textViewTitleInfos;
     ImageButton previous, next;
+    Button buttonGoToCarte;
 
     DatabaseHelper dbHelper;
     Cursor cur;
@@ -38,6 +43,7 @@ public class InfosFragment extends Fragment {
         bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation_info);
         previous = (ImageButton) view.findViewById(R.id.previousInfo);
         next = (ImageButton) view.findViewById(R.id.nextInfo);
+        buttonGoToCarte = (Button) view.findViewById((R.id.button_go_to_carte));
 
 
 
@@ -140,24 +146,28 @@ public class InfosFragment extends Fragment {
                                 textViewInfos.setVisibility(View.VISIBLE);
                                 previous.setVisibility(View.INVISIBLE);
                                 next.setVisibility(View.VISIBLE);
+                                buttonGoToCarte.setVisibility(View.INVISIBLE);
                                 break;
                             case R.id.action_graphe_diametre:
                                 textViewTitleInfos.setText(R.string.graphe_diametre_caps);
                                 textViewInfos.setVisibility(View.INVISIBLE);
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.VISIBLE);
+                                buttonGoToCarte.setVisibility(View.INVISIBLE);
                                 break;
                             case R.id.action_graphe_note_eco:
                                 textViewTitleInfos.setText(R.string.graphe_note_eco_caps);
                                 textViewInfos.setVisibility(View.INVISIBLE);
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.VISIBLE);
+                                buttonGoToCarte.setVisibility(View.INVISIBLE);
                                 break;
                             case R.id.action_graphe_essence:
                                 textViewTitleInfos.setText(R.string.graphe_essence_caps);
                                 textViewInfos.setVisibility(View.INVISIBLE);
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.VISIBLE);
+                                buttonGoToCarte.setVisibility(View.INVISIBLE);
                                 break;
                             case R.id.action_graphe_exploitabilite_rotation:
                                 textViewInfos.setText(R.string.info_exploitabilite_rotation);
@@ -165,6 +175,15 @@ public class InfosFragment extends Fragment {
                                 textViewInfos.setVisibility(View.VISIBLE);
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.INVISIBLE);
+                                buttonGoToCarte.setVisibility(View.VISIBLE);
+
+                                buttonGoToCarte.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
+
+                                    }
+                                });
                                 break;
                         }
                         return true;
@@ -174,6 +193,10 @@ public class InfosFragment extends Fragment {
 
 
         return view;
+    }
+
+    public void setVp(ViewPager viewPager) {
+        this.viewPager = viewPager;
     }
 
 
