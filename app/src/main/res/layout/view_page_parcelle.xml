@@ -15,13 +15,6 @@
         android:layout_weight="0.2">
     </com.github.mikephil.charting.charts.ScatterChart>
 
-    <TextView
-        android:id="@+id/text_info_parcelle"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.8"
-        android:textSize="26sp"
-        android:textColor="@color/colorBlack"
-        android:text="" />
+
 
 </LinearLayout>

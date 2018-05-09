@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_carte_id"
+        android:enabled="true"
+        android:icon="@drawable/assignment"
+        android:title="@string/carte_id_caps"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_graphe_diametre"
+        android:enabled="true"
+        android:icon="@drawable/pie_chart"
+        android:title="@string/graphe_diametre_caps"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_graphe_note_eco"
+        android:enabled="true"
+        android:icon="@drawable/pie_chart"
+        android:title="@string/graphe_note_eco_caps"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_graphe_essence"
+        android:enabled="true"
+        android:icon="@drawable/pie_chart"
+        android:title="@string/graphe_essence_caps"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_graphe_exploitabilite_rotation"
+        android:enabled="true"
+        android:icon="@drawable/pie_chart"
+        android:title="@string/exploitabilite_rotation_caps"
+        app:showAsAction="ifRoom" />
+</menu>

@@ -8,29 +8,12 @@
         android:title="@string/general_caps"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_volume"
+        android:id="@+id/action_objectif"
         android:enabled="true"
         android:icon="@drawable/pie_chart"
-        android:title="@string/volume_caps"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/action_biodiversite"
-        android:enabled="true"
-        android:icon="@drawable/flower"
-        android:title="@string/biodiversite_caps"
+        android:title="@string/objectif_caps"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/action_exploitabilite"
-        android:enabled="true"
-        android:icon="@drawable/tonality"
-        android:title="@string/exploitabilite_caps"
-        app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/action_rotation"
-        android:enabled="true"
-        android:icon="@drawable/update"
-        android:title="@string/rotations_caps"
-        app:showAsAction="ifRoom" />
+
 </menu>

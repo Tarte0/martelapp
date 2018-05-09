@@ -162,12 +162,9 @@ public class ParcelleFragment extends Fragment implements OnChartValueSelectedLi
         cur.moveToFirst();
         surfaceParcelle = cur.getFloat(cur.getColumnIndex(DatabaseHelper.SURFACE_PARCELLE));
 
-        TextView textInfoParcelle = view.findViewById(R.id.text_info_parcelle);
-        textInfoParcelle.setText("Surface\n" + Float.toString(surfaceParcelle) + " ha\n\n"
-                                + "Nombre d'arbres\n" + Integer.toString(nbArbreParcelle));
 
         return view;
-}
+    }
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {

@@ -15,6 +15,7 @@ import java.util.List;
 import martelapp.test.Fragment.ArbresMartelesFragment;
 import martelapp.test.Fragment.ChoixMartelageFragment;
 import martelapp.test.Fragment.ConsignesFragment;
+import martelapp.test.Fragment.InfosFragment;
 import martelapp.test.Fragment.ParcelleFragment;
 import martelapp.test.Fragment.RechercheFragment;
 import martelapp.test.R;
@@ -35,17 +36,18 @@ public class RechercheActivity extends AppCompatActivity {
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
-        viewPager.setCurrentItem(1);
+        viewPager.setCurrentItem(0);
 
     }
 
     // ajout et associations des Fragments aux onglets
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new RechercheFragment(), "Recherche");
         adapter.addFragment(new ConsignesFragment(), "Consignes");
-        adapter.addFragment(new ParcelleFragment(), "Parcelle");
-        adapter.addFragment(new ArbresMartelesFragment(), "Arbres martelés");
+        adapter.addFragment(new InfosFragment(), "Info");
+        adapter.addFragment(new ParcelleFragment(), "Carte");
+        adapter.addFragment(new RechercheFragment(), "Sélection");
+        adapter.addFragment(new ArbresMartelesFragment(), "Arbres sélectionnés");
         viewPager.setAdapter(adapter);
     }
 

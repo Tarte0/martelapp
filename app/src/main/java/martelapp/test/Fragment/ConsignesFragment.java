@@ -62,17 +62,8 @@ public class ConsignesFragment extends Fragment {
                 switch (bottomNavigationView.getSelectedItemId()) {
                     case R.id.action_general:
                         break;
-                    case R.id.action_volume:
+                    case R.id.action_objectif:
                         bottomNavigationView.setSelectedItemId(R.id.action_general);
-                        break;
-                    case R.id.action_biodiversite:
-                        bottomNavigationView.setSelectedItemId(R.id.action_volume);
-                        break;
-                    case R.id.action_exploitabilite:
-                        bottomNavigationView.setSelectedItemId(R.id.action_biodiversite);
-                        break;
-                    case R.id.action_rotation:
-                        bottomNavigationView.setSelectedItemId(R.id.action_exploitabilite);
                         break;
                 }
 
@@ -80,18 +71,9 @@ public class ConsignesFragment extends Fragment {
             public void onSwipeLeft() {
                 switch (bottomNavigationView.getSelectedItemId()) {
                     case R.id.action_general:
-                        bottomNavigationView.setSelectedItemId(R.id.action_volume);
+                        bottomNavigationView.setSelectedItemId(R.id.action_objectif);
                         break;
-                    case R.id.action_volume:
-                        bottomNavigationView.setSelectedItemId(R.id.action_biodiversite);
-                        break;
-                    case R.id.action_biodiversite:
-                        bottomNavigationView.setSelectedItemId(R.id.action_exploitabilite);
-                        break;
-                    case R.id.action_exploitabilite:
-                        bottomNavigationView.setSelectedItemId(R.id.action_rotation);
-                        break;
-                    case R.id.action_rotation:
+                    case R.id.action_objectif:
                         break;
                 }
             }
@@ -103,17 +85,8 @@ public class ConsignesFragment extends Fragment {
                 switch (bottomNavigationView.getSelectedItemId()) {
                     case R.id.action_general:
                         break;
-                    case R.id.action_volume:
+                    case R.id.action_objectif:
                         bottomNavigationView.setSelectedItemId(R.id.action_general);
-                        break;
-                    case R.id.action_biodiversite:
-                        bottomNavigationView.setSelectedItemId(R.id.action_volume);
-                        break;
-                    case R.id.action_exploitabilite:
-                        bottomNavigationView.setSelectedItemId(R.id.action_biodiversite);
-                        break;
-                    case R.id.action_rotation:
-                        bottomNavigationView.setSelectedItemId(R.id.action_exploitabilite);
                         break;
                 }
             }
@@ -124,18 +97,9 @@ public class ConsignesFragment extends Fragment {
             public void onClick(View view) {
                 switch (bottomNavigationView.getSelectedItemId()) {
                     case R.id.action_general:
-                        bottomNavigationView.setSelectedItemId(R.id.action_volume);
+                        bottomNavigationView.setSelectedItemId(R.id.action_objectif);
                         break;
-                    case R.id.action_volume:
-                        bottomNavigationView.setSelectedItemId(R.id.action_biodiversite);
-                        break;
-                    case R.id.action_biodiversite:
-                        bottomNavigationView.setSelectedItemId(R.id.action_exploitabilite);
-                        break;
-                    case R.id.action_exploitabilite:
-                        bottomNavigationView.setSelectedItemId(R.id.action_rotation);
-                        break;
-                    case R.id.action_rotation:
+                    case R.id.action_objectif:
                         break;
                 }
             }
@@ -153,31 +117,13 @@ public class ConsignesFragment extends Fragment {
                                 previous.setVisibility(View.INVISIBLE);
                                 next.setVisibility(View.VISIBLE);
                                 break;
-                            case R.id.action_volume:
-                                textViewConsignes.setText(R.string.consignes_volume);
-                                textViewConsignes.setText(textViewConsignes.getText() +
+                            case R.id.action_objectif:
+                                textViewConsignes.setText(R.string.consignes_objectif);
+                                /*textViewConsignes.setText(textViewConsignes.getText() +
                                                 "Notre parcelle fait " + surfaceParcelle + " ha. Il faudra alors prélever un volume entre "
                                                 + (int)(DatabaseHelper.MIN_PRELEVEMENT * surfaceParcelle) + " et "
-                                                + (int)(DatabaseHelper.MAX_PRELEVEMENT * surfaceParcelle) + " m3.\n\n\n");
-                                textViewTitleConsignes.setText(R.string.volume_caps);
-                                previous.setVisibility(View.VISIBLE);
-                                next.setVisibility(View.VISIBLE);
-                                break;
-                            case R.id.action_biodiversite:
-                                textViewConsignes.setText(R.string.consignes_biodiversite);
-                                textViewTitleConsignes.setText(R.string.biodiversite_caps);
-                                previous.setVisibility(View.VISIBLE);
-                                next.setVisibility(View.VISIBLE);
-                                break;
-                            case R.id.action_exploitabilite:
-                                textViewConsignes.setText(R.string.consignes_exploitabilite);
-                                textViewTitleConsignes.setText(R.string.exploitabilite_caps);
-                                previous.setVisibility(View.VISIBLE);
-                                next.setVisibility(View.VISIBLE);
-                                break;
-                            case R.id.action_rotation:
-                                textViewConsignes.setText(R.string.consignes_rotations);
-                                textViewTitleConsignes.setText(R.string.rotations_caps);
+                                                + (int)(DatabaseHelper.MAX_PRELEVEMENT * surfaceParcelle) + " m3.\n\n\n");*/
+                                textViewTitleConsignes.setText(R.string.objectif_caps);
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.INVISIBLE);
                                 break;
