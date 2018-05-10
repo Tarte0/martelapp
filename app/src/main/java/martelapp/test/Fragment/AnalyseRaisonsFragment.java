@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -20,6 +21,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
@@ -46,30 +48,6 @@ public class AnalyseRaisonsFragment extends Fragment {
         View view = inflater.inflate(R.layout.view_page_analyse_raisons, null);
 
         dbHelper = new DatabaseHelper(view.getContext());
-        DecimalFormat df = new DecimalFormat("#0.0");
-
-        /*
-         *  Création de la première ligne du tableau correspondant aux headers.
-         *  Ajout de chaque valeur du tableau de String headers dans chaque
-         *  colonne de cette ligne
-         */
-        TableLayout tableau_coupe_essence = view.findViewById(R.id.tableau_pourcentage_raison);
-
-        TableRow tableRow = new TableRow(view.getContext());
-        tableau_coupe_essence.addView(tableRow, new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-        tableau_coupe_essence.setBackgroundColor(Color.GRAY);
-
-        String[] headers = {"Raisons", "Nombre", "Pourcentage"};
-
-        tableRow.setLayoutParams(new TableRow.LayoutParams(headers.length));
-
-        for(int j = 0; j < headers.length; j++){
-            TextView text = ChartHelper.createTextView(false, j == headers.length - 1, view);
-            text.setText(headers[j]);
-            text.setTypeface(null, Typeface.BOLD);
-            tableRow.addView(text, j);
-        }
-
 
         /*
          *
@@ -90,7 +68,7 @@ public class AnalyseRaisonsFragment extends Fragment {
          *  String raison : On récupère les raisons à chaque itération pour trier les données par raison
          *  int i : Défini une nouvelle entrée de données (par essence) sur l'axe x du graphe
          *  int nbRaisonActuelle : Nombre d'occurrence pour une certaine raison
-         *  int nbRaisonsTotal : On récupère le nombre de raisons total pour calculer le pourcentage
+         *  int nbArbresMarteles : On récupère le nombre d'arbres martelés pour calculer le pourcentage
          *  float percentageRaisonActuel : calcul du pourcentage pour une raison donnée
          */
         ArrayList<BarEntry> entriesRaisonPercentage = new ArrayList<>();
@@ -98,13 +76,13 @@ public class AnalyseRaisonsFragment extends Fragment {
         String raison;
         int i = 0;
         int nbRaisonActuelle;
-        int nbRaisonsTotal;
+        int nbArbresMarteles;
         float percentageRaisonsActuel;
 
         // Récupération du nombre total de raisons
-        cur1 = dbHelper.getAllDataFromTable(DatabaseHelper.RAISON_TABLE);
+        cur1 = dbHelper.getAllDataFromTable(DatabaseHelper.ARBRES_MARTELES_TABLE);
         cur1.moveToFirst();
-        nbRaisonsTotal = cur1.getCount();
+        nbArbresMarteles = cur1.getCount();
 
         /*
          *  Cursor cur1 : Cursor pointant sur toutes les raisons possibles
@@ -126,31 +104,13 @@ public class AnalyseRaisonsFragment extends Fragment {
             cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.RAISON_TABLE, DatabaseHelper.RAISON + " = '" + raison + "'");
             cur2.moveToFirst();
             nbRaisonActuelle = cur2.getCount();
-            percentageRaisonsActuel = ((float)(nbRaisonActuelle) / nbRaisonsTotal) * 100;
+            percentageRaisonsActuel = ((float)(nbRaisonActuelle) / nbArbresMarteles) * 100;
 
             // Ajout dans la liste des données du graphe le pourcentage que l'on vient de calculer
             entriesRaisonPercentage.add(new BarEntry(i, percentageRaisonsActuel));
 
             i++;
 
-            /*
-             *  Création d'une nouvelle ligne dans le tableau
-             *  et ajout de chaque valeur du tableau de String row
-             *  dans chaque colonne du tableau pour cette ligne
-             */
-            tableRow = new TableRow(view.getContext());
-            tableau_coupe_essence.addView(tableRow, new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-
-            String[] row = {raison, Integer.toString(nbRaisonActuelle), df.format(percentageRaisonsActuel) + " %"};
-
-            for(int j = 0; j < row.length; j++){
-                TextView text = ChartHelper.createTextView(i == cur1.getCount(), j == row.length - 1, view);
-                text.setText(row[j]);
-                if(j == 0){
-                    text.setTypeface(null, Typeface.BOLD);
-                }
-                tableRow.addView(text, j);
-            }
         }
         cur1.close();
         cur2.close();
@@ -171,7 +131,7 @@ public class AnalyseRaisonsFragment extends Fragment {
          */
 
         BarChart barChartRaisonPercentage = view.findViewById(R.id.bar_chart_pourcentage_raison);
-        BarDataSet barDataSet = new BarDataSet(entriesRaisonPercentage, "Pourcentage Raisons");
+        BarDataSet barDataSet = new BarDataSet(entriesRaisonPercentage, "");
 
         barDataSet.setColors(getResources().getColor(R.color.colorBarBlue));
 
@@ -182,11 +142,11 @@ public class AnalyseRaisonsFragment extends Fragment {
         YAxis yAxisL = barChartRaisonPercentage.getAxisLeft();
         YAxis yAxisR = barChartRaisonPercentage.getAxisRight();
 
-
         yAxisL.setTextSize(13f);
 
         yAxisL.setAxisMinimum(0f);
-        yAxisL.setAxisMaximum(100f);
+        yAxisL.setAxisMaximum(105f);
+
         xAxis.setDrawGridLines(true);
         xAxis.setDrawAxisLine(true);
         xAxis.setDrawLabels(true);
@@ -207,15 +167,22 @@ public class AnalyseRaisonsFragment extends Fragment {
 
         // Afficher les valeurs en X
         xAxis.setLabelCount(entriesRaison.size());
-        // Axe des X affiche les raisons
-        xAxis.setValueFormatter(new IndexAxisValueLimitCharacterFormatter(entriesRaison, 10));
 
+
+        // Axe des X affiche les raisons
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(entriesRaison));
+        xAxis.setGranularityEnabled(true);
 
         // Axe des X en bas du graphe
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTextSize(13f);
-        // Enlever "description label"
-        barChartRaisonPercentage.getDescription().setEnabled(false);
+
+        barChartRaisonPercentage.getDescription().setText(getResources().getString(R.string.axe_raison));
+        barChartRaisonPercentage.getDescription().setYOffset(-40f);
+        barChartRaisonPercentage.getDescription().setTextSize(16f);
+        barChartRaisonPercentage.getDescription().setTextColor(getResources().getColor(R.color.colorBlack));
+
+        barChartRaisonPercentage.setViewPortOffsets(30f,0f,20f, 55f);
 
         // Ne pas dessiner la grille de fond
         barChartRaisonPercentage.getAxisLeft().setDrawGridLines(false);

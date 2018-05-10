@@ -44,30 +44,6 @@ public class AnalyseVolumeDiametreFragment extends Fragment {
         View view = inflater.inflate(R.layout.view_page_volume_diametre, null);
 
         dbHelper = new DatabaseHelper(view.getContext());
-        DecimalFormat df = new DecimalFormat("#0.00");
-
-         /*
-         *  Création de la première ligne du tableau correspondant aux headers.
-         *  Ajout de chaque valeur du tableau de String headers dans chaque
-         *  colonne de cette ligne
-         */
-        TableLayout tableau_coupe_essence = view.findViewById(R.id.tableau_coupe_volume);
-
-        TableRow tableRow = new TableRow(view.getContext());
-        tableau_coupe_essence.addView(tableRow, new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-        tableau_coupe_essence.setBackgroundColor(Color.GRAY);
-
-        String[] headers = {"Diametre", "Avant", "Coupe", "Après"};
-
-        tableRow.setLayoutParams(new TableRow.LayoutParams(headers.length));
-
-        for(int j = 0; j < headers.length; j++){
-            TextView text = ChartHelper.createTextView(false, j == headers.length - 1, view);
-            text.setText(headers[j]);
-            text.setTypeface(null, Typeface.BOLD);
-            tableRow.addView(text, j);
-        }
-
 
         /*
          *
@@ -152,25 +128,6 @@ public class AnalyseVolumeDiametreFragment extends Fragment {
             entriesVolumeArbre.add(new BarEntry(i, new float[]{volumeArbreApresCoupe, volumeArbreCoupe}));
 
             i++;
-
-            /*
-             *  Création d'une nouvelle ligne dans le tableau
-             *  et ajout de chaque valeur du tableau de String row
-             *  dans chaque colonne du tableau pour cette ligne
-             */
-            tableRow = new TableRow(view.getContext());
-            tableau_coupe_essence.addView(tableRow, new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-
-            String[] row = {Integer.toString(diametre), df.format(volumeArbreAvant), df.format(volumeArbreCoupe), df.format(volumeArbreApresCoupe)};
-
-            for(int j = 0; j < row.length; j++){
-                TextView text = ChartHelper.createTextView(i == cur1.getCount(), j == row.length - 1, view);
-                text.setText(row[j]);
-                if(j == 0) {
-                    text.setTypeface(null, Typeface.BOLD);
-                }
-                tableRow.addView(text, j);
-            }
         }
         cur1.close();
         cur2.close();
@@ -198,7 +155,7 @@ public class AnalyseVolumeDiametreFragment extends Fragment {
 
         barDataSet.setColors(colors);
 
-        barDataSet.setValueFormatter(new StackedBarFormatter(" | ", 0));
+        barDataSet.setValueFormatter(new StackedBarFormatter(" | ", 2));
 
 
         BarChart barChart = view.findViewById(R.id.bar_chart_volume);
@@ -237,8 +194,10 @@ public class AnalyseVolumeDiametreFragment extends Fragment {
         yAxisLeft.setDrawZeroLine(true);
         yAxisLeft.setAxisMinimum(0f);
 
-        // Enlever "description label"
-        barChart.getDescription().setEnabled(false);
+        barChart.getDescription().setText(getResources().getString(R.string.axe_diametre_cm));
+        barChart.getDescription().setYOffset(-40f);
+        barChart.getDescription().setTextSize(16f);
+        barChart.getDescription().setTextColor(getResources().getColor(R.color.colorBlack));
 
 
         //barChart.getXAxis().setDrawLabels(true);

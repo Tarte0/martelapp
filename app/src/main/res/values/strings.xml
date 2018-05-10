@@ -22,7 +22,6 @@
     <string name="exploitabilite_rotation_caps">EXPLOITABILITE</string>
 
 
-
     <string name="consignes_general">
         A travers l’exercice de martelage, il s’agit de vous :\n\n
         - Former au martelage et aux modes de gestion favorables à la biodiversité, à la naturalité,
@@ -82,21 +81,26 @@
         \n\nEn général, la rotation varie entre 5 et 15 ans.
     </string>
 
+    <string name="titre_resume_exerice">
+        Point important de l\'exercice de martelage
+    </string>
 
     <string name="titre_coupe_essence">
         Répartition du prélèvement, nombre de tiges/essence
     </string>
     <string name="titre_coupe_diametre">
-        Répartition du prélèvement, nombre de tiges/diamètre
+        Répartition du prélèvement par classe de diamètre
     </string>
     <string name="titre_coupe_note_eco">
         Répartition du prélèvement, nombre de tiges/note écologique
     </string>
+
     <string name="titre_coupe_volume">
         Répartition du prélèvement, volume/diamètre
     </string>
+
     <string name="titre_pourcentage_raison">
-        Nombre et pourcentage des raisons de martelage choisis
+        Pourcentage des raisons de martelage
     </string>
     <string name="titre_volume_categorie_diametre">
         Répartition du prélèvement du volume par catégorie de diamètre
@@ -111,6 +115,27 @@
         A gardé au moins 2 arbres porteurs de micros-habitats
     </string>
 
+    <string name="axe_volume_m3">
+        Volume (m3)
+    </string>
+    <string name="axe_diametre_cm">
+        Diamètre (cm)
+    </string>
+    <string name="axe_nombre_tiges">
+        Nombre de tiges
+    </string>
+    <string name="axe_essence">
+        Essence
+    </string>
+    <string name="axe_note_eco">
+        Note écologique
+    </string>
+    <string name="axe_raison">
+        Raison
+    </string>
+    <string name="axe_pourcentage_raison">
+        Pourcentage (Nombre raison / Total arbres martelés)
+    </string>
     <string name="button_go_to_info">
         Caractéristiques de la parcelle
     </string>

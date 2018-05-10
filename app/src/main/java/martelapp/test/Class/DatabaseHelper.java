@@ -44,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     // Table "raison"
     public static final String RAISON_TABLE                 = "raison_table";
     public static final String ID_RAISON                    = "_id";
-    public static final String NUMERO_ARBRE_MARTELE_RAISON  = "NUMERO_ARBRE_MARTELE_RAISON";
+    public static final String NUMERO_ARBRE_TRAITE_RAISON   = "NUMERO_ARBRE_TRAITE_RAISON";
     public static final String RAISON                       = "RAISON";
 
     // Table "constantes" (Utilisée pour les calculs dans le détail de la parcelle ainsi que
@@ -145,9 +145,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
          */
         db.execSQL("CREATE TABLE " + RAISON_TABLE + "("
                 + ID_RAISON                     + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + NUMERO_ARBRE_MARTELE_RAISON   + " TEXT, "
+                + NUMERO_ARBRE_TRAITE_RAISON   + " TEXT, "
                 + RAISON                        + " TEXT, "
-                + "FOREIGN KEY(" + NUMERO_ARBRE_MARTELE_RAISON + ") REFERENCES " + ARBRES_MARTELES_TABLE + "(" + NUMERO_ARBRE_MART + "))"
+                + "FOREIGN KEY(" + NUMERO_ARBRE_TRAITE_RAISON + ") REFERENCES " + ARBRES_MARTELES_TABLE + "(" + NUMERO_ARBRE_MART + "))"
         );
 
 
@@ -246,7 +246,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public boolean insertRaison(String numero, String raison){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(NUMERO_ARBRE_MARTELE_RAISON, numero);
+        contentValues.put(NUMERO_ARBRE_TRAITE_RAISON, numero);
         contentValues.put(RAISON, raison);
 
         long res = db.insert(RAISON_TABLE, null, contentValues);
