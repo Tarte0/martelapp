@@ -96,11 +96,17 @@ public class RechercheFragment extends Fragment {
             nomEquipe = extras.getString("nomEquipe");
         }
 
+        mEditText.setText("Saisie n° d'arbre");
+
         // Bouton 0
         mButton0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEditText.setText(String.format("%s0", mEditText.getText()));
+                if(!mEditText.getText().toString().equals("Saisie n° d'arbre")){
+                    mEditText.setText(String.format("%s0", mEditText.getText()));
+                }else{
+                    mEditText.setText("0");
+                }
             }
         });
 
@@ -108,7 +114,11 @@ public class RechercheFragment extends Fragment {
         mButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEditText.setText(String.format("%s1", mEditText.getText()));
+                if(!mEditText.getText().toString().equals("Saisie n° d'arbre")) {
+                    mEditText.setText(String.format("%s1", mEditText.getText()));
+                }else{
+                mEditText.setText("1");
+            }
             }
         });
 
@@ -116,7 +126,11 @@ public class RechercheFragment extends Fragment {
         mButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEditText.setText(String.format("%s2", mEditText.getText()));
+                if (!mEditText.getText().toString().equals("Saisie n° d'arbre")) {
+                    mEditText.setText(String.format("%s2", mEditText.getText()));
+                }else {
+                    mEditText.setText("2");
+                }
             }
         });
 
@@ -124,7 +138,11 @@ public class RechercheFragment extends Fragment {
         mButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEditText.setText(String.format("%s3", mEditText.getText()));
+                if (!mEditText.getText().toString().equals("Saisie n° d'arbre")) {
+                    mEditText.setText(String.format("%s3", mEditText.getText()));
+                }else {
+                    mEditText.setText("3");
+                }
             }
         });
 
@@ -132,7 +150,11 @@ public class RechercheFragment extends Fragment {
         mButton4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEditText.setText(String.format("%s4", mEditText.getText()));
+                if (!mEditText.getText().toString().equals("Saisie n° d'arbre")) {
+                    mEditText.setText(String.format("%s4", mEditText.getText()));
+                }else {
+                    mEditText.setText("4");
+                }
             }
         });
 
@@ -140,7 +162,11 @@ public class RechercheFragment extends Fragment {
         mButton5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEditText.setText(String.format("%s5", mEditText.getText()));
+                if (!mEditText.getText().toString().equals("Saisie n° d'arbre")) {
+                    mEditText.setText(String.format("%s5", mEditText.getText()));
+                }else {
+                    mEditText.setText("5");
+                }
             }
         });
 
@@ -148,7 +174,11 @@ public class RechercheFragment extends Fragment {
         mButton6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEditText.setText(String.format("%s6", mEditText.getText()));
+                if (!mEditText.getText().toString().equals("Saisie n° d'arbre")) {
+                    mEditText.setText(String.format("%s6", mEditText.getText()));
+                }else {
+                    mEditText.setText("6");
+                }
             }
         });
 
@@ -156,7 +186,11 @@ public class RechercheFragment extends Fragment {
         mButton7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEditText.setText(String.format("%s7", mEditText.getText()));
+                if (!mEditText.getText().toString().equals("Saisie n° d'arbre")) {
+                    mEditText.setText(String.format("%s7", mEditText.getText()));
+                }else {
+                    mEditText.setText("7");
+                }
             }
         });
 
@@ -164,7 +198,11 @@ public class RechercheFragment extends Fragment {
         mButton8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEditText.setText(String.format("%s8", mEditText.getText()));
+                if (!mEditText.getText().toString().equals("Saisie n° d'arbre")) {
+                    mEditText.setText(String.format("%s8", mEditText.getText()));
+                }else {
+                    mEditText.setText("8");
+                }
             }
         });
 
@@ -172,7 +210,11 @@ public class RechercheFragment extends Fragment {
         mButton9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEditText.setText(String.format("%s9", mEditText.getText()));
+                if (!mEditText.getText().toString().equals("Saisie n° d'arbre")) {
+                    mEditText.setText(String.format("%s9", mEditText.getText()));
+                }else {
+                    mEditText.setText("9");
+                }
             }
         });
 
@@ -188,8 +230,13 @@ public class RechercheFragment extends Fragment {
         mButtonDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mEditText.getText().length() > 0) {
-                    mEditText.setText(mEditText.getText().subSequence(0, mEditText.getText().length() - 1));
+                if (!mEditText.getText().toString().equals("Saisie n° d'arbre")) {
+                    if (mEditText.getText().length() > 0) {
+                        mEditText.setText(mEditText.getText().subSequence(0, mEditText.getText().length() - 1));
+                    }
+                }
+                else {
+                    mEditText.setText("");
                 }
             }
         });
