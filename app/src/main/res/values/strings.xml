@@ -79,6 +79,7 @@
         \n- Frêne, érables : à partir de 50 cm
 
         \n\nEn général, la rotation varie entre 5 et 15 ans.
+
     </string>
 
     <string name="titre_resume_exerice">
@@ -142,4 +143,11 @@
     <string name="button_go_to_carte">
         Carte de la parcelle
     </string>
+
+
+    <string name="choix_conserver">
+        CONSERVER UN ARBRE RAISON ECOLOGIQUE
+    </string>
+
+
 </resources>

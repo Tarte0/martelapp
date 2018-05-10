@@ -8,6 +8,9 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +36,8 @@ import martelapp.test.R;
 public class ArbresMartelesFragment extends Fragment {
     ListView listeArbresMarteles;
 
+    ViewPager viewPager;
+
     DatabaseHelper dbHelper;
     Cursor cur1, cur2;
     LinearLayout treeCardNumber;
@@ -43,11 +48,14 @@ public class ArbresMartelesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View mainView = inflater.inflate(R.layout.view_page_arbresmarteles, null);
+
         dbHelper = new DatabaseHelper(mainView.getContext());
         finishButton = (Button) mainView.findViewById(R.id.finish);
 
         treeCardNumber = (LinearLayout) mainView.findViewById(R.id.arbreLayout);
         listeArbresMarteles = mainView.findViewById(R.id.liste_arbres_marteles);
+
+
 
         listeArbresMarteles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -165,4 +173,10 @@ public class ArbresMartelesFragment extends Fragment {
         return raison;
 
     }
+
+
+    public void setVp(ViewPager viewPager) {
+        this.viewPager = viewPager;
+    }
+
 }

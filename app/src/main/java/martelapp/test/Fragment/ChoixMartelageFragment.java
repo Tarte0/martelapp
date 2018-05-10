@@ -13,6 +13,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import martelapp.test.Activity.MessageErreurArbreMarteleActivity;
 import martelapp.test.Class.DatabaseHelper;
@@ -27,7 +30,12 @@ public class ChoixMartelageFragment extends DialogFragment {
     Button  boutonMarteler,
             buttonCancel,
             buttonConserver;
+    TextView textViewNum,
+             textViewEssence,
+             textViewEtat,
+             textViewDiametre;
     DatabaseHelper dbHelper;
+    Cursor cur1;
     int noteEcologiqueHaute = 6;
     private String numeroArbre;
 
@@ -49,7 +57,26 @@ public class ChoixMartelageFragment extends DialogFragment {
 
         boutonMarteler = (Button) view.findViewById(R.id.boutonMarteler);
         buttonCancel = (Button) view.findViewById(R.id.cancel);
-        buttonConserver = view.findViewById(R.id.conserver);
+        //buttonConserver = view.findViewById(R.id.conserver);
+
+        textViewNum = view.findViewById(R.id.textViewNum);
+        textViewEssence = view.findViewById(R.id.textViewEssence);
+        textViewEtat = view.findViewById(R.id.textViewEtat);
+        textViewDiametre = view.findViewById(R.id.textViewDiametre);
+
+        // Affichage caractéristiques de l'arbre
+        String queryCaractArbre = "SELECT * FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE + " WHERE "
+                                    + DatabaseHelper.NUMERO_ARBRE_PARC + " = " + numeroArbre;
+
+        cur1 = dbHelper.executeQuery(queryCaractArbre);
+        cur1.moveToFirst();
+
+        textViewNum.setText(String.format("Arbre n°%s", cur1.getString(cur1.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC))));
+        textViewEssence.setText(cur1.getString(cur1.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE)));
+        textViewEtat.setText(etatToString(cur1.getString(cur1.getColumnIndex(DatabaseHelper.ETAT_ARBRE))));
+        textViewDiametre.setText(String.format("Diametre : %s cm", cur1.getString(cur1.getColumnIndex(DatabaseHelper.DIAMETRE_ARBRE))));
+
+
 
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,15 +112,28 @@ public class ChoixMartelageFragment extends DialogFragment {
             }
         });
 
-        buttonConserver.setOnClickListener(new View.OnClickListener() {
+        /*buttonConserver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dbHelper.insertArbreConserve(numeroArbre);
                 dbHelper.insertRaison(numeroArbre, DatabaseHelper.BIODIVERSITE);
                 dismiss();
             }
-        });
+        });*/
         return view;
+    }
+
+    private String etatToString(String etat) {
+        switch (etat) {
+            case "v":
+                return "Vivant";
+            case "mp":
+                return "Mort sur pied";
+            case "ms":
+                return "Mort sur sol";
+            default:
+                return "";
+        }
     }
 
     // Savoir si une raison est bien cochée au minimum

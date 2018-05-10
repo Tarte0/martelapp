@@ -38,7 +38,8 @@ public class RechercheFragment extends Fragment {
             mButtonClear,
             mButtonDel,
             mButtonOk;
-    ImageButton martelerButtonTreeCard;
+    ImageButton martelerButtonTreeCard,
+            conserverButtonTreeCard;
 
     ImageView dejaMarteleImage;
 
@@ -77,6 +78,7 @@ public class RechercheFragment extends Fragment {
         mButtonDel = (Button) view.findViewById(R.id.buttonDel);
         mButtonOk = (Button) view.findViewById(R.id.buttonOk);
         martelerButtonTreeCard = (ImageButton) view.findViewById(R.id.martelerButtonTreeCard);
+        conserverButtonTreeCard = (ImageButton) view.findViewById(R.id.conserverButtonTreeCard);
         tvNum = (TextView) view.findViewById(R.id.numero_tree_card);
         tvEssence = (TextView) view.findViewById(R.id.essence_tree_card);
         tvEtat = (TextView) view.findViewById(R.id.etat_tree_card);
@@ -97,6 +99,7 @@ public class RechercheFragment extends Fragment {
         }
 
         mEditText.setHint("Saisie n° d'arbre");
+
         // Bouton 0
         mButton0.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,11 +112,7 @@ public class RechercheFragment extends Fragment {
         mButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!mEditText.getText().toString().equals("Saisie n° d'arbre")) {
-                    mEditText.setText(String.format("%s1", mEditText.getText()));
-                }else{
-                mEditText.setText("1");
-            }
+                mEditText.setText(String.format("%s1", mEditText.getText()));
             }
         });
 
@@ -121,11 +120,8 @@ public class RechercheFragment extends Fragment {
         mButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!mEditText.getText().toString().equals("Saisie n° d'arbre")) {
-                    mEditText.setText(String.format("%s2", mEditText.getText()));
-                }else {
-                    mEditText.setText("2");
-                }
+                mEditText.setText(String.format("%s2", mEditText.getText()));
+
             }
         });
 
@@ -133,11 +129,8 @@ public class RechercheFragment extends Fragment {
         mButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!mEditText.getText().toString().equals("Saisie n° d'arbre")) {
-                    mEditText.setText(String.format("%s3", mEditText.getText()));
-                }else {
-                    mEditText.setText("3");
-                }
+                mEditText.setText(String.format("%s3", mEditText.getText()));
+
             }
         });
 
@@ -145,11 +138,7 @@ public class RechercheFragment extends Fragment {
         mButton4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!mEditText.getText().toString().equals("Saisie n° d'arbre")) {
-                    mEditText.setText(String.format("%s4", mEditText.getText()));
-                }else {
-                    mEditText.setText("4");
-                }
+                mEditText.setText(String.format("%s4", mEditText.getText()));
             }
         });
 
@@ -157,11 +146,7 @@ public class RechercheFragment extends Fragment {
         mButton5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!mEditText.getText().toString().equals("Saisie n° d'arbre")) {
                     mEditText.setText(String.format("%s5", mEditText.getText()));
-                }else {
-                    mEditText.setText("5");
-                }
             }
         });
 
@@ -169,11 +154,8 @@ public class RechercheFragment extends Fragment {
         mButton6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!mEditText.getText().toString().equals("Saisie n° d'arbre")) {
-                    mEditText.setText(String.format("%s6", mEditText.getText()));
-                }else {
-                    mEditText.setText("6");
-                }
+                mEditText.setText(String.format("%s6", mEditText.getText()));
+
             }
         });
 
@@ -181,11 +163,8 @@ public class RechercheFragment extends Fragment {
         mButton7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!mEditText.getText().toString().equals("Saisie n° d'arbre")) {
-                    mEditText.setText(String.format("%s7", mEditText.getText()));
-                }else {
-                    mEditText.setText("7");
-                }
+                mEditText.setText(String.format("%s7", mEditText.getText()));
+
             }
         });
 
@@ -193,11 +172,8 @@ public class RechercheFragment extends Fragment {
         mButton8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!mEditText.getText().toString().equals("Saisie n° d'arbre")) {
-                    mEditText.setText(String.format("%s8", mEditText.getText()));
-                }else {
-                    mEditText.setText("8");
-                }
+                mEditText.setText(String.format("%s8", mEditText.getText()));
+
             }
         });
 
@@ -205,11 +181,8 @@ public class RechercheFragment extends Fragment {
         mButton9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!mEditText.getText().toString().equals("Saisie n° d'arbre")) {
-                    mEditText.setText(String.format("%s9", mEditText.getText()));
-                }else {
-                    mEditText.setText("9");
-                }
+                mEditText.setText(String.format("%s9", mEditText.getText()));
+
             }
         });
 
@@ -225,14 +198,9 @@ public class RechercheFragment extends Fragment {
         mButtonDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!mEditText.getText().toString().equals("Saisie n° d'arbre")) {
                     if (mEditText.getText().length() > 0) {
                         mEditText.setText(mEditText.getText().subSequence(0, mEditText.getText().length() - 1));
                     }
-                }
-                else {
-                    mEditText.setText("");
-                }
             }
         });
 
@@ -302,6 +270,18 @@ public class RechercheFragment extends Fragment {
             public void onClick(View view) {
                 if (!numArbreCourant.equals("")) {
                     ((RechercheActivity) getActivity()).openMartelagePopup(numArbreCourant);
+                    cleanCard();
+                    numArbreCourant = "";
+                }
+
+            }
+        });
+
+        conserverButtonTreeCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!numArbreCourant.equals("")) {
+                    ((RechercheActivity) getActivity()).openConserverPopup(numArbreCourant);
                     cleanCard();
                     numArbreCourant = "";
                 }

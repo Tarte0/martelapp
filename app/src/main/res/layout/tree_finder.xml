@@ -45,7 +45,7 @@
 
         <Button
             android:id="@+id/buttonSeven"
-            style="@android:style/Widget.Material.Button"
+            style="@style/button_selection"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_below="@id/editText"
@@ -55,7 +55,7 @@
 
         <Button
             android:id="@+id/buttonEight"
-            style="@android:style/Widget.Material.Button"
+            style="@style/button_selection"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -63,7 +63,7 @@
 
         <Button
             android:id="@+id/buttonNine"
-            style="@android:style/Widget.Material.Button"
+            style="@style/button_selection"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -82,7 +82,7 @@
 
         <Button
             android:id="@+id/buttonFour"
-            style="@android:style/Widget.Material.Light.Button"
+            style="@style/button_selection"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -90,7 +90,7 @@
 
         <Button
             android:id="@+id/buttonFive"
-            style="@android:style/Widget.Material.Button"
+            style="@style/button_selection"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -98,7 +98,7 @@
 
         <Button
             android:id="@+id/buttonSix"
-            style="@android:style/Widget.Material.Light.Button"
+            style="@style/button_selection"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -116,7 +116,7 @@
 
         <Button
             android:id="@+id/buttonOne"
-            style="@android:style/Widget.Material.Light.Button"
+            style="@style/button_selection"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -124,7 +124,7 @@
 
         <Button
             android:id="@+id/buttonTwo"
-            style="@android:style/Widget.Material.Light.Button"
+            style="@style/button_selection"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -132,7 +132,7 @@
 
         <Button
             android:id="@+id/buttonThree"
-            style="@android:style/Widget.Material.Light.Button"
+            style="@style/button_selection"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -152,7 +152,7 @@
 
         <Button
             android:id="@+id/buttonClear"
-            style="@android:style/Widget.Material.Light.Button"
+            style="@style/button_selection"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -160,7 +160,7 @@
 
         <Button
             android:id="@+id/buttonZero"
-            style="@android:style/Widget.Material.Light.Button"
+            style="@style/button_selection"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -168,11 +168,10 @@
 
         <Button
             android:id="@+id/buttonDel"
-            style="@android:style/Widget.Material.Light.Button"
+            style="@style/button_selection"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-
             android:text="←" />
 
     </LinearLayout>

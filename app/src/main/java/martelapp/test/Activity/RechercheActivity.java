@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import martelapp.test.Fragment.ArbresMartelesFragment;
+import martelapp.test.Fragment.ChoixConserverFragment;
 import martelapp.test.Fragment.ChoixMartelageFragment;
 import martelapp.test.Fragment.ConsignesFragment;
 import martelapp.test.Fragment.InfosFragment;
@@ -24,6 +25,7 @@ public class RechercheActivity extends AppCompatActivity {
     ViewPager viewPager;
     InfosFragment infosf;
     ConsignesFragment cf;
+    ArbresMartelesFragment af;
 
 
     @Override
@@ -52,6 +54,8 @@ public class RechercheActivity extends AppCompatActivity {
         cf.setVp(viewPager);
         infosf = new InfosFragment();
         infosf.setVp(viewPager);
+        af = new ArbresMartelesFragment();
+        af.setVp(viewPager);
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(cf, "Consignes");
         adapter.addFragment(infosf, "Info");
@@ -93,6 +97,16 @@ public class RechercheActivity extends AppCompatActivity {
     public void openMartelagePopup(String numeroArbre){
         FragmentManager fragmentManager = getSupportFragmentManager();
         ChoixMartelageFragment newFragment = new ChoixMartelageFragment();
+        newFragment.setNumeroArbre(numeroArbre);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.replace(android.R.id.content, newFragment);
+        transaction.addToBackStack(null).commit();
+    }
+
+    public void openConserverPopup(String numeroArbre){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        ChoixConserverFragment newFragment = new ChoixConserverFragment();
         newFragment.setNumeroArbre(numeroArbre);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);

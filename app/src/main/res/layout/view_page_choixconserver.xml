@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="6"
+    android:background="@color/colorWhite">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:weightSum="7">
+
+                <TextView
+                    android:id="@+id/textViewConserver"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/choix_conserver" />
+
+
+        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/textViewEssence"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/textViewEtat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/textViewDiametre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/raisonsCheck"
+            android:layout_weight="5"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/boutonConserver"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="Conserver"
+                android:textColor="@color/colorWhite" />
+
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:backgroundTint="@android:color/darker_gray"
+                android:text="Annuler"
+                android:textColor="@color/colorWhite" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

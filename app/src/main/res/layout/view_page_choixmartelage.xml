@@ -8,73 +8,118 @@
 
 
     <LinearLayout
-        android:id="@+id/raisonsCheck"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:weightSum="7">
+        android:orientation="horizontal">
 
-        <CheckBox
-            android:id="@+id/arbreMur"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:checked="false"
-            android:text="Arbre Mûr"
-            android:textSize="24sp"
-            android:layoutDirection="rtl"
-            android:gravity="right|center"/>
 
-        <CheckBox
-            android:id="@+id/eclaircie"
+        <LinearLayout
+            android:id="@+id/raisonsCheck"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Eclaircie au profit d'un arbre d'avenir"
-            android:textSize="24sp"
-            android:layoutDirection="rtl"
-            android:gravity="right|center"/>
+            android:orientation="vertical"
+            android:weightSum="7">
 
-        <CheckBox
-            android:id="@+id/sanitaire"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Sanitaire"
-            android:textSize="24sp"
-            android:layoutDirection="rtl"
-            android:gravity="right|center"/>
+            <CheckBox
+                android:id="@+id/arbreMur"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="false"
+                android:gravity="left|center"
+                android:layoutDirection="ltr"
+                android:text="Arbre Mûr"
+                android:textSize="24sp" />
 
-        <CheckBox
-            android:id="@+id/regeneration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Pour la Régénération"
-            android:textSize="24sp"
-            android:layoutDirection="rtl"
-            android:gravity="right|center"/>
+            <CheckBox
+                android:id="@+id/eclaircie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center"
+                android:layoutDirection="ltr"
+                android:text="Eclaircie au profit d'un arbre d'avenir"
+                android:textSize="24sp" />
 
-        <CheckBox
-            android:id="@+id/exploitation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Pour l'Exploitation"
-            android:textSize="24sp"
-            android:layoutDirection="rtl"
-            android:gravity="right|center"/>
+            <CheckBox
+                android:id="@+id/sanitaire"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center"
+                android:layoutDirection="ltr"
+                android:text="Sanitaire"
+                android:textSize="24sp" />
 
-        <CheckBox
-            android:id="@+id/stabilite"
+            <CheckBox
+                android:id="@+id/regeneration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center"
+                android:layoutDirection="ltr"
+                android:text="Pour la Régénération"
+                android:textSize="24sp" />
+
+            <CheckBox
+                android:id="@+id/exploitation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center"
+                android:layoutDirection="ltr"
+                android:text="Pour l'Exploitation"
+                android:textSize="24sp" />
+
+            <CheckBox
+                android:id="@+id/stabilite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center"
+                android:layoutDirection="ltr"
+                android:text="Pour la stabilité"
+                android:textSize="24sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Pour la stabilité"
-            android:textSize="24sp"
-            android:layoutDirection="rtl"
-            android:gravity="right|center"/>
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewNum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/textViewEssence"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/textViewEtat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/textViewDiametre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -85,16 +130,15 @@
         android:orientation="horizontal">
 
 
-
         <Button
-            android:id="@+id/conserver"
+            android:id="@+id/boutonMarteler"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
             android:layout_weight="1"
             android:backgroundTint="@color/colorPrimary"
-            android:text="Conserver"
-            android:textColor="@color/colorWhite"/>
+            android:text="Marteler"
+            android:textColor="@color/colorWhite" />
 
         <Button
             android:id="@+id/cancel"
@@ -106,15 +150,6 @@
             android:text="Annuler"
             android:textColor="@color/colorWhite" />
 
-        <Button
-            android:id="@+id/boutonMarteler"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:backgroundTint="@color/colorPrimary"
-            android:text="Marteler"
-            android:textColor="@color/colorWhite" />
     </LinearLayout>
 
 

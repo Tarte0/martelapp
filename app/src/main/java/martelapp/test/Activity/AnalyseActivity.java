@@ -16,6 +16,7 @@ import java.util.List;
 import martelapp.test.Fragment.AnalyseParcelleFragment;
 import martelapp.test.Fragment.AnalyseRaisonsFragment;
 import martelapp.test.Fragment.AnalyseRespectConsignesFragment;
+import martelapp.test.Fragment.AnalyseSyntheseFragment;
 import martelapp.test.Fragment.AnalyseTigesDiametreFragment;
 import martelapp.test.Fragment.AnalyseTigesEcoFragment;
 import martelapp.test.Fragment.AnalyseTigesEssencesFragment;
@@ -96,6 +97,7 @@ public class AnalyseActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         RechercheActivity.Adapter adapter = new RechercheActivity.Adapter(getSupportFragmentManager());
         adapter.addFragment(new AnalyseRespectConsignesFragment(), "Consignes");
+        adapter.addFragment(new AnalyseSyntheseFragment(), "Synthèse");
         adapter.addFragment(new AnalyseTigesEssencesFragment(), "Essences");
         adapter.addFragment(new AnalyseTigesDiametreFragment(), "Diametre");
         adapter.addFragment(new AnalyseTigesEcoFragment(), "Note écologique");
