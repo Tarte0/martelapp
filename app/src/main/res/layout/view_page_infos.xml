@@ -56,6 +56,7 @@
                     app:srcCompat="@drawable/arrow" />
 
                 <LinearLayout
+                    android:id="@+id/layout_info"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="10"
@@ -70,6 +71,23 @@
                         android:text=""
                         android:textColor="@color/colorBlack"
                         android:textSize="22sp" />
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/bar_chart_diametre_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/bar_chart_note_eco_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/pie_chart_essence_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
 
                     <Button
                         android:id="@+id/button_go_to_carte"

@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         // On assigne le listener "postListener" à notre parcelle Martelapp de la base de données firebase
-        firebaseDatabase.child("parcelles").child("Demo").addListenerForSingleValueEvent(postListener);
+        firebaseDatabase.child("parcelles").child("parcelleMartelapp").addListenerForSingleValueEvent(postListener);
     }
 
 

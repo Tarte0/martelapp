@@ -96,17 +96,12 @@ public class RechercheFragment extends Fragment {
             nomEquipe = extras.getString("nomEquipe");
         }
 
-        mEditText.setText("Saisie n° d'arbre");
-
+        mEditText.setHint("Saisie n° d'arbre");
         // Bouton 0
         mButton0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!mEditText.getText().toString().equals("Saisie n° d'arbre")){
-                    mEditText.setText(String.format("%s0", mEditText.getText()));
-                }else{
-                    mEditText.setText("0");
-                }
+                mEditText.setText(String.format("%s0", mEditText.getText()));
             }
         });
 

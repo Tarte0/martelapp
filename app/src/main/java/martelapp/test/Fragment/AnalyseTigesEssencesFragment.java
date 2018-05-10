@@ -1,16 +1,11 @@
 package martelapp.test.Fragment;
 
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -23,7 +18,6 @@ import com.github.mikephil.charting.data.BarEntry;
 
 import java.util.ArrayList;
 
-import martelapp.test.Class.ChartHelper;
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.Formatter.IndexAxisValueLimitCharacterFormatter;
 import martelapp.test.Formatter.StackedBarFormatter;
