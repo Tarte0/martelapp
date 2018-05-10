@@ -318,6 +318,7 @@ public class RechercheFragment extends Fragment {
         tvEssence.setText("");
         tvEtat.setText("");
         tvDiametre.setText("");
+        tvNum.setText("");
     }
 
     @Override
