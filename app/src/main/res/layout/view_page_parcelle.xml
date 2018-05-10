@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
-    <com.github.mikephil.charting.charts.ScatterChart
-        android:id="@+id/scatter_chart_parcelle"
+    <com.github.mikephil.charting.charts.BubbleChart
+        android:id="@+id/bubble_chart_parcelle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="8dp"
@@ -13,7 +13,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_weight="0.2">
-    </com.github.mikephil.charting.charts.ScatterChart>
+    </com.github.mikephil.charting.charts.BubbleChart>
 
 
 

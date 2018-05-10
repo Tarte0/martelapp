@@ -22,6 +22,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.ScatterData;
 import com.github.mikephil.charting.data.ScatterDataSet;
 import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.IBubbleDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IScatterDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
@@ -41,19 +42,14 @@ import martelapp.test.R;
 public class ParcelleFragment extends Fragment implements OnChartValueSelectedListener {
 
     DatabaseHelper dbHelper;
-    Cursor cur;
+    Cursor cur1, cur2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.view_page_parcelle, null);
 
-
-        int nbArbreParcelle;
-        float surfaceParcelle;
-
         dbHelper = new DatabaseHelper(view.getContext());
-
 
         /*
          *
@@ -74,22 +70,48 @@ public class ParcelleFragment extends Fragment implements OnChartValueSelectedLi
          *  float x, y : variable intermédiaire pour enregistrer la position dans les listes
          *  int noteEco : note écologique d'un arbre pour savoir dans quelle liste l'enregistrer
          */
-        ArrayList<Entry> entriesPositionArbre = new ArrayList<>();
-        float x, y;
+        ArrayList<BubbleEntry> entriesPositionArbre;
+        BubbleDataSet bubbleDataSet;
+        ArrayList<IBubbleDataSet> listBubbleData = new ArrayList<>();
 
+        String essence;
+        float x, y;
+        int diametre;
+        int i = 0;
         /*
          *  Récupération de la position x, y des arbres NON MARTELES
          *  et vérification de la note écologique pour différencier les
          *  arbres écologiques et les autres
          */
-        cur = dbHelper.getAllDataFromTable(DatabaseHelper.ARBRES_PARCELLE_TABLE);
-        while (cur.moveToNext()) {
-            x = (float) cur.getDouble(cur.getColumnIndex(DatabaseHelper.COORD_X_ARBRE));
-            y = (float) cur.getDouble(cur.getColumnIndex(DatabaseHelper.COORD_Y_ARBRE));
+        cur1 = dbHelper.getDataFromTable("DISTINCT " + DatabaseHelper.ESSENCE_ARBRE, DatabaseHelper.ARBRES_PARCELLE_TABLE + " ORDER BY " + DatabaseHelper.ESSENCE_ARBRE);
+        while (cur1.moveToNext()) {
 
-            entriesPositionArbre.add(new Entry(x, y));
+            essence = cur1.getString(cur1.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE));
+
+            cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE,
+                    DatabaseHelper.ESSENCE_ARBRE + " = '" + essence + "'");
+
+            entriesPositionArbre = new ArrayList<>();
+            while(cur2.moveToNext()) {
+
+                x = (float) cur2.getDouble(cur2.getColumnIndex(DatabaseHelper.COORD_X_ARBRE));
+                y = (float) cur2.getDouble(cur2.getColumnIndex(DatabaseHelper.COORD_Y_ARBRE));
+                diametre = cur2.getInt(cur2.getColumnIndex(DatabaseHelper.DIAMETRE_ARBRE));
+                entriesPositionArbre.add(new BubbleEntry(x, y, (float)diametre));
+            }
+            Collections.sort(entriesPositionArbre, new EntryXComparator());
+            bubbleDataSet = new BubbleDataSet(entriesPositionArbre, essence);
+
+            bubbleDataSet.setColor(ColorTemplate.VORDIPLOM_COLORS[i % 5]);
+
+            bubbleDataSet.setDrawValues(false);
+            listBubbleData.add(bubbleDataSet);
+
+            i++;
         }
-
+        dbHelper.close();
+        cur1.close();
+        cur2.close();
 
 
         /*
@@ -104,48 +126,43 @@ public class ParcelleFragment extends Fragment implements OnChartValueSelectedLi
          *
          */
 
-        Collections.sort(entriesPositionArbre, new EntryXComparator());
-
-        ScatterDataSet scatterDataSet = new ScatterDataSet(entriesPositionArbre, "Arbres parcelle");
-
-        // Couleur des arbres
-        scatterDataSet.setColor(ColorTemplate.JOYFUL_COLORS[3]);
-
-        scatterDataSet.setDrawValues(false);
-
         // Forme des arbres non martelés = cercle
-        scatterDataSet.setScatterShape(ScatterChart.ScatterShape.CIRCLE);
 
-        ScatterData scatterData = new ScatterData(scatterDataSet);
+        BubbleData bubbleData = new BubbleData(listBubbleData);
 
-        ScatterChart scatterChart = view.findViewById(R.id.scatter_chart_parcelle);
-        scatterChart.setData(scatterData);
+        BubbleChart bubbleChart = view.findViewById(R.id.bubble_chart_parcelle);
+        bubbleChart.setData(bubbleData);
 
         // Empêcher zoom
-        scatterChart.setScaleEnabled(false);
+        bubbleChart.setScaleEnabled(false);
 
         // Désactiver le clique
-        scatterChart.setTouchEnabled(false);
+        bubbleChart.setTouchEnabled(false);
 
         // Enlever "description label"
-        scatterChart.getDescription().setEnabled(false);
+        bubbleChart.getDescription().setEnabled(false);
 
         // Axe des X en bas du graphe
-        scatterChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        bubbleChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
 
         // Axe des Y droit désactivé
-        scatterChart.getAxisRight().setEnabled(false);
+        bubbleChart.getAxisRight().setEnabled(false);
 
         // Enlever espace entre axe des X et les stack bars
-        scatterChart.getAxisLeft().setDrawZeroLine(true);
-        scatterChart.getAxisLeft().setAxisMinimum(0f);
+        bubbleChart.getAxisLeft().setDrawZeroLine(true);
+        bubbleChart.getAxisLeft().setAxisMinimum(0f);
 
         // Ne pas dessiner la grille de fond
-        scatterChart.getAxisLeft().setDrawGridLines(false);
-        scatterChart.getXAxis().setDrawGridLines(false);
+        bubbleChart.getAxisLeft().setDrawGridLines(false);
+        bubbleChart.getXAxis().setDrawGridLines(false);
 
         // Récupération de la légende du graphe
-        Legend legende = scatterChart.getLegend();
+        Legend legende = bubbleChart.getLegend();
+
+        /*bubbleChart.setExtraOffsets(0f,0f,20f,0f);
+        legende.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        legende.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        legende.setOrientation(Legend.LegendOrientation.VERTICAL);*/
 
         // Forme de la légende
         legende.setForm(Legend.LegendForm.CIRCLE);
@@ -153,15 +170,7 @@ public class ParcelleFragment extends Fragment implements OnChartValueSelectedLi
         legende.setFormSize(12f);
 
         // Refresh le graphe
-        scatterChart.invalidate();
-
-
-        nbArbreParcelle = cur.getCount();
-
-        cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
-        cur.moveToFirst();
-        surfaceParcelle = cur.getFloat(cur.getColumnIndex(DatabaseHelper.SURFACE_PARCELLE));
-
+        bubbleChart.invalidate();
 
         return view;
     }
