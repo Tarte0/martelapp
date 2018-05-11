@@ -96,28 +96,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="" />
+                android:text=""
+                android:textSize="24sp"/>
 
             <TextView
                 android:id="@+id/textViewEssence"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="" />
+                android:text=""
+                android:textSize="24sp"/>
 
             <TextView
                 android:id="@+id/textViewEtat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="" />
+                android:text=""
+                android:textSize="24sp"/>
 
             <TextView
                 android:id="@+id/textViewDiametre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="" />
+                android:text=""
+                android:textSize="24sp"/>
         </LinearLayout>
 
     </LinearLayout>
