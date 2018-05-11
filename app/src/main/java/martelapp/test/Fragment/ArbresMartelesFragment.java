@@ -56,7 +56,6 @@ public class ArbresMartelesFragment extends Fragment {
         listeArbresMarteles = mainView.findViewById(R.id.liste_arbres_marteles);
 
 
-
         listeArbresMarteles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {

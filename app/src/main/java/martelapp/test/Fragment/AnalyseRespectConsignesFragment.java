@@ -25,8 +25,27 @@ import martelapp.test.R;
 public class AnalyseRespectConsignesFragment extends Fragment {
     Cursor cur;
     DatabaseHelper dbHelper;
-    TextView tvPrelevementVolumeR, tvGrosDiametreR, tvEcoR, tvGainR;
+    TextView tvPrelevementVolumeR, tvGrosDiametreR, tvEcoR;
     ImageView ivPrelevementVolumeR, ivGrosDiametreR, ivEcoR;
+
+    DecimalFormat df;
+
+    int     prelevementMin = 0,
+            prelevementMax = 0;
+
+    float volumeTotalBoisMartele;
+
+    float diametre;
+    int nbArbresDiamSup50conserve = 0;
+
+    float noteEcologique;
+    int nbArbreEcoConserves =0;
+
+    double volumeBoisTotalParcelle = 0f;
+    double volumeBoisTotalParcelleHa = 0f;
+    double  surfaceParcelle = 0f;
+
+    float volumeMartelePourcent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,191 +57,136 @@ public class AnalyseRespectConsignesFragment extends Fragment {
         tvPrelevementVolumeR = view.findViewById(R.id.tvPrelevementVolumeR);
         tvGrosDiametreR = view.findViewById(R.id.tvGrosDiametreR);
         tvEcoR = view.findViewById(R.id.tvEcoR);
-        tvGainR = view.findViewById(R.id.tvGainR);
 
         ivPrelevementVolumeR = view.findViewById(R.id.ivPrelevementVolumeR);
         ivGrosDiametreR = view.findViewById(R.id.ivGrosDiametreR);
         ivEcoR = view.findViewById(R.id.ivEcoR);
 
-        cur = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap, " + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
-                "ap." + dbHelper.NUMERO_ARBRE_PARC + " = am." + dbHelper.NUMERO_ARBRE_MART);
+        // Récupération du prélevement min et max sur la parcelle en %
+        cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
+        cur.moveToFirst();
+        prelevementMin = (int) cur.getFloat(cur.getColumnIndex(DatabaseHelper.PRELEVEMENT_VOLUME_MIN));
+        prelevementMax = (int) cur.getFloat(cur.getColumnIndex(DatabaseHelper.PRELEVEMENT_VOLUME_MAX));
 
 
-        /**************
-         *  CONSIGNE PRELEVEMENT VOLUME
-         *************/
+        surfaceParcelle = cur.getDouble(cur.getColumnIndex(DatabaseHelper.SURFACE_PARCELLE));
 
 
-        float volumeTotalBoisMartele, gainTotal;
+        df = new DecimalFormat("#0.00");
 
 
-        cur = dbHelper.executeQuery("SELECT SUM(" + DatabaseHelper.VOLUME_COMMERCIAL + ")"
-                + " FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_MARTELES_TABLE + " am"
-                + " WHERE ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = am." + DatabaseHelper.NUMERO_ARBRE_MART);
+        // !!!!!!!!!!!!!! A RETIRER QUAND SURFACE SERA EN HA !!!!!!!!!!!!!!!!!!!
+
+        surfaceParcelle = surfaceParcelle / 1000;
+
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+        // Volume de bois parcelle remis à l'hectare
+        cur = dbHelper.getDataFromTable("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL +")",
+                DatabaseHelper.ARBRES_PARCELLE_TABLE);
+        cur.moveToFirst();
+        volumeBoisTotalParcelle = cur.getDouble(0);
+        volumeBoisTotalParcelleHa = volumeBoisTotalParcelle / surfaceParcelle;
+
+        dbHelper.close();
+        cur.close();
+
+
+        /*
+            CONSIGNE 1:
+            Prélever entre prelevementMin et prelevementMax
+        */
+
+        // Calcul volume prélevé
+        cur = dbHelper.getDataFromTableWithCondition("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL + ")",
+                 DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
+                "ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = am." + DatabaseHelper.NUMERO_ARBRE_MART);
         cur.moveToFirst();
         volumeTotalBoisMartele = cur.getFloat(0);
 
 
-        // Recup SURFACE_PARCELLE
-        cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
-        cur.moveToFirst();
-        final float surfaceParcelle = cur.getFloat(cur.getColumnIndex(DatabaseHelper.SURFACE_PARCELLE));
-
-        final float minPrelevement = (float) DatabaseHelper.MIN_PRELEVEMENT;
-        final float maxPrelevement = (float) DatabaseHelper.MAX_PRELEVEMENT;
-
-        float limiteInf = surfaceParcelle * minPrelevement;
-        float limiteSup = surfaceParcelle * maxPrelevement;
-
-        // Consigne Volume prélevement respectée**********************************************
-        if (limiteInf >= volumeTotalBoisMartele || volumeTotalBoisMartele >= limiteSup) {
+        volumeMartelePourcent = (float)(volumeTotalBoisMartele/volumeBoisTotalParcelle)*100;
+        tvPrelevementVolumeR.setText(String.format("Prélever entre %s et %s du volume de bois de la parcelle.\nVolume prélevé: %sm3 (%s)",
+                prelevementMin +"%" , prelevementMax +"%" ,df.format(volumeTotalBoisMartele),df.format(volumeMartelePourcent)+"%"));
+        if (prelevementMin >= volumeMartelePourcent || volumeMartelePourcent >= prelevementMax) {
             tvPrelevementVolumeR.setTextColor(getResources().getColor(R.color.colorRed));
             ivPrelevementVolumeR.setColorFilter(getResources().getColor(R.color.colorRed));
             ivPrelevementVolumeR.setImageResource(R.drawable.cross);
-            if(volumeTotalBoisMartele < limiteInf){
-                tvPrelevementVolumeR.setText(String.format("%s \n %s < %s", tvPrelevementVolumeR.getText(), volumeTotalBoisMartele, Math.floor(limiteInf)));
-            }else{
-                tvPrelevementVolumeR.setText(String.format("%s \n %s > %s", tvPrelevementVolumeR.getText(), volumeTotalBoisMartele, Math.floor(limiteSup)));
-            }
-
-        }else {
-            tvPrelevementVolumeR.setText(String.format("%s \n %s > %s > %s", tvPrelevementVolumeR.getText(), Math.floor(limiteInf), volumeTotalBoisMartele, Math.floor(limiteSup)));
         }
 
-        /*Toast.makeText(view.getContext(),
-                Float.toString(volumeTotalBoisMartele), Toast.LENGTH_LONG).show();*/
+        /*
+            CONSIGNE 1 *********************************************
+        */
 
 
-        /**************
-         *  CONSIGNE PRELEVEMENT VOLUME
-         *************/
 
 
-        /*******************
-         * CONSIGNE il doit rester au moins 3 Arbres a diam > 50/ha
-         */
 
-        float diametre;
-
-        int nbArbresDiamSup50Base = 0;
+        /*
+            CONSIGNE 2:
+            Avoir conservé au moins 3 arbres de gros diamètre par hectare
+        */
 
 
-        // Nombre d'abres à diametre > 50 dans la Base
-        cur = dbHelper.executeQuery("SELECT(" + DatabaseHelper.DIAMETRE_ARBRE + ")"
-                + " FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE);
+        // Nombre d'abres à diametre > 50 Conservé
+        cur = dbHelper.getAllDataFromTableWithCondition(
+                 DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_CONSERVES_TABLE + " ac"
+                , "ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = ac." + DatabaseHelper.NUMERO_ARBRE_CONS);
 
         while (cur.moveToNext()) {
-            diametre = cur.getFloat(0);
+            diametre = cur.getFloat(cur.getColumnIndex(DatabaseHelper.DIAMETRE_ARBRE));
             if (diametre >= 50) {
-                nbArbresDiamSup50Base++;
+                nbArbresDiamSup50conserve++;
             }
 
         }
 
-        int nbArbresDiamSup50Marteles = 0;
 
-        // Nombre d'abres à diametre > 50 Marteles
-        cur = dbHelper.executeQuery("SELECT(" + DatabaseHelper.DIAMETRE_ARBRE + ")"
-                + " FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_MARTELES_TABLE + " am"
-                + " WHERE ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = am." + DatabaseHelper.NUMERO_ARBRE_MART);
-
-        while (cur.moveToNext()) {
-            diametre = cur.getFloat(0);
-            if (diametre >= 50) {
-                nbArbresDiamSup50Marteles++;
-            }
-
-        }
-
-        int nbArbreDiamHectare = (int) (nbArbresDiamSup50Base - nbArbresDiamSup50Marteles) / (1 + (int) surfaceParcelle);
-        tvGrosDiametreR.setText(String.format("%s \n %s / %s", tvGrosDiametreR.getText(), (nbArbresDiamSup50Base - nbArbresDiamSup50Marteles), (int)Math.round(surfaceParcelle*3)));
+        tvGrosDiametreR.setText(String.format("Conserver au moins 3 arbres de gros diamètre par hectare.\nArbres conservés: %s",
+                (nbArbresDiamSup50conserve)));
         // Moins de 3 * surfaceParcelle arbres de diamètre > 50 à la fin de l'exercice
-        if (nbArbreDiamHectare < 3) {
+        if (nbArbresDiamSup50conserve < (3*surfaceParcelle)) {
             tvGrosDiametreR.setTextColor(getResources().getColor(R.color.colorRed));
             ivGrosDiametreR.setColorFilter(getResources().getColor(R.color.colorRed));
             ivGrosDiametreR.setImageResource(R.drawable.cross);
         }
 
-        /*******************
-         * CONSIGNE il doit rester au moins 3 Arbres a diam > 50/ha
-         */
+        /*
+            CONSIGNE 2
+        */
 
 
-        /*******************
-         * CONSIGNE il doit rester au moins  Arbres a noteEco > 6 /ha
-         */
 
+        /*
+            CONSIGNE 3:
+            Avoir conservé au moins 2 arbres porteurs de micros habitats
+        */
 
-        float noteEcologique;
-
-        int nbArbreEcoBase = 0;
-
-
-        // Nombre d'abres à diametre > 50 dans la Base
-        cur = dbHelper.executeQuery("SELECT(" + DatabaseHelper.NOTE_ECO_ARBRE + ")"
-                + " FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE);
+        // Nombre d'abres à NoteEco > 6
+        cur = dbHelper.getAllDataFromTableWithCondition(
+                DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_CONSERVES_TABLE + " ac",
+                "ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = ac." + DatabaseHelper.NUMERO_ARBRE_CONS);
 
         while (cur.moveToNext()) {
-            noteEcologique = cur.getFloat(0);
+            noteEcologique = cur.getFloat(cur.getColumnIndex(DatabaseHelper.NOTE_ECO_ARBRE));
             if (noteEcologique >= 6) {
-                nbArbreEcoBase++;
+                nbArbreEcoConserves++;
             }
-
         }
-
-        int nbArbreEcoMarteles = 0;
-
-        // Nombre d'abres à diametre > 50 Marteles
-        cur = dbHelper.executeQuery("SELECT(" + DatabaseHelper.NOTE_ECO_ARBRE + ")"
-                + " FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_MARTELES_TABLE + " am"
-                + " WHERE ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = am." + DatabaseHelper.NUMERO_ARBRE_MART);
-
-        while (cur.moveToNext()) {
-            noteEcologique = cur.getFloat(0);
-            if (noteEcologique >= 6) {
-                nbArbreEcoMarteles++;
-            }
-
-        }
-
-
-        int nbArbreEcoHectare = (int) (nbArbreEcoBase - nbArbreEcoMarteles) / (1 + (int) surfaceParcelle);
-        tvEcoR.setText(String.format("%s \n %s / %s", tvEcoR.getText(), (nbArbreEcoBase - nbArbreEcoMarteles), (int)Math.floor(surfaceParcelle*2)));
+        tvEcoR.setText(String.format("Conserver au moins 2 arbres porteurs de micros-habitats par hectare.\nArbres conservés: %s",
+                (nbArbreEcoConserves)));
         // Moins de 2 * surfaceParcelle arbres ECO à la fin de l'exercice
-        if (nbArbreEcoHectare < 2) {
+        if (nbArbreEcoConserves < (2*surfaceParcelle)) {
             tvEcoR.setTextColor(getResources().getColor(R.color.colorRed));
             ivEcoR.setColorFilter(getResources().getColor(R.color.colorRed));
             ivEcoR.setImageResource(R.drawable.cross);
         }
 
 
-        /*******************
-         * CONSIGNE il doit rester au moins  Arbres a noteEco > 6 /ha
-         */
-
-
-
-
-
         /*
-         * GAIN de tous les arbres
-         */
-
-        cur = dbHelper.executeQuery("SELECT SUM(" + DatabaseHelper.VALEUR_ECONOMIQUE + ")"
-                + " FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_MARTELES_TABLE + " am"
-                + " WHERE ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = am." + DatabaseHelper.NUMERO_ARBRE_MART);
-        cur.moveToFirst();
-        gainTotal = cur.getFloat(0);
-
-
-        // AFFICHER GAIN TOTAL
-
-        /*
-         * GAIN de tous les arbres
-         */
-        DecimalFormat df = new DecimalFormat("#0.00");
-        tvGainR.setText(String.format("Gains total du martelage : %s€", df.format(gainTotal)));
-
+            CONSIGNE 3
+        */
 
         return view;
     }
