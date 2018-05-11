@@ -72,7 +72,7 @@ public class VolumeCalculator {
 
     public double getHauteurDecoupe(Tree tree) {
         //si l'arbre est un petit bois on renvoie simplement sa constante
-        if (Double.parseDouble(tree.getDiametre()) <= 30) {
+        if (tree.getDiametre() <= 30) {
             return constants.get(DatabaseHelper.HAUTEUR_MOYENNE_PETIT_BOIS);
         }
         //sinon on va chercher la constante correspondant au type de son essence
@@ -82,7 +82,7 @@ public class VolumeCalculator {
     public double getVolumeCommercial(Tree tree) {
         if (tree.getEtat().equals(ETAT_VIVANT)) {
             return round(constants.get(("VOLUME_COMMERCIAL_".concat(getType(tree))).toUpperCase()) *
-                    Math.pow(Double.parseDouble(tree.getDiametre()) / 100, 2) * getHauteurDecoupe(tree),2);
+                    Math.pow((float)(tree.getDiametre()) / 100, 2) * getHauteurDecoupe(tree),2);
         }
         //un arbre mort n'a pas de volume commercialisable
         return 0d;

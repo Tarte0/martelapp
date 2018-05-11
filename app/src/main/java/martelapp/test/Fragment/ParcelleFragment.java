@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BubbleChart;
 import com.github.mikephil.charting.charts.ScatterChart;
@@ -41,6 +42,7 @@ import martelapp.test.R;
 
 public class ParcelleFragment extends Fragment implements OnChartValueSelectedListener {
 
+    ArrayList<IBubbleDataSet> listBubbleData;
     DatabaseHelper dbHelper;
     Cursor cur1, cur2;
 
@@ -50,6 +52,7 @@ public class ParcelleFragment extends Fragment implements OnChartValueSelectedLi
         View view = inflater.inflate(R.layout.view_page_parcelle, null);
 
         dbHelper = new DatabaseHelper(view.getContext());
+
 
         /*
          *
@@ -72,8 +75,8 @@ public class ParcelleFragment extends Fragment implements OnChartValueSelectedLi
          */
         ArrayList<BubbleEntry> entriesPositionArbre;
         BubbleDataSet bubbleDataSet;
-        ArrayList<IBubbleDataSet> listBubbleData = new ArrayList<>();
-
+        //ArrayList<IBubbleDataSet> listBubbleData = new ArrayList<>();
+        listBubbleData = new ArrayList<>();
         String essence;
         float x, y;
         int diametre;

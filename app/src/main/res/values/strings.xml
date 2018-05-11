@@ -15,7 +15,7 @@
     <string name="exploitabilite_caps">EXPLOITABILITÉ</string>
     <string name="rotations_caps">ROTATIONS</string>
 
-    <string name="carte_id_caps">CARTE D\'IDENTITE</string>
+    <string name="caracteristique_parcelle_caps">CARACTERISTIQUE DE LA PARCELLE</string>
     <string name="graphe_diametre_caps">DIAMETRE</string>
     <string name="graphe_note_eco_caps">NOTE ECOLOGIQUE</string>
     <string name="graphe_essence_caps">ESSENCE</string>
@@ -49,8 +49,6 @@
         \nLes essences rares seront conservées.\n
     </string>
     <string name="consignes_objectif">
-        Volume:
-        \n- Prélevez entre 1/5 et 1/3 du volume soit entre 90 et 140 m3 /ha.
         \n\nBiodiversité:
         \n- Conservez au moins 3 arbres de gros diamètre par hectare.
         \n- Conservez au moins 2 arbres porteurs de micros-habitats par hectare.
@@ -69,12 +67,8 @@
         (sécheresse, attaques parasitaires…).\n
     </string>
 
-
-    <string name="info_carte_id">
-        CARTE ID
-    </string>
     <string name="info_exploitabilite_rotation">
-        \nPour les principales essences :
+        Pour les principales essences :
         \n- Epicéa : de 50 à 70 cm\n- Sapin pectiné : de 45 à 50 cm\n- Hêtre : jusqu’à 50 cm
         \n- Frêne, érables : à partir de 50 cm
 

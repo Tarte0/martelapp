@@ -5,7 +5,7 @@
         android:id="@+id/action_carte_id"
         android:enabled="true"
         android:icon="@drawable/assignment"
-        android:title="@string/carte_id_caps"
+        android:title="@string/caracteristique_parcelle_caps"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_graphe_diametre"

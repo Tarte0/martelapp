@@ -33,6 +33,9 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import org.xml.sax.DTDHandler;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import martelapp.test.Class.DatabaseHelper;
@@ -56,6 +59,17 @@ public class InfosFragment extends Fragment {
     DatabaseHelper dbHelper;
     Cursor cur1, cur2;
 
+    DecimalFormat df;
+
+    int altitude = 0,
+        densiteVivantMortPied = 0,
+        densiteMortSol = 0;
+
+    double  surfaceParcelle = 0f,
+            volumeVivantMortPied = 0f,
+            volumeMortSol = 0f;
+
+    String habitat = "";
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,8 +85,11 @@ public class InfosFragment extends Fragment {
         barChartNoteEco = view.findViewById(R.id.bar_chart_note_eco_info);
         pieChartEssence = view.findViewById(R.id.pie_chart_essence_info);
 
+        df = new DecimalFormat("#0.00");
 
         dbHelper = new DatabaseHelper(view.getContext());
+
+        caracteristiqueParcelle();
 
         grapheDiametre(barChartDiametre);
         grapheNoteEcologique(barChartNoteEco);
@@ -176,8 +193,15 @@ public class InfosFragment extends Fragment {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.action_carte_id:
-                                textViewInfos.setText(R.string.info_carte_id);
-                                textViewTitleInfos.setText(R.string.carte_id_caps);
+                                textViewTitleInfos.setText(R.string.caracteristique_parcelle_caps);
+                                textViewInfos.setText(
+                                          "- altitude : " + Integer.toString(altitude) + " mètres\n"
+                                        + "- habitat naturel : " + habitat + "\n"
+                                        + "- surface : " + df.format(surfaceParcelle) + " ha\n"
+                                        + "- densité (vivants et morts sur pied) : " + Integer.toString(densiteVivantMortPied) + " tiges/ha\n"
+                                        + "- volume : " + Integer.toString((int)volumeVivantMortPied) + " m3/ha\n"
+                                        + "- densité de bois mort au sol : " + Integer.toString(densiteMortSol) + " tiges/ha\n"
+                                        + "- volume de bois mort au sol : " + Integer.toString((int)volumeMortSol) + " m3/ha");
                                 textViewInfos.setVisibility(View.VISIBLE);
                                 previous.setVisibility(View.INVISIBLE);
                                 next.setVisibility(View.VISIBLE);
@@ -255,6 +279,52 @@ public class InfosFragment extends Fragment {
     }
 
 
+    private void caracteristiqueParcelle(){
+        cur1 = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
+        cur1.moveToFirst();
+
+        altitude = (int) cur1.getDouble(cur1.getColumnIndex(DatabaseHelper.ALTITUDE_PARCELLE));
+        surfaceParcelle = cur1.getDouble(cur1.getColumnIndex(DatabaseHelper.SURFACE_PARCELLE));
+        habitat = cur1.getString(cur1.getColumnIndex(DatabaseHelper.HABITAT_PARCELLE));
+
+        // !!!!!!!!!!!!!! A RETIRER QUAND SURFACE SERA EN HA !!!!!!!!!!!!!!!!!!!
+
+        surfaceParcelle = surfaceParcelle / 1000;
+
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+        cur1 = dbHelper.getDataFromTableWithCondition("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL +")",
+                DatabaseHelper.ARBRES_PARCELLE_TABLE,
+                DatabaseHelper.ETAT_ARBRE + " = 'v'" +
+                        " OR " + DatabaseHelper.ETAT_ARBRE + " = 'mp'");
+        cur1.moveToFirst();
+        volumeVivantMortPied = cur1.getDouble(0);
+
+        cur1 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE,
+                DatabaseHelper.ETAT_ARBRE + " = 'v'" +
+                        " OR " + DatabaseHelper.ETAT_ARBRE + " = 'mp'");
+        cur1.moveToFirst();
+        densiteVivantMortPied = cur1.getCount();
+
+        cur1 = dbHelper.getDataFromTableWithCondition("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL +")",
+                DatabaseHelper.ARBRES_PARCELLE_TABLE,
+                DatabaseHelper.ETAT_ARBRE + " = 'ms'");
+        cur1.moveToFirst();
+        volumeMortSol = cur1.getDouble(0);
+
+        cur1 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE,
+                DatabaseHelper.ETAT_ARBRE + " = 'ms'");
+        cur1.moveToFirst();
+        densiteMortSol = cur1.getCount();
+
+        // Valeurs ramenées à l'hectare
+        volumeVivantMortPied = volumeVivantMortPied / surfaceParcelle;
+        volumeMortSol = volumeMortSol / surfaceParcelle;
+
+        densiteVivantMortPied = (int)(densiteVivantMortPied / surfaceParcelle);
+        densiteMortSol = (int)(densiteMortSol / surfaceParcelle);
+    }
+
     private void grapheDiametre(BarChart barChart) {
 
         ArrayList<BarEntry> entriesArbres = new ArrayList<>();
@@ -303,7 +373,7 @@ public class InfosFragment extends Fragment {
              *  de calculer sous forme de tableau de float car on veut que les données soit
              *  sous forme de bar chart stack
              */
-            entriesArbres.add(new BarEntry(i, new float[]{nbArbreVivant, nbArbreMortSol, nbArbreMortPied}));
+            entriesArbres.add(new BarEntry(i, new float[]{nbArbreVivant, nbArbreMortPied, nbArbreMortSol}));
 
             i++;
         }
@@ -462,7 +532,7 @@ public class InfosFragment extends Fragment {
              *  de calculer sous forme de tableau de float car on veut que les données soit
              *  sous forme de bar chart stack
              */
-            entriesArbres.add(new BarEntry(i, new float[]{nbArbreVivant, nbArbreMortSol, nbArbreMortPied}));
+            entriesArbres.add(new BarEntry(i, new float[]{nbArbreVivant, nbArbreMortPied, nbArbreMortSol}));
 
             i++;
         }
@@ -551,8 +621,8 @@ public class InfosFragment extends Fragment {
         // ArrayList contenant les textes des états des arbres pour la légende
         ArrayList<String> titleList = new ArrayList<>();
         titleList.add("Arbres Vivant");
-        titleList.add("Arbres Mort sur Sol");
         titleList.add("Arbres Mort sur Pied");
+        titleList.add("Arbres Mort sur Sol");
 
         // Listes des Entrées de la légende
         ArrayList<LegendEntry> legendeEntrees = new ArrayList<>();

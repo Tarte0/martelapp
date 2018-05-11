@@ -53,6 +53,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String ID_CONSTANTE                 = "_id";
     public static final String NOM_EQUIPE                   = "NOM_EQUIPE";
     public static final String SURFACE_PARCELLE             = "SURFACE_PARCELLE";
+    public static final String ALTITUDE_PARCELLE            = "ALTITUDE_PARCELLE";
+    public static final String HABITAT_PARCELLE             = "HABITAT_PARCELLE";
+    public static final String PRELEVEMENT_VOLUME_MIN       = "PRELEVEMENT_VOLUME_MIN";
+    public static final String PRELEVEMENT_VOLUME_MAX       = "PRELEVEMENT_VOLUME_MAX";
     public static final String HAUTEUR_MOYENNE_FEUILLU      = "HAUTEUR_MOYENNE_FEUILLU";
     public static final String HAUTEUR_MOYENNE_PETIT_BOIS   = "HAUTEUR_MOYENNE_PETIT_BOIS";
     public static final String HAUTEUR_MOYENNE_RESINEUX     = "HAUTEUR_MOYENNE_RESINEUX";
@@ -159,6 +163,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 + ID_CONSTANTE                  + " INTEGER PRIMARY KEY, "
                 + NOM_EQUIPE                    + " TEXT, "
                 + SURFACE_PARCELLE              + " REAL, "
+                + ALTITUDE_PARCELLE             + " REAL, "
+                + HABITAT_PARCELLE              + " TEXT, "
+                + PRELEVEMENT_VOLUME_MIN        + " REAL, "
+                + PRELEVEMENT_VOLUME_MAX        + " REAL, "
                 + HAUTEUR_MOYENNE_FEUILLU       + " REAL, "
                 + HAUTEUR_MOYENNE_PETIT_BOIS    + " REAL, "
                 + HAUTEUR_MOYENNE_RESINEUX      + " REAL, "
@@ -253,16 +261,19 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return res != -1;
     }
 
-    public boolean insertConstante(double hauteurFeuillu, double hauteurPetitBois, double hauteurResineux,
-                                   double prixChauffageFeuillu, double prixChauffageResineux,
-                                   double prixIndustrieFeuillu, double prixIndustrieResineux,
-                                   double prixOeuvreEpicea, double prixOeuvreFeuillu, double prixOeuvreResineux, double prixOeuvreSapin,
-                                   double volumeFeuillu, double volumeResineux){
+    public boolean insertConstante( double prelevementMin, double prelevementMax,
+                                    double hauteurFeuillu, double hauteurPetitBois, double hauteurResineux,
+                                    double prixChauffageFeuillu, double prixChauffageResineux,
+                                    double prixIndustrieFeuillu, double prixIndustrieResineux,
+                                    double prixOeuvreEpicea, double prixOeuvreFeuillu, double prixOeuvreResineux, double prixOeuvreSapin,
+                                    double volumeFeuillu, double volumeResineux){
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(ID_CONSTANTE, 0);
+        contentValues.put(PRELEVEMENT_VOLUME_MIN,       prelevementMin);
+        contentValues.put(PRELEVEMENT_VOLUME_MAX,       prelevementMax);
         contentValues.put(HAUTEUR_MOYENNE_FEUILLU,      hauteurFeuillu);
         contentValues.put(HAUTEUR_MOYENNE_PETIT_BOIS,   hauteurPetitBois);
         contentValues.put(HAUTEUR_MOYENNE_RESINEUX,     hauteurResineux);
@@ -282,10 +293,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return res != -1;
     }
 
-    public void updateSurfaceParcelleConstante(Double surfaceParcelle){
+    public void updateInfosParcelleConstante(double altitude, String habitat,double surfaceParcelle){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE " + CONSTANTES_TABLE
-                + " SET " + SURFACE_PARCELLE + " = " + surfaceParcelle
+                + " SET " + ALTITUDE_PARCELLE + " = " + altitude
+                + ", " + HABITAT_PARCELLE + " = '" + habitat + "'"
+                + ", " + SURFACE_PARCELLE + " = " + surfaceParcelle
                 + " WHERE " + ID_CONSTANTE + " = 0";
 
         db.execSQL(query);

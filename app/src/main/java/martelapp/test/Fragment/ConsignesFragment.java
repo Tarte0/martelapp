@@ -3,6 +3,7 @@ package martelapp.test.Fragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -43,6 +44,11 @@ public class ConsignesFragment extends Fragment {
     DatabaseHelper dbHelper;
     Cursor cur;
 
+    int     prelevementMin = 0,
+            prelevementMax = 0;
+
+    double  volumeBoisTotalParcelleHa = 0f;
+    double  surfaceParcelle = 0f;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,10 +56,7 @@ public class ConsignesFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.view_page_consignes, null);
 
-
         dbHelper = new DatabaseHelper(view.getContext());
-
-        DecimalFormat df = new DecimalFormat("#0.00");
 
         textViewConsignes = (TextView) view.findViewById(R.id.textViewConsignes);
         textViewTitleConsignes = (TextView) view.findViewById(R.id.titleConsignes);
@@ -64,7 +67,28 @@ public class ConsignesFragment extends Fragment {
 
         cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
         cur.moveToFirst();
-        final float surfaceParcelle = cur.getFloat(cur.getColumnIndex(DatabaseHelper.SURFACE_PARCELLE));
+        prelevementMin = (int) cur.getFloat(cur.getColumnIndex(DatabaseHelper.PRELEVEMENT_VOLUME_MIN));
+        prelevementMax = (int) cur.getFloat(cur.getColumnIndex(DatabaseHelper.PRELEVEMENT_VOLUME_MAX));
+
+        surfaceParcelle = cur.getDouble(cur.getColumnIndex(DatabaseHelper.SURFACE_PARCELLE));
+
+
+        // !!!!!!!!!!!!!! A RETIRER QUAND SURFACE SERA EN HA !!!!!!!!!!!!!!!!!!!
+
+        surfaceParcelle = surfaceParcelle / 1000;
+
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+        cur = dbHelper.getDataFromTable("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL +")",
+                                        DatabaseHelper.ARBRES_PARCELLE_TABLE);
+        cur.moveToFirst();
+        volumeBoisTotalParcelleHa = cur.getDouble(0);
+        volumeBoisTotalParcelleHa = volumeBoisTotalParcelleHa / surfaceParcelle;
+
+        dbHelper.close();
+        cur.close();
 
         //on gere le swipe gauche et droite (un peu brute)
         view.setOnTouchListener(new OnSwipeTouchListener(view.getContext()) {
@@ -130,10 +154,10 @@ public class ConsignesFragment extends Fragment {
                                 break;
                             case R.id.action_objectif:
                                 textViewConsignes.setText(R.string.consignes_objectif);
-                                /*textViewConsignes.setText(textViewConsignes.getText() +
-                                                "Notre parcelle fait " + surfaceParcelle + " ha. Il faudra alors prélever un volume entre "
-                                                + (int)(DatabaseHelper.MIN_PRELEVEMENT * surfaceParcelle) + " et "
-                                                + (int)(DatabaseHelper.MAX_PRELEVEMENT * surfaceParcelle) + " m3.\n\n\n");*/
+                                textViewConsignes.setText("Volume :\n" +
+                                        "- Prélever entre " + Integer.toString(prelevementMin) + " % et " + Integer.toString(prelevementMax) + " % du volume de bois de la parcelle" +
+                                        " soit entre " + Integer.toString((int)(volumeBoisTotalParcelleHa * prelevementMin / 100)) + " et " + Integer.toString((int)(volumeBoisTotalParcelleHa * prelevementMax / 100)) + " m3/ha"
+                                + textViewConsignes.getText());
                                 textViewTitleConsignes.setText(R.string.objectif_caps);
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.INVISIBLE);

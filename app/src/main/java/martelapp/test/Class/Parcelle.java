@@ -8,20 +8,24 @@ import java.util.Iterator;
 
 public class Parcelle {
 
+    public String altitude;
     public HashMap<String, Tree> arbres;
+    public String habitat;
     public String nom = "";
     public String lieu ="";
-    public float surface = 0f;
+    public String surface = "";
 
     public Parcelle(){};
 
-    public Parcelle(String name, String place, float surface){
+    public Parcelle(String name, String place, String surface){
         this.nom = name;
         this.lieu = place;
         this.surface = surface;
     }
 
-    public Parcelle(String name, String place, float surface, HashMap<String, Tree> trees){
+    public Parcelle(String altitude, String habitat, String name, String place, String surface, HashMap<String, Tree> trees){
+        this.altitude = altitude;
+        this.habitat = habitat;
         this.nom = name;
         this.lieu = place;
         this.surface = surface;

@@ -9,16 +9,16 @@ import java.util.HashMap;
 public class Tree {
 
     public String numero = "",
-            diametre = "",
-            noteEcologique = "",
             essence = "",
             etat = "";
 
+    public int diametre = 0,
+            noteEcologique = 0;
     public Coord coord;
 
     public UtilisationBois utilisationBois;
 
-    public String getDiametre() {
+    public int getDiametre() {
         return diametre;
     }
 
@@ -35,12 +35,12 @@ public class Tree {
     }
 
     public static class UtilisationBois {
-        public String chauffage = "", industrie = "", oeuvre = "";
+        public double chauffage = 0f, industrie = 0f, oeuvre = 0f;
 
         public UtilisationBois() {
         }
 
-        public UtilisationBois(String chauffage, String industrie, String oeuvre) {
+        public UtilisationBois(double chauffage, double industrie, double oeuvre) {
             this.chauffage = chauffage;
             this.industrie = industrie;
             this.oeuvre = oeuvre;
@@ -50,7 +50,7 @@ public class Tree {
     public Tree() {
     }
 
-    public Tree(String numero, String diametre, String noteEcologique, String essence, String etat) {
+    public Tree(String numero, int diametre, int noteEcologique, String essence, String etat) {
         this.numero = numero;
         this.diametre = diametre;
         this.noteEcologique = noteEcologique;
@@ -58,8 +58,8 @@ public class Tree {
         this.etat = etat;
     }
 
-    public Tree(String numero, String diametre, String noteEcologique, String essence, String etat,
-                String chauffage, String industrie, String oeuvre, double x, double y) {
+    public Tree(String numero, int diametre, int noteEcologique, String essence, String etat,
+                double chauffage, double industrie, double oeuvre, double x, double y) {
         this.numero = numero;
         this.diametre = diametre;
         this.noteEcologique = noteEcologique;
@@ -85,15 +85,15 @@ public class Tree {
         return etat;
     }
 
-    public String getNoteEcologique() {
+    public int getNoteEcologique() {
         return noteEcologique;
     }
 
     public HashMap<String, Double> getUtilBoisAsMap() {
         HashMap<String, Double> util = new HashMap<>();
-        util.put("oeuvre", utilisationBois.oeuvre.equals("")? 0.0 : Double.parseDouble(utilisationBois.oeuvre));
-        util.put("chauffage", utilisationBois.chauffage.equals("")? 0.0 : Double.parseDouble(utilisationBois.chauffage));
-        util.put("industrie", utilisationBois.industrie.equals("")? 0.0 : Double.parseDouble(utilisationBois.industrie));
+        util.put("oeuvre", utilisationBois.oeuvre);
+        util.put("chauffage", utilisationBois.chauffage);
+        util.put("industrie",utilisationBois.industrie);
         return util;
     }
 }
