@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.view.menu.MenuItemImpl;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -59,6 +60,7 @@ public class ConsignesFragment extends Fragment {
         dbHelper = new DatabaseHelper(view.getContext());
 
         textViewConsignes = (TextView) view.findViewById(R.id.textViewConsignes);
+        textViewConsignes.setTextSize(22f);
         textViewTitleConsignes = (TextView) view.findViewById(R.id.titleConsignes);
         bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation_consignes);
         previous = (ImageButton) view.findViewById(R.id.previousConsignes);
@@ -153,11 +155,16 @@ public class ConsignesFragment extends Fragment {
                                 buttonGoToInfos.setVisibility((View.INVISIBLE));
                                 break;
                             case R.id.action_objectif:
-                                textViewConsignes.setText(R.string.consignes_objectif);
-                                textViewConsignes.setText("Volume :\n" +
-                                        "- Prélever entre " + Integer.toString(prelevementMin) + " % et " + Integer.toString(prelevementMax) + " % du volume de bois de la parcelle" +
-                                        " soit entre " + Integer.toString((int)(volumeBoisTotalParcelleHa * prelevementMin / 100)) + " et " + Integer.toString((int)(volumeBoisTotalParcelleHa * prelevementMax / 100)) + " m3/ha"
-                                + textViewConsignes.getText());
+                                textViewConsignes.setText(Html.fromHtml("<b>iufezgiugi</b>"));
+
+                                textViewConsignes.setText(Html.fromHtml("<b>Volume</b>" +
+                                        "<br><br>• Prélever entre " + Integer.toString(prelevementMin) + " % et " + Integer.toString(prelevementMax) + " % du volume de bois de la parcelle" +
+                                        " soit entre " + Integer.toString((int)(volumeBoisTotalParcelleHa * prelevementMin / 100)) + " et " + Integer.toString((int)(volumeBoisTotalParcelleHa * prelevementMax / 100)) + " m3/ha" +
+                                        "<br><br><br><b>Biodiversité</b>" +
+                                        "<br>" +
+                                        "<br>• Conservez au moins 3 arbres de gros diamètre par hectare." +
+                                        "<br>" +
+                                        "<br>• Conservez au moins 2 arbres porteurs de micros-habitats par hectare."));
                                 textViewTitleConsignes.setText(R.string.objectif_caps);
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.INVISIBLE);

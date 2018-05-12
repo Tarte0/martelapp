@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -194,6 +195,7 @@ public class InfosFragment extends Fragment {
                         switch (item.getItemId()) {
                             case R.id.action_carte_id:
                                 textViewTitleInfos.setText(R.string.caracteristique_parcelle_caps);
+                                textViewInfos.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 9));
                                 textViewInfos.setTextSize(24f);
                                 textViewInfos.setText(
                                           "• altitude : " + Integer.toString(altitude) + " mètres\n\n"
@@ -213,7 +215,10 @@ public class InfosFragment extends Fragment {
                                 break;
                             case R.id.action_graphe_diametre:
                                 textViewTitleInfos.setText(R.string.graphe_diametre_caps);
-                                textViewInfos.setVisibility(View.GONE);
+                                textViewInfos.setVisibility(View.VISIBLE);
+                                textViewInfos.setTextSize(18f);
+                                textViewInfos.setText(R.string.axe_nombre_tiges);
+                                textViewInfos.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.5f));
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.VISIBLE);
                                 buttonGoToCarte.setVisibility(View.GONE);
@@ -223,7 +228,10 @@ public class InfosFragment extends Fragment {
                                 break;
                             case R.id.action_graphe_note_eco:
                                 textViewTitleInfos.setText(R.string.graphe_note_eco_caps);
-                                textViewInfos.setVisibility(View.GONE);
+                                textViewInfos.setVisibility(View.VISIBLE);
+                                textViewInfos.setTextSize(18f);
+                                textViewInfos.setText(R.string.axe_nombre_tiges);
+                                textViewInfos.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.5f));
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.VISIBLE);
                                 buttonGoToCarte.setVisibility(View.GONE);
@@ -243,6 +251,7 @@ public class InfosFragment extends Fragment {
                                 break;
                             case R.id.action_graphe_exploitabilite_rotation:
                                 textViewInfos.setTextSize(22f);
+                                textViewInfos.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 9));
                                 textViewInfos.setText(R.string.info_exploitabilite_rotation);
                                 textViewTitleInfos.setText(R.string.information_supplementaire_caps);
                                 textViewInfos.setVisibility(View.VISIBLE);
