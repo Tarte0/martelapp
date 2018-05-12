@@ -36,10 +36,8 @@ public class AnalyseRespectConsignesFragment extends Fragment {
     float volumeTotalBoisMartele;
 
     float diametre;
-    int nbArbresDiamSup50conserve = 0;
 
     float noteEcologique;
-    int nbArbreEcoConserves =0;
 
     double volumeBoisTotalParcelle = 0f;
     double volumeBoisTotalParcelleHa = 0f;
@@ -129,6 +127,8 @@ public class AnalyseRespectConsignesFragment extends Fragment {
         */
 
 
+        int nbArbresDiamSup50conserve = 0;
+
         // Nombre d'abres à diametre > 50 Conservé
         cur = dbHelper.getAllDataFromTableWithCondition(
                  DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_CONSERVES_TABLE + " ac"
@@ -162,6 +162,8 @@ public class AnalyseRespectConsignesFragment extends Fragment {
             CONSIGNE 3:
             Avoir conservé au moins 2 arbres porteurs de micros habitats
         */
+
+        int nbArbreEcoConserves =0;
 
         // Nombre d'abres à NoteEco > 6
         cur = dbHelper.getAllDataFromTableWithCondition(
