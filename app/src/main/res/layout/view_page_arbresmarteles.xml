@@ -7,7 +7,7 @@
     android:background="@color/colorBackground"
     android:weightSum="2"
     android:baselineAligned="false"
-    tools:context="martelapp.test.Activity.RechercheActivity">
+    tools:context="martelapp.test.Activity.ExerciceActivity">
 
 
 

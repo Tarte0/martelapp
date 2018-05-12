@@ -1,4 +1,4 @@
-package martelapp.test.Fragment;
+package martelapp.test.Fragment.Exercice;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -15,10 +15,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import martelapp.test.Activity.MessageErreurArbreMarteleActivity;
-import martelapp.test.Activity.RechercheActivity;
+import martelapp.test.Activity.ExerciceActivity;
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.R;
 
@@ -96,8 +94,8 @@ public class ChoixMartelageFragment extends DialogFragment {
                     dbHelper.insertArbreMartele(numeroArbre);
                     insertRaisonFromCheckBoxes();
 
-                    if(rechercheFragmentView.getContext() instanceof RechercheActivity){
-                        ((RechercheActivity) rechercheFragmentView.getContext()).reloadArbreMartelesFragment();
+                    if(rechercheFragmentView.getContext() instanceof ExerciceActivity){
+                        ((ExerciceActivity) rechercheFragmentView.getContext()).reloadArbreMartelesFragment();
                     }
 
 

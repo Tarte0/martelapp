@@ -12,20 +12,20 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import martelapp.test.Fragment.ArbresMartelesFragment;
-import martelapp.test.Fragment.ChoixConserverFragment;
-import martelapp.test.Fragment.ChoixMartelageFragment;
-import martelapp.test.Fragment.ConsignesFragment;
-import martelapp.test.Fragment.InfosFragment;
-import martelapp.test.Fragment.ParcelleFragment;
-import martelapp.test.Fragment.RechercheFragment;
+import martelapp.test.Fragment.Exercice.ArbresSelectionnesFragment;
+import martelapp.test.Fragment.Exercice.ChoixConserverFragment;
+import martelapp.test.Fragment.Exercice.ChoixMartelageFragment;
+import martelapp.test.Fragment.Exercice.ConsignesFragment;
+import martelapp.test.Fragment.Exercice.InfosFragment;
+import martelapp.test.Fragment.Exercice.CarteParcelleFragment;
+import martelapp.test.Fragment.Exercice.SelectionArbreFragment;
 import martelapp.test.R;
 
-public class RechercheActivity extends AppCompatActivity {
+public class ExerciceActivity extends AppCompatActivity {
     ViewPager viewPager;
     InfosFragment infosf;
     ConsignesFragment cf;
-    ArbresMartelesFragment af;
+    ArbresSelectionnesFragment af;
 
 
     @Override
@@ -54,13 +54,13 @@ public class RechercheActivity extends AppCompatActivity {
         cf.setVp(viewPager);
         infosf = new InfosFragment();
         infosf.setVp(viewPager);
-        af = new ArbresMartelesFragment();
+        af = new ArbresSelectionnesFragment();
         af.setVp(viewPager);
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(cf, "Consignes");
         adapter.addFragment(infosf, "Info");
-        adapter.addFragment(new ParcelleFragment(), "Carte");
-        adapter.addFragment(new RechercheFragment(), "Sélection");
+        adapter.addFragment(new CarteParcelleFragment(), "Carte");
+        adapter.addFragment(new SelectionArbreFragment(), "Sélection");
         adapter.addFragment(af, "Arbres sélectionnés");
         viewPager.setAdapter(adapter);
     }

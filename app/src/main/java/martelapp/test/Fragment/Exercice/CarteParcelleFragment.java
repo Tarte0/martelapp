@@ -1,4 +1,4 @@
-package martelapp.test.Fragment;
+package martelapp.test.Fragment.Exercice;
 
 import android.database.Cursor;
 import android.graphics.Color;
@@ -40,7 +40,7 @@ import martelapp.test.R;
  * Created by cimin on 04/04/2018.
  */
 
-public class ParcelleFragment extends Fragment implements OnChartValueSelectedListener {
+public class CarteParcelleFragment extends Fragment implements OnChartValueSelectedListener {
 
     ArrayList<IBubbleDataSet> listBubbleData;
     DatabaseHelper dbHelper;
@@ -134,8 +134,8 @@ public class ParcelleFragment extends Fragment implements OnChartValueSelectedLi
         BubbleData bubbleData = new BubbleData(listBubbleData);
 
         BubbleChart bubbleChart = view.findViewById(R.id.bubble_chart_parcelle);
-
         bubbleChart.setHardwareAccelerationEnabled(false);
+
         bubbleChart.setData(bubbleData);
 
 

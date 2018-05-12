@@ -1,4 +1,4 @@
-package martelapp.test.Fragment;
+package martelapp.test.Fragment.Analyse;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -27,17 +27,16 @@ import martelapp.test.R;
  * Created by cimin on 24/04/2018.
  */
 
-public class AnalyseTigesDiametreFragment extends Fragment {
-    DatabaseHelper dbHelper;
+public class AnalyseVolumeDiametreFragment extends Fragment {
     Cursor cur1, cur2;
+    DatabaseHelper dbHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.view_page_tiges_diametre, null);
+        View view = inflater.inflate(R.layout.view_page_volume_diametre, null);
 
         dbHelper = new DatabaseHelper(view.getContext());
-
 
         /*
          *
@@ -57,17 +56,17 @@ public class AnalyseTigesDiametreFragment extends Fragment {
          *  ArrayList<String> entriesDiametre : Liste des diamètres pour afficher les labels sur chaque barre
          *  int diametre : on récupère le diamètre à chaque itération pour trier les données par diamètre
          *  int i : Défini une nouvelle entrée de données (par essence) sur l'axe x du graphe
-         *  int nbArbreAvant : Nombre d'arbres initialement dans la parcelle par diamètre
-         *  int nbArbreCoupe : Nombre d'arbres martelés par essence
-         *  int nbArbreApresCoupe : Nombre d'arbres restant sur la parcelle après coupe par essence
+         *  float volumeArbreAvant : Volume d'arbre initialement dans la parcelle par diamètre
+         *  float volumeArbreCoupe : Volume d'arbre martelé par diamètre
+         *  float volumeArbreApresCoupe : Volume d'arbre restant sur la parcelle après coupe par diamètre
          */
-        ArrayList<BarEntry> entriesArbres = new ArrayList<>();
+        ArrayList<BarEntry> entriesVolumeArbre = new ArrayList<>();
         ArrayList<String> entriesDiametre = new ArrayList<>();
         int diametre;
         int i = 0;
-        int nbArbreAvant;
-        int nbArbreCoupe;
-        int nbArbreApresCoupe;
+        float volumeArbreAvant;
+        float volumeArbreCoupe;
+        float volumeArbreApresCoupe;
 
 
         /*
@@ -90,8 +89,11 @@ public class AnalyseTigesDiametreFragment extends Fragment {
             cur2 = dbHelper.getDataFromTableWithCondition("*",DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap, " + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
                     "ap." + dbHelper.NUMERO_ARBRE_PARC + " = am." + dbHelper.NUMERO_ARBRE_MART
                             + " AND ap." + DatabaseHelper.DIAMETRE_ARBRE + " = " + diametre);
-            cur2.moveToFirst();
-            nbArbreCoupe = cur2.getCount();
+
+            volumeArbreCoupe = 0f;
+            while(cur2.moveToNext()){
+                volumeArbreCoupe += cur2.getDouble(cur2.getColumnIndex(DatabaseHelper.VOLUME_COMMERCIAL));
+            }
 
 
             /*
@@ -103,16 +105,20 @@ public class AnalyseTigesDiametreFragment extends Fragment {
              *  parcelle moins le nbArbreCoupe pour l'essence actuelle
              */
             cur2 = dbHelper.getDataFromTableWithCondition("*", DatabaseHelper.ARBRES_PARCELLE_TABLE, DatabaseHelper.DIAMETRE_ARBRE + " = " + diametre);
-            cur2.moveToFirst();
-            nbArbreAvant = cur2.getCount();
-            nbArbreApresCoupe = nbArbreAvant - nbArbreCoupe;
+
+            volumeArbreAvant = 0f;
+            while(cur2.moveToNext()){
+                volumeArbreAvant += cur2.getDouble(cur2.getColumnIndex(DatabaseHelper.VOLUME_COMMERCIAL));
+            }
+
+            volumeArbreApresCoupe = volumeArbreAvant - volumeArbreCoupe;
 
             /*
              *  On ajoute dans la liste des données du graphe les deux valeurs que l'on vient
              *  de calculer sous forme de tableau de float car on veut que les données soit
              *  sous forme de bar chart stack
              */
-            entriesArbres.add(new BarEntry(i, new float[]{nbArbreApresCoupe, nbArbreCoupe}));
+            entriesVolumeArbre.add(new BarEntry(i, new float[]{volumeArbreApresCoupe, volumeArbreCoupe}));
 
             i++;
         }
@@ -133,7 +139,7 @@ public class AnalyseTigesDiametreFragment extends Fragment {
          *
          */
 
-        BarDataSet barDataSet = new BarDataSet(entriesArbres, "");
+        BarDataSet barDataSet = new BarDataSet(entriesVolumeArbre, "");
 
         //add colors to dataset
         ArrayList<Integer> colors = new ArrayList<>();
@@ -142,10 +148,10 @@ public class AnalyseTigesDiametreFragment extends Fragment {
 
         barDataSet.setColors(colors);
 
-        barDataSet.setValueFormatter(new StackedBarFormatter(" | ", 0));
+        barDataSet.setValueFormatter(new StackedBarFormatter(" | ", 2));
 
 
-        BarChart barChart = view.findViewById(R.id.bar_chart_coupe_diametre);
+        BarChart barChart = view.findViewById(R.id.bar_chart_volume);
         BarData barData = new BarData(barDataSet);
         barChart.setData(barData);
 
@@ -187,7 +193,6 @@ public class AnalyseTigesDiametreFragment extends Fragment {
         barChart.getDescription().setTextColor(getResources().getColor(R.color.colorBlack));
 
 
-
         //barChart.getXAxis().setDrawLabels(true);
 
         /* ************************ LEGENDE ****************
@@ -223,7 +228,6 @@ public class AnalyseTigesDiametreFragment extends Fragment {
 
         // Set la légende avec les entrées
         legende.setCustom(legendeEntrees);
-
 
         // Refresh le graphe
         barChart.invalidate();

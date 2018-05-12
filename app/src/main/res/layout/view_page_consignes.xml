@@ -7,7 +7,7 @@
     android:background="@color/colorBackground"
     android:orientation="vertical"
     android:weightSum="10"
-    tools:context="martelapp.test.Activity.RechercheActivity">
+    tools:context="martelapp.test.Activity.ExerciceActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -74,6 +74,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_weight="1"
+                        android:textColor="@color/colorWhite"
+                        android:backgroundTint="@color/colorPrimary"
                         android:text="@string/button_go_to_info" />
                 </LinearLayout>
 

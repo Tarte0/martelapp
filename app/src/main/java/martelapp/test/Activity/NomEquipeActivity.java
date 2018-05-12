@@ -7,18 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.HashMap;
-import java.util.Iterator;
-
 import martelapp.test.Class.DatabaseHelper;
-import martelapp.test.Class.Parcelle;
-import martelapp.test.Class.Tree;
 import martelapp.test.R;
 
 public class NomEquipeActivity extends AppCompatActivity {
@@ -44,7 +33,7 @@ public class NomEquipeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //if(editTextTeamName.getText().length()>0) {
                     nomEquipe = editTextTeamName.getText().toString();
-                    Intent intent = new Intent(getApplicationContext(), RechercheActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), ExerciceActivity.class);
                     intent.putExtra("nomEquipe", nomEquipe);
                     startActivity(intent);
 

@@ -1,4 +1,4 @@
-package martelapp.test.Fragment;
+package martelapp.test.Fragment.Exercice;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -194,7 +194,7 @@ public class InfosFragment extends Fragment {
                         switch (item.getItemId()) {
                             case R.id.action_carte_id:
                                 textViewTitleInfos.setText(R.string.caracteristique_parcelle_caps);
-                                textViewInfos.setTextSize(26f);
+                                textViewInfos.setTextSize(24f);
                                 textViewInfos.setText(
                                           "• altitude : " + Integer.toString(altitude) + " mètres\n\n"
                                         + "• habitat naturel : " + habitat + "\n\n"
@@ -242,7 +242,7 @@ public class InfosFragment extends Fragment {
                                 pieChartEssence.setVisibility(View.VISIBLE);
                                 break;
                             case R.id.action_graphe_exploitabilite_rotation:
-                                textViewInfos.setTextSize(24f);
+                                textViewInfos.setTextSize(22f);
                                 textViewInfos.setText(R.string.info_exploitabilite_rotation);
                                 textViewTitleInfos.setText(R.string.information_supplementaire_caps);
                                 textViewInfos.setVisibility(View.VISIBLE);

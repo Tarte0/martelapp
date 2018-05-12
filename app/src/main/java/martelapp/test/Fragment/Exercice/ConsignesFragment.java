@@ -1,4 +1,4 @@
-package martelapp.test.Fragment;
+package martelapp.test.Fragment.Exercice;
 
 import android.content.Intent;
 import android.database.Cursor;

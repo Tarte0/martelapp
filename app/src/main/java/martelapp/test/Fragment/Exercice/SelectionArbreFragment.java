@@ -1,4 +1,4 @@
-package martelapp.test.Fragment;
+package martelapp.test.Fragment.Exercice;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import martelapp.test.Activity.RechercheActivity;
+import martelapp.test.Activity.ExerciceActivity;
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.R;
 
@@ -22,7 +22,7 @@ import martelapp.test.R;
  * Created by cimin on 04/04/2018.
  */
 
-public class RechercheFragment extends Fragment {
+public class SelectionArbreFragment extends Fragment {
 
     EditText mEditText;
     Button mButton0,
@@ -269,7 +269,7 @@ public class RechercheFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (!numArbreCourant.equals("")) {
-                    ((RechercheActivity) getActivity()).openMartelagePopup(numArbreCourant);
+                    ((ExerciceActivity) getActivity()).openMartelagePopup(numArbreCourant);
                     cleanCard();
                     numArbreCourant = "";
                 }
@@ -281,7 +281,7 @@ public class RechercheFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (!numArbreCourant.equals("")) {
-                    ((RechercheActivity) getActivity()).openConserverPopup(numArbreCourant);
+                    ((ExerciceActivity) getActivity()).openConserverPopup(numArbreCourant);
                     cleanCard();
                     numArbreCourant = "";
                 }

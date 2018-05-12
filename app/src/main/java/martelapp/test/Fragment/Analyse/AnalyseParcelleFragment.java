@@ -1,4 +1,4 @@
-package martelapp.test.Fragment;
+package martelapp.test.Fragment.Analyse;
 
 import android.database.Cursor;
 import android.graphics.Color;

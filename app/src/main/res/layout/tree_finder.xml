@@ -6,7 +6,7 @@
     android:background="@color/colorBackground"
     android:orientation="vertical"
     android:weightSum="6"
-    tools:context="martelapp.test.Activity.RechercheActivity"
+    tools:context="martelapp.test.Activity.ExerciceActivity"
     android:layout_gravity="center"
     android:layout_marginTop="20dp"
     android:layout_marginBottom="20dp"

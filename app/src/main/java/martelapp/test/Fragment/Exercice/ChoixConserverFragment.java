@@ -1,4 +1,4 @@
-package martelapp.test.Fragment;
+package martelapp.test.Fragment.Exercice;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import martelapp.test.Activity.RechercheActivity;
+import martelapp.test.Activity.ExerciceActivity;
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.R;
 
@@ -67,8 +67,8 @@ public class ChoixConserverFragment extends DialogFragment {
                 dbHelper.insertArbreConserve(numeroArbre);
                 dbHelper.insertRaison(numeroArbre, DatabaseHelper.BIODIVERSITE);
 
-                if(rechercheFragmentView.getContext() instanceof RechercheActivity){
-                    ((RechercheActivity) rechercheFragmentView.getContext()).reloadArbreMartelesFragment();
+                if(rechercheFragmentView.getContext() instanceof ExerciceActivity){
+                    ((ExerciceActivity) rechercheFragmentView.getContext()).reloadArbreMartelesFragment();
                 }
 
                 dismiss();

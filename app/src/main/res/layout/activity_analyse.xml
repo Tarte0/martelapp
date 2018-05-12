@@ -7,7 +7,7 @@
     android:background="@color/colorBackground"
     android:orientation="vertical"
     android:weightSum="10"
-    tools:context="martelapp.test.Activity.RechercheActivity">
+    tools:context="martelapp.test.Activity.ExerciceActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

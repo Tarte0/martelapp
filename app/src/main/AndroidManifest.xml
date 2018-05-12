@@ -14,7 +14,7 @@
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Activity.RechercheActivity"
+            android:name=".Activity.ExerciceActivity"
             android:parentActivityName=".Activity.NomEquipeActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />

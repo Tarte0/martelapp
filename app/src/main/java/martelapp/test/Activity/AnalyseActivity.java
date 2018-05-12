@@ -13,17 +13,17 @@ import android.widget.ImageButton;
 import java.util.ArrayList;
 import java.util.List;
 
-import martelapp.test.Fragment.AnalyseListeArbresConservesFragment;
-import martelapp.test.Fragment.AnalyseListeArbresMartelesFragment;
-import martelapp.test.Fragment.AnalyseParcelleFragment;
-import martelapp.test.Fragment.AnalyseRaisonsFragment;
-import martelapp.test.Fragment.AnalyseRespectConsignesFragment;
-import martelapp.test.Fragment.AnalyseSyntheseFragment;
-import martelapp.test.Fragment.AnalyseTigesDiametreFragment;
-import martelapp.test.Fragment.AnalyseTigesEcoFragment;
-import martelapp.test.Fragment.AnalyseTigesEssencesFragment;
-import martelapp.test.Fragment.AnalyseVolumeCategorieFragment;
-import martelapp.test.Fragment.AnalyseVolumeDiametreFragment;
+import martelapp.test.Fragment.Analyse.AnalyseListeArbresConservesFragment;
+import martelapp.test.Fragment.Analyse.AnalyseListeArbresMartelesFragment;
+import martelapp.test.Fragment.Analyse.AnalyseParcelleFragment;
+import martelapp.test.Fragment.Analyse.AnalyseRaisonsFragment;
+import martelapp.test.Fragment.Analyse.AnalyseRespectConsignesFragment;
+import martelapp.test.Fragment.Analyse.AnalyseSyntheseFragment;
+import martelapp.test.Fragment.Analyse.AnalyseTigesDiametreFragment;
+import martelapp.test.Fragment.Analyse.AnalyseTigesEcoFragment;
+import martelapp.test.Fragment.Analyse.AnalyseTigesEssencesFragment;
+import martelapp.test.Fragment.Analyse.AnalyseVolumeCategorieFragment;
+import martelapp.test.Fragment.Analyse.AnalyseVolumeDiametreFragment;
 import martelapp.test.R;
 
 public class AnalyseActivity extends AppCompatActivity {
@@ -97,7 +97,7 @@ public class AnalyseActivity extends AppCompatActivity {
 
     // ajout et associations des Fragments aux onglets
     private void setupViewPager(ViewPager viewPager) {
-        RechercheActivity.Adapter adapter = new RechercheActivity.Adapter(getSupportFragmentManager());
+        ExerciceActivity.Adapter adapter = new ExerciceActivity.Adapter(getSupportFragmentManager());
         adapter.addFragment(new AnalyseRespectConsignesFragment(), "Consignes");
         adapter.addFragment(new AnalyseSyntheseFragment(), "Synthèse");
         adapter.addFragment(new AnalyseListeArbresMartelesFragment(), "Arbres martelés");

@@ -1,4 +1,4 @@
-package martelapp.test.Fragment;
+package martelapp.test.Fragment.Exercice;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -29,7 +29,7 @@ import martelapp.test.Adapter.ArbresMartelesAdapter;
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.R;
 
-public class ArbresMartelesFragment extends Fragment {
+public class ArbresSelectionnesFragment extends Fragment {
     ListView listeArbresMarteles;
 
     ViewPager viewPager;

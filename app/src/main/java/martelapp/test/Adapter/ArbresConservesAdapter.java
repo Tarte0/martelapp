@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import martelapp.test.Class.DatabaseHelper;
-import martelapp.test.Fragment.ChoixMartelageFragment;
+import martelapp.test.Fragment.Exercice.ChoixMartelageFragment;
 import martelapp.test.R;
 
 /**
