@@ -19,7 +19,7 @@
     <string name="graphe_diametre_caps">DIAMETRE</string>
     <string name="graphe_note_eco_caps">NOTE ECOLOGIQUE</string>
     <string name="graphe_essence_caps">ESSENCE</string>
-    <string name="exploitabilite_rotation_caps">EXPLOITABILITE</string>
+    <string name="information_supplementaire_caps">INFORMATIONS SUPPLEMENTAIRES</string>
 
 
     <string name="consignes_general">
@@ -68,11 +68,16 @@
     </string>
 
     <string name="info_exploitabilite_rotation">
-        Pour les principales essences :
+        <b>Exploitabilité</b>
+        \n
+        \nPour les principales essences :
         \n- Epicéa : de 50 à 70 cm\n- Sapin pectiné : de 45 à 50 cm\n- Hêtre : jusqu’à 50 cm
         \n- Frêne, érables : à partir de 50 cm
-
-        \n\nEn général, la rotation varie entre 5 et 15 ans.
+        \n
+        \n
+        \n<b>Rotation</b>
+        \n
+        \nEn général, la rotation varie entre 5 et 15 ans.
 
     </string>
 

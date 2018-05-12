@@ -29,15 +29,12 @@ import martelapp.test.Adapter.ArbresMartelesAdapter;
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.R;
 
-/**
- * Created by cimin on 04/04/2018.
- */
-
 public class ArbresMartelesFragment extends Fragment {
     ListView listeArbresMarteles;
 
     ViewPager viewPager;
 
+    View mainView;
     DatabaseHelper dbHelper;
     Cursor cur1, cur2;
     LinearLayout treeCardNumber;
@@ -47,7 +44,7 @@ public class ArbresMartelesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View mainView = inflater.inflate(R.layout.view_page_arbresmarteles, null);
+        mainView = inflater.inflate(R.layout.view_page_arbresmarteles, null);
 
         dbHelper = new DatabaseHelper(mainView.getContext());
         finishButton = (Button) mainView.findViewById(R.id.finish);
@@ -59,8 +56,7 @@ public class ArbresMartelesFragment extends Fragment {
         listeArbresMarteles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
-                TextView text = view.findViewById(R.id.numero_arbre_martele);
-                if(text == null) text = view.findViewById(R.id.numero_arbre_conserve);
+                TextView text = view.findViewById(R.id.numero_arbre_traite);
 
                 String numero = text.getText().toString();
                 cur1 = dbHelper.executeQuery("Select *"
@@ -94,25 +90,7 @@ public class ArbresMartelesFragment extends Fragment {
             }
         });
 
-        cur1 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
-                "ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = am." + DatabaseHelper.NUMERO_ARBRE_MART +
-                        " ORDER BY CAST(ap." + DatabaseHelper.NUMERO_ARBRE_PARC +" as INTEGER)");
-
-        cur1.moveToFirst();
-
-
-        cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_CONSERVES_TABLE + " ac",
-                                                "ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = ac." + DatabaseHelper.NUMERO_ARBRE_CONS +
-                                                          " ORDER BY CAST(ap." + DatabaseHelper.NUMERO_ARBRE_PARC +" as INTEGER)");
-
-        cur2.moveToFirst();
-        ArbresMartelesAdapter arbresMartelesAdapter = new ArbresMartelesAdapter(mainView.getContext(), cur1);
-        ArbresConservesAdapter arbresConservesAdapter = new ArbresConservesAdapter(mainView.getContext(), cur2);
-
-        MergeAdapter mergeAdapter = new MergeAdapter();
-        mergeAdapter.addAdapter(arbresMartelesAdapter);
-        mergeAdapter.addAdapter(arbresConservesAdapter);
-        listeArbresMarteles.setAdapter(mergeAdapter);
+        reload();
 
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,4 +156,28 @@ public class ArbresMartelesFragment extends Fragment {
         this.viewPager = viewPager;
     }
 
+
+    public void reload() {
+        dbHelper = new DatabaseHelper(mainView.getContext());
+
+        cur1 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
+                "ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = am." + DatabaseHelper.NUMERO_ARBRE_MART +
+                        " ORDER BY CAST(ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " as INTEGER)");
+
+        cur1.moveToFirst();
+
+
+        cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_CONSERVES_TABLE + " ac",
+                "ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = ac." + DatabaseHelper.NUMERO_ARBRE_CONS +
+                        " ORDER BY CAST(ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " as INTEGER)");
+
+        cur2.moveToFirst();
+        ArbresMartelesAdapter arbresMartelesAdapter = new ArbresMartelesAdapter(mainView.getContext(), cur1, false);
+        ArbresConservesAdapter arbresConservesAdapter = new ArbresConservesAdapter(mainView.getContext(), cur2, false);
+
+        MergeAdapter mergeAdapter = new MergeAdapter();
+        mergeAdapter.addAdapter(arbresMartelesAdapter);
+        mergeAdapter.addAdapter(arbresConservesAdapter);
+        listeArbresMarteles.setAdapter(mergeAdapter);
+    }
 }

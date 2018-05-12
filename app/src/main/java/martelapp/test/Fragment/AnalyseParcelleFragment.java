@@ -179,6 +179,7 @@ public class AnalyseParcelleFragment extends Fragment {
         ScatterData scatterData = new ScatterData(listScatterData);
 
         ScatterChart scatterChart = view.findViewById(R.id.scatter_chart_carte);
+        scatterChart.setHardwareAccelerationEnabled(false);
         scatterChart.setData(scatterData);
 
         // Empêcher zoom

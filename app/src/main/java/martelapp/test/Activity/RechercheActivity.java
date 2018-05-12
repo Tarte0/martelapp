@@ -61,7 +61,7 @@ public class RechercheActivity extends AppCompatActivity {
         adapter.addFragment(infosf, "Info");
         adapter.addFragment(new ParcelleFragment(), "Carte");
         adapter.addFragment(new RechercheFragment(), "Sélection");
-        adapter.addFragment(new ArbresMartelesFragment(), "Arbres sélectionnés");
+        adapter.addFragment(af, "Arbres sélectionnés");
         viewPager.setAdapter(adapter);
     }
 
@@ -117,6 +117,14 @@ public class RechercheActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+    }
+
+    public void reloadArbreMartelesFragment()
+    {
+        if(af != null){
+            System.out.println("jpasse dans onResume()");
+            af.reload();
+        }
     }
 }
 

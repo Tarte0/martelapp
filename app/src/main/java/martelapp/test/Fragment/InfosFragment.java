@@ -194,14 +194,15 @@ public class InfosFragment extends Fragment {
                         switch (item.getItemId()) {
                             case R.id.action_carte_id:
                                 textViewTitleInfos.setText(R.string.caracteristique_parcelle_caps);
+                                textViewInfos.setTextSize(26f);
                                 textViewInfos.setText(
-                                          "- altitude : " + Integer.toString(altitude) + " mètres\n"
-                                        + "- habitat naturel : " + habitat + "\n"
-                                        + "- surface : " + df.format(surfaceParcelle) + " ha\n"
-                                        + "- densité (vivants et morts sur pied) : " + Integer.toString(densiteVivantMortPied) + " tiges/ha\n"
-                                        + "- volume : " + Integer.toString((int)volumeVivantMortPied) + " m3/ha\n"
-                                        + "- densité de bois mort au sol : " + Integer.toString(densiteMortSol) + " tiges/ha\n"
-                                        + "- volume de bois mort au sol : " + Integer.toString((int)volumeMortSol) + " m3/ha");
+                                          "• altitude : " + Integer.toString(altitude) + " mètres\n\n"
+                                        + "• habitat naturel : " + habitat + "\n\n"
+                                        + "• surface : " + df.format(surfaceParcelle) + " ha\n\n"
+                                        + "• densité (vivants et morts sur pied) : " + Integer.toString(densiteVivantMortPied) + " tiges/ha\n\n"
+                                        + "• volume : " + Integer.toString((int)volumeVivantMortPied) + " m3/ha\n\n"
+                                        + "• densité de bois mort au sol : " + Integer.toString(densiteMortSol) + " tiges/ha\n\n"
+                                        + "• volume de bois mort au sol : " + Integer.toString((int)volumeMortSol) + " m3/ha");
                                 textViewInfos.setVisibility(View.VISIBLE);
                                 previous.setVisibility(View.INVISIBLE);
                                 next.setVisibility(View.VISIBLE);
@@ -241,8 +242,9 @@ public class InfosFragment extends Fragment {
                                 pieChartEssence.setVisibility(View.VISIBLE);
                                 break;
                             case R.id.action_graphe_exploitabilite_rotation:
+                                textViewInfos.setTextSize(24f);
                                 textViewInfos.setText(R.string.info_exploitabilite_rotation);
-                                textViewTitleInfos.setText(R.string.exploitabilite_rotation_caps);
+                                textViewTitleInfos.setText(R.string.information_supplementaire_caps);
                                 textViewInfos.setVisibility(View.VISIBLE);
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.INVISIBLE);
@@ -422,8 +424,8 @@ public class InfosFragment extends Fragment {
         // Axe des X en bas du graphe
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
-        xAxis.setTextSize(13f);
-        yAxisLeft.setTextSize(13f);
+        xAxis.setTextSize(18f);
+        yAxisLeft.setTextSize(18f);
 
         // Axe des Y droit désactivé
         barChart.getAxisRight().setEnabled(false);
@@ -438,8 +440,8 @@ public class InfosFragment extends Fragment {
         yAxisLeft.setAxisMinimum(0f);
 
         barChart.getDescription().setText(getResources().getString(R.string.axe_diametre_cm));
-        barChart.getDescription().setYOffset(-40f);
-        barChart.getDescription().setTextSize(16f);
+        barChart.getDescription().setYOffset(-50f);
+        barChart.getDescription().setTextSize(18f);
         barChart.getDescription().setTextColor(getResources().getColor(R.color.colorBlack));
 
 
@@ -582,8 +584,8 @@ public class InfosFragment extends Fragment {
         // Axe des X en bas du graphe
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
-        xAxis.setTextSize(13f);
-        yAxisLeft.setTextSize(13f);
+        xAxis.setTextSize(18f);
+        yAxisLeft.setTextSize(18f);
 
         // Axe des Y droit désactivé
         barChart.getAxisRight().setEnabled(false);
@@ -598,8 +600,8 @@ public class InfosFragment extends Fragment {
         yAxisLeft.setAxisMinimum(0f);
 
         barChart.getDescription().setText(getResources().getString(R.string.axe_note_eco));
-        barChart.getDescription().setYOffset(-40f);
-        barChart.getDescription().setTextSize(16f);
+        barChart.getDescription().setYOffset(-50f);
+        barChart.getDescription().setTextSize(18f);
         barChart.getDescription().setTextColor(getResources().getColor(R.color.colorBlack));
 
         //barChart.getXAxis().setDrawLabels(true);
@@ -764,6 +766,4 @@ public class InfosFragment extends Fragment {
         // Refresh le graphe
         pieChart.invalidate();
     }
-
-
 }

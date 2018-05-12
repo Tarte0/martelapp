@@ -18,6 +18,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import martelapp.test.Activity.MessageErreurArbreMarteleActivity;
+import martelapp.test.Activity.RechercheActivity;
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.R;
 
@@ -36,7 +37,7 @@ public class ChoixMartelageFragment extends DialogFragment {
              textViewDiametre;
     DatabaseHelper dbHelper;
     Cursor cur1;
-    int noteEcologiqueHaute = 6;
+    public static int noteEcologiqueHaute = 6;
     private String numeroArbre;
 
     @Override
@@ -94,6 +95,11 @@ public class ChoixMartelageFragment extends DialogFragment {
                     cur.moveToFirst();
                     dbHelper.insertArbreMartele(numeroArbre);
                     insertRaisonFromCheckBoxes();
+
+                    if(rechercheFragmentView.getContext() instanceof RechercheActivity){
+                        ((RechercheActivity) rechercheFragmentView.getContext()).reloadArbreMartelesFragment();
+                    }
+
 
                     if (cur.getInt(cur.getColumnIndex(DatabaseHelper.NOTE_ECO_ARBRE)) > noteEcologiqueHaute) {
                         Intent intent = new Intent(view.getContext(), MessageErreurArbreMarteleActivity.class);

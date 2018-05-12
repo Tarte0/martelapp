@@ -134,7 +134,10 @@ public class ParcelleFragment extends Fragment implements OnChartValueSelectedLi
         BubbleData bubbleData = new BubbleData(listBubbleData);
 
         BubbleChart bubbleChart = view.findViewById(R.id.bubble_chart_parcelle);
+
+        bubbleChart.setHardwareAccelerationEnabled(false);
         bubbleChart.setData(bubbleData);
+
 
         // Empêcher zoom
         bubbleChart.setScaleEnabled(false);

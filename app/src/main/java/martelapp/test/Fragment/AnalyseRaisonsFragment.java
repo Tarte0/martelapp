@@ -130,7 +130,7 @@ public class AnalyseRaisonsFragment extends Fragment {
         YAxis yAxisL = barChartRaisonPercentage.getAxisLeft();
         YAxis yAxisR = barChartRaisonPercentage.getAxisRight();
 
-        yAxisL.setTextSize(13f);
+        yAxisL.setTextSize(18f);
 
         yAxisL.setAxisMinimum(0f);
         yAxisL.setAxisMaximum(105f);
@@ -163,14 +163,14 @@ public class AnalyseRaisonsFragment extends Fragment {
 
         // Axe des X en bas du graphe
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextSize(13f);
+        xAxis.setTextSize(18f);
 
         barChartRaisonPercentage.getDescription().setText(getResources().getString(R.string.axe_raison));
-        barChartRaisonPercentage.getDescription().setYOffset(-40f);
-        barChartRaisonPercentage.getDescription().setTextSize(16f);
+        barChartRaisonPercentage.getDescription().setYOffset(-50f);
+        barChartRaisonPercentage.getDescription().setTextSize(18f);
         barChartRaisonPercentage.getDescription().setTextColor(getResources().getColor(R.color.colorBlack));
 
-        barChartRaisonPercentage.setViewPortOffsets(30f,0f,20f, 55f);
+        //barChartRaisonPercentage.setViewPortOffsets(30f,0f,20f, 55f);
 
         // Ne pas dessiner la grille de fond
         barChartRaisonPercentage.getAxisLeft().setDrawGridLines(false);
@@ -182,7 +182,7 @@ public class AnalyseRaisonsFragment extends Fragment {
         // Axe des Y droit désactivé
         barChartRaisonPercentage.getAxisRight().setEnabled(false);
 
-        barChartRaisonPercentage.setExtraBottomOffset(15f);
+        barChartRaisonPercentage.setExtraBottomOffset(50f);
         // Refresh le graphe
         barChartRaisonPercentage.invalidate();
 

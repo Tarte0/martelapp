@@ -16,6 +16,11 @@ public class StackedBarFormatter implements IValueFormatter {
     private DecimalFormat format;
     private String appendix;
 
+    private int indexValue = 0;
+    private int top = 1;
+    private boolean topValue = false;
+    private boolean bottomValue = false;
+
     public StackedBarFormatter(String appendix, int decimals){
         this.appendix = appendix;
 
@@ -32,30 +37,52 @@ public class StackedBarFormatter implements IValueFormatter {
     @Override
     public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
 
-        if(entry instanceof BarEntry){
+        if(entry instanceof BarEntry) {
+
 
             BarEntry barEntry = (BarEntry) entry;
+
             float[] values = barEntry.getYVals();
             StringBuffer result = new StringBuffer();
-            int top = 1;
 
-            if(values != null){
+            if (values != null) {
 
-                for(; top <= values.length; top++){
-                    if(values[values.length - top] != 0){
-                        break;
-                    }
-                }
-
-                if(values[values.length - top] == value) {
-                    for (int i = 0; i < values.length; i++) {
-                        result.append(format.format(values[i]));
-                        if (i != values.length - 1) {
-                            result.append(appendix);
+                if(!bottomValue){
+                    for(int i = 0; i < values.length; i++){
+                        if(values[i] != 0){
+                            bottomValue = true;
+                            indexValue = i;
+                            break;
                         }
                     }
-                    return result.toString();
                 }
+
+                if(!topValue) {
+                    for (; top <= values.length; top++) {
+                        if (values[values.length - top] != 0) {
+                            topValue = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (indexValue < values.length - top) {
+                    indexValue++;
+                    return "";
+                }
+
+                indexValue = 0;
+                top = 1;
+                topValue = false;
+                bottomValue = false;
+
+                for (int i = 0; i < values.length; i++) {
+                    result.append(format.format(values[i]));
+                    if (i != values.length - 1) {
+                        result.append(appendix);
+                    }
+                }
+                return result.toString();
             }
         }
 

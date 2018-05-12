@@ -2,13 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_arbres_traites"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBarOrange"
-    android:padding="10dp" >
+    android:padding="10dp">
 
     <TextView
-        android:id="@+id/numero_arbre_conserve"
+        android:id="@+id/numero_arbre_traite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -19,27 +19,27 @@
         tools:text="numero" />
 
     <TextView
-        android:id="@+id/essence_arbre_conserve"
+        android:id="@+id/essence_arbre_traite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/numero_arbre_traite"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
-        android:layout_alignBottom="@+id/numero_arbre_conserve"
-        android:layout_toEndOf="@+id/numero_arbre_conserve"
-        android:layout_toRightOf="@+id/numero_arbre_conserve"
+        android:layout_toEndOf="@+id/numero_arbre_traite"
+        android:layout_toRightOf="@+id/numero_arbre_traite"
         android:textColor="@android:color/black"
         android:textSize="24sp"
         tools:text="essence" />
 
     <TextView
-        android:id="@+id/diametre_arbre_conserve"
+        android:id="@+id/diametre_arbre_traite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/numero_arbre_traite"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
-        android:layout_alignBottom="@+id/numero_arbre_conserve"
-        android:layout_toEndOf="@+id/essence_arbre_conserve"
-        android:layout_toRightOf="@+id/essence_arbre_conserve"
+        android:layout_toEndOf="@+id/essence_arbre_traite"
+        android:layout_toRightOf="@+id/essence_arbre_traite"
         android:textColor="@android:color/black"
         android:textSize="24sp"
         tools:text="diametre" />

@@ -38,7 +38,7 @@
                 android:id="@+id/axe_volume"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:textColor="@color/colorBlack"
                 android:text="@string/axe_volume_m3" />
 

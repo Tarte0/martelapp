@@ -15,6 +15,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.StackedValueFormatter;
 
 import java.util.ArrayList;
 
@@ -141,14 +142,11 @@ public class AnalyseTigesEssencesFragment extends Fragment {
 
         barDataSet.setColors(colors);
 
-        //barDataSet.setValueFormatter(new IntegerFormatter());
         barDataSet.setValueFormatter(new StackedBarFormatter(" | ", 0));
-
 
         BarChart barChart = view.findViewById(R.id.bar_chart_coupe_essence);
         BarData barData = new BarData(barDataSet);
         barChart.setData(barData);
-
 
         XAxis xAxis = barChart.getXAxis();
         YAxis yAxisLeft = barChart.getAxisLeft();
@@ -166,8 +164,8 @@ public class AnalyseTigesEssencesFragment extends Fragment {
         // Axe des X en bas du graphe
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
-        xAxis.setTextSize(11f);
-        yAxisLeft.setTextSize(13f);
+        xAxis.setTextSize(18f);
+        yAxisLeft.setTextSize(18f);
 
         // Axe des Y droit désactivé
         barChart.getAxisRight().setEnabled(false);
@@ -182,8 +180,8 @@ public class AnalyseTigesEssencesFragment extends Fragment {
         yAxisLeft.setAxisMinimum(0f);
 
         barChart.getDescription().setText(getResources().getString(R.string.axe_essence));
-        barChart.getDescription().setYOffset(-40f);
-        barChart.getDescription().setTextSize(16f);
+        barChart.getDescription().setYOffset(-50f);
+        barChart.getDescription().setTextSize(18f);
         barChart.getDescription().setTextColor(getResources().getColor(R.color.colorBlack));
 
 

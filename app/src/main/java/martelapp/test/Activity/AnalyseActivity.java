@@ -13,6 +13,8 @@ import android.widget.ImageButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import martelapp.test.Fragment.AnalyseListeArbresConservesFragment;
+import martelapp.test.Fragment.AnalyseListeArbresMartelesFragment;
 import martelapp.test.Fragment.AnalyseParcelleFragment;
 import martelapp.test.Fragment.AnalyseRaisonsFragment;
 import martelapp.test.Fragment.AnalyseRespectConsignesFragment;
@@ -98,6 +100,8 @@ public class AnalyseActivity extends AppCompatActivity {
         RechercheActivity.Adapter adapter = new RechercheActivity.Adapter(getSupportFragmentManager());
         adapter.addFragment(new AnalyseRespectConsignesFragment(), "Consignes");
         adapter.addFragment(new AnalyseSyntheseFragment(), "Synthèse");
+        adapter.addFragment(new AnalyseListeArbresMartelesFragment(), "Arbres martelés");
+        adapter.addFragment(new AnalyseListeArbresConservesFragment(), "Arbres conservés");
         adapter.addFragment(new AnalyseTigesEssencesFragment(), "Essences");
         adapter.addFragment(new AnalyseTigesDiametreFragment(), "Diametre");
         adapter.addFragment(new AnalyseTigesEcoFragment(), "Note écologique");

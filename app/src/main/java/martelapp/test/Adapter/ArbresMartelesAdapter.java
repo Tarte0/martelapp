@@ -7,10 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import martelapp.test.Class.DatabaseHelper;
+import martelapp.test.Fragment.ChoixMartelageFragment;
 import martelapp.test.R;
 
 /**
@@ -19,23 +20,42 @@ import martelapp.test.R;
 
 public class ArbresMartelesAdapter extends CursorAdapter {
 
-    public ArbresMartelesAdapter(Context context, Cursor cursor) {
+    private boolean analyse = false;
+
+    public ArbresMartelesAdapter(Context context, Cursor cursor, boolean analyse) {
         super(context, cursor, 0);
+        this.analyse = analyse;
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.arbres_marteles_row_layout, parent, false);
+        return LayoutInflater.from(context).inflate(R.layout.arbres_traites_row_layout, parent, false);
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        TextView numeroArbreMartele =  view.findViewById(R.id.numero_arbre_martele);
-        TextView essenceArbreMartele =  view.findViewById(R.id.essence_arbre_martele);
-        TextView diameteArbreMartele =  view.findViewById(R.id.diametre_arbre_martele);
+        RelativeLayout layoutArbreMarteles = view.findViewById(R.id.layout_arbres_traites);
+
+        TextView numeroArbreMartele =  view.findViewById(R.id.numero_arbre_traite);
+        TextView essenceArbreMartele =  view.findViewById(R.id.essence_arbre_traite);
+        TextView diameteArbreMartele =  view.findViewById(R.id.diametre_arbre_traite);
 
         numeroArbreMartele.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC)));
         essenceArbreMartele.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE)));
         diameteArbreMartele.setText(Integer.toString(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.DIAMETRE_ARBRE))));
+
+        int noteEcologique = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.NOTE_ECO_ARBRE));
+
+        if(analyse){
+            if(noteEcologique > ChoixMartelageFragment.noteEcologiqueHaute) {
+                layoutArbreMarteles.setBackgroundColor(Color.RED);
+            }
+            else{
+                layoutArbreMarteles.setBackgroundColor(view.getResources().getColor(R.color.colorWhite));
+            }
+        }
+        else{
+            layoutArbreMarteles.setBackgroundColor(view.getResources().getColor(R.color.colorWhite));
+        }
     }
 }

@@ -166,8 +166,8 @@ public class AnalyseTigesDiametreFragment extends Fragment {
         // Axe des X en bas du graphe
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
-        xAxis.setTextSize(13f);
-        yAxisLeft.setTextSize(13f);
+        xAxis.setTextSize(18f);
+        yAxisLeft.setTextSize(18f);
 
         // Axe des Y droit désactivé
         barChart.getAxisRight().setEnabled(false);
@@ -182,8 +182,8 @@ public class AnalyseTigesDiametreFragment extends Fragment {
         yAxisLeft.setAxisMinimum(0f);
 
         barChart.getDescription().setText(getResources().getString(R.string.axe_diametre_cm));
-        barChart.getDescription().setYOffset(-40f);
-        barChart.getDescription().setTextSize(16f);
+        barChart.getDescription().setYOffset(-50f);
+        barChart.getDescription().setTextSize(18f);
         barChart.getDescription().setTextColor(getResources().getColor(R.color.colorBlack));
 
 

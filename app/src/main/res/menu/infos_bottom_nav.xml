@@ -29,6 +29,6 @@
         android:id="@+id/action_graphe_exploitabilite_rotation"
         android:enabled="true"
         android:icon="@drawable/pie_chart"
-        android:title="@string/exploitabilite_rotation_caps"
+        android:title="@string/information_supplementaire_caps"
         app:showAsAction="ifRoom" />
 </menu>

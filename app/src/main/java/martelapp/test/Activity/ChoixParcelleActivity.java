@@ -1,13 +1,17 @@
 package martelapp.test.Activity;
 
-import android.content.Intent;
+import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.provider.ContactsContract;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -16,8 +20,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.Class.Parcelle;
@@ -26,34 +33,7 @@ import martelapp.test.Class.VolumeCalculator;
 import martelapp.test.R;
 
 
-/**
- * <b>MainActivity est la première activité lors du lancement de l'application où
- * l'utilisateur peut choisir de commencer un nouvel exercice ou de continuer un
- * exercice en cours </b>
- *
- * <p>
- * Dans cette activité est récupérée la base de données firebase de la parcelle
- * pour l'enregistrer localement dans l'appareil avec SQLITE.
- * </p>
- *
- * <p>
- * Deux boutons sont présent dans cette activité :
- * <ul>
- * <li>Nouvel exercice : Supprime les données SQLITE utilisées pour un exercice et
- * lance NomEquipeActivity pour démarrer un nouvel exercice.
- * Les tables concernées sont ARBRES_MARTELES_TABLE, ARBRES_CONSERVES_TABLE et RAISON_TABLE.</li>
- * <li>Continuer exercice : Lance ExerciceActivity. Ce bouton est une sécurité en cas de crash de
- * l'application ou d'une mauvaise manipulation de l'utilisateur pour qu'il puisse retrouver son
- * exercice en cours.</li>
- * </p>
- *
- * @see DatabaseHelper
- *
- * @author Baptiste
- * @version 1.0
- *
- */
-public class MainActivity extends AppCompatActivity {
+public class ChoixParcelleActivity extends AppCompatActivity {
 
     /**
      * Le nom de parcelle où va être récupérées toutes les informations
@@ -186,134 +166,105 @@ public class MainActivity extends AppCompatActivity {
      */
     public static final String CHAMP_MIN                = "min";
 
-
+    Spinner spinnerParcelles;
+    TextView textTemoin;
+    ProgressBar progressBarListe;
     /**
      * Référence de la base de données firebase pour récupérer les données
      */
     private DatabaseReference firebaseDatabase;
 
-    /**
-     * Référence de la base de données firebase pour le test de la connexion
-     */
-    private DatabaseReference connectedRef;
 
-
-    /**
-     * La base de données SQLITE locale
-     *
-     * @see DatabaseHelper
-     */
-    private DatabaseHelper dbHelper;
-
+    DatabaseHelper dbHelper;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_choix_parcelle);
 
-        // Récupération de la base de données SQLITE locale
         dbHelper = new DatabaseHelper(getApplicationContext());
-
-        //getApplicationContext().deleteDatabase(DatabaseHelper.DATABASE_NAME);
 
         // Récupération de la base de données firebase
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
 
+        spinnerParcelles = findViewById(R.id.spinner_parcelle_firebase);
+        textTemoin = findViewById(R.id.text_temoin);
+        progressBarListe = findViewById(R.id.progressBar_liste);
 
+        progressBarListe.setVisibility(View.INVISIBLE);
 
-        /*#################################
-         *###  Bouton "Nouvel Exercice" ###
-         *#################################
+        /*##########################
+         *###  Bouton "Test MAJ" ###
+         *##########################
          *
-         * Efface toutes les données qu'il y a dans les tables
-         * ARBRES_MARTELES_TABLE, ARBRES_CONSERVES_TABLE et RAISON_TABLE
-         * et lance l'activité du choix du nom de l'équipe NomEquipeActivity
-         * pour commencer un nouvel exercice de martelage.
+         * Met à jour les données de ARBRES_PARCELLE_TABLE,
+         * CONSTANTES_TABLE et TYPE_ARBRE_TABLE depuis une
+         * base de données Firebase en testant premièrement
+         * s'il y a une connexion à internet.
          */
-        Button buttonNouvelExercice = findViewById(R.id.nouvel_exercice);
-        buttonNouvelExercice.setOnClickListener(new View.OnClickListener() {
+        Button buttonMajBdd = findViewById(R.id.button_maj_bdd);
+        buttonMajBdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dbHelper.clearTableExercice();
-                Intent intent = new Intent(getApplicationContext(), NomEquipeActivity.class);
-                startActivity(intent);
+                if(spinnerParcelles.getSelectedItem() != null) {
+                    if (isNetworkAvailable(getApplicationContext())) {
+                        miseAJourConstantesTable();
+                        miseAJourParcelle(spinnerParcelles.getSelectedItem().toString());
+                        textTemoin.setText("Mise a jour de la base de données avec la parcelle : " + spinnerParcelles.getSelectedItem().toString());
+                    } else {
+                        textTemoin.setText("Pas de connexion internet maj bdd");
+                    }
+                }
             }
         });
 
-
-        /*####################################
-         *###  Bouton "Continuer Exercice" ###
-         *####################################
-         *
-         * Lance l'activité de l'exercice de martelage ExerciceActivity.
-         * Sécurité en cas de mauvaise manipulation de l'utilisateur
-         * ou de crash de l'application pour que l'utilisateur puisse
-         * retrouver sa progression de l'exercice.
-         */
-        Button buttonContinuerExercice = findViewById(R.id.continuer_exercice);
-        buttonContinuerExercice.setOnClickListener(new View.OnClickListener() {
+        Button buttonRefreshList = findViewById(R.id.button_refresh_liste);
+        buttonRefreshList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), RechercheActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
-        Button buttonTestMAJ = findViewById(R.id.test_maj_bdd);
-        buttonTestMAJ.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ChoixParcelleActivity.class);
-                startActivity(intent);
+                if (isNetworkAvailable(getApplicationContext())) {
+                    progressBarListe.setVisibility(View.VISIBLE);
+                    getAllParcelle();
+                    textTemoin.setText("");
+                } else {
+                    textTemoin.setText("Pas de connexion internet get all parcelle");
+                }
             }
         });
     }
 
-    /**
-     * Met à jour ARBRES_PARCELLE_TABLE avec la base de données firebase.
-     *
-     * <p>
-     * La méthode commence par supprimer toutes les données que contient ARBRES_PARCELLE_TABLE.
-     * </p>
-     *
-     * <p>
-     * La table est mise à jour à partir de la référence firebaseDatabase
-     * dans le CHAMP_PARCELLE et récupère toutes les informations
-     * de la parcelle NOM_PARCELLE_FIREBASE dans une instance de la
-     * classe Parcelle.
-     * </p>
-     *
-     * <p>
-     * La méthode récupère également des informations depuis CONSTANTES_TABLE
-     * et TYPE_ARBRE_TABLE pour calculer le volume et la valeur économique d'un
-     * arbre à l'aide de VolumeCalculator.
-     * </p>
-     *
-     * <p>
-     * Une fois les informations d'un arbre récupérées, elles sont insérées dans la table.
-     * </p>
-     *
-     * @see DatabaseHelper#ARBRES_PARCELLE_TABLE
-     * @see DatabaseHelper#CONSTANTES_TABLE
-     * @see DatabaseHelper#TYPE_ARBRE_TABLE
-     * @see DatabaseHelper#clearTable(String)
-     * @see DatabaseHelper#insertArbreParcelle(String, String, int, int, String , double, double, double, double, double,,double, double)
-     *
-     * @see MainActivity#firebaseDatabase
-     * @see MainActivity#CHAMP_PARCELLES
-     * @see MainActivity#NOM_PARCELLE_FIREBASE
-     *
-     * @see Parcelle
-     *
-     * @see VolumeCalculator
-     *
-     */
-    public void miseAJourParcelle(){
+    public void getAllParcelle(){
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<String> listeParcelles = new ArrayList<>();
 
-        // Suppression des données de ARBRES_PARCELLE_TABLE
-        dbHelper.clearTable(DatabaseHelper.ARBRES_PARCELLE_TABLE);
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    String parcelle = child.getKey();
+
+                    listeParcelles.add(parcelle);
+                }
+
+                ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), R.layout.spinner_item, listeParcelles);
+                adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+
+                spinnerParcelles.setAdapter(adapter);
+
+                progressBarListe.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+
+        firebaseDatabase.child(CHAMP_PARCELLES).addListenerForSingleValueEvent(postListener);
+    }
+
+    public void miseAJourParcelle(String parcelle){
+
+
 
         /*
          * Listener qui récupère toute la parcelle à partir de la base de données firebase
@@ -324,7 +275,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-
+                // Suppression des données de ARBRES_PARCELLE_TABLE
+                dbHelper.clearTable(DatabaseHelper.ARBRES_PARCELLE_TABLE);
 
                 /*
                  *----------------------------------------------------------------
@@ -422,38 +374,11 @@ public class MainActivity extends AppCompatActivity {
         };
 
         // On assigne le listener "postListener" à notre parcelle NOM_PARCELLE_FIREBASE de la référence firebaseDatabase
-        firebaseDatabase.child(CHAMP_PARCELLES).child(NOM_PARCELLE_FIREBASE).addListenerForSingleValueEvent(postListener);
+        firebaseDatabase.child(CHAMP_PARCELLES).child(parcelle).addListenerForSingleValueEvent(postListener);
     }
 
-    /**
-     * Met à jour CONSTANTES_TABLE et TYPE_ARBRE_TABLE avec la base de données firebase.
-     *
-     * <p>
-     * La méthode commence par supprimer toutes les données que contient CONSTANTES_TABLE et TYPE_ARBRE_TABLE.
-     * </p>
-     *
-     * <p>
-     * La table est mise à jour à partir de la référence firebaseDatabase
-     * dans le CHAMP_METADATA et récupère toutes les constantes du CHAMP_CONSTANTES
-     * et le type des arbres selon l'essence du CHAMP_ESSENCES.
-     * </p>
-     *
-     * <p>
-     * Les informations sont ensuite insérées dans CONSTANTES_TABLE et TYPE_ARBRE_TABLE.
-     * </p>
-     *
-     * @see DatabaseHelper#CONSTANTES_TABLE
-     * @see DatabaseHelper#TYPE_ARBRE_TABLE
-     * @see DatabaseHelper#clearTable(String)
-     * @see DatabaseHelper#insertConstante(double, double, double, double, double, double, double, double, double, double, double, double, double, double, double)
-     * @see DatabaseHelper#insertTypeArbre(String, String)
-     *
-     */
     public void miseAJourConstantesTable(){
 
-        // Suppression des données de la table CONSTANTES_TABLE et TYPE_ARBRE_TABLE
-        dbHelper.clearTable(DatabaseHelper.CONSTANTES_TABLE);
-        dbHelper.clearTable(DatabaseHelper.TYPE_ARBRE_TABLE);
 
         /*
          * Listener qui récupère toutes les constantes à partir de la base de données firebase
@@ -464,6 +389,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                // Suppression des données de la table CONSTANTES_TABLE et TYPE_ARBRE_TABLE
+                dbHelper.clearTable(DatabaseHelper.CONSTANTES_TABLE);
+                dbHelper.clearTable(DatabaseHelper.TYPE_ARBRE_TABLE);
                 /*
                  *------------------------------
                  * Récupération des constantes et insertion dans CONSTANTES_TABLE
@@ -539,4 +467,34 @@ public class MainActivity extends AppCompatActivity {
         // On assigne le listener "postListener" au CHAMP_METADATA de la référence firebaseDatabase
         firebaseDatabase.child(CHAMP_METADATA).addListenerForSingleValueEvent(postListener);
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        if (isNetworkAvailable(getApplicationContext())) {
+            progressBarListe.setVisibility(View.VISIBLE);
+            getAllParcelle();
+            textTemoin.setText("");
+        } else {
+            textTemoin.setText("Pas de connexion internet get all parcelle");
+        }
+    }
+
+    public static boolean isNetworkAvailable(Context con) {
+        try {
+            ConnectivityManager cm = (ConnectivityManager) con
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+
+            if (networkInfo != null && networkInfo.isConnected()) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
+
+
