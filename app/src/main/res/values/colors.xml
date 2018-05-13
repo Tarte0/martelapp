@@ -26,7 +26,13 @@
     <color name="colorGrapheGrey">#9E9E9E</color>
     <color name="colorGrapheBlack">#000000</color>
 
-    <color name="button_pressed">#ff8a00</color>
-    <color name="button_focused">#ff8a00</color>
-    <color name="button_default">#1c76bb</color>
+    <color name="button_pave_pressed">#777e84</color>
+    <color name="button_pave_focused">#4f5459</color>
+    <color name="button_pave_default">#d6d7d7</color>
+
+    <color name="button_rouge_pressed">#800506</color>
+    <color name="button_rouge_focused">#800506</color>
+
+    <color name="button_vert_pressed">#006c4e</color>
+    <color name="button_vert_focused">#006c4e</color>
 </resources>

@@ -14,14 +14,63 @@
     </style>
 
 
-    <style name="button_selection" parent="@android:style/Widget.Button">
+    <style name="button_pave" parent="@android:style/Widget.Button">
         <item name="android:gravity">center_vertical|center_horizontal</item>
         <item name="android:textColor">#FF000000</item>
         <item name="android:shadowColor">#FF000000</item>
+        <item name="android:background">@drawable/button_pave_numerique</item>
         <item name="android:shadowDx">0</item>
         <item name="android:shadowDy">-1</item>
         <item name="android:shadowRadius">0.2</item>
-        <item name="android:textSize">35dp</item>
+        <item name="android:textSize">36sp</item>
+        <item name="android:layout_margin">1sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+
+    <style name="button_rouge_recherche" parent="@android:style/Widget.Button">
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:shadowColor">#FF000000</item>
+        <item name="android:background">@drawable/button_rouge</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">-1</item>
+        <item name="android:shadowRadius">0.2</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_margin">1sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="button_rouge_fin_exercice" parent="@android:style/Widget.Button">
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:shadowColor">#FF000000</item>
+        <item name="android:background">@drawable/button_rouge</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">-1</item>
+        <item name="android:shadowRadius">0.2</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_margin">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="button_vert" parent="@android:style/Widget.Button">
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:shadowColor">#FF000000</item>
+        <item name="android:background">@drawable/button_vert</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">-1</item>
+        <item name="android:shadowRadius">0.2</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingRight">10sp</item>
+        <item name="android:paddingLeft">10sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>

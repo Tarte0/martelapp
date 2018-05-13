@@ -70,12 +70,11 @@
 
                     <Button
                         android:id="@+id/button_go_to_info"
+                        style="@style/button_vert"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_weight="1"
-                        android:textColor="@color/colorWhite"
-                        android:backgroundTint="@color/colorPrimary"
                         android:text="@string/button_go_to_info" />
                 </LinearLayout>
 
