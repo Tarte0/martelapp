@@ -66,6 +66,19 @@ public class CarteParcelleFragment extends Fragment implements OnChartValueSelec
          *
          */
 
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(getResources().getColor(R.color.colorGraphePurple));
+        colors.add(getResources().getColor(R.color.colorGrapheBlue));
+        colors.add(getResources().getColor(R.color.colorGrapheLime));
+        colors.add(getResources().getColor(R.color.colorGrapheRed));
+        colors.add(getResources().getColor(R.color.colorGrapheLightPink));
+        colors.add(getResources().getColor(R.color.colorGrapheGreen));
+        colors.add(getResources().getColor(R.color.colorGrapheYellow));
+        colors.add(getResources().getColor(R.color.colorGrapheOrange));
+        colors.add(getResources().getColor(R.color.colorGrapheBlack));
+        colors.add(getResources().getColor(R.color.colorGrapheBrown));
+        colors.add(getResources().getColor(R.color.colorGrapheGrey));
+
         /*
          *  ArrayList<Entry> entriesPositionArbreNonMartele : Liste des position des arbres NON MARTELES pour le graphe
          *  ArrayList<Entry> entriesPositionArbreMartele : Liste des position des arbres MARTELES pour le graphe
@@ -104,8 +117,7 @@ public class CarteParcelleFragment extends Fragment implements OnChartValueSelec
             }
             Collections.sort(entriesPositionArbre, new EntryXComparator());
             bubbleDataSet = new BubbleDataSet(entriesPositionArbre, essence);
-
-            bubbleDataSet.setColor(ColorTemplate.VORDIPLOM_COLORS[i % 5]);
+            bubbleDataSet.setColor(colors.get(i % colors.size()));
 
             bubbleDataSet.setDrawValues(false);
             listBubbleData.add(bubbleDataSet);
@@ -165,16 +177,16 @@ public class CarteParcelleFragment extends Fragment implements OnChartValueSelec
         // Récupération de la légende du graphe
         Legend legende = bubbleChart.getLegend();
 
-        /*bubbleChart.setExtraOffsets(0f,0f,20f,0f);
+        bubbleChart.setExtraOffsets(0f,0f,20f,0f);
         legende.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         legende.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        legende.setOrientation(Legend.LegendOrientation.VERTICAL);*/
+        legende.setOrientation(Legend.LegendOrientation.VERTICAL);
 
         // Forme de la légende
         legende.setForm(Legend.LegendForm.CIRCLE);
         legende.setTextSize(20f);
         legende.setFormSize(12f);
-
+        legende.setYEntrySpace(5f);
         // Refresh le graphe
         bubbleChart.invalidate();
 

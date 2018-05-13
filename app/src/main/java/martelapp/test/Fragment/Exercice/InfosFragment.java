@@ -1,6 +1,7 @@
 package martelapp.test.Fragment.Exercice;
 
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
@@ -43,6 +44,7 @@ import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.Class.OnSwipeTouchListener;
 import martelapp.test.Formatter.PercentWithoutSmallValueFormatter;
 import martelapp.test.Formatter.StackedBarFormatter;
+import martelapp.test.Formatter.WithoutSmallValueFormatter;
 import martelapp.test.R;
 
 public class InfosFragment extends Fragment {
@@ -63,10 +65,10 @@ public class InfosFragment extends Fragment {
     DecimalFormat df;
 
     int altitude = 0,
-        densiteVivantMortPied = 0,
-        densiteMortSol = 0;
+            densiteVivantMortPied = 0,
+            densiteMortSol = 0;
 
-    double  surfaceParcelle = 0f,
+    double surfaceParcelle = 0f,
             volumeVivantMortPied = 0f,
             volumeMortSol = 0f;
 
@@ -121,6 +123,7 @@ public class InfosFragment extends Fragment {
                 }
 
             }
+
             public void onSwipeLeft() {
                 switch (bottomNavigationView.getSelectedItemId()) {
                     case R.id.action_carte_id:
@@ -129,7 +132,7 @@ public class InfosFragment extends Fragment {
                     case R.id.action_graphe_diametre:
                         bottomNavigationView.setSelectedItemId(R.id.action_graphe_note_eco);
                         break;
-                   case R.id.action_graphe_note_eco:
+                    case R.id.action_graphe_note_eco:
                         bottomNavigationView.setSelectedItemId(R.id.action_graphe_essence);
                         break;
                     case R.id.action_graphe_essence:
@@ -198,13 +201,13 @@ public class InfosFragment extends Fragment {
                                 textViewInfos.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 9));
                                 textViewInfos.setTextSize(24f);
                                 textViewInfos.setText(
-                                          "• altitude : " + Integer.toString(altitude) + " mètres\n\n"
-                                        + "• habitat naturel : " + habitat + "\n\n"
-                                        + "• surface : " + df.format(surfaceParcelle) + " ha\n\n"
-                                        + "• densité (vivants et morts sur pied) : " + Integer.toString(densiteVivantMortPied) + " tiges/ha\n\n"
-                                        + "• volume : " + Integer.toString((int)volumeVivantMortPied) + " m3/ha\n\n"
-                                        + "• densité de bois mort au sol : " + Integer.toString(densiteMortSol) + " tiges/ha\n\n"
-                                        + "• volume de bois mort au sol : " + Integer.toString((int)volumeMortSol) + " m3/ha");
+                                        "• altitude : " + Integer.toString(altitude) + " mètres\n\n"
+                                                + "• habitat naturel : " + habitat + "\n\n"
+                                                + "• surface : " + df.format(surfaceParcelle) + " ha\n\n"
+                                                + "• densité (vivants et morts sur pied) : " + Integer.toString(densiteVivantMortPied) + " tiges/ha\n\n"
+                                                + "• volume : " + Integer.toString((int) volumeVivantMortPied) + " m3/ha\n\n"
+                                                + "• densité de bois mort au sol : " + Integer.toString(densiteMortSol) + " tiges/ha\n\n"
+                                                + "• volume de bois mort au sol : " + Integer.toString((int) volumeMortSol) + " m3/ha");
                                 textViewInfos.setVisibility(View.VISIBLE);
                                 previous.setVisibility(View.INVISIBLE);
                                 next.setVisibility(View.VISIBLE);
@@ -214,7 +217,7 @@ public class InfosFragment extends Fragment {
                                 pieChartEssence.setVisibility(View.GONE);
                                 break;
                             case R.id.action_graphe_diametre:
-                                textViewTitleInfos.setText(R.string.graphe_diametre_caps);
+                                textViewTitleInfos.setText(R.string.titre_graphe_nbtige_diametre_info);
                                 textViewInfos.setVisibility(View.VISIBLE);
                                 textViewInfos.setTextSize(18f);
                                 textViewInfos.setText(R.string.axe_nombre_tiges);
@@ -227,7 +230,7 @@ public class InfosFragment extends Fragment {
                                 pieChartEssence.setVisibility(View.GONE);
                                 break;
                             case R.id.action_graphe_note_eco:
-                                textViewTitleInfos.setText(R.string.graphe_note_eco_caps);
+                                textViewTitleInfos.setText(R.string.titre_graphe_nbtige_noteeco_info);
                                 textViewInfos.setVisibility(View.VISIBLE);
                                 textViewInfos.setTextSize(18f);
                                 textViewInfos.setText(R.string.axe_nombre_tiges);
@@ -240,7 +243,7 @@ public class InfosFragment extends Fragment {
                                 pieChartEssence.setVisibility(View.GONE);
                                 break;
                             case R.id.action_graphe_essence:
-                                textViewTitleInfos.setText(R.string.graphe_essence_caps);
+                                textViewTitleInfos.setText(R.string.titre_graphe_nbtige_essence_info);
                                 textViewInfos.setVisibility(View.GONE);
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.VISIBLE);
@@ -264,7 +267,7 @@ public class InfosFragment extends Fragment {
                                 buttonGoToCarte.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
+                                        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
 
                                     }
                                 });
@@ -273,7 +276,6 @@ public class InfosFragment extends Fragment {
                         return true;
                     }
                 });
-
 
 
         return view;
@@ -290,7 +292,7 @@ public class InfosFragment extends Fragment {
     }
 
 
-    private void caracteristiqueParcelle(){
+    private void caracteristiqueParcelle() {
         cur1 = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
         cur1.moveToFirst();
 
@@ -304,7 +306,7 @@ public class InfosFragment extends Fragment {
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-        cur1 = dbHelper.getDataFromTableWithCondition("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL +")",
+        cur1 = dbHelper.getDataFromTableWithCondition("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL + ")",
                 DatabaseHelper.ARBRES_PARCELLE_TABLE,
                 DatabaseHelper.ETAT_ARBRE + " = 'v'" +
                         " OR " + DatabaseHelper.ETAT_ARBRE + " = 'mp'");
@@ -317,7 +319,7 @@ public class InfosFragment extends Fragment {
         cur1.moveToFirst();
         densiteVivantMortPied = cur1.getCount();
 
-        cur1 = dbHelper.getDataFromTableWithCondition("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL +")",
+        cur1 = dbHelper.getDataFromTableWithCondition("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL + ")",
                 DatabaseHelper.ARBRES_PARCELLE_TABLE,
                 DatabaseHelper.ETAT_ARBRE + " = 'ms'");
         cur1.moveToFirst();
@@ -332,8 +334,8 @@ public class InfosFragment extends Fragment {
         volumeVivantMortPied = volumeVivantMortPied / surfaceParcelle;
         volumeMortSol = volumeMortSol / surfaceParcelle;
 
-        densiteVivantMortPied = (int)(densiteVivantMortPied / surfaceParcelle);
-        densiteMortSol = (int)(densiteMortSol / surfaceParcelle);
+        densiteVivantMortPied = (int) (densiteVivantMortPied / surfaceParcelle);
+        densiteMortSol = (int) (densiteMortSol / surfaceParcelle);
     }
 
     private void grapheDiametre(BarChart barChart) {
@@ -410,7 +412,6 @@ public class InfosFragment extends Fragment {
         colors.add(getResources().getColor(R.color.colorBarViolet));
 
         barDataSet.setColors(colors);
-
         barDataSet.setValueFormatter(new StackedBarFormatter(" | ", 0));
 
         BarData barData = new BarData(barDataSet);
@@ -466,7 +467,7 @@ public class InfosFragment extends Fragment {
         legende.setForm(Legend.LegendForm.SQUARE);
         legende.setTextSize(20f);
         legende.setFormSize(12f);
-
+        legende.setXEntrySpace(15f);
         // Position de la légende (changer si besoin)
         //legende.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
 
@@ -513,15 +514,15 @@ public class InfosFragment extends Fragment {
          *  ce que le cur1 n'ai plus de notes écologique disponible
          */
         cur1 = dbHelper.getDataFromTable("DISTINCT " + DatabaseHelper.NOTE_ECO_ARBRE, DatabaseHelper.ARBRES_PARCELLE_TABLE + " ORDER BY " + DatabaseHelper.NOTE_ECO_ARBRE + " ASC");
-        while(cur1.moveToNext()){
+        while (cur1.moveToNext()) {
 
             // Récupération de la note écologique actuelle et ajout dans la liste des notes écologique
             noteEco = cur1.getInt(cur1.getColumnIndex(DatabaseHelper.NOTE_ECO_ARBRE));
             entriesNoteEco.add(Integer.toString(noteEco));
 
             cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE,
-                            DatabaseHelper.NOTE_ECO_ARBRE + " = " + noteEco +
-                                        " AND " + DatabaseHelper.ETAT_ARBRE + " = 'v'");
+                    DatabaseHelper.NOTE_ECO_ARBRE + " = " + noteEco +
+                            " AND " + DatabaseHelper.ETAT_ARBRE + " = 'v'");
             cur2.moveToFirst();
             nbArbreVivant = cur2.getCount();
 
@@ -625,7 +626,7 @@ public class InfosFragment extends Fragment {
         legende.setForm(Legend.LegendForm.SQUARE);
         legende.setTextSize(20f);
         legende.setFormSize(12f);
-
+        legende.setXEntrySpace(15f);
         // Position de la légende (changer si besoin)
         //legende.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
 
@@ -654,7 +655,7 @@ public class InfosFragment extends Fragment {
         barChart.invalidate();
     }
 
-    private void grapheEssence(PieChart pieChart){
+    private void grapheEssence(PieChart pieChart) {
 
         ArrayList<PieEntry> entriesArbres = new ArrayList<>();
         ArrayList<String> entriesEssences = new ArrayList<>();
@@ -669,7 +670,7 @@ public class InfosFragment extends Fragment {
          *  ce que le cur1 n'ai plus d'essence disponible
          */
         cur1 = dbHelper.getDataFromTable("DISTINCT " + DatabaseHelper.ESSENCE_ARBRE, DatabaseHelper.ARBRES_PARCELLE_TABLE + " ORDER BY " + DatabaseHelper.ESSENCE_ARBRE);
-        while(cur1.moveToNext()){
+        while (cur1.moveToNext()) {
 
             // Récupération de l'essence actuelle et ajout dans la liste des essences
             essence = cur1.getString(cur1.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE));
@@ -714,29 +715,43 @@ public class InfosFragment extends Fragment {
         PieDataSet pieDataSet = new PieDataSet(entriesArbres, "");
 
 
-        //add colors to dataset
-        /*ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(getResources().getColor(R.color.colorBarBlue));
-        colors.add(getResources().getColor(R.color.colorBarOrange));
-        colors.add(getResources().getColor(R.color.colorBarViolet));
-*/
-        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(getResources().getColor(R.color.colorGraphePurple));
+        colors.add(getResources().getColor(R.color.colorGrapheBlue));
+        colors.add(getResources().getColor(R.color.colorGrapheLime));
+        colors.add(getResources().getColor(R.color.colorGrapheRed));
+        colors.add(getResources().getColor(R.color.colorGrapheLightPink));
+        colors.add(getResources().getColor(R.color.colorGrapheGreen));
+        colors.add(getResources().getColor(R.color.colorGrapheYellow));
+        colors.add(getResources().getColor(R.color.colorGrapheOrange));
+        colors.add(getResources().getColor(R.color.colorGrapheBlack));
+        colors.add(getResources().getColor(R.color.colorGrapheBrown));
+        colors.add(getResources().getColor(R.color.colorGrapheGrey));
 
-        pieDataSet.setDrawValues(false);
+        pieDataSet.setColors(colors);
+
+        //pieDataSet.setDrawValues(false);
+        pieDataSet.setValueTextSize(22f);
+        pieDataSet.setValueTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        pieDataSet.setValueTextColor(getResources().getColor(R.color.colorWhite));
+        pieDataSet.setValueFormatter(new WithoutSmallValueFormatter());
 
         PieData pieData = new PieData(pieDataSet);
         pieChart.setData(pieData);
 
+        pieChart.getDescription().setText("Seulement les valeurs ≥ 5 sont affichées");
+        pieChart.getDescription().setTextSize(18f);
+        pieChart.getDescription().setXOffset(85f);
+        pieChart.getDescription().setYOffset(-15f);
 
         // Enlever "description label"
-        pieChart.getDescription().setEnabled(false);
         pieChart.setTouchEnabled(false);
 
         // Désactiver le trou du pie chart
         pieChart.setDrawHoleEnabled(false);
 
 
-        pieChart.setExtraOffsets(0,0,80f,10f);
+        pieChart.setExtraOffsets(0, 0, 80f, 10f);
 
         /* ************************ LEGENDE ****************
          *
@@ -746,8 +761,8 @@ public class InfosFragment extends Fragment {
         Legend legende = pieChart.getLegend();
         // Forme de la légende
 
-        legende.setXOffset(100f);
-        legende.setYOffset(-180f);
+        legende.setXOffset(140f);
+        legende.setYOffset(-140f);
         legende.setForm(Legend.LegendForm.SQUARE);
         legende.setTextSize(20f);
         legende.setFormSize(12f);
@@ -755,13 +770,16 @@ public class InfosFragment extends Fragment {
 
         // Listes des Entrées de la légende
         ArrayList<LegendEntry> legendeEntrees = new ArrayList<>();
+
         for (int k = 0; k < entriesEssences.size(); k++) {
+
             // Création d'une nouvelle entrée de légende
             LegendEntry entree = new LegendEntry();
             // Récupération de la couleur "k" de l'arrayList colors
-            //entree.formColor = ColorTemplate.COLORFUL_COLORS[k];
+            entree.formColor = colors.get(k);
             // Récupération du label "k" de l'arrayList titleList
-            entree.label = entriesEssences.get(k) + " - " + Integer.toString((int)entriesArbres.get(k).getValue());
+            entree.label = entriesEssences.get(k);
+// Integer.toString((int) entriesArbres.get(k).getValue()) + (entriesArbres.get(k).getValue() < 2 ? "tige" : "tiges")
             legendeEntrees.add(entree);
         }
 
@@ -770,6 +788,7 @@ public class InfosFragment extends Fragment {
         legende.setVerticalAlignment(Legend.LegendVerticalAlignment.CENTER);
         legende.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         legende.setOrientation(Legend.LegendOrientation.VERTICAL);
+        legende.setYEntrySpace(5f);
         legende.setDrawInside(false);
 
         // Refresh le graphe

@@ -21,6 +21,9 @@
     <string name="graphe_essence_caps">ESSENCE</string>
     <string name="information_supplementaire_caps">INFORMATIONS SUPPLEMENTAIRES</string>
 
+    <string name="titre_graphe_nbtige_diametre_info">Nombre de tiges par classe de diamètre</string>
+    <string name="titre_graphe_nbtige_noteeco_info">Nombre de tiges / Note écologique</string>
+    <string name="titre_graphe_nbtige_essence_info">Nombre de tiges / Essence</string>
 
     <string name="consignes_general">
         A travers l’exercice de martelage, il s’agit de vous :\n\n
