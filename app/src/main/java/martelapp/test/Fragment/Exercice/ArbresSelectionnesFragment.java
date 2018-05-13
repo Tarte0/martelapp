@@ -86,6 +86,7 @@ public class ArbresSelectionnesFragment extends Fragment {
                 numCard.setText(cur1.getString(cur1.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC)));
                 detailCard.setText(String.format("%s",
                         cur1.getString(cur1.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE))));
+
                 treeCardNumber.setVisibility(View.VISIBLE);
             }
         });

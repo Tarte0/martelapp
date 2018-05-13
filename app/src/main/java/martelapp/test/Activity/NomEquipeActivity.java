@@ -33,6 +33,7 @@ public class NomEquipeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //if(editTextTeamName.getText().length()>0) {
                     nomEquipe = editTextTeamName.getText().toString();
+                    dbHelper.updateNomEquipeConstante(nomEquipe);
                     Intent intent = new Intent(getApplicationContext(), ExerciceActivity.class);
                     intent.putExtra("nomEquipe", nomEquipe);
                     startActivity(intent);

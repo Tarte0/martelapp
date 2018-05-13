@@ -197,6 +197,7 @@ public class AnalyseTigesEssencesFragment extends Fragment {
         legende.setForm(Legend.LegendForm.SQUARE);
         legende.setTextSize(20f);
         legende.setFormSize(12f);
+        legende.setXEntrySpace(15f);
 
         // Position de la légende (changer si besoin)
         //legende.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);

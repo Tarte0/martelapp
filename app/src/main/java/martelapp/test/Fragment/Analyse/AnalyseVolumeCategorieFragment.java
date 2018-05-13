@@ -190,9 +190,13 @@ public class AnalyseVolumeCategorieFragment extends Fragment {
         pieChartAvant.setData(pieDataAvant);
 
 
-        // Enlever "description label"
-        pieChartAvant.getDescription().setEnabled(false);
+        pieChartAvant.getDescription().setText("Avant");
+        pieChartAvant.getDescription().setTextSize(18f);
+        pieChartAvant.getDescription().setPosition(70f,70f);
+
         pieChartAvant.setTouchEnabled(false);
+
+        pieChartAvant.setExtraOffsets(10f,10f,10f,10f);
 
         // Désactiver le trou du pie chart
         pieChartAvant.setDrawHoleEnabled(false);
@@ -217,9 +221,13 @@ public class AnalyseVolumeCategorieFragment extends Fragment {
         pieChartApres.setData(pieDataApres);
 
 
-        // Enlever "description label"
-        pieChartApres.getDescription().setEnabled(false);
+
+        pieChartApres.getDescription().setText("Après");
+        pieChartApres.getDescription().setTextSize(18f);
+        pieChartApres.getDescription().setPosition(70f,70f);
         pieChartApres.setTouchEnabled(false);
+
+        pieChartApres.setExtraOffsets(10f,10f,10f,10f);
 
         // Désactiver le trou du pie chart
         pieChartApres.setDrawHoleEnabled(false);
@@ -243,12 +251,13 @@ public class AnalyseVolumeCategorieFragment extends Fragment {
         legendeAvant.setForm(Legend.LegendForm.SQUARE);
         legendeAvant.setTextSize(20f);
         legendeAvant.setFormSize(12f);
+        legendeAvant.setXEntrySpace(15f);
 
         legendeApres.setYOffset(20f);
         legendeApres.setForm(Legend.LegendForm.SQUARE);
         legendeApres.setTextSize(20f);
         legendeApres.setFormSize(12f);
-
+        legendeApres.setXEntrySpace(15f);
 
         // Listes des Entrées de la légende
         ArrayList<LegendEntry> legendeEntrees = new ArrayList<>();

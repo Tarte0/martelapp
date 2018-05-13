@@ -47,7 +47,7 @@ public class ArbresConservesAdapter extends CursorAdapter {
         int noteEcologique = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.NOTE_ECO_ARBRE));
 
         if(analyse){
-            if(noteEcologique > ChoixMartelageFragment.noteEcologiqueHaute) {
+            if(noteEcologique >= ChoixMartelageFragment.noteEcologiqueHaute) {
                 layoutArbreMarteles.setBackgroundColor(Color.GREEN);
             }
             else{

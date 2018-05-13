@@ -223,7 +223,7 @@ public class AnalyseTigesDiametreFragment extends Fragment {
 
         // Set la légende avec les entrées
         legende.setCustom(legendeEntrees);
-
+        legende.setXEntrySpace(15f);
 
         // Refresh le graphe
         barChart.invalidate();

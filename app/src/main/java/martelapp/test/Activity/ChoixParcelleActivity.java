@@ -36,23 +36,8 @@ import martelapp.test.R;
 public class ChoixParcelleActivity extends AppCompatActivity {
 
     /**
-     * Le nom de parcelle où va être récupérées toutes les informations
-     * dans la base de données firebase.
-     */
-    public static final String NOM_PARCELLE_FIREBASE    = "2c8856a9-6d1c-4558-bfaa-8f9de8adbaab";
-
-    /**
-     * Champ de la base de données firebase où récupérer le témoin de
-     * connexion à la base de données.
-     */
-    public static final String TEST_CONNECTION_FIREBASE = ".info/connected";
-
-    /**
      * Champ de la base de données firebase "metadata" où se trouvent les champs
      * "constantes" et "essences".
-     *
-     * @see MainActivity#CHAMP_CONSTANTES
-     * @see MainActivity#CHAMP_ESSENCES
      */
     public static final String CHAMP_METADATA           = "metadata";
 
@@ -62,8 +47,6 @@ public class ChoixParcelleActivity extends AppCompatActivity {
      *
      * C'est dans ce champ que se trouvent les noms de parcelle à choisir pour changer
      * la variable NOM_PARCELLE_FIREBASE.
-     *
-     * @see MainActivity#NOM_PARCELLE_FIREBASE
      */
     public static final String CHAMP_PARCELLES          = "parcelles";
 
@@ -72,9 +55,6 @@ public class ChoixParcelleActivity extends AppCompatActivity {
      * Champ de la base de données firebase "constantes" où se trouvent les champs
      * "hauteurMoyenne", "prix" et "volume".
      *
-     * @see MainActivity#CHAMP_HAUTEUR_MOYENNE
-     * @see MainActivity#CHAMP_PRIX
-     * @see MainActivity#CHAMP_VOLUME
      */
     public static final String CHAMP_CONSTANTES         = "constantes";
 
@@ -262,6 +242,46 @@ public class ChoixParcelleActivity extends AppCompatActivity {
         firebaseDatabase.child(CHAMP_PARCELLES).addListenerForSingleValueEvent(postListener);
     }
 
+
+
+    /**
+     * Met à jour ARBRES_PARCELLE_TABLE avec la base de données firebase.
+     *
+     * <p>
+     * La méthode commence par supprimer toutes les données que contient ARBRES_PARCELLE_TABLE.
+     * </p>
+     *
+     * <p>
+     * La table est mise à jour à partir de la référence firebaseDatabase
+     * dans le CHAMP_PARCELLE et récupère toutes les informations
+     * de la parcelle NOM_PARCELLE_FIREBASE dans une instance de la
+     * classe Parcelle.
+     * </p>
+     *
+     * <p>
+     * La méthode récupère également des informations depuis CONSTANTES_TABLE
+     * et TYPE_ARBRE_TABLE pour calculer le volume et la valeur économique d'un
+     * arbre à l'aide de VolumeCalculator.
+     * </p>
+     *
+     * <p>
+     * Une fois les informations d'un arbre récupérées, elles sont insérées dans la table.
+     * </p>
+     *
+     * @see DatabaseHelper#ARBRES_PARCELLE_TABLE
+     * @see DatabaseHelper#CONSTANTES_TABLE
+     * @see DatabaseHelper#TYPE_ARBRE_TABLE
+     * @see DatabaseHelper#clearTable(String)
+     * @see DatabaseHelper#insertArbreParcelle(String, String, int, int, String , double, double, double, double, double,,double, double)
+     *
+     * @see ChoixParcelleActivity#firebaseDatabase
+     * @see ChoixParcelleActivity#CHAMP_PARCELLES
+     *
+     * @see Parcelle
+     *
+     * @see VolumeCalculator
+     *
+     */
     public void miseAJourParcelle(String parcelle){
 
 
@@ -377,6 +397,30 @@ public class ChoixParcelleActivity extends AppCompatActivity {
         firebaseDatabase.child(CHAMP_PARCELLES).child(parcelle).addListenerForSingleValueEvent(postListener);
     }
 
+    /**
+     * Met à jour CONSTANTES_TABLE et TYPE_ARBRE_TABLE avec la base de données firebase.
+     *
+     * <p>
+     * La méthode commence par supprimer toutes les données que contient CONSTANTES_TABLE et TYPE_ARBRE_TABLE.
+     * </p>
+     *
+     * <p>
+     * La table est mise à jour à partir de la référence firebaseDatabase
+     * dans le CHAMP_METADATA et récupère toutes les constantes du CHAMP_CONSTANTES
+     * et le type des arbres selon l'essence du CHAMP_ESSENCES.
+     * </p>
+     *
+     * <p>
+     * Les informations sont ensuite insérées dans CONSTANTES_TABLE et TYPE_ARBRE_TABLE.
+     * </p>
+     *
+     * @see DatabaseHelper#CONSTANTES_TABLE
+     * @see DatabaseHelper#TYPE_ARBRE_TABLE
+     * @see DatabaseHelper#clearTable(String)
+     * @see DatabaseHelper#insertConstante(double, double, double, double, double, double, double, double, double, double, double, double, double, double, double)
+     * @see DatabaseHelper#insertTypeArbre(String, String)
+     *
+     */
     public void miseAJourConstantesTable(){
 
 

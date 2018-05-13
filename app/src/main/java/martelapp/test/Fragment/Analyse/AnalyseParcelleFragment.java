@@ -212,6 +212,7 @@ public class AnalyseParcelleFragment extends Fragment {
         legende.setForm(Legend.LegendForm.CIRCLE);
         legende.setTextSize(20f);
         legende.setFormSize(12f);
+        legende.setXEntrySpace(15f);
 
         // Refresh le graphe
         scatterChart.invalidate();

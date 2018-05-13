@@ -9,43 +9,42 @@
     tools:context="martelapp.test.Activity.AnalyseActivity">
 
 
-
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_weight="0.8"
         android:orientation="vertical"
-        android:layout_weight="1"
         android:weightSum="6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="8dp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ListView
             android:id="@+id/liste_arbres_traites_analyse"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5.5" />
+            android:layout_weight="5" />
 
         <TextView
             android:id="@+id/text_complement_arbres"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5"
-            android:textSize="30sp"
-            android:textColor="@color/colorBlack" />
+            android:layout_weight="1"
+            android:textColor="@color/colorBlack"
+            android:textSize="30sp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:weightSum="6"
-        android:orientation="vertical">
+        android:layout_weight="1.2"
+        android:orientation="vertical"
+        android:weightSum="6">
 
-        <include layout="@layout/martele_card"/>
+        <include layout="@layout/martele_card" />
 
 
     </LinearLayout>

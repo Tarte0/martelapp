@@ -83,22 +83,24 @@ public class AnalyseRaisonsFragment extends Fragment {
 
             // Récupération de la raison actuelle et ajout dans la liste des raisons
             raison = cur1.getString(cur1.getColumnIndex(DatabaseHelper.RAISON));
-            entriesRaison.add(raison);
+            if(!raison.equals(DatabaseHelper.BIODIVERSITE)) {
 
-            /*
-             *  Récupération du nombre de raison pour la raison actuelle
-             *  et calcul du pourcentage de cette raison actuelle
-             */
-            cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.RAISON_TABLE, DatabaseHelper.RAISON + " = '" + raison + "'");
-            cur2.moveToFirst();
-            nbRaisonActuelle = cur2.getCount();
-            percentageRaisonsActuel = ((float)(nbRaisonActuelle) / nbArbresMarteles) * 100;
+                entriesRaison.add(raison);
 
-            // Ajout dans la liste des données du graphe le pourcentage que l'on vient de calculer
-            entriesRaisonPercentage.add(new BarEntry(i, percentageRaisonsActuel));
+                /*
+                *  Récupération du nombre de raison pour la raison actuelle
+                *  et calcul du pourcentage de cette raison actuelle
+                */
+                cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.RAISON_TABLE, DatabaseHelper.RAISON + " = '" + raison + "'");
+                cur2.moveToFirst();
+                nbRaisonActuelle = cur2.getCount();
+                percentageRaisonsActuel = ((float) (nbRaisonActuelle) / nbArbresMarteles) * 100;
 
-            i++;
+                // Ajout dans la liste des données du graphe le pourcentage que l'on vient de calculer
+                entriesRaisonPercentage.add(new BarEntry(i, percentageRaisonsActuel));
 
+                i++;
+            }
         }
         cur1.close();
         cur2.close();
