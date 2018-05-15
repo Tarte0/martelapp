@@ -300,11 +300,6 @@ public class InfosFragment extends Fragment {
         surfaceParcelle = cur1.getDouble(cur1.getColumnIndex(DatabaseHelper.SURFACE_PARCELLE));
         habitat = cur1.getString(cur1.getColumnIndex(DatabaseHelper.HABITAT_PARCELLE));
 
-        // !!!!!!!!!!!!!! A RETIRER QUAND SURFACE SERA EN HA !!!!!!!!!!!!!!!!!!!
-
-        surfaceParcelle = surfaceParcelle / 1000;
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         cur1 = dbHelper.getDataFromTableWithCondition("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL + ")",
                 DatabaseHelper.ARBRES_PARCELLE_TABLE,

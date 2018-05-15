@@ -75,12 +75,6 @@ public class ConsignesFragment extends Fragment {
         surfaceParcelle = cur.getDouble(cur.getColumnIndex(DatabaseHelper.SURFACE_PARCELLE));
 
 
-        // !!!!!!!!!!!!!! A RETIRER QUAND SURFACE SERA EN HA !!!!!!!!!!!!!!!!!!!
-
-        surfaceParcelle = surfaceParcelle / 1000;
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 
 
         cur = dbHelper.getDataFromTable("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL +")",

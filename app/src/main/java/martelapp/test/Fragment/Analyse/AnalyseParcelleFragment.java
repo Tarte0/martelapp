@@ -183,10 +183,15 @@ public class AnalyseParcelleFragment extends Fragment {
         scatterChart.setData(scatterData);
 
         // Empêcher zoom
-        scatterChart.setScaleEnabled(false);
+        //scatterChart.setScaleEnabled(false);
 
-        // Désactiver le clique
-        scatterChart.setTouchEnabled(false);
+        scatterChart.setPinchZoom(true);
+
+        // Désactiver le clic
+        //scatterChart.setTouchEnabled(false);
+
+        // Enlever la croix qui indique la sélection d'un point lorsqu'on appuie sur le graphe
+        scatterChart.getData().setHighlightEnabled(false);
 
         // Enlever "description label"
         scatterChart.getDescription().setEnabled(false);

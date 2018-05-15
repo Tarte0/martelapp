@@ -151,11 +151,14 @@ public class CarteParcelleFragment extends Fragment implements OnChartValueSelec
         bubbleChart.setData(bubbleData);
 
 
-        // Empêcher zoom
-        bubbleChart.setScaleEnabled(false);
+        // Empêcher zoom des axes
+        //bubbleChart.setScaleEnabled(false);
 
-        // Désactiver le clique
-        bubbleChart.setTouchEnabled(false);
+        // Autoriser PinchZoom
+        bubbleChart.setPinchZoom(true);
+
+        // Désactiver le clic
+        //bubbleChart.setTouchEnabled(false);
 
         // Enlever "description label"
         bubbleChart.getDescription().setEnabled(false);

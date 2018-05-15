@@ -73,12 +73,6 @@ public class AnalyseRespectConsignesFragment extends Fragment {
         df = new DecimalFormat("#0.00");
 
 
-        // !!!!!!!!!!!!!! A RETIRER QUAND SURFACE SERA EN HA !!!!!!!!!!!!!!!!!!!
-
-        surfaceParcelle = surfaceParcelle / 1000;
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 
         // Volume de bois parcelle remis à l'hectare
         cur = dbHelper.getDataFromTable("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL +")",
