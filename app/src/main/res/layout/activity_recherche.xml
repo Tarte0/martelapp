@@ -29,6 +29,8 @@
                 app:tabMaxWidth="0dp"
                 app:tabMode="fixed"
                 app:tabSelectedTextColor="@android:color/white"
+
+
                 />
 
             <martelapp.test.Class.NonSwipeableViewPager

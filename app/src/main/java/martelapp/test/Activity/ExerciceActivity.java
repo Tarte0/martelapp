@@ -72,7 +72,8 @@ public class ExerciceActivity extends AppCompatActivity {
         int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark);
 
         tabs.getTabAt(0).setIcon(R.drawable.consignes);
-        tabs.getTabAt(0).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+        int white = ContextCompat.getColor(getApplicationContext(), R.color.colorWhite);
+        tabs.getTabAt(0).getIcon().setColorFilter(white, PorterDuff.Mode.SRC_IN);
         tabs.getTabAt(1).setIcon(R.drawable.info);
         tabs.getTabAt(1).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
         tabs.getTabAt(2).setIcon(R.drawable.carte);
@@ -81,7 +82,6 @@ public class ExerciceActivity extends AppCompatActivity {
         tabs.getTabAt(3).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
         tabs.getTabAt(4).setIcon(R.drawable.arbre_selec);
         tabs.getTabAt(4).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-
 
         viewPager.setCurrentItem(0);
 
