@@ -1,11 +1,13 @@
 package martelapp.test.Activity;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
@@ -43,6 +45,12 @@ public class ExerciceActivity extends AppCompatActivity {
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
+
+        /*int white = ContextCompat.getColor(getApplicationContext(), R.color.colorWhite);
+        tabs.getTabAt(0).setIcon(R.drawable.consignes);
+        tabs.getTabAt(0).getIcon().setColorFilter(white, PorterDuff.Mode.SRC_IN);
+        tabs.getTabAt(0).setIcon(R.drawable.consignes);
+        tabs.getTabAt(0).getIcon().setColorFilter(white, PorterDuff.Mode.SRC_IN);*/
 
         viewPager.setCurrentItem(0);
 
