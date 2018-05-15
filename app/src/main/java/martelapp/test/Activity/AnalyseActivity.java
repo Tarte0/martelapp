@@ -26,29 +26,44 @@ import martelapp.test.Fragment.Analyse.AnalyseVolumeCategorieFragment;
 import martelapp.test.Fragment.Analyse.AnalyseVolumeDiametreFragment;
 import martelapp.test.R;
 
+
 public class AnalyseActivity extends AppCompatActivity {
+    /**
+     * Viewpager de l'activité utilisé pour creer plusieurs fragments
+     */
     ViewPager viewPager;
-    ImageButton previous, next;
+
+    /**
+     * Bouton permettant d'aller sur le fragment à gauche
+     */
+    ImageButton previous;
+
+    /**
+     * Bouton permettant d'aller sur le fragment à gauche
+     */
+    ImageButton next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analyse);
 
-        //On configure notre ViewPager pour chaque onglet
-        //Un fragment pour chaque onglet
+        // On configure notre ViewPager pour chaque onglet
+        // Un fragment pour chaque onglet
         viewPager = (ViewPager) findViewById(R.id.viewpagerAnalyse);
         setupViewPager(viewPager);
 
-        //on associe nos onglets avec le viewpager
+        // On associe nos onglets avec le viewpager
         final TabLayout tabs = (TabLayout) findViewById(R.id.tabsAnalyse);
         tabs.setupWithViewPager(viewPager);
 
         previous = (ImageButton) findViewById(R.id.previousAnalyse);
         next = (ImageButton) findViewById(R.id.nextAnalyse);
 
+        // Bouton fragment précédent invisible sur le premier fragment
         previous.setVisibility(View.INVISIBLE);
 
+        // On gère l'affichage des flèches pour naviguer entre les fragments en fonction de leur position
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -75,6 +90,7 @@ public class AnalyseActivity extends AppCompatActivity {
             }
         });
 
+        // Cliquer sur le bouton suivant mène au fragment suivant
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,6 +99,7 @@ public class AnalyseActivity extends AppCompatActivity {
             }
         });
 
+        // Cliquer sur le bouton précédent mène au fragment précédent
         previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +112,7 @@ public class AnalyseActivity extends AppCompatActivity {
         });
     }
 
-    // ajout et associations des Fragments aux onglets
+    // Ajout et associations des Fragments aux onglets
     private void setupViewPager(ViewPager viewPager) {
         ExerciceActivity.Adapter adapter = new ExerciceActivity.Adapter(getSupportFragmentManager());
         adapter.addFragment(new AnalyseRespectConsignesFragment(), "Consignes");

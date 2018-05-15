@@ -163,6 +163,7 @@ public class AnalyseParcelleFragment extends Fragment {
         // Forme des arbres conservés = cercle
 
 
+
         listScatterData.add(scatterDataSetNonMartele);
         listScatterData.add(scatterDataSetNonMarteleEco);
         listScatterData.add(scatterDataSetMartele);

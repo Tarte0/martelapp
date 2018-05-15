@@ -41,7 +41,8 @@ public class SelectionArbreFragment extends Fragment {
     ImageButton martelerButtonTreeCard,
             conserverButtonTreeCard;
 
-    ImageView dejaMarteleImage;
+    ImageView dejaMarteleImage,
+                dejaConserveImage;
 
     TextView tvNum,
             tvEssence,
@@ -87,6 +88,9 @@ public class SelectionArbreFragment extends Fragment {
         mEditText = (EditText) view.findViewById(R.id.editText);
 
         dejaMarteleImage = (ImageView) view.findViewById(R.id.dejaMarteleImage);
+        dejaConserveImage = (ImageView) view.findViewById(R.id.dejaConserveImage);
+
+
 
         treeCardNumber = view.findViewById(R.id.arbreLayout);
 
@@ -223,17 +227,20 @@ public class SelectionArbreFragment extends Fragment {
 
                     if (cur1.moveToFirst()) {
                         dejaMarteleImage.setVisibility(View.VISIBLE);
+                        dejaConserveImage.setVisibility(View.INVISIBLE);
                         dejaMarteleImage.bringToFront();
                         cleanCard();
                         showSnackbar(view, "Arbre n°" + numEntree + " deja martelé");
                     }
                     else if(cur2.moveToFirst()) {
-                        dejaMarteleImage.setVisibility(View.VISIBLE);
-                        dejaMarteleImage.bringToFront();
+                        dejaConserveImage.setVisibility(View.VISIBLE);
+                        dejaMarteleImage.setVisibility(View.INVISIBLE);
+                        dejaConserveImage.bringToFront();
                         cleanCard();
                         showSnackbar(view, "Arbre n°" + numEntree + " a été conservé");;
                     } else {
                         dejaMarteleImage.setVisibility(View.INVISIBLE);
+                        dejaConserveImage.setVisibility(View.INVISIBLE);
                         treeCardNumber.setVisibility(View.VISIBLE);
                         // Requete de recherche d'arbre par le numéro "numEntree"
                         query = "SELECT * FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE +

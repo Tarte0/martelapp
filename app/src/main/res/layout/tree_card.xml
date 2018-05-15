@@ -24,6 +24,14 @@
             android:tint="@color/colorPrimary"
             app:srcCompat="@drawable/hammer" />
 
+        <ImageView
+            android:id="@+id/dejaConserveImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/conserver" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -99,7 +107,7 @@
                     android:background="@color/colorTransparentBlack"
                     android:scaleType="fitCenter"
                     android:tint="@color/colorWhite"
-                    app:srcCompat="@drawable/hammer" />
+                    app:srcCompat="@drawable/conserver" />
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

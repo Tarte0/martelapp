@@ -15,11 +15,11 @@
     <string name="exploitabilite_caps">EXPLOITABILITÉ</string>
     <string name="rotations_caps">ROTATIONS</string>
 
-    <string name="caracteristique_parcelle_caps">CARACTERISTIQUE DE LA PARCELLE</string>
+    <string name="caracteristique_parcelle_caps">CARACTERISTIQUES</string>
     <string name="graphe_diametre_caps">DIAMETRE</string>
     <string name="graphe_note_eco_caps">NOTE ECOLOGIQUE</string>
     <string name="graphe_essence_caps">ESSENCE</string>
-    <string name="information_supplementaire_caps">INFORMATIONS SUPPLEMENTAIRES</string>
+    <string name="information_supplementaire_caps">INFORMATIONS</string>
 
     <string name="titre_graphe_nbtige_diametre_info">Nombre de tiges par classe de diamètre</string>
     <string name="titre_graphe_nbtige_noteeco_info">Nombre de tiges / Note écologique</string>

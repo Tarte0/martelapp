@@ -4,13 +4,13 @@
     <item
         android:id="@+id/action_general"
         android:enabled="true"
-        android:icon="@drawable/assignment"
+        android:icon="@drawable/consignes_general"
         android:title="@string/general_caps"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_objectif"
         android:enabled="true"
-        android:icon="@drawable/pie_chart"
+        android:icon="@drawable/consignes_obj"
         android:title="@string/objectif_caps"
         app:showAsAction="ifRoom" />
 
