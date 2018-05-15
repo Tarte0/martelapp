@@ -129,6 +129,7 @@ public class AnalyseActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
+
     static class Adapter extends FragmentStatePagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();

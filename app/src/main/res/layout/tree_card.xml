@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:visibility="invisible"
             android:tint="@color/colorPrimary"
-            app:srcCompat="@drawable/hammer" />
+            app:srcCompat="@drawable/marteau" />
 
         <ImageView
             android:id="@+id/dejaConserveImage"
@@ -122,7 +122,7 @@
                     android:background="@color/colorTransparentBlack"
                     android:scaleType="fitCenter"
                     android:tint="@color/colorWhite"
-                    app:srcCompat="@drawable/hammer" />
+                    app:srcCompat="@drawable/marteau" />
 
             </LinearLayout>
 
