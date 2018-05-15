@@ -28,7 +28,8 @@
                 app:tabIndicatorColor="@color/colorPrimaryDark"
                 app:tabMaxWidth="0dp"
                 app:tabMode="fixed"
-                app:tabSelectedTextColor="@android:color/white" />
+                app:tabSelectedTextColor="@android:color/white"
+                />
 
             <martelapp.test.Class.NonSwipeableViewPager
                 android:id="@+id/viewpager"

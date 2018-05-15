@@ -45,12 +45,43 @@ public class ExerciceActivity extends AppCompatActivity {
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
+        tabs.addOnTabSelectedListener(
+                new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
 
-        /*int white = ContextCompat.getColor(getApplicationContext(), R.color.colorWhite);
+                    @Override
+                    public void onTabSelected(TabLayout.Tab tab) {
+                        super.onTabSelected(tab);
+                        int white = ContextCompat.getColor(getApplicationContext(), R.color.colorWhite);
+                        tab.getIcon().setColorFilter(white, PorterDuff.Mode.SRC_IN);
+                    }
+
+                    @Override
+                    public void onTabUnselected(TabLayout.Tab tab) {
+                        super.onTabUnselected(tab);
+                        int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark);
+                        tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+                    }
+
+                    @Override
+                    public void onTabReselected(TabLayout.Tab tab) {
+                        super.onTabReselected(tab);
+                    }
+                }
+        );
+
+        int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark);
+
         tabs.getTabAt(0).setIcon(R.drawable.consignes);
-        tabs.getTabAt(0).getIcon().setColorFilter(white, PorterDuff.Mode.SRC_IN);
-        tabs.getTabAt(0).setIcon(R.drawable.consignes);
-        tabs.getTabAt(0).getIcon().setColorFilter(white, PorterDuff.Mode.SRC_IN);*/
+        tabs.getTabAt(0).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+        tabs.getTabAt(1).setIcon(R.drawable.info);
+        tabs.getTabAt(1).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+        tabs.getTabAt(2).setIcon(R.drawable.carte);
+        tabs.getTabAt(2).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+        tabs.getTabAt(3).setIcon(R.drawable.selection);
+        tabs.getTabAt(3).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+        tabs.getTabAt(4).setIcon(R.drawable.arbre_selec);
+        tabs.getTabAt(4).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+
 
         viewPager.setCurrentItem(0);
 
