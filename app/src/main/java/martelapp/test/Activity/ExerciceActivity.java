@@ -78,7 +78,7 @@ public class ExerciceActivity extends AppCompatActivity {
         tabs.getTabAt(1).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
         tabs.getTabAt(2).setIcon(R.drawable.carte);
         tabs.getTabAt(2).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-        tabs.getTabAt(3).setIcon(R.drawable.selection);
+        tabs.getTabAt(3).setIcon(R.drawable.marteau);
         tabs.getTabAt(3).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
         tabs.getTabAt(4).setIcon(R.drawable.arbre_selec);
         tabs.getTabAt(4).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
