@@ -1,9 +1,11 @@
 package martelapp.test.Fragment.Exercice;
 
 import android.database.Cursor;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,13 +43,13 @@ public class SelectionArbreFragment extends Fragment {
     ImageButton martelerButtonTreeCard,
             conserverButtonTreeCard;
 
-    ImageView dejaMarteleImage,
-                dejaConserveImage;
+    ImageView dejaSelectionneImage;
 
     TextView tvNum,
             tvEssence,
             tvEtat,
-            tvDiametre;
+            tvDiametre,
+            tvDejaSelectionne;
 
     DatabaseHelper dbHelper;
     Cursor cur1, cur2;
@@ -84,11 +86,12 @@ public class SelectionArbreFragment extends Fragment {
         tvEssence = (TextView) view.findViewById(R.id.essence_tree_card);
         tvEtat = (TextView) view.findViewById(R.id.etat_tree_card);
         tvDiametre = (TextView) view.findViewById(R.id.diametre_tree_card);
+        tvDejaSelectionne = view.findViewById(R.id.Deja_selectionne);
 
         mEditText = (EditText) view.findViewById(R.id.editText);
 
-        dejaMarteleImage = (ImageView) view.findViewById(R.id.dejaMarteleImage);
-        dejaConserveImage = (ImageView) view.findViewById(R.id.dejaConserveImage);
+        dejaSelectionneImage = (ImageView) view.findViewById(R.id.dejaSelectionneImage);
+        //dejaConserveImage = (ImageView) view.findViewById(R.id.dejaConserveImage);
 
 
 
@@ -226,22 +229,29 @@ public class SelectionArbreFragment extends Fragment {
                     cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_CONSERVES_TABLE,DatabaseHelper.NUMERO_ARBRE_CONS + " = " + numEntree);
 
                     if (cur1.moveToFirst()) {
-                        dejaMarteleImage.setVisibility(View.VISIBLE);
-                        dejaConserveImage.setVisibility(View.INVISIBLE);
-                        dejaMarteleImage.bringToFront();
+                        dejaSelectionneImage.bringToFront();
+                        dejaSelectionneImage.setVisibility(View.VISIBLE);
+                        dejaSelectionneImage.setImageResource(R.drawable.marteau);
+                        dejaSelectionneImage.setColorFilter(dejaSelectionneImage.getContext().getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+
+                        tvDejaSelectionne.setVisibility(View.VISIBLE);
+                        tvDejaSelectionne.setText("Cet arbre à déjà été martelé !");
                         cleanCard();
-                        showSnackbar(view, "Arbre n°" + numEntree + " deja martelé");
                     }
                     else if(cur2.moveToFirst()) {
-                        dejaConserveImage.setVisibility(View.VISIBLE);
-                        dejaMarteleImage.setVisibility(View.INVISIBLE);
-                        dejaConserveImage.bringToFront();
+                        dejaSelectionneImage.setVisibility(View.VISIBLE);
+                        dejaSelectionneImage.setImageResource(R.drawable.conserver);
+                        dejaSelectionneImage.setColorFilter(dejaSelectionneImage.getContext().getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+
+                        tvDejaSelectionne.setVisibility(View.VISIBLE);
+                        tvDejaSelectionne.setText("Cet arbre à déjà été conservé !");
+
                         cleanCard();
-                        showSnackbar(view, "Arbre n°" + numEntree + " a été conservé");;
                     } else {
-                        dejaMarteleImage.setVisibility(View.INVISIBLE);
-                        dejaConserveImage.setVisibility(View.INVISIBLE);
+                        dejaSelectionneImage.setVisibility(View.INVISIBLE);
                         treeCardNumber.setVisibility(View.VISIBLE);
+                        tvDejaSelectionne.setVisibility(View.GONE);
+
                         // Requete de recherche d'arbre par le numéro "numEntree"
                         query = "SELECT * FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE +
                                 " WHERE " + DatabaseHelper.NUMERO_ARBRE_PARC + " = " + numEntree;

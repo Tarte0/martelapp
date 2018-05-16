@@ -12,25 +12,35 @@
     android:layout_marginRight="20dp"
     app:itemBackground="@color/colorWhite">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/Deja_selectionne"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:textSize="25sp"
+            android:textAlignment="center"/>
+
+
+        <ImageView
+            android:id="@+id/dejaSelectionneImage"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:tint="@color/colorPrimary"
+            android:scaleType="fitCenter"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/dejaMarteleImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="invisible"
-            android:tint="@color/colorPrimary"
-            app:srcCompat="@drawable/marteau" />
-
-        <ImageView
-            android:id="@+id/dejaConserveImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="invisible"
-            android:tint="@color/colorPrimary"
-            app:srcCompat="@drawable/conserver" />
 
         <LinearLayout
             android:layout_width="match_parent"
