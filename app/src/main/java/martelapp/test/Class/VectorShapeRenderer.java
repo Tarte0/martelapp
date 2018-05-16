@@ -30,7 +30,8 @@ public class VectorShapeRenderer implements IShapeRenderer {
 
     @Override
     public void renderShape(Canvas c, IScatterDataSet dataSet, ViewPortHandler viewPortHandler, float posX, float posY, Paint renderPaint) {
-        c.drawBitmap(getBitmapFromVectorDrawable(context, vectorId), posX, posY, renderPaint);
+        Bitmap vector = getBitmapFromVectorDrawable(context, vectorId);
+        c.drawBitmap(vector, posX - vector.getWidth()/2, posY - vector.getHeight()/2, renderPaint);
     }
 
     private static Bitmap getBitmapFromVectorDrawable(Context context, int drawableId) {
