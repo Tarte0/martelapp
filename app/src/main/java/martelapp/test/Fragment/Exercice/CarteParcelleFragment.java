@@ -160,6 +160,8 @@ public class CarteParcelleFragment extends Fragment implements OnChartValueSelec
 
         bubbleChart.setData(bubbleData);
 
+        // Enlever indication de la sélection d'un point lorsqu'on appuie sur le graphe
+        bubbleChart.getData().setHighlightEnabled(false);
 
         // Empêcher zoom des axes
         //bubbleChart.setScaleEnabled(false);

@@ -194,7 +194,7 @@ public class AnalyseParcelleFragment extends Fragment {
         // Désactiver le clic
         //scatterChart.setTouchEnabled(false);
 
-        // Enlever la croix qui indique la sélection d'un point lorsqu'on appuie sur le graphe
+        // Enlever indication de la sélection d'un point lorsqu'on appuie sur le graphe
         scatterChart.getData().setHighlightEnabled(false);
 
         // Enlever "description label"
