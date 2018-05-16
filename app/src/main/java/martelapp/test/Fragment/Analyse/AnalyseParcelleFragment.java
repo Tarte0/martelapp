@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import martelapp.test.Class.DatabaseHelper;
+import martelapp.test.Class.VectorShapeRenderer;
 import martelapp.test.R;
 
 /**
@@ -159,7 +160,7 @@ public class AnalyseParcelleFragment extends Fragment {
         // Forme des arbres non martelés Eco = cercle
         scatterDataSetNonMarteleEco.setScatterShape(ScatterChart.ScatterShape.CIRCLE);
         // Forme des arbres martelés = X
-        scatterDataSetMartele.setScatterShape(ScatterChart.ScatterShape.X);
+        //scatterDataSetMartele.setScatterShape(ScatterChart.ScatterShape.X);
         // Forme des arbres conservés = cercle
 
 
@@ -171,9 +172,11 @@ public class AnalyseParcelleFragment extends Fragment {
         if(!(entriesPositionArbreConserve.isEmpty())) {
             Collections.sort(entriesPositionArbreConserve, new EntryXComparator());
             ScatterDataSet scatterDataSetConserve = new ScatterDataSet(entriesPositionArbreConserve, "Arbres conservés");
+            scatterDataSetConserve.setShapeRenderer(new VectorShapeRenderer(view.getContext(), R.drawable.info_eco));
             scatterDataSetConserve.setColor(ColorTemplate.JOYFUL_COLORS[4]);
             scatterDataSetConserve.setDrawValues(false);
-            scatterDataSetConserve.setScatterShape(ScatterChart.ScatterShape.CIRCLE);
+            //scatterDataSetConserve.setScatterShape(ScatterChart.ScatterShape.CIRCLE);
+            scatterDataSetMartele.setShapeRenderer(new VectorShapeRenderer(view.getContext(), R.drawable.marteau));
             listScatterData.add(scatterDataSetConserve);
         }
 

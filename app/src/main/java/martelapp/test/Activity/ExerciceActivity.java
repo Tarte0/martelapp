@@ -45,6 +45,7 @@ public class ExerciceActivity extends AppCompatActivity {
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
+        //on ajoute un listener pour changer la couleur des icones dans les tabs
         tabs.addOnTabSelectedListener(
                 new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
 
@@ -71,6 +72,7 @@ public class ExerciceActivity extends AppCompatActivity {
 
         int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark);
 
+        //on associe les icones aux tabs et on met en blanc le premier
         tabs.getTabAt(0).setIcon(R.drawable.consignes);
         int white = ContextCompat.getColor(getApplicationContext(), R.color.colorWhite);
         tabs.getTabAt(0).getIcon().setColorFilter(white, PorterDuff.Mode.SRC_IN);
@@ -83,7 +85,7 @@ public class ExerciceActivity extends AppCompatActivity {
         tabs.getTabAt(4).setIcon(R.drawable.arbre_selec);
         tabs.getTabAt(4).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
 
-        viewPager.setCurrentItem(0);
+        viewPager.setCurrentItem(0);//on selectionne le premier
 
     }
 

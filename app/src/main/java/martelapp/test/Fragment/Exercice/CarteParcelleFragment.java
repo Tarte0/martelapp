@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+import martelapp.test.Class.AdaptableColorSet;
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.R;
 
@@ -67,7 +68,8 @@ public class CarteParcelleFragment extends Fragment implements OnChartValueSelec
          */
 
         ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(getResources().getColor(R.color.colorGraphePurple));
+
+        /*colors.add(getResources().getColor(R.color.colorGraphePurple));
         colors.add(getResources().getColor(R.color.colorGrapheBlue));
         colors.add(getResources().getColor(R.color.colorGrapheLime));
         colors.add(getResources().getColor(R.color.colorGrapheRed));
@@ -77,7 +79,9 @@ public class CarteParcelleFragment extends Fragment implements OnChartValueSelec
         colors.add(getResources().getColor(R.color.colorGrapheOrange));
         colors.add(getResources().getColor(R.color.colorGrapheBlack));
         colors.add(getResources().getColor(R.color.colorGrapheBrown));
-        colors.add(getResources().getColor(R.color.colorGrapheGrey));
+        colors.add(getResources().getColor(R.color.colorGrapheGrey));*/
+
+
 
         /*
          *  ArrayList<Entry> entriesPositionArbreNonMartele : Liste des position des arbres NON MARTELES pour le graphe
@@ -99,6 +103,11 @@ public class CarteParcelleFragment extends Fragment implements OnChartValueSelec
          *  et vérification de la note écologique pour différencier les
          *  arbres écologiques et les autres
          */
+        cur1 = dbHelper.executeQuery("SELECT * FROM "+DatabaseHelper.ARBRES_PARCELLE_TABLE+" GROUP BY "+DatabaseHelper.ESSENCE_ARBRE);
+        cur1.moveToFirst();
+        int nbEssences = cur1.getCount();
+        colors = AdaptableColorSet.createColorSet(nbEssences);
+
         cur1 = dbHelper.getDataFromTable("DISTINCT " + DatabaseHelper.ESSENCE_ARBRE, DatabaseHelper.ARBRES_PARCELLE_TABLE + " ORDER BY " + DatabaseHelper.ESSENCE_ARBRE);
         while (cur1.moveToNext()) {
 
@@ -117,7 +126,8 @@ public class CarteParcelleFragment extends Fragment implements OnChartValueSelec
             }
             Collections.sort(entriesPositionArbre, new EntryXComparator());
             bubbleDataSet = new BubbleDataSet(entriesPositionArbre, essence);
-            bubbleDataSet.setColor(colors.get(i % colors.size()));
+
+            bubbleDataSet.setColor(colors.get(i));
 
             bubbleDataSet.setDrawValues(false);
             listBubbleData.add(bubbleDataSet);
