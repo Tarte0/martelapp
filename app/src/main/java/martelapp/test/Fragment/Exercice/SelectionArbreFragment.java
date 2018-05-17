@@ -65,7 +65,7 @@ public class SelectionArbreFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.view_page_recherche, null);
+        View view = inflater.inflate(R.layout.view_page_selection, null);
 
         mButton0 = (Button) view.findViewById(R.id.buttonZero);
         mButton1 = (Button) view.findViewById(R.id.buttonOne);
@@ -235,7 +235,7 @@ public class SelectionArbreFragment extends Fragment {
                         dejaSelectionneImage.setColorFilter(dejaSelectionneImage.getContext().getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
 
                         tvDejaSelectionne.setVisibility(View.VISIBLE);
-                        tvDejaSelectionne.setText("Cet arbre à déjà été martelé !");
+                        tvDejaSelectionne.setText("Cet arbre a déjà été martelé !");
                         cleanCard();
                     }
                     else if(cur2.moveToFirst()) {
@@ -244,7 +244,7 @@ public class SelectionArbreFragment extends Fragment {
                         dejaSelectionneImage.setColorFilter(dejaSelectionneImage.getContext().getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
 
                         tvDejaSelectionne.setVisibility(View.VISIBLE);
-                        tvDejaSelectionne.setText("Cet arbre à déjà été conservé !");
+                        tvDejaSelectionne.setText("Cet arbre a déjà été conservé !");
 
                         cleanCard();
                     } else {

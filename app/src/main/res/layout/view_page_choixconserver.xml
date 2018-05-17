@@ -23,57 +23,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:weightSum="7">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/textViewConserver"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="@string/choix_conserver"
-                    android:textSize="24sp"/>
+                    android:textColor="@color/colorBlack"
+                    android:textSize="30sp"/>
+
+                <TextView
+                    android:id="@+id/text_attention_conserver"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginTop="36dp"
+                    android:textSize="20sp"
+                    android:text="@string/attention_conserver" />
 
 
-        </LinearLayout>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/textViewNum"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text=""
-                    android:textSize="24sp"/>
+                <include layout="@layout/tree_card" />
 
-                <TextView
-                    android:id="@+id/textViewEssence"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text=""
-                    android:textSize="24sp"/>
-
-                <TextView
-                    android:id="@+id/textViewEtat"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text=""
-                    android:textSize="24sp"/>
-
-                <TextView
-                    android:id="@+id/textViewDiametre"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text=""
-                    android:textSize="24sp"/>
             </LinearLayout>
-
         </LinearLayout>
 
 

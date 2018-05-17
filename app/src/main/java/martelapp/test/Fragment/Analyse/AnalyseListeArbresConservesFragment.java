@@ -14,6 +14,7 @@ import android.widget.TextView;
 import martelapp.test.Adapter.ArbresConservesAdapter;
 import martelapp.test.Adapter.ArbresMartelesAdapter;
 import martelapp.test.Class.DatabaseHelper;
+import martelapp.test.Fragment.Exercice.ChoixMartelageFragment;
 import martelapp.test.R;
 
 
@@ -77,8 +78,12 @@ public class AnalyseListeArbresConservesFragment extends Fragment {
         listeArbresMartelesAnalyse.setAdapter(arbresConservesAdapter);
 
         TextView textComplementArbresMarteles = mainView.findViewById(R.id.text_complement_arbres);
+        TextView textCouleurArbre = mainView.findViewById(R.id.text_couleur_arbre);
 
         textComplementArbresMarteles.setText("Nombre d'arbres conservés : " + Integer.toString(nbArbresConserves));
+
+        textCouleurArbre.setText("■ Note écologique ≥ " + Integer.toString(ChoixMartelageFragment.noteEcologiqueHaute));
+        textCouleurArbre.setTextColor(mainView.getResources().getColor(R.color.colorGreen));
 
         treeCardNumber.setVisibility(View.INVISIBLE);
 

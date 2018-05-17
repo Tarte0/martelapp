@@ -3,10 +3,13 @@ package martelapp.test.Adapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,28 +37,39 @@ public class ArbresConservesAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        RelativeLayout layoutArbreMarteles = view.findViewById(R.id.layout_arbres_traites);
+        TextView numeroArbreTraite =  view.findViewById(R.id.numero_arbre_traite);
+        TextView essenceArbreTraite =  view.findViewById(R.id.essence_arbre_traite);
+        TextView diameteArbreTraite =  view.findViewById(R.id.diametre_arbre_traite);
+        TextView noteEcoArbreTraite = view.findViewById(R.id.note_eco_arbre_traite);
 
-        TextView numeroArbreMartele =  view.findViewById(R.id.numero_arbre_traite);
-        TextView essenceArbreMartele =  view.findViewById(R.id.essence_arbre_traite);
-        TextView diameteArbreMartele =  view.findViewById(R.id.diametre_arbre_traite);
+        ImageView imageArbreTraite = view.findViewById(R.id.image_arbre_traite);
 
-        numeroArbreMartele.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC)));
-        essenceArbreMartele.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE)));
-        diameteArbreMartele.setText(Integer.toString(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.DIAMETRE_ARBRE))));
+        numeroArbreTraite.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC)));
+        essenceArbreTraite.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE)));
+        diameteArbreTraite.setText(Integer.toString(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.DIAMETRE_ARBRE))));
+
+
+        imageArbreTraite.setImageResource(R.drawable.flower);
 
         int noteEcologique = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.NOTE_ECO_ARBRE));
 
         if(analyse){
+            noteEcoArbreTraite.setText(Integer.toString(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.NOTE_ECO_ARBRE))));
+            noteEcoArbreTraite.setVisibility(View.VISIBLE);
             if(noteEcologique >= ChoixMartelageFragment.noteEcologiqueHaute) {
-                layoutArbreMarteles.setBackgroundColor(Color.GREEN);
-            }
-            else{
-                layoutArbreMarteles.setBackgroundColor(view.getResources().getColor(R.color.colorWhite));
+                numeroArbreTraite.setTextColor(view.getResources().getColor(R.color.colorGreen));
+                essenceArbreTraite.setTextColor(view.getResources().getColor(R.color.colorGreen));
+                diameteArbreTraite.setTextColor(view.getResources().getColor(R.color.colorGreen));
+                noteEcoArbreTraite.setTextColor(view.getResources().getColor(R.color.colorGreen));
+                imageArbreTraite.setColorFilter(imageArbreTraite.getContext().getResources().getColor(R.color.colorGreen), PorterDuff.Mode.SRC_ATOP);
             }
         }
         else{
-            layoutArbreMarteles.setBackgroundColor(view.getResources().getColor(R.color.colorBarOrange));
+            noteEcoArbreTraite.setVisibility(View.GONE);
+            numeroArbreTraite.setTextColor(view.getResources().getColor(R.color.colorPrimary));
+            essenceArbreTraite.setTextColor(view.getResources().getColor(R.color.colorPrimary));
+            diameteArbreTraite.setTextColor(view.getResources().getColor(R.color.colorPrimary));
+            imageArbreTraite.setColorFilter(imageArbreTraite.getContext().getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
         }
     }
 }

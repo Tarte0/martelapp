@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import martelapp.test.Activity.ExerciceActivity;
@@ -19,10 +20,13 @@ public class ChoixConserverFragment extends DialogFragment {
             boutonCancel;
 
     TextView textViewConserver,
-            textViewNum,
-            textViewEssence,
-            textViewEtat,
-            textViewDiametre;
+            tvNum,
+            tvEssence,
+            tvEtat,
+            tvDiametre;
+
+    LinearLayout treeCardNumber;
+
 
     DatabaseHelper dbHelper;
     Cursor cur1;
@@ -35,7 +39,7 @@ public class ChoixConserverFragment extends DialogFragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.view_page_choixconserver, null);
-        final View rechercheFragmentView = inflater.inflate(R.layout.view_page_recherche, null);
+        final View rechercheFragmentView = inflater.inflate(R.layout.view_page_selection, null);
 
         dbHelper = new DatabaseHelper(view.getContext());
 
@@ -43,11 +47,13 @@ public class ChoixConserverFragment extends DialogFragment {
         boutonCancel = view.findViewById(R.id.cancel);
 
         textViewConserver = view.findViewById(R.id.textViewConserver);
-        textViewNum = view.findViewById(R.id.textViewNum);
-        textViewEssence = view.findViewById(R.id.textViewEssence);
-        textViewEtat = view.findViewById(R.id.textViewEtat);
-        textViewDiametre = view.findViewById(R.id.textViewDiametre);
 
+        tvNum = (TextView) view.findViewById(R.id.numero_tree_card);
+        tvEssence = (TextView) view.findViewById(R.id.essence_tree_card);
+        tvEtat = (TextView) view.findViewById(R.id.etat_tree_card);
+        tvDiametre = (TextView) view.findViewById(R.id.diametre_tree_card);
+
+        treeCardNumber = view.findViewById(R.id.arbreLayout);
 
         String queryCaractArbre = "SELECT * FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE + " WHERE "
                 + DatabaseHelper.NUMERO_ARBRE_PARC + " = " + numeroArbre;
@@ -55,11 +61,12 @@ public class ChoixConserverFragment extends DialogFragment {
         cur1 = dbHelper.executeQuery(queryCaractArbre);
         cur1.moveToFirst();
 
+        tvEssence.setText(cur1.getString(cur1.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE)));
+        tvEtat.setText(etatToString(cur1.getString(cur1.getColumnIndex(DatabaseHelper.ETAT_ARBRE))));
+        tvDiametre.setText(String.format("Diametre : %s cm", cur1.getString(cur1.getColumnIndex(DatabaseHelper.DIAMETRE_ARBRE))));
+        tvNum.setText(String.format("Arbre n°%s", cur1.getString(cur1.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC))));
 
-        textViewNum.setText(String.format("Arbre n°%s", cur1.getString(cur1.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC))));
-        textViewEssence.setText(cur1.getString(cur1.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE)));
-        textViewEtat.setText(etatToString(cur1.getString(cur1.getColumnIndex(DatabaseHelper.ETAT_ARBRE))));
-        textViewDiametre.setText(String.format("Diametre : %s cm", cur1.getString(cur1.getColumnIndex(DatabaseHelper.DIAMETRE_ARBRE))));
+        treeCardNumber.setVisibility(View.GONE);
 
         boutonConserver.setOnClickListener(new View.OnClickListener() {
             @Override

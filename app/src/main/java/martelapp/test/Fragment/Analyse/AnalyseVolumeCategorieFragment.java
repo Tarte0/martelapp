@@ -1,6 +1,7 @@
 package martelapp.test.Fragment.Analyse;
 
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -178,7 +179,7 @@ public class AnalyseVolumeCategorieFragment extends Fragment {
         ArrayList<Integer> colors = new ArrayList<>();
         colors.add(getResources().getColor(R.color.colorBarBlue));
         colors.add(getResources().getColor(R.color.colorBarOrange));
-        colors.add(getResources().getColor(R.color.colorBarViolet));
+        colors.add(getResources().getColor(R.color.colorBarGreen));
 
         pieDataSetAvant.setColors(colors);
 
@@ -189,6 +190,10 @@ public class AnalyseVolumeCategorieFragment extends Fragment {
         PieData pieDataAvant = new PieData(pieDataSetAvant);
         pieChartAvant.setData(pieDataAvant);
 
+
+        pieDataSetAvant.setValueTextSize(22f);
+        pieDataSetAvant.setValueTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        pieDataSetAvant.setValueTextColor(getResources().getColor(R.color.colorWhite));
 
         pieChartAvant.getDescription().setText("Avant");
         pieChartAvant.getDescription().setTextSize(18f);
@@ -206,7 +211,7 @@ public class AnalyseVolumeCategorieFragment extends Fragment {
 
         /*
          *##################################
-         *########## GRAPHE AVANT ##########
+         *########## GRAPHE APRES ##########
          *##################################
          */
         PieDataSet pieDataSetApres = new PieDataSet(entriesVolumeApres, "");
@@ -221,6 +226,9 @@ public class AnalyseVolumeCategorieFragment extends Fragment {
         pieChartApres.setData(pieDataApres);
 
 
+        pieDataSetApres.setValueTextSize(22f);
+        pieDataSetApres.setValueTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        pieDataSetApres.setValueTextColor(getResources().getColor(R.color.colorWhite));
 
         pieChartApres.getDescription().setText("Après");
         pieChartApres.getDescription().setTextSize(18f);

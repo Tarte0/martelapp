@@ -67,17 +67,14 @@ public class ArbresSelectionnesFragment extends Fragment {
 
                 String raison = cur1.getString(cur1.getColumnIndex(DatabaseHelper.RAISON));
 
-                LinearLayout arbreLayout = mainView.findViewById(R.id.arbreLayout);
                 if (raison.equals(DatabaseHelper.BIODIVERSITE)) {
                     textRaison.setText("Arbre conservé pour la Biodiversité");
-                    arbreLayout.setBackgroundColor(getResources().getColor(R.color.colorBarOrange));
                 } else {
                     textRaison.setText(String.format("Raisons du Martelage : \n\n- %s\n", raisonToString(raison)));
                     while (cur1.moveToNext()) {
                         textRaison.setText(String.format("%s\n- %s\n", textRaison.getText(),
                                 raisonToString(cur1.getString(cur1.getColumnIndex(DatabaseHelper.RAISON)))));
                     }
-                    arbreLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 }
                 cur1 = dbHelper.executeQuery("SELECT * FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE + " WHERE " + DatabaseHelper.NUMERO_ARBRE_PARC + " = " + numero);
                 cur1.moveToFirst();

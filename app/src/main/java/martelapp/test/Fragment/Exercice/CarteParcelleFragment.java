@@ -67,19 +67,7 @@ public class CarteParcelleFragment extends Fragment implements OnChartValueSelec
          *
          */
 
-        ArrayList<Integer> colors = new ArrayList<>();
 
-        /*colors.add(getResources().getColor(R.color.colorGraphePurple));
-        colors.add(getResources().getColor(R.color.colorGrapheBlue));
-        colors.add(getResources().getColor(R.color.colorGrapheLime));
-        colors.add(getResources().getColor(R.color.colorGrapheRed));
-        colors.add(getResources().getColor(R.color.colorGrapheLightPink));
-        colors.add(getResources().getColor(R.color.colorGrapheGreen));
-        colors.add(getResources().getColor(R.color.colorGrapheYellow));
-        colors.add(getResources().getColor(R.color.colorGrapheOrange));
-        colors.add(getResources().getColor(R.color.colorGrapheBlack));
-        colors.add(getResources().getColor(R.color.colorGrapheBrown));
-        colors.add(getResources().getColor(R.color.colorGrapheGrey));*/
 
 
 
@@ -106,7 +94,7 @@ public class CarteParcelleFragment extends Fragment implements OnChartValueSelec
         cur1 = dbHelper.executeQuery("SELECT * FROM "+DatabaseHelper.ARBRES_PARCELLE_TABLE+" GROUP BY "+DatabaseHelper.ESSENCE_ARBRE);
         cur1.moveToFirst();
         int nbEssences = cur1.getCount();
-        colors = AdaptableColorSet.createColorSet(nbEssences);
+        ArrayList<Integer> colors = AdaptableColorSet.createColorSet(nbEssences);
 
         cur1 = dbHelper.getDataFromTable("DISTINCT " + DatabaseHelper.ESSENCE_ARBRE, DatabaseHelper.ARBRES_PARCELLE_TABLE + " ORDER BY " + DatabaseHelper.ESSENCE_ARBRE);
         while (cur1.moveToNext()) {

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import martelapp.test.Adapter.ArbresMartelesAdapter;
 import martelapp.test.Class.DatabaseHelper;
+import martelapp.test.Fragment.Exercice.ChoixMartelageFragment;
 import martelapp.test.R;
 
 public class AnalyseListeArbresMartelesFragment extends Fragment {
@@ -48,7 +49,6 @@ public class AnalyseListeArbresMartelesFragment extends Fragment {
                         + " WHERE " + DatabaseHelper.NUMERO_ARBRE_TRAITE_RAISON + " = " + numero);
                 cur.moveToFirst();
                 TextView textRaison = mainView.findViewById(R.id.raison_martele_card);
-
                 String raison = cur.getString(cur.getColumnIndex(DatabaseHelper.RAISON));
 
                 textRaison.setText(String.format("Raisons du Martelage : \n\n- %s\n", raisonToString(raison)));
@@ -80,8 +80,12 @@ public class AnalyseListeArbresMartelesFragment extends Fragment {
         listeArbresMartelesAnalyse.setAdapter(arbresMartelesAdapter);
 
         TextView textComplementArbresMarteles = mainView.findViewById(R.id.text_complement_arbres);
+        TextView textCouleurArbre = mainView.findViewById(R.id.text_couleur_arbre);
 
         textComplementArbresMarteles.setText("Nombre d'arbres martelés : " + Integer.toString(nbArbresMarteles));
+
+        textCouleurArbre.setText("■ Note écologique ≥ " + Integer.toString(ChoixMartelageFragment.noteEcologiqueHaute));
+        textCouleurArbre.setTextColor(mainView.getResources().getColor(R.color.colorRed));
 
         treeCardNumber.setVisibility(View.INVISIBLE);
 

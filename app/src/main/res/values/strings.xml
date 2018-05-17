@@ -62,6 +62,10 @@
 
     </string>
 
+    <string name="choix_raison_martelage">
+        <b>Expliquer votre choix</b>
+    </string>
+
     <string name="titre_resume_exerice">
         Point important de l\'exercice de martelage
     </string>
@@ -126,8 +130,10 @@
 
 
     <string name="choix_conserver">
-        CONSERVER UN ARBRE RAISON ECOLOGIQUE
+        <b>Conserver cet arbre pour la biodiversité</b>
     </string>
 
-
+    <string name="attention_conserver">
+        Attention : Si vous souhaitez simplement ne pas marteler cet arbre, ne pas conserver.
+    </string>
 </resources>

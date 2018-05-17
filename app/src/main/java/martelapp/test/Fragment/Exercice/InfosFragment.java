@@ -3,12 +3,10 @@ package martelapp.test.Fragment.Exercice;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,22 +25,17 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.utils.ColorTemplate;
-
-import org.xml.sax.DTDHandler;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import martelapp.test.Class.AdaptableColorSet;
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.Class.OnSwipeTouchListener;
-import martelapp.test.Formatter.PercentWithoutSmallValueFormatter;
 import martelapp.test.Formatter.StackedBarFormatter;
 import martelapp.test.Formatter.WithoutSmallValueFormatter;
 import martelapp.test.R;
@@ -404,7 +397,7 @@ public class InfosFragment extends Fragment {
         ArrayList<Integer> colors = new ArrayList<>();
         colors.add(getResources().getColor(R.color.colorBarBlue));
         colors.add(getResources().getColor(R.color.colorBarOrange));
-        colors.add(getResources().getColor(R.color.colorBarViolet));
+        colors.add(getResources().getColor(R.color.colorBarGreen));
 
         barDataSet.setColors(colors);
         barDataSet.setValueFormatter(new StackedBarFormatter(" | ", 0));
@@ -563,7 +556,7 @@ public class InfosFragment extends Fragment {
         ArrayList<Integer> colors = new ArrayList<>();
         colors.add(getResources().getColor(R.color.colorBarBlue));
         colors.add(getResources().getColor(R.color.colorBarOrange));
-        colors.add(getResources().getColor(R.color.colorBarViolet));
+        colors.add(getResources().getColor(R.color.colorBarGreen));
 
         barDataSet.setColors(colors);
 
@@ -658,6 +651,18 @@ public class InfosFragment extends Fragment {
         int i = 0;
         int nbArbre;
 
+
+
+        /*
+         *  Récupération de la position x, y des arbres NON MARTELES
+         *  et vérification de la note écologique pour différencier les
+         *  arbres écologiques et les autres
+         */
+        cur1 = dbHelper.executeQuery("SELECT * FROM "+DatabaseHelper.ARBRES_PARCELLE_TABLE+" GROUP BY "+DatabaseHelper.ESSENCE_ARBRE);
+        cur1.moveToFirst();
+        int nbEssences = cur1.getCount();
+        ArrayList<Integer> colors = AdaptableColorSet.createColorSet(nbEssences);
+
         /*
          *  Cursor cur1 : Cursor pointant sur toutes les essences disponibles dans la base de données
          *
@@ -710,18 +715,6 @@ public class InfosFragment extends Fragment {
         PieDataSet pieDataSet = new PieDataSet(entriesArbres, "");
 
 
-        ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(getResources().getColor(R.color.colorGraphePurple));
-        colors.add(getResources().getColor(R.color.colorGrapheBlue));
-        colors.add(getResources().getColor(R.color.colorGrapheLime));
-        colors.add(getResources().getColor(R.color.colorGrapheRed));
-        colors.add(getResources().getColor(R.color.colorGrapheLightPink));
-        colors.add(getResources().getColor(R.color.colorGrapheGreen));
-        colors.add(getResources().getColor(R.color.colorGrapheYellow));
-        colors.add(getResources().getColor(R.color.colorGrapheOrange));
-        colors.add(getResources().getColor(R.color.colorGrapheBlack));
-        colors.add(getResources().getColor(R.color.colorGrapheBrown));
-        colors.add(getResources().getColor(R.color.colorGrapheGrey));
 
         pieDataSet.setColors(colors);
 

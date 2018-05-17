@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.ScatterChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.ScatterData;
@@ -137,17 +138,18 @@ public class AnalyseParcelleFragment extends Fragment {
 
 
         ArrayList<IScatterDataSet> listScatterData = new ArrayList<>();
-        ScatterDataSet scatterDataSetNonMartele = new ScatterDataSet(entriesPositionArbreNonMartele, "Arbres non martelés");
-        ScatterDataSet scatterDataSetNonMarteleEco = new ScatterDataSet(entriesPositionArbreEco, "Arbres ecologiques");
-        ScatterDataSet scatterDataSetMartele = new ScatterDataSet(entriesPositionArbreMartele, "Arbres martelés (X)");
+        ScatterDataSet scatterDataSetNonMartele = new ScatterDataSet(entriesPositionArbreNonMartele, "");
+        ScatterDataSet scatterDataSetNonMarteleEco = new ScatterDataSet(entriesPositionArbreEco, "");
+        ScatterDataSet scatterDataSetMartele = new ScatterDataSet(entriesPositionArbreMartele, "");
 
 
 
         // Couleur des arbres
         scatterDataSetNonMartele.setColor(ColorTemplate.JOYFUL_COLORS[3]);
         scatterDataSetNonMarteleEco.setColor(ColorTemplate.JOYFUL_COLORS[1]);
-        scatterDataSetMartele.setColor(Color.RED);
 
+
+        scatterDataSetMartele.setShapeRenderer(new VectorShapeRenderer(view.getContext(), R.drawable.marteau));
 
         scatterDataSetNonMartele.setDrawValues(false);
         scatterDataSetNonMarteleEco.setDrawValues(false);
@@ -171,12 +173,10 @@ public class AnalyseParcelleFragment extends Fragment {
 
         if(!(entriesPositionArbreConserve.isEmpty())) {
             Collections.sort(entriesPositionArbreConserve, new EntryXComparator());
-            ScatterDataSet scatterDataSetConserve = new ScatterDataSet(entriesPositionArbreConserve, "Arbres conservés");
+            ScatterDataSet scatterDataSetConserve = new ScatterDataSet(entriesPositionArbreConserve, "");
             scatterDataSetConserve.setShapeRenderer(new VectorShapeRenderer(view.getContext(), R.drawable.info_eco));
-            scatterDataSetConserve.setColor(ColorTemplate.JOYFUL_COLORS[4]);
             scatterDataSetConserve.setDrawValues(false);
             //scatterDataSetConserve.setScatterShape(ScatterChart.ScatterShape.CIRCLE);
-            scatterDataSetMartele.setShapeRenderer(new VectorShapeRenderer(view.getContext(), R.drawable.marteau));
             listScatterData.add(scatterDataSetConserve);
         }
 
@@ -223,6 +223,26 @@ public class AnalyseParcelleFragment extends Fragment {
         legende.setFormSize(12f);
         legende.setXEntrySpace(15f);
 
+
+        // ArrayList contenant les textes des états des arbres pour la légende
+        ArrayList<String> titleList = new ArrayList<>();
+        titleList.add("Arbres non martelés");
+        titleList.add("Arbres écologiques");
+
+        // Listes des Entrées de la légende
+        ArrayList<LegendEntry> legendeEntrees = new ArrayList<>();
+        for (int k = 0; k < titleList.size(); k++) {
+            // Création d'une nouvelle entrée de légende
+            LegendEntry entree = new LegendEntry();
+            // Récupération de la couleur "k" de l'arrayList colors
+            entree.formColor = ColorTemplate.JOYFUL_COLORS[3];
+            // Récupération du label "k" de l'arrayList titleList
+            entree.label = titleList.get(k);
+            legendeEntrees.add(entree);
+        }
+
+        // Set la légende avec les entrées
+        legende.setCustom(legendeEntrees);
         // Refresh le graphe
         scatterChart.invalidate();
 

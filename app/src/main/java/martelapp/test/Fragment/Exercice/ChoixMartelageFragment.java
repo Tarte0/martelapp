@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import martelapp.test.Activity.MessageErreurArbreMarteleActivity;
@@ -27,12 +28,15 @@ import martelapp.test.R;
 public class ChoixMartelageFragment extends DialogFragment {
     CheckBox arbreMur, eclaircie, sanitaire, regeneration, exploitation, stabilite;
     Button  boutonMarteler,
-            buttonCancel,
-            buttonConserver;
-    TextView textViewNum,
-             textViewEssence,
-             textViewEtat,
-             textViewDiametre;
+            buttonCancel;
+
+    TextView tvNum,
+            tvEssence,
+            tvEtat,
+            tvDiametre;
+
+    LinearLayout treeCardNumber;
+
     DatabaseHelper dbHelper;
     Cursor cur1;
     public static int noteEcologiqueHaute = 6;
@@ -43,7 +47,7 @@ public class ChoixMartelageFragment extends DialogFragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.view_page_choixmartelage, null);
-        final View rechercheFragmentView = inflater.inflate(R.layout.view_page_recherche, null);
+        final View rechercheFragmentView = inflater.inflate(R.layout.view_page_selection, null);
 
         dbHelper = new DatabaseHelper(view.getContext());
 
@@ -58,11 +62,13 @@ public class ChoixMartelageFragment extends DialogFragment {
         buttonCancel = (Button) view.findViewById(R.id.cancel);
         //buttonConserver = view.findViewById(R.id.conserver);
 
-        textViewNum = view.findViewById(R.id.textViewNum);
-        textViewEssence = view.findViewById(R.id.textViewEssence);
-        textViewEtat = view.findViewById(R.id.textViewEtat);
-        textViewDiametre = view.findViewById(R.id.textViewDiametre);
+        tvNum = (TextView) view.findViewById(R.id.numero_tree_card);
+        tvEssence = (TextView) view.findViewById(R.id.essence_tree_card);
+        tvEtat = (TextView) view.findViewById(R.id.etat_tree_card);
+        tvDiametre = (TextView) view.findViewById(R.id.diametre_tree_card);
 
+
+        treeCardNumber = view.findViewById(R.id.arbreLayout);
         // Affichage caractéristiques de l'arbre
         String queryCaractArbre = "SELECT * FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE + " WHERE "
                                     + DatabaseHelper.NUMERO_ARBRE_PARC + " = " + numeroArbre;
@@ -70,11 +76,12 @@ public class ChoixMartelageFragment extends DialogFragment {
         cur1 = dbHelper.executeQuery(queryCaractArbre);
         cur1.moveToFirst();
 
-        textViewNum.setText(String.format("Arbre n°%s", cur1.getString(cur1.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC))));
-        textViewEssence.setText(cur1.getString(cur1.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE)));
-        textViewEtat.setText(etatToString(cur1.getString(cur1.getColumnIndex(DatabaseHelper.ETAT_ARBRE))));
-        textViewDiametre.setText(String.format("Diametre : %s cm", cur1.getString(cur1.getColumnIndex(DatabaseHelper.DIAMETRE_ARBRE))));
+        tvEssence.setText(cur1.getString(cur1.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE)));
+        tvEtat.setText(etatToString(cur1.getString(cur1.getColumnIndex(DatabaseHelper.ETAT_ARBRE))));
+        tvDiametre.setText(String.format("Diametre : %s cm", cur1.getString(cur1.getColumnIndex(DatabaseHelper.DIAMETRE_ARBRE))));
+        tvNum.setText(String.format("Arbre n°%s", cur1.getString(cur1.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC))));
 
+        treeCardNumber.setVisibility(View.GONE);
 
 
         buttonCancel.setOnClickListener(new View.OnClickListener() {

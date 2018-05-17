@@ -20,7 +20,16 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:weightSum="7">
+            android:weightSum="7.5">
+
+            <TextView
+                android:id="@+id/text_raison_martelage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:textSize="36sp"
+                android:textColor="@color/colorBlack"
+                android:text="@string/choix_raison_martelage" />
 
             <CheckBox
                 android:id="@+id/arbreMur"
@@ -89,39 +98,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textViewNum"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text=""
-                android:textSize="24sp"/>
+            <include layout="@layout/tree_card" />
 
-            <TextView
-                android:id="@+id/textViewEssence"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text=""
-                android:textSize="24sp"/>
-
-            <TextView
-                android:id="@+id/textViewEtat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text=""
-                android:textSize="24sp"/>
-
-            <TextView
-                android:id="@+id/textViewDiametre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text=""
-                android:textSize="24sp"/>
         </LinearLayout>
 
     </LinearLayout>

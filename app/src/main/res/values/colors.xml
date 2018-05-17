@@ -10,7 +10,9 @@
     <color name="colorBlack">#484848</color>
     <color name="colorBarBlue">#4b64c8</color>
     <color name="colorBarOrange">#e1af4b</color>
-    <color name="colorBarViolet">#9664af</color>
+    <color name="colorBarGreen">#d34141</color>
+
+
     <color name="colorRed">#e14b4b</color>
     <color name="colorGreen">#32af4b</color>
     <color name="colorGrapheBlack">#000000</color>
@@ -26,6 +28,8 @@
     <color name="colorGrapheBrown">#c3834c</color>
     <color name="colorGrapheGrey">#9E9E9E</color>
     <color name="holoBlack">#000000aa</color>
+
+    <color name="background_conserve">#c6ffb3</color>
 
     <color name="button_pave_pressed">#777e84</color>
     <color name="button_pave_focused">#4f5459</color>
