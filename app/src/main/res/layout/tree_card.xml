@@ -132,7 +132,7 @@
                     android:background="@color/colorTransparentBlack"
                     android:scaleType="fitCenter"
                     android:tint="@color/colorWhite"
-                    app:srcCompat="@drawable/marteau" />
+                    app:srcCompat="@drawable/marteau_tab" />
 
             </LinearLayout>
 

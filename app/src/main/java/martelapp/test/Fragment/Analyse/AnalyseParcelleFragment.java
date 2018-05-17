@@ -1,7 +1,6 @@
 package martelapp.test.Fragment.Analyse;
 
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -149,7 +148,7 @@ public class AnalyseParcelleFragment extends Fragment {
         scatterDataSetNonMarteleEco.setColor(ColorTemplate.JOYFUL_COLORS[1]);
 
 
-        scatterDataSetMartele.setShapeRenderer(new VectorShapeRenderer(view.getContext(), R.drawable.marteau));
+        scatterDataSetMartele.setShapeRenderer(new VectorShapeRenderer(view.getContext(), R.drawable.marteau_tab));
 
         scatterDataSetNonMartele.setDrawValues(false);
         scatterDataSetNonMarteleEco.setDrawValues(false);

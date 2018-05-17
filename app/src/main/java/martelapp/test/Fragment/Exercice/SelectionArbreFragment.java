@@ -5,7 +5,6 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -231,7 +230,7 @@ public class SelectionArbreFragment extends Fragment {
                     if (cur1.moveToFirst()) {
                         dejaSelectionneImage.bringToFront();
                         dejaSelectionneImage.setVisibility(View.VISIBLE);
-                        dejaSelectionneImage.setImageResource(R.drawable.marteau);
+                        dejaSelectionneImage.setImageResource(R.drawable.marteau_tab);
                         dejaSelectionneImage.setColorFilter(dejaSelectionneImage.getContext().getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
 
                         tvDejaSelectionne.setVisibility(View.VISIBLE);

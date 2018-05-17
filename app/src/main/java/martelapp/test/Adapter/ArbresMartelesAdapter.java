@@ -2,15 +2,12 @@ package martelapp.test.Adapter;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import martelapp.test.Class.DatabaseHelper;
@@ -49,7 +46,7 @@ public class ArbresMartelesAdapter extends CursorAdapter {
         diameteArbreTraite.setText(Integer.toString(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.DIAMETRE_ARBRE))));
 
 
-        imageArbreTraite.setImageResource(R.drawable.marteau);
+        imageArbreTraite.setImageResource(R.drawable.marteau_tab);
 
         int noteEcologique = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.NOTE_ECO_ARBRE));
 
