@@ -24,6 +24,7 @@ import martelapp.test.Fragment.Analyse.AnalyseTigesEcoFragment;
 import martelapp.test.Fragment.Analyse.AnalyseTigesEssencesFragment;
 import martelapp.test.Fragment.Analyse.AnalyseVolumeCategorieFragment;
 import martelapp.test.Fragment.Analyse.AnalyseVolumeDiametreFragment;
+import martelapp.test.Fragment.Analyse.GrapheFragment;
 import martelapp.test.R;
 
 
@@ -42,6 +43,8 @@ public class AnalyseActivity extends AppCompatActivity {
      * Bouton permettant d'aller sur le fragment à gauche
      */
     ImageButton next;
+
+    GrapheFragment gf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,17 +118,13 @@ public class AnalyseActivity extends AppCompatActivity {
     // Ajout et associations des Fragments aux onglets
     private void setupViewPager(ViewPager viewPager) {
         ExerciceActivity.Adapter adapter = new ExerciceActivity.Adapter(getSupportFragmentManager());
+        gf = new GrapheFragment();
+        gf.setVp(viewPager);
         adapter.addFragment(new AnalyseRespectConsignesFragment(), "Consignes");
         adapter.addFragment(new AnalyseSyntheseFragment(), "Synthèse");
         adapter.addFragment(new AnalyseListeArbresMartelesFragment(), "Arbres martelés");
         adapter.addFragment(new AnalyseListeArbresConservesFragment(), "Arbres conservés");
-        adapter.addFragment(new AnalyseTigesEssencesFragment(), "Essences");
-        adapter.addFragment(new AnalyseTigesDiametreFragment(), "Diametre");
-        adapter.addFragment(new AnalyseTigesEcoFragment(), "Note écologique");
-        adapter.addFragment(new AnalyseVolumeDiametreFragment(), "Volume");
-        adapter.addFragment(new AnalyseVolumeCategorieFragment(), "Catégories");
-        adapter.addFragment(new AnalyseRaisonsFragment(), "Raisons");
-        adapter.addFragment(new AnalyseParcelleFragment(), "Parcelle");
+        adapter.addFragment(gf, "Graphe wesh");
         viewPager.setAdapter(adapter);
     }
 

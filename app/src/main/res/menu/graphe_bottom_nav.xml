@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_graphe_essence_analyse"
+        android:enabled="true"
+        android:icon="@drawable/info_carac_parcelle"
+        android:title="@string/caracteristique_parcelle_caps"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_graphe_diametre_analyse"
+        android:enabled="true"
+        android:icon="@drawable/info_diametre"
+        android:title="@string/graphe_diametre_caps"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_graphe_note_eco_analyse"
+        android:enabled="true"
+        android:icon="@drawable/info_eco"
+        android:title="@string/graphe_note_eco_caps"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_graphe_volume_analyse"
+        android:enabled="true"
+        android:icon="@drawable/info_essences"
+        android:title="@string/graphe_essence_caps"
+        app:showAsAction="ifRoom" />
+</menu>

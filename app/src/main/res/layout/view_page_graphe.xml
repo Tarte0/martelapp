@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:orientation="vertical"
+    android:weightSum="10"
+    tools:context="martelapp.test.Activity.AnalyseActivity">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/GrapheDetails"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="5"
+            android:layout_above="@+id/bottom_navigation_graphe">
+
+            <TextView
+                android:id="@+id/title_graphe"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:gravity="center_vertical"
+                android:text=""
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="36sp" />
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top"
+                android:orientation="horizontal"
+                android:weightSum="12"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:id="@+id/previousInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:scaleX="-1"
+                    android:tint="@color/colorPrimary"
+                    app:srcCompat="@drawable/arrow" />
+
+                <LinearLayout
+                    android:id="@+id/layout_graphe_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+
+                    <LinearLayout
+                        android:id="@+id/layout_graphe"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="10"
+                        android:orientation="vertical"
+                        android:weightSum="10">
+
+
+                        <TextView
+                            android:id="@+id/text_axe"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text=""
+                            android:textColor="@color/colorBlack"
+                            android:textSize="22sp" />
+
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/bar_chart_essence_graphe"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="9.5" />
+
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/bar_chart_diametre_graphe"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="9.5" />
+
+
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/bar_chart_note_eco_graphe"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="9.5" />
+
+
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/bar_chart_volume_graphe"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="9.5" />
+
+
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/bar_chart_raison_graphe"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="9.5" />
+
+
+                        <com.github.mikephil.charting.charts.ScatterChart
+                            android:id="@+id/scatter_chart_carte_graphe"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="9.5" />
+
+                        <LinearLayout
+                            android:id="@+id/layout_pie_chart_volume"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:weightSum="10"
+                            android:layout_weight="9.5"
+                            android:orientation="horizontal">
+
+                            <com.github.mikephil.charting.charts.PieChart
+                                android:id="@+id/pie_chart_volume_avant_graphe"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="5" />
+
+
+                            <com.github.mikephil.charting.charts.PieChart
+                                android:id="@+id/pie_chart_volume_apres_graphe"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="5" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/button_terminer_analyse_save_pdf"
+                        style="@style/button_vert"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="bottom|end"
+                        android:layout_weight="3"
+                        android:text="@string/button_go_to_carte" />
+
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/nextInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:tint="@color/colorPrimary"
+                    app:srcCompat="@drawable/arrow" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottom_navigation_graphe"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            app:itemBackground="@color/colorWhite"
+            app:itemIconTint="@drawable/bottom_nav_color_selector"
+            app:itemTextColor="@drawable/bottom_nav_color_selector"
+            app:menu="@menu/graphe_bottom_nav"
+            />
+
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>
