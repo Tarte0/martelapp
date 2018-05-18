@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="6"
+    android:clickable="true"
     android:background="@color/colorWhite">
 
 
@@ -39,7 +40,7 @@
                 android:checked="false"
                 android:gravity="left|center"
                 android:layoutDirection="ltr"
-                android:text="Arbre Mûr"
+                android:text="Parce que l'arbre est mûr"
                 android:textSize="24sp" />
 
             <CheckBox
@@ -49,7 +50,7 @@
                 android:layout_weight="1"
                 android:gravity="left|center"
                 android:layoutDirection="ltr"
-                android:text="Eclaircie au profit d'un arbre d'avenir"
+                android:text="Pour apporter de l'éclaircie au profit d'un arbre d'avenir"
                 android:textSize="24sp" />
 
             <CheckBox
@@ -59,7 +60,7 @@
                 android:layout_weight="1"
                 android:gravity="left|center"
                 android:layoutDirection="ltr"
-                android:text="Sanitaire"
+                android:text="Pour des raisons sanitaire"
                 android:textSize="24sp" />
 
             <CheckBox
@@ -69,7 +70,7 @@
                 android:layout_weight="1"
                 android:gravity="left|center"
                 android:layoutDirection="ltr"
-                android:text="Pour la Régénération"
+                android:text="Pour la régénération"
                 android:textSize="24sp" />
 
             <CheckBox
@@ -79,7 +80,7 @@
                 android:layout_weight="1"
                 android:gravity="left|center"
                 android:layoutDirection="ltr"
-                android:text="Pour l'Exploitation"
+                android:text="Pour l'exploitation"
                 android:textSize="24sp" />
 
             <CheckBox

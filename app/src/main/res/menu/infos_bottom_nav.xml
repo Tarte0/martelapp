@@ -25,10 +25,4 @@
         android:icon="@drawable/info_essences"
         android:title="@string/graphe_essence_caps"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/action_graphe_exploitabilite_rotation"
-        android:enabled="true"
-        android:icon="@drawable/info_supp"
-        android:title="@string/information_supplementaire_caps"
-        app:showAsAction="ifRoom" />
 </menu>

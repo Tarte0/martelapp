@@ -149,8 +149,6 @@ public class ConsignesFragment extends Fragment {
                                 buttonGoToInfos.setVisibility((View.INVISIBLE));
                                 break;
                             case R.id.action_objectif:
-                                textViewConsignes.setText(Html.fromHtml("<b>iufezgiugi</b>"));
-
                                 textViewConsignes.setText(Html.fromHtml("<b>Volume</b>" +
                                         "<br><br>• Prélever entre " + Integer.toString(prelevementMin) + " % et " + Integer.toString(prelevementMax) + " % du volume de bois de la parcelle" +
                                         " soit entre " + Integer.toString((int)(volumeBoisTotalParcelleHa * prelevementMin / 100)) + " et " + Integer.toString((int)(volumeBoisTotalParcelleHa * prelevementMax / 100)) + " m3/ha" +

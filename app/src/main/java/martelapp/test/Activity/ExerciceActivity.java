@@ -99,7 +99,7 @@ public class ExerciceActivity extends AppCompatActivity {
         af.setVp(viewPager);
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(cf, "Consignes");
-        adapter.addFragment(infosf, "Info");
+        adapter.addFragment(infosf, "Infos");
         adapter.addFragment(new CarteParcelleFragment(), "Carte");
         adapter.addFragment(new SelectionArbreFragment(), "Sélection");
         adapter.addFragment(af, "Arbres sélectionnés");

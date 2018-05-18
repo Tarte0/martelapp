@@ -63,7 +63,11 @@
     </string>
 
     <string name="choix_raison_martelage">
-        <b>Expliquer votre choix</b>
+        <b>Je martèle :</b>
+    </string>
+
+    <string name="titre_carte">
+        Carte de la parcelle
     </string>
 
     <string name="titre_resume_exerice">
@@ -125,7 +129,7 @@
         Caractéristiques de la parcelle
     </string>
     <string name="button_go_to_carte">
-        Carte de la parcelle
+        > Consulter la carte de la parcelle
     </string>
 
 

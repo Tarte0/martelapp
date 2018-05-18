@@ -46,6 +46,7 @@ public class InfosFragment extends Fragment {
 
     BottomNavigationView bottomNavigationView;
     TextView textViewInfos, textViewTitleInfos;
+    LinearLayout layoutInfo;
     ImageButton previous, next;
     Button buttonGoToCarte;
     BarChart barChartDiametre;
@@ -73,6 +74,7 @@ public class InfosFragment extends Fragment {
 
         textViewInfos = (TextView) view.findViewById(R.id.textViewInfo);
         textViewTitleInfos = (TextView) view.findViewById(R.id.titleInfo);
+        layoutInfo = view.findViewById(R.id.layout_info);
         bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation_info);
         previous = (ImageButton) view.findViewById(R.id.previousInfo);
         next = (ImageButton) view.findViewById(R.id.nextInfo);
@@ -95,6 +97,14 @@ public class InfosFragment extends Fragment {
         cur1.close();
         cur2.close();
 
+        buttonGoToCarte.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+
+            }
+        });
+
         //on gere le swipe gauche et droite (un peu brute)
         view.setOnTouchListener(new OnSwipeTouchListener(view.getContext()) {
             public void onSwipeRight() {
@@ -109,9 +119,6 @@ public class InfosFragment extends Fragment {
                         break;
                     case R.id.action_graphe_essence:
                         bottomNavigationView.setSelectedItemId(R.id.action_graphe_note_eco);
-                        break;
-                    case R.id.action_graphe_exploitabilite_rotation:
-                        bottomNavigationView.setSelectedItemId(R.id.action_graphe_essence);
                         break;
                 }
 
@@ -129,9 +136,6 @@ public class InfosFragment extends Fragment {
                         bottomNavigationView.setSelectedItemId(R.id.action_graphe_essence);
                         break;
                     case R.id.action_graphe_essence:
-                        bottomNavigationView.setSelectedItemId(R.id.action_graphe_exploitabilite_rotation);
-                        break;
-                    case R.id.action_graphe_exploitabilite_rotation:
                         break;
                 }
             }
@@ -153,9 +157,6 @@ public class InfosFragment extends Fragment {
                     case R.id.action_graphe_essence:
                         bottomNavigationView.setSelectedItemId(R.id.action_graphe_note_eco);
                         break;
-                    case R.id.action_graphe_exploitabilite_rotation:
-                        bottomNavigationView.setSelectedItemId(R.id.action_graphe_essence);
-                        break;
                 }
             }
         });
@@ -175,9 +176,6 @@ public class InfosFragment extends Fragment {
                         bottomNavigationView.setSelectedItemId(R.id.action_graphe_essence);
                         break;
                     case R.id.action_graphe_essence:
-                        bottomNavigationView.setSelectedItemId(R.id.action_graphe_exploitabilite_rotation);
-                        break;
-                    case R.id.action_graphe_exploitabilite_rotation:
                         break;
                 }
             }
@@ -192,6 +190,7 @@ public class InfosFragment extends Fragment {
                             case R.id.action_carte_id:
                                 textViewTitleInfos.setText(R.string.caracteristique_parcelle_caps);
                                 textViewInfos.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 9));
+                                layoutInfo.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 10));
                                 textViewInfos.setTextSize(24f);
                                 textViewInfos.setText(
                                         "• altitude : " + Integer.toString(altitude) + " mètres\n\n"
@@ -212,6 +211,7 @@ public class InfosFragment extends Fragment {
                             case R.id.action_graphe_diametre:
                                 textViewTitleInfos.setText(R.string.titre_graphe_nbtige_diametre_info);
                                 textViewInfos.setVisibility(View.VISIBLE);
+                                layoutInfo.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 10));
                                 textViewInfos.setTextSize(18f);
                                 textViewInfos.setText(R.string.axe_nombre_tiges);
                                 textViewInfos.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.5f));
@@ -227,6 +227,7 @@ public class InfosFragment extends Fragment {
                                 textViewInfos.setVisibility(View.VISIBLE);
                                 textViewInfos.setTextSize(18f);
                                 textViewInfos.setText(R.string.axe_nombre_tiges);
+                                layoutInfo.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 10));
                                 textViewInfos.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.5f));
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.VISIBLE);
@@ -237,33 +238,14 @@ public class InfosFragment extends Fragment {
                                 break;
                             case R.id.action_graphe_essence:
                                 textViewTitleInfos.setText(R.string.titre_graphe_nbtige_essence_info);
+                                layoutInfo.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 7f));
                                 textViewInfos.setVisibility(View.GONE);
-                                previous.setVisibility(View.VISIBLE);
-                                next.setVisibility(View.VISIBLE);
-                                buttonGoToCarte.setVisibility(View.GONE);
-                                barChartDiametre.setVisibility(View.GONE);
-                                barChartNoteEco.setVisibility(View.GONE);
-                                pieChartEssence.setVisibility(View.VISIBLE);
-                                break;
-                            case R.id.action_graphe_exploitabilite_rotation:
-                                textViewInfos.setTextSize(22f);
-                                textViewInfos.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 9));
-                                textViewInfos.setText(R.string.info_exploitabilite_rotation);
-                                textViewTitleInfos.setText(R.string.information_supplementaire_caps);
-                                textViewInfos.setVisibility(View.VISIBLE);
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.INVISIBLE);
                                 buttonGoToCarte.setVisibility(View.VISIBLE);
                                 barChartDiametre.setVisibility(View.GONE);
                                 barChartNoteEco.setVisibility(View.GONE);
-                                pieChartEssence.setVisibility(View.GONE);
-                                buttonGoToCarte.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
-
-                                    }
-                                });
+                                pieChartEssence.setVisibility(View.VISIBLE);
                                 break;
                         }
                         return true;
@@ -729,7 +711,7 @@ public class InfosFragment extends Fragment {
 
         pieChart.getDescription().setText("Seulement les valeurs ≥ 5 sont affichées");
         pieChart.getDescription().setTextSize(18f);
-        pieChart.getDescription().setXOffset(85f);
+        pieChart.getDescription().setXOffset(70f);
         pieChart.getDescription().setYOffset(-15f);
 
         // Enlever "description label"
@@ -739,7 +721,7 @@ public class InfosFragment extends Fragment {
         pieChart.setDrawHoleEnabled(false);
 
 
-        pieChart.setExtraOffsets(0, 0, 80f, 10f);
+        pieChart.setExtraOffsets(0, 0, 0f, 10f);
 
         /* ************************ LEGENDE ****************
          *
@@ -749,7 +731,7 @@ public class InfosFragment extends Fragment {
         Legend legende = pieChart.getLegend();
         // Forme de la légende
 
-        legende.setXOffset(140f);
+        //legende.setXOffset(140f);
         legende.setYOffset(-140f);
         legende.setForm(Legend.LegendForm.SQUARE);
         legende.setTextSize(20f);
