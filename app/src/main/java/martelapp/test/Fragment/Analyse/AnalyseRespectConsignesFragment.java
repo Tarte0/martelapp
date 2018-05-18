@@ -3,6 +3,7 @@ package martelapp.test.Fragment.Analyse;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,10 +100,20 @@ public class AnalyseRespectConsignesFragment extends Fragment {
 
 
         volumeMartelePourcent = (float)(volumeTotalBoisMartele/volumeBoisTotalParcelle)*100;
-        tvPrelevementVolumeR.setText(String.format("Prélever entre %s et %s du volume de bois de la parcelle.\nVolume prélevé: %sm3 (%s)",
-                prelevementMin +"%" , prelevementMax +"%" ,df.format(volumeTotalBoisMartele),df.format(volumeMartelePourcent)+"%"));
+        /*tvPrelevementVolumeR.setText(String.format("Prélever entre %s et %s du volume de bois de la parcelle.\nVolume prélevé: %sm3 (%s)",
+                prelevementMin +"%" , prelevementMax +"%" ,df.format(volumeTotalBoisMartele),df.format(volumeMartelePourcent)+"%"));*/
+        tvPrelevementVolumeR.setText(Html.fromHtml(
+                "Prélever entre " + prelevementMin + "% et " + prelevementMax + "% du volume de bois de la parcelle (Entre "
+                        + (int)(volumeBoisTotalParcelle * prelevementMin / 100)  + " et " + (int)(volumeBoisTotalParcelle * prelevementMax / 100) + "m3 pour notre parcelle)." +
+                        "<br><font color='#32af4b'>Volume prélevé : "+ df.format(volumeTotalBoisMartele) + "m3 (" +
+                        df.format(volumeMartelePourcent) + "%)</font>"));
         if (prelevementMin >= volumeMartelePourcent || volumeMartelePourcent >= prelevementMax) {
-            tvPrelevementVolumeR.setTextColor(getResources().getColor(R.color.colorRed));
+            //tvPrelevementVolumeR.setTextColor(getResources().getColor(R.color.colorRed));
+            tvPrelevementVolumeR.setText(Html.fromHtml(
+                    "Prélever entre " + prelevementMin + "% et " + prelevementMax + "% du volume de bois de la parcelle (Entre "
+                            + (int)(volumeBoisTotalParcelle * prelevementMin / 100)  + " et " + (int)(volumeBoisTotalParcelle * prelevementMax / 100) + "m3 pour notre parcelle)." +
+                            "<br><font color='#e14b4b'>Volume prélevé : "+ df.format(volumeTotalBoisMartele) + "m3 (" +
+                            df.format(volumeMartelePourcent) + "%)</font>" ));
             ivPrelevementVolumeR.setColorFilter(getResources().getColor(R.color.colorRed));
             ivPrelevementVolumeR.setImageResource(R.drawable.cross);
         }
@@ -137,11 +148,15 @@ public class AnalyseRespectConsignesFragment extends Fragment {
         }
 
 
-        tvGrosDiametreR.setText(String.format("Conserver au moins 3 arbres de gros diamètre par hectare.\nArbres conservés: %s",
-                (nbArbresDiamSup50conserve)));
+        /*tvGrosDiametreR.setText(String.format("Conserver au moins 3 arbres de gros diamètre par hectare.\nArbres conservés: %s",
+                (nbArbresDiamSup50conserve)));*/
+        tvGrosDiametreR.setText(Html.fromHtml("Conserver au moins 3 arbres de gros diamètre par hectare (Soit " +  (int)Math.ceil(3*surfaceParcelle) + " arbres pour notre parcelle)." +
+                                            "<br><font color='#32af4b'>Arbres conservés : " + nbArbresDiamSup50conserve + "</font>"));
         // Moins de 3 * surfaceParcelle arbres de diamètre > 50 à la fin de l'exercice
         if (nbArbresDiamSup50conserve < (3*surfaceParcelle)) {
-            tvGrosDiametreR.setTextColor(getResources().getColor(R.color.colorRed));
+            //tvGrosDiametreR.setTextColor(getResources().getColor(R.color.colorRed));
+            tvGrosDiametreR.setText(Html.fromHtml("Conserver au moins 3 arbres de gros diamètre par hectare (Soit " + (int)Math.ceil(3*surfaceParcelle) + " arbres pour notre parcelle)." +
+                    "<br><font color='#e14b4b'>Arbres conservés : " + nbArbresDiamSup50conserve + "</font>"));
             ivGrosDiametreR.setColorFilter(getResources().getColor(R.color.colorRed));
             ivGrosDiametreR.setImageResource(R.drawable.cross);
         }
@@ -170,11 +185,15 @@ public class AnalyseRespectConsignesFragment extends Fragment {
                 nbArbreEcoConserves++;
             }
         }
-        tvEcoR.setText(String.format("Conserver au moins 2 arbres porteurs de micros-habitats par hectare.\nArbres conservés: %s",
-                (nbArbreEcoConserves)));
+        /*tvEcoR.setText(String.format("Conserver au moins 2 arbres porteurs de micros-habitats par hectare.\nArbres conservés: %s",
+                (nbArbreEcoConserves)));*/
+        tvEcoR.setText(Html.fromHtml("Conserver au moins 2 arbres porteurs de micros-habitats par hectare (Soit " +  (int)Math.ceil(2*surfaceParcelle) +" arbres pour notre parcelle)." +
+                                        "<br><font color='#32af4b'>Arbres conservés : " + nbArbreEcoConserves + "</font>"));
         // Moins de 2 * surfaceParcelle arbres ECO à la fin de l'exercice
         if (nbArbreEcoConserves < (2*surfaceParcelle)) {
-            tvEcoR.setTextColor(getResources().getColor(R.color.colorRed));
+            //tvEcoR.setTextColor(getResources().getColor(R.color.colorRed));
+            tvEcoR.setText(Html.fromHtml("Conserver au moins 2 arbres porteurs de micros-habitats par hectare (Soit " +  (int)Math.ceil(2*surfaceParcelle) +" arbres pour notre parcelle)." +
+                    "<br><font color='#e14b4b'>Arbres conservés : " + nbArbreEcoConserves + "</font>"));
             ivEcoR.setColorFilter(getResources().getColor(R.color.colorRed));
             ivEcoR.setImageResource(R.drawable.cross);
         }

@@ -134,12 +134,9 @@
 
 
     <string name="choix_conserver">
-        <b>Conserver cet arbre pour la biodiversité</b>
+        <b>Je conserve cet arbre pour la biodiversité</b>
     </string>
 
-    <string name="attention_conserver">
-        Attention : Si vous souhaitez simplement ne pas marteler cet arbre, ne pas conserver.
-    </string>
 
     <string name="textImgBoutonConserver">
         Je le conserve

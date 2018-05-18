@@ -34,14 +34,7 @@
                     android:textColor="@color/colorBlack"
                     android:textSize="30sp"/>
 
-                <TextView
-                    android:id="@+id/text_attention_conserver"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:layout_marginTop="36dp"
-                    android:textSize="20sp"
-                    android:text="@string/attention_conserver" />
+
 
 
             </LinearLayout>

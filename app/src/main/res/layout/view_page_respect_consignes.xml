@@ -31,7 +31,7 @@
             android:gravity="center|left"
             android:text=""
             android:textSize="30sp"
-            android:textColor="@color/colorGreen"/>
+            android:textColor="@color/colorBlack"/>
     </LinearLayout>
 
     <LinearLayout
@@ -58,7 +58,7 @@
             android:gravity="center|left"
             android:text=""
             android:textSize="30sp"
-            android:textColor="@color/colorGreen"/>
+            android:textColor="@color/colorBlack"/>
     </LinearLayout>
 
     <LinearLayout
@@ -85,7 +85,7 @@
             android:gravity="center|left"
             android:text=""
             android:textSize="30sp"
-            android:textColor="@color/colorGreen"/>
+            android:textColor="@color/colorBlack"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -272,10 +272,14 @@ public class SelectionArbreFragment extends Fragment {
 
                         // Si l'arbre cherché n'existe pas, un message d'erreur est affiché
                         else {
-
-
                             tvDejaSelectionne.setVisibility(View.VISIBLE);
                             tvDejaSelectionne.setText("Cet arbre n'existe pas !");
+
+                            dejaSelectionneImage.setVisibility(View.VISIBLE);
+                            dejaSelectionneImage.setImageResource(R.drawable.alerte);
+                            dejaSelectionneImage.setColorFilter(dejaSelectionneImage.getContext().getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+
+
                             cleanCard();
                         }
                     }
