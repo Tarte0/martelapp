@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:layout_marginTop="20dp"
     android:layout_marginBottom="20dp"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
+    android:layout_marginTop="20dp"
     app:itemBackground="@color/colorWhite">
 
     <LinearLayout
@@ -22,24 +22,24 @@
             android:id="@+id/Deja_selectionne"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:textColor="@color/colorBlack"
-            android:textSize="25sp"
-            android:textAlignment="center"/>
+            android:textSize="25sp" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
 
         <ImageView
             android:id="@+id/dejaSelectionneImage"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3"
-            android:tint="@color/colorPrimary"
-            android:scaleType="fitCenter"
             android:layout_gravity="bottom"
+            android:layout_weight="3"
+            android:scaleType="fitCenter"
+            android:tint="@color/colorPrimary"
             android:visibility="invisible" />
 
     </LinearLayout>
@@ -77,32 +77,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textColor="@color/colorBlack"
-                    android:text=""
-                    android:textSize="30sp"
                     android:gravity="center_vertical"
-                    android:paddingLeft="10dp"/>
+                    android:paddingLeft="10dp"
+                    android:text=""
+                    android:textColor="@color/colorBlack"
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/etat_tree_card"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textColor="@color/colorBlack"
-                    android:text=""
-                    android:textSize="30sp"
                     android:gravity="center_vertical"
-                    android:paddingLeft="10dp"/>
+                    android:paddingLeft="10dp"
+                    android:text=""
+                    android:textColor="@color/colorBlack"
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/diametre_tree_card"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textColor="@color/colorBlack"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:text=""
+                    android:textColor="@color/colorBlack"
                     android:textSize="30sp" />
             </LinearLayout>
 
@@ -111,34 +111,85 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:weightSum="6"
                 android:background="@color/colorPrimary"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="6">
 
-                <ImageButton
-                    android:id="@+id/conserverButtonTreeCard"
+
+                <LinearLayout
+                    android:id="@+id/imgConserver"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:background="@color/colorTransparentBlack"
-                    android:scaleType="fitCenter"
-                    android:tint="@color/colorWhite"
-                    app:srcCompat="@drawable/conserver" />
+                    android:background="@color/colorPrimary"
+                    android:clickable="true"
+                    android:orientation="vertical"
+                    android:weightSum="5">
+
+                    <ImageView
+                        android:id="@+id/conserverButtonTreeCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/colorTransparentBlack"
+                        android:scaleType="fitCenter"
+                        android:tint="@color/colorWhite"
+                        app:srcCompat="@drawable/conserver" />
+
+                    <TextView
+                        android:id="@+id/imgConserverText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:background="@color/colorTransparentBlack"
+                        android:gravity="center_vertical"
+                        android:text="@string/textImgBoutonConserver"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
-                />
+                    android:layout_weight="2" />
 
-                <ImageButton
-                    android:id="@+id/martelerButtonTreeCard"
+
+                <LinearLayout
+                    android:id="@+id/imgMarteler"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:background="@color/colorTransparentBlack"
-                    android:scaleType="fitCenter"
-                    android:tint="@color/colorWhite"
-                    app:srcCompat="@drawable/marteau_tab" />
+                    android:background="@color/colorPrimary"
+                    android:clickable="true"
+                    android:orientation="vertical"
+                    android:weightSum="5">
+
+
+                    <ImageView
+                        android:id="@+id/martelerButtonTreeCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/colorTransparentBlack"
+                        android:scaleType="fitCenter"
+                        android:tint="@color/colorWhite"
+                        app:srcCompat="@drawable/marteau_tab" />
+
+                    <TextView
+                        android:id="@+id/imgMartelerText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:background="@color/colorTransparentBlack"
+                        android:gravity="center_vertical"
+                        android:text="@string/textImgBoutonMarteler"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

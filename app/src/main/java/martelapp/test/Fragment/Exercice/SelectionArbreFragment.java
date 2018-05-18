@@ -39,8 +39,11 @@ public class SelectionArbreFragment extends Fragment {
             mButtonClear,
             mButtonDel,
             mButtonOk;
-    ImageButton martelerButtonTreeCard,
-            conserverButtonTreeCard;
+
+
+
+    LinearLayout conserverButtonTreeCard,
+                 martelerButtonTreeCard;
 
     ImageView dejaSelectionneImage;
 
@@ -79,8 +82,8 @@ public class SelectionArbreFragment extends Fragment {
         mButtonClear = (Button) view.findViewById(R.id.buttonClear);
         mButtonDel = (Button) view.findViewById(R.id.buttonDel);
         mButtonOk = (Button) view.findViewById(R.id.buttonOk);
-        martelerButtonTreeCard = (ImageButton) view.findViewById(R.id.martelerButtonTreeCard);
-        conserverButtonTreeCard = (ImageButton) view.findViewById(R.id.conserverButtonTreeCard);
+        martelerButtonTreeCard = view.findViewById(R.id.imgMarteler);
+        conserverButtonTreeCard = view.findViewById(R.id.imgConserver);
         tvNum = (TextView) view.findViewById(R.id.numero_tree_card);
         tvEssence = (TextView) view.findViewById(R.id.essence_tree_card);
         tvEtat = (TextView) view.findViewById(R.id.etat_tree_card);

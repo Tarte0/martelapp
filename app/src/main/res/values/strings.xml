@@ -140,4 +140,11 @@
     <string name="attention_conserver">
         Attention : Si vous souhaitez simplement ne pas marteler cet arbre, ne pas conserver.
     </string>
+
+    <string name="textImgBoutonConserver">
+        Je le conserve
+    </string>
+    <string name="textImgBoutonMarteler">
+        Je le martèle
+    </string>
 </resources>
