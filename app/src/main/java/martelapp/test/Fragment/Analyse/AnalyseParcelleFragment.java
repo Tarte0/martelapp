@@ -1,6 +1,7 @@
 package martelapp.test.Fragment.Analyse;
 
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -223,22 +224,19 @@ public class AnalyseParcelleFragment extends Fragment {
         legende.setXEntrySpace(15f);
 
 
-        // ArrayList contenant les textes des états des arbres pour la légende
-        ArrayList<String> titleList = new ArrayList<>();
-        titleList.add("Arbres non martelés");
-        titleList.add("Arbres écologiques");
+        LegendEntry entree1 = new LegendEntry();
+        LegendEntry entree2 = new LegendEntry();
+
+        entree1.label = "Arbres";
+        entree1.formColor = ColorTemplate.JOYFUL_COLORS[3];
+
+        entree2.label = "Arbres avec note écologique ≥ 6";
+        entree2.formColor = ColorTemplate.JOYFUL_COLORS[1];
 
         // Listes des Entrées de la légende
         ArrayList<LegendEntry> legendeEntrees = new ArrayList<>();
-        for (int k = 0; k < titleList.size(); k++) {
-            // Création d'une nouvelle entrée de légende
-            LegendEntry entree = new LegendEntry();
-            // Récupération de la couleur "k" de l'arrayList colors
-            entree.formColor = ColorTemplate.JOYFUL_COLORS[3];
-            // Récupération du label "k" de l'arrayList titleList
-            entree.label = titleList.get(k);
-            legendeEntrees.add(entree);
-        }
+        legendeEntrees.add(entree1);
+        legendeEntrees.add(entree2);
 
         // Set la légende avec les entrées
         legende.setCustom(legendeEntrees);

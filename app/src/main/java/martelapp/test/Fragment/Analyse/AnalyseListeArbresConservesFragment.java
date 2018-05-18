@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.commonsware.cwac.merge.MergeAdapter;
+
 import martelapp.test.Adapter.ArbresConservesAdapter;
 import martelapp.test.Adapter.ArbresMartelesAdapter;
 import martelapp.test.Class.DatabaseHelper;
@@ -21,9 +23,9 @@ import martelapp.test.R;
 
 public class AnalyseListeArbresConservesFragment extends Fragment {
 
-    ListView listeArbresMartelesAnalyse;
+    ListView listeArbresConservesAnalyse;
 
-    Cursor cur;
+    Cursor cur1, cur2;
     DatabaseHelper dbHelper;
     LinearLayout treeCardNumber;
 
@@ -34,48 +36,61 @@ public class AnalyseListeArbresConservesFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View mainView = inflater.inflate(R.layout.view_page_arbres_traites_analyse, null);
 
-        listeArbresMartelesAnalyse = mainView.findViewById(R.id.liste_arbres_traites_analyse);
+        listeArbresConservesAnalyse = mainView.findViewById(R.id.liste_arbres_traites_analyse);
         treeCardNumber = (LinearLayout) mainView.findViewById(R.id.arbreLayout);
 
 
         dbHelper = new DatabaseHelper(mainView.getContext());
 
 
-        listeArbresMartelesAnalyse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listeArbresConservesAnalyse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                 TextView text = view.findViewById(R.id.numero_arbre_traite);
 
                 String numero = text.getText().toString();
-                cur = dbHelper.executeQuery("Select *"
+                cur1 = dbHelper.executeQuery("Select *"
                         + " FROM " + DatabaseHelper.RAISON_TABLE
                         + " WHERE " + DatabaseHelper.NUMERO_ARBRE_TRAITE_RAISON + " = " + numero);
-                cur.moveToFirst();
+                cur1.moveToFirst();
                 TextView textRaison = mainView.findViewById(R.id.raison_martele_card);
 
                 textRaison.setText("Arbre conservé pour la Biodiversité");
 
-                cur = dbHelper.executeQuery("SELECT * FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE + " WHERE " + DatabaseHelper.NUMERO_ARBRE_PARC + " = " + numero);
-                cur.moveToFirst();
+                cur1 = dbHelper.executeQuery("SELECT * FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE + " WHERE " + DatabaseHelper.NUMERO_ARBRE_PARC + " = " + numero);
+                cur1.moveToFirst();
                 TextView numCard = mainView.findViewById(R.id.numero_martele_card);
                 TextView detailCard = mainView.findViewById(R.id.details_martele_card);
-                numCard.setText(cur.getString(cur.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC)));
+                numCard.setText(cur1.getString(cur1.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC)));
                 detailCard.setText(String.format("%s",
-                        cur.getString(cur.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE))));
+                        cur1.getString(cur1.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE))));
                 treeCardNumber.setVisibility(View.VISIBLE);
             }
         });
 
 
-        cur = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_CONSERVES_TABLE + " ac",
+        cur1 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_CONSERVES_TABLE + " ac",
                 "ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = ac." + DatabaseHelper.NUMERO_ARBRE_CONS +
+                        " AND ap." + DatabaseHelper.NOTE_ECO_ARBRE + " >= " + ChoixMartelageFragment.noteEcologiqueHaute +
                         " ORDER BY CAST(ap." + DatabaseHelper.NUMERO_ARBRE_PARC +" as INTEGER)");
-        cur.moveToFirst();
-        nbArbresConserves = cur.getCount();
+        cur1.moveToFirst();
 
-        ArbresConservesAdapter arbresConservesAdapter = new ArbresConservesAdapter(mainView.getContext(), cur, true);
+        cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_CONSERVES_TABLE + " ac",
+                "ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = ac." + DatabaseHelper.NUMERO_ARBRE_CONS +
+                        " AND ap." + DatabaseHelper.NOTE_ECO_ARBRE + " < " + ChoixMartelageFragment.noteEcologiqueHaute +
+                        " ORDER BY CAST(ap." + DatabaseHelper.NUMERO_ARBRE_PARC +" as INTEGER)");
+        cur2.moveToFirst();
 
-        listeArbresMartelesAnalyse.setAdapter(arbresConservesAdapter);
+        nbArbresConserves = cur1.getCount() + cur2.getCount();
+
+        ArbresConservesAdapter arbresConservesAdapterNoteEcoSup = new ArbresConservesAdapter(mainView.getContext(), cur1, true);
+        ArbresConservesAdapter arbresConservesAdapter = new ArbresConservesAdapter(mainView.getContext(), cur2, true);
+
+
+        MergeAdapter mergeAdapter = new MergeAdapter();
+        mergeAdapter.addAdapter(arbresConservesAdapterNoteEcoSup);
+        mergeAdapter.addAdapter(arbresConservesAdapter);
+        listeArbresConservesAnalyse.setAdapter(mergeAdapter);
 
         TextView textComplementArbresMarteles = mainView.findViewById(R.id.text_complement_arbres);
         TextView textCouleurArbre = mainView.findViewById(R.id.text_couleur_arbre);

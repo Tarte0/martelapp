@@ -154,6 +154,7 @@ public class ChoixParcelleActivity extends AppCompatActivity {
      */
     private DatabaseReference firebaseDatabase;
 
+    HashMap<String, String> idNomParcelle;
 
     DatabaseHelper dbHelper;
 
@@ -188,10 +189,10 @@ public class ChoixParcelleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(spinnerParcelles.getSelectedItem() != null) {
-                    if (isNetworkAvailable(getApplicationContext())) {
+                    if (DatabaseHelper.isNetworkAvailable(getApplicationContext())) {
                         miseAJourConstantesTable();
-                        miseAJourParcelle(spinnerParcelles.getSelectedItem().toString());
-                        textTemoin.setText("Mise a jour de la base de données avec la parcelle : " + spinnerParcelles.getSelectedItem().toString());
+                        miseAJourParcelle(idNomParcelle.get(spinnerParcelles.getSelectedItem().toString()));
+                        textTemoin.setText("Mise a jour de la base de données avec la parcelle : " + spinnerParcelles.getSelectedItem().toString() + " - id : " + idNomParcelle.get(spinnerParcelles.getSelectedItem().toString()));
                     } else {
                         textTemoin.setText("Pas de connexion internet maj bdd");
                     }
@@ -203,7 +204,7 @@ public class ChoixParcelleActivity extends AppCompatActivity {
         buttonRefreshList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isNetworkAvailable(getApplicationContext())) {
+                if (DatabaseHelper.isNetworkAvailable(getApplicationContext())) {
                     progressBarListe.setVisibility(View.VISIBLE);
                     getAllParcelle();
                     textTemoin.setText("");
@@ -218,15 +219,18 @@ public class ChoixParcelleActivity extends AppCompatActivity {
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<String> listeParcelles = new ArrayList<>();
+                ArrayList<String> listeParcelle = new ArrayList<>();
+                idNomParcelle = new HashMap<>();
 
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    String parcelle = child.getKey();
+                    String idParcelle = child.getKey();
+                    String nomParcelle = child.child("nom").getValue(String.class);
 
-                    listeParcelles.add(parcelle);
+                    idNomParcelle.put(nomParcelle, idParcelle);
+                    listeParcelle.add(nomParcelle);
                 }
 
-                ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), R.layout.spinner_item, listeParcelles);
+                ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), R.layout.spinner_item, listeParcelle);
                 adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
                 spinnerParcelles.setAdapter(adapter);
@@ -516,28 +520,13 @@ public class ChoixParcelleActivity extends AppCompatActivity {
     public void onResume(){
         super.onResume();
 
-        if (isNetworkAvailable(getApplicationContext())) {
+        if (DatabaseHelper.isNetworkAvailable(getApplicationContext())) {
             progressBarListe.setVisibility(View.VISIBLE);
             getAllParcelle();
             textTemoin.setText("");
         } else {
             textTemoin.setText("Pas de connexion internet get all parcelle");
         }
-    }
-
-    public static boolean isNetworkAvailable(Context con) {
-        try {
-            ConnectivityManager cm = (ConnectivityManager) con
-                    .getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-
-            if (networkInfo != null && networkInfo.isConnected()) {
-                return true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 }
 

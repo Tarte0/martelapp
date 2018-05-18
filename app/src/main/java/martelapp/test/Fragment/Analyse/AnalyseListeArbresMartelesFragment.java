@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.commonsware.cwac.merge.MergeAdapter;
+
 import martelapp.test.Adapter.ArbresMartelesAdapter;
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.Fragment.Exercice.ChoixMartelageFragment;
@@ -20,7 +22,7 @@ public class AnalyseListeArbresMartelesFragment extends Fragment {
 
     ListView listeArbresMartelesAnalyse;
 
-    Cursor cur;
+    Cursor cur1, cur2;
     DatabaseHelper dbHelper;
     LinearLayout treeCardNumber;
 
@@ -44,40 +46,52 @@ public class AnalyseListeArbresMartelesFragment extends Fragment {
                 TextView text = view.findViewById(R.id.numero_arbre_traite);
 
                 String numero = text.getText().toString();
-                cur = dbHelper.executeQuery("Select *"
+                cur1 = dbHelper.executeQuery("Select *"
                         + " FROM " + DatabaseHelper.RAISON_TABLE
                         + " WHERE " + DatabaseHelper.NUMERO_ARBRE_TRAITE_RAISON + " = " + numero);
-                cur.moveToFirst();
+                cur1.moveToFirst();
                 TextView textRaison = mainView.findViewById(R.id.raison_martele_card);
-                String raison = cur.getString(cur.getColumnIndex(DatabaseHelper.RAISON));
+                String raison = cur1.getString(cur1.getColumnIndex(DatabaseHelper.RAISON));
 
                 textRaison.setText(String.format("Raisons du Martelage : \n\n- %s\n", raisonToString(raison)));
-                while (cur.moveToNext()) {
+                while (cur1.moveToNext()) {
                     textRaison.setText(String.format("%s\n- %s\n", textRaison.getText(),
-                            raisonToString(cur.getString(cur.getColumnIndex(DatabaseHelper.RAISON)))));
+                            raisonToString(cur1.getString(cur1.getColumnIndex(DatabaseHelper.RAISON)))));
                 }
 
-                cur = dbHelper.executeQuery("SELECT * FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE + " WHERE " + DatabaseHelper.NUMERO_ARBRE_PARC + " = " + numero);
-                cur.moveToFirst();
+                cur1 = dbHelper.executeQuery("SELECT * FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE + " WHERE " + DatabaseHelper.NUMERO_ARBRE_PARC + " = " + numero);
+                cur1.moveToFirst();
                 TextView numCard = mainView.findViewById(R.id.numero_martele_card);
                 TextView detailCard = mainView.findViewById(R.id.details_martele_card);
-                numCard.setText(cur.getString(cur.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC)));
+                numCard.setText(cur1.getString(cur1.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC)));
                 detailCard.setText(String.format("%s",
-                        cur.getString(cur.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE))));
+                        cur1.getString(cur1.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE))));
                 treeCardNumber.setVisibility(View.VISIBLE);
             }
         });
 
 
-        cur = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
+        cur1 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
                 "ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = am." + DatabaseHelper.NUMERO_ARBRE_MART +
+                        " AND ap." + DatabaseHelper.NOTE_ECO_ARBRE + " >= " + ChoixMartelageFragment.noteEcologiqueHaute +
                         " ORDER BY CAST(ap." + DatabaseHelper.NUMERO_ARBRE_PARC +" as INTEGER)");
-        cur.moveToFirst();
-        nbArbresMarteles = cur.getCount();
+        cur1.moveToFirst();
 
-        ArbresMartelesAdapter arbresMartelesAdapter = new ArbresMartelesAdapter(mainView.getContext(), cur, true);
+        cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
+                "ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = am." + DatabaseHelper.NUMERO_ARBRE_MART +
+                        " AND ap." + DatabaseHelper.NOTE_ECO_ARBRE + " < " + ChoixMartelageFragment.noteEcologiqueHaute +
+                        " ORDER BY CAST(ap." + DatabaseHelper.NUMERO_ARBRE_PARC +" as INTEGER)");
+        cur2.moveToFirst();
 
-        listeArbresMartelesAnalyse.setAdapter(arbresMartelesAdapter);
+        nbArbresMarteles = cur1.getCount() + cur2.getCount();
+
+        ArbresMartelesAdapter arbresMartelesAdapterNoteEcoSup = new ArbresMartelesAdapter(mainView.getContext(), cur1, true);
+        ArbresMartelesAdapter arbresMartelesAdapter = new ArbresMartelesAdapter(mainView.getContext(), cur2, true);
+
+        MergeAdapter mergeAdapter = new MergeAdapter();
+        mergeAdapter.addAdapter(arbresMartelesAdapterNoteEcoSup);
+        mergeAdapter.addAdapter(arbresMartelesAdapter);
+        listeArbresMartelesAnalyse.setAdapter(mergeAdapter);
 
         TextView textComplementArbresMarteles = mainView.findViewById(R.id.text_complement_arbres);
         TextView textCouleurArbre = mainView.findViewById(R.id.text_couleur_arbre);

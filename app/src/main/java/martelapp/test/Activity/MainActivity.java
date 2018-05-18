@@ -131,8 +131,13 @@ public class MainActivity extends AppCompatActivity {
         buttonTestMAJ.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ChoixParcelleActivity.class);
-                startActivity(intent);
+                if(DatabaseHelper.isNetworkAvailable(getApplicationContext())) {
+                    Intent intent = new Intent(getApplicationContext(), ChoixParcelleActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Y'a pas de coco", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

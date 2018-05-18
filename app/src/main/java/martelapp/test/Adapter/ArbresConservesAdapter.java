@@ -69,8 +69,10 @@ public class ArbresConservesAdapter extends CursorAdapter {
             numeroArbreTraite.setTextColor(view.getResources().getColor(R.color.colorPrimary));
             essenceArbreTraite.setTextColor(view.getResources().getColor(R.color.colorPrimary));
             diameteArbreTraite.setTextColor(view.getResources().getColor(R.color.colorPrimary));
-            imageArbreTraite.setColorFilter(imageArbreTraite.getContext().getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+            imageArbreTraite.setColorFilter(context.getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
         }
     }
+
+
 }
 

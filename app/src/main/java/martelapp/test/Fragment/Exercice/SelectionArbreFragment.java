@@ -230,7 +230,7 @@ public class SelectionArbreFragment extends Fragment {
                     if (cur1.moveToFirst()) {
                         dejaSelectionneImage.bringToFront();
                         dejaSelectionneImage.setVisibility(View.VISIBLE);
-                        dejaSelectionneImage.setImageResource(R.drawable.marteau_tab);
+                        dejaSelectionneImage.setImageResource(R.drawable.marteau_martele);
                         dejaSelectionneImage.setColorFilter(dejaSelectionneImage.getContext().getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
 
                         tvDejaSelectionne.setVisibility(View.VISIBLE);

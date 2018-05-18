@@ -46,7 +46,7 @@ public class ArbresMartelesAdapter extends CursorAdapter {
         diameteArbreTraite.setText(Integer.toString(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.DIAMETRE_ARBRE))));
 
 
-        imageArbreTraite.setImageResource(R.drawable.marteau_tab);
+        imageArbreTraite.setImageResource(R.drawable.marteau_martele);
 
         int noteEcologique = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.NOTE_ECO_ARBRE));
 
@@ -59,7 +59,7 @@ public class ArbresMartelesAdapter extends CursorAdapter {
                 diameteArbreTraite.setTextColor(view.getResources().getColor(R.color.colorRed));
                 numeroArbreTraite.setTextColor(view.getResources().getColor(R.color.colorRed));
                 noteEcoArbreTraite.setTextColor(view.getResources().getColor(R.color.colorRed));
-                imageArbreTraite.setColorFilter(imageArbreTraite.getContext().getResources().getColor(R.color.colorRed), PorterDuff.Mode.SRC_ATOP);
+                imageArbreTraite.setColorFilter(context.getResources().getColor(R.color.colorRed), PorterDuff.Mode.SRC_ATOP);
             }
         }
         else{
