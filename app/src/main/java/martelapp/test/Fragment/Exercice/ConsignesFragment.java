@@ -49,7 +49,9 @@ public class ConsignesFragment extends Fragment {
             prelevementMax = 0;
 
     double  volumeBoisTotalParcelleHa = 0f;
+    double volumeBoisTotalParcelle= 0f;
     double  surfaceParcelle = 0f;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,8 +82,8 @@ public class ConsignesFragment extends Fragment {
         cur = dbHelper.getDataFromTable("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL +")",
                                         DatabaseHelper.ARBRES_PARCELLE_TABLE);
         cur.moveToFirst();
-        volumeBoisTotalParcelleHa = cur.getDouble(0);
-        volumeBoisTotalParcelleHa = volumeBoisTotalParcelleHa / surfaceParcelle;
+        volumeBoisTotalParcelle = cur.getDouble(0);
+        volumeBoisTotalParcelleHa = volumeBoisTotalParcelle / surfaceParcelle;
 
         dbHelper.close();
         cur.close();
@@ -143,21 +145,30 @@ public class ConsignesFragment extends Fragment {
                         switch (item.getItemId()) {
                             case R.id.action_general:
                                 textViewConsignes.setText(R.string.consignes_general);
+                                textViewConsignes.setTextSize(22);
                                 textViewTitleConsignes.setText(R.string.general_caps);
                                 previous.setVisibility(View.INVISIBLE);
                                 next.setVisibility(View.VISIBLE);
                                 buttonGoToInfos.setVisibility((View.INVISIBLE));
                                 break;
                             case R.id.action_objectif:
-                                textViewConsignes.setText(Html.fromHtml("<b>Volume</b>" +
-                                        "<br><br>• Prélever entre " + Integer.toString(prelevementMin) + " % et " + Integer.toString(prelevementMax) + " % du volume de bois de la parcelle" +
-                                        " soit entre " + Integer.toString((int)(volumeBoisTotalParcelleHa * prelevementMin / 100)) + " et " + Integer.toString((int)(volumeBoisTotalParcelleHa * prelevementMax / 100)) + " m3/ha" +
-                                        "<br><br><br><b>Biodiversité</b>" +
-                                        "<br>" +
-                                        "<br>• Conservez au moins 3 arbres de gros diamètre par hectare." +
-                                        "<br>" +
-                                        "<br>• Conservez au moins 2 arbres porteurs de micros-habitats par hectare."));
                                 textViewTitleConsignes.setText(R.string.objectif_caps);
+                                textViewConsignes.setText(Html.fromHtml(
+                                        "Compte tenu d'une période de rotation fixée entre 5 et 15 ans et des diamètres d'exploitabilité* sur cette parcelle :" +
+                                        "<br><br><b>Volume</b>" +
+                                        "<br>• Prélever entre " + Integer.toString(prelevementMin) + " % et " + Integer.toString(prelevementMax) + " % du volume de bois de la parcelle" +
+                                        " soit entre " + Integer.toString((int)(volumeBoisTotalParcelleHa * prelevementMin / 100)) + " et " + Integer.toString((int)(volumeBoisTotalParcelleHa * prelevementMax / 100)) + " m3/ha." +
+                                        "<br>Pour notre parcelle il faut donc prélever entre " + Integer.toString((int)(volumeBoisTotalParcelle * prelevementMin / 100)) + " et " + Integer.toString((int)(volumeBoisTotalParcelle * prelevementMax / 100)) + " m3." +
+                                        "<br>" +
+                                        "<br><i>(*)Pour les principales essences : " +
+                                        "<br>- Épicéa : de 50 à 70 cm" +
+                                        "<br>- Sapin pectiné : de 45 à 50 cm" +
+                                        "<br>- Hêtre : jusqu'à 50 cm" +
+                                        "<br>- Frêne, Érables : à partir de 50 cm</i>" +
+                                        "<br><br><b>Biodiversité</b>" +
+                                        "<br>• Conservez sciemment au moins 3 arbres de gros diamètre par hectare." +
+                                        "<br>• Conservez sciemment au moins 2 arbres porteurs de micros-habitats par hectare." ));
+                                textViewConsignes.setTextSize(14);
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.INVISIBLE);
                                 buttonGoToInfos.setVisibility((View.VISIBLE));

@@ -10,7 +10,7 @@
     <string name="arbres_marteles">ARBRES MARTELÉS</string>
     <string name="general_caps">GÉNÉRAL</string>
     <string name="volume_caps">VOLUME</string>
-    <string name="objectif_caps">OBJECTIF</string>
+    <string name="objectif_caps">OBJECTIFS</string>
     <string name="biodiversite_caps">BIODIVERSITÉ</string>
     <string name="exploitabilite_caps">EXPLOITABILITÉ</string>
     <string name="rotations_caps">ROTATIONS</string>
@@ -126,7 +126,7 @@
         Pourcentage (Nombre raison / Total arbres martelés)
     </string>
     <string name="button_go_to_info">
-        Caractéristiques de la parcelle
+        > Consulter les infos de la parcelle
     </string>
     <string name="button_go_to_carte">
         > Consulter la carte de la parcelle
