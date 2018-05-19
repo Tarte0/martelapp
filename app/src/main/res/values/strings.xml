@@ -154,4 +154,8 @@
     <string name="textImgBoutonMarteler">
         Je le martèle
     </string>
+
+    <string name="bouton_terminer_analyse">
+        Terminer analyse
+    </string>
 </resources>

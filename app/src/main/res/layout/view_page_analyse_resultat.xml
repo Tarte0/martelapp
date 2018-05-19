@@ -136,20 +136,105 @@
 
                 </LinearLayout>
 
+
+
+
+
+
+
+
+
+
                 <LinearLayout
                     android:id="@+id/layout_synthese_picto"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:layout_weight="10">
+                    android:layout_weight="10"
+                    android:weightSum="3">
 
-                    <TextView
-                        android:id="@+id/textView2"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="WAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" />
-                </LinearLayout>
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
 
+                        <ImageView
+                            android:id="@+id/ivVolumePreleve"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/check"
+                            android:tint="@color/colorGreen"/>
+
+                        <TextView
+                            android:id="@+id/tvVolumePreleve"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="9"
+                            android:layout_marginLeft="20dp"
+                            android:gravity="center|left"
+                            android:text=""
+                            android:textSize="30sp"
+                            android:textColor="@color/colorBlack"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <ImageView
+                            android:id="@+id/ivGainCoupe"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/check"
+                            android:tint="@color/colorGreen"/>
+
+                        <TextView
+                            android:id="@+id/tvGainCoupe"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="9"
+                            android:layout_marginLeft="20dp"
+                            android:gravity="center|left"
+                            android:text=""
+                            android:textSize="30sp"
+                            android:textColor="@color/colorBlack"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <ImageView
+                            android:id="@+id/ivNoteEco"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/check"
+                            android:tint="@color/colorGreen"/>
+
+                        <TextView
+                            android:id="@+id/tvNoteEco"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="9"
+                            android:layout_marginLeft="20dp"
+                            android:gravity="center|left"
+                            android:text=""
+                            android:textSize="30sp"
+                            android:textColor="@color/colorBlack"/>
+                    </LinearLayout>
+
+                </LinearLayout>
 
 
                 <ImageButton

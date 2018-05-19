@@ -42,6 +42,8 @@ public class ConsignesFragment extends Fragment {
     ImageButton previous, next;
     Button buttonGoToInfos;
 
+    DecimalFormat df;
+
     DatabaseHelper dbHelper;
     Cursor cur;
 
@@ -76,7 +78,7 @@ public class ConsignesFragment extends Fragment {
 
         surfaceParcelle = cur.getDouble(cur.getColumnIndex(DatabaseHelper.SURFACE_PARCELLE));
 
-
+        df = new DecimalFormat("#0.00");
 
 
         cur = dbHelper.getDataFromTable("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL +")",
@@ -154,11 +156,11 @@ public class ConsignesFragment extends Fragment {
                             case R.id.action_objectif:
                                 textViewTitleConsignes.setText(R.string.objectif_caps);
                                 textViewConsignes.setText(Html.fromHtml(
-                                        "Compte tenu d'une période de rotation fixée entre 5 et 15 ans et des diamètres d'exploitabilité* sur cette parcelle :" +
+                                        "Compte tenu d'une période de rotation fixée entre 5 et 15 ans et des diamètres d'exploitabilité(*) sur cette parcelle :" +
                                         "<br><br><b>Volume</b>" +
                                         "<br>• Prélever entre " + Integer.toString(prelevementMin) + " % et " + Integer.toString(prelevementMax) + " % du volume de bois de la parcelle" +
                                         " soit entre " + Integer.toString((int)(volumeBoisTotalParcelleHa * prelevementMin / 100)) + " et " + Integer.toString((int)(volumeBoisTotalParcelleHa * prelevementMax / 100)) + " m3/ha." +
-                                        "<br>Pour notre parcelle il faut donc prélever entre " + Integer.toString((int)(volumeBoisTotalParcelle * prelevementMin / 100)) + " et " + Integer.toString((int)(volumeBoisTotalParcelle * prelevementMax / 100)) + " m3." +
+                                        "<br>Pour notre parcelle de " + df.format(surfaceParcelle) + " ha, il faut donc prélever entre " + Integer.toString((int)(volumeBoisTotalParcelle * prelevementMin / 100)) + " et " + Integer.toString((int)(volumeBoisTotalParcelle * prelevementMax / 100)) + " m3." +
                                         "<br>" +
                                         "<br><i>(*)Pour les principales essences : " +
                                         "<br>- Épicéa : de 50 à 70 cm" +
@@ -168,7 +170,7 @@ public class ConsignesFragment extends Fragment {
                                         "<br><br><b>Biodiversité</b>" +
                                         "<br>• Conservez sciemment au moins 3 arbres de gros diamètre par hectare." +
                                         "<br>• Conservez sciemment au moins 2 arbres porteurs de micros-habitats par hectare." ));
-                                textViewConsignes.setTextSize(14);
+                                textViewConsignes.setTextSize(21);
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.INVISIBLE);
                                 buttonGoToInfos.setVisibility((View.VISIBLE));

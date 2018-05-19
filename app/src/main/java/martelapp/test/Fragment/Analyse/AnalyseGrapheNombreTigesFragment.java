@@ -9,15 +9,14 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.charts.ScatterChart;
 
+import martelapp.test.Activity.AnalyseActivity;
 import martelapp.test.Class.GrapheHelper;
 import martelapp.test.Class.OnSwipeTouchListener;
 import martelapp.test.R;
@@ -39,6 +38,9 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
 
     PieChart pieChartNbTigesAvant;
     PieChart pieChartNbTigesApres;
+
+    private boolean viewBarChartDiametreAdded = false;
+    private boolean viewBarChartEssenceAdded = false;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -161,8 +163,10 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
 
                                 layoutPieChartNbTige.setVisibility(View.GONE);
 
-                                pieChartNbTigesApres.setVisibility(View.GONE);
-                                pieChartNbTigesAvant.setVisibility(View.GONE);
+                                if(!viewBarChartEssenceAdded){
+                                    ((AnalyseActivity) getActivity()).addViewPdf(barChartEssenceAnalyse,2);
+                                    viewBarChartEssenceAdded = true;
+                                }
                                 break;
 
 
@@ -180,8 +184,11 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
 
                                 layoutPieChartNbTige.setVisibility(View.GONE);
 
-                                pieChartNbTigesApres.setVisibility(View.GONE);
-                                pieChartNbTigesAvant.setVisibility(View.GONE);
+                                if(!viewBarChartDiametreAdded){
+                                    ((AnalyseActivity) getActivity()).addViewPdf(barChartDiametreAnalyse,3);
+                                    viewBarChartDiametreAdded = true;
+                                }
+
                                 break;
 
 
@@ -199,8 +206,6 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
 
                                 layoutPieChartNbTige.setVisibility(View.GONE);
 
-                                pieChartNbTigesApres.setVisibility(View.GONE);
-                                pieChartNbTigesAvant.setVisibility(View.GONE);
                                 break;
 
 
@@ -216,15 +221,11 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
                                 barChartNoteEcoAnalyse.setVisibility(View.GONE);
 
                                 layoutPieChartNbTige.setVisibility(View.VISIBLE);
-
-                                pieChartNbTigesApres.setVisibility(View.VISIBLE);
-                                pieChartNbTigesAvant.setVisibility(View.VISIBLE);
                             break;
                         }
                         return true;
                     }
                 });
-
 
         return view;
     }

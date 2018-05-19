@@ -32,6 +32,7 @@ public class NomEquipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //if(editTextTeamName.getText().length()>0) {
+                    dbHelper.clearTableExercice();
                     nomEquipe = editTextTeamName.getText().toString();
                     dbHelper.updateNomEquipeConstante(nomEquipe);
                     Intent intent = new Intent(getApplicationContext(), ExerciceActivity.class);

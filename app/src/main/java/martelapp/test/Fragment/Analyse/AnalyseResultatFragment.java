@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
+import martelapp.test.Activity.AnalyseActivity;
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.Class.OnSwipeTouchListener;
 import martelapp.test.R;
@@ -40,6 +41,8 @@ public class AnalyseResultatFragment extends Fragment {
     TextView tvPrelevementVolumeR, tvGrosDiametreR, tvEcoR;
     ImageView ivPrelevementVolumeR, ivGrosDiametreR, ivEcoR;
 
+    TextView tvVolumePreleve, tvGainCoupe, tvNoteEco;
+
     DecimalFormat df;
 
     int     prelevementMin = 0,
@@ -56,6 +59,14 @@ public class AnalyseResultatFragment extends Fragment {
     double  surfaceParcelle = 0f;
 
     float volumeMartelePourcent;
+
+    float gainCoupe = 0f;
+
+    int noteEcoAvant, noteEcoMartele;
+    float pourcentageNoteEcoMartelage;
+
+    private boolean respectConsigneViewAdded = false;
+    private boolean synthesePictoViewAdded = false;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -74,6 +85,11 @@ public class AnalyseResultatFragment extends Fragment {
         ivPrelevementVolumeR = view.findViewById(R.id.ivPrelevementVolumeR);
         ivGrosDiametreR = view.findViewById(R.id.ivGrosDiametreR);
         ivEcoR = view.findViewById(R.id.ivEcoR);
+
+        tvVolumePreleve = view.findViewById(R.id.tvVolumePreleve);
+        tvGainCoupe = view.findViewById(R.id.tvGainCoupe);
+        tvNoteEco = view.findViewById(R.id.tvNoteEco);
+
 
         bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation_resultat_analyse);
         previous = (ImageButton) view.findViewById(R.id.previousInfo);
@@ -145,6 +161,10 @@ public class AnalyseResultatFragment extends Fragment {
                                 layoutRespectConsignes.setVisibility(View.VISIBLE);
                                 layoutSynthesePicto.setVisibility(View.GONE);
 
+                                if(!respectConsigneViewAdded){
+                                    ((AnalyseActivity) getActivity()).addViewPdf(layoutRespectConsignes, 0);
+                                    respectConsigneViewAdded = true;
+                                }
                                 break;
 
 
@@ -155,11 +175,18 @@ public class AnalyseResultatFragment extends Fragment {
                                 layoutRespectConsignes.setVisibility(View.GONE);
                                 layoutSynthesePicto.setVisibility(View.VISIBLE);
 
+                                if(!synthesePictoViewAdded){
+                                    ((AnalyseActivity) getActivity()).addViewPdf(layoutSynthesePicto, 1);
+                                    synthesePictoViewAdded = true;
+                                }
                                 break;
                         }
                         return true;
                     }
                 });
+
+
+
         return view;
     }
 
@@ -220,17 +247,15 @@ public class AnalyseResultatFragment extends Fragment {
         /*tvPrelevementVolumeR.setText(String.format("Prélever entre %s et %s du volume de bois de la parcelle.\nVolume prélevé: %sm3 (%s)",
                 prelevementMin +"%" , prelevementMax +"%" ,df.format(volumeTotalBoisMartele),df.format(volumeMartelePourcent)+"%"));*/
         tvPrelevementVolumeR.setText(Html.fromHtml(
-                "Prélever entre " + prelevementMin + "% et " + prelevementMax + "% du volume de bois de la parcelle (Entre "
-                        + (int)(volumeBoisTotalParcelle * prelevementMin / 100)  + " et " + (int)(volumeBoisTotalParcelle * prelevementMax / 100) + "m3 pour notre parcelle)." +
-                        "<br><font color='#32af4b'>Volume prélevé : "+ df.format(volumeTotalBoisMartele) + "m3 (" +
-                        df.format(volumeMartelePourcent) + "%)</font>"));
+                "<i>Prélever entre " + prelevementMin + "% et " + prelevementMax + "% du volume de bois de la parcelle." +
+                        "<br>(Entre " + (int)(volumeBoisTotalParcelle * prelevementMin / 100)  + " et " + (int)(volumeBoisTotalParcelle * prelevementMax / 100) + "m3 pour notre parcelle)</i>" +
+                        "<br><font color='#32af4b'>Volume prélevé : "+ df.format(volumeTotalBoisMartele) + " m3 (" + df.format(volumeMartelePourcent) + "%)</font>"));
         if (prelevementMin >= volumeMartelePourcent || volumeMartelePourcent >= prelevementMax) {
             //tvPrelevementVolumeR.setTextColor(getResources().getColor(R.color.colorRed));
             tvPrelevementVolumeR.setText(Html.fromHtml(
-                    "Prélever entre " + prelevementMin + "% et " + prelevementMax + "% du volume de bois de la parcelle (Entre "
-                            + (int)(volumeBoisTotalParcelle * prelevementMin / 100)  + " et " + (int)(volumeBoisTotalParcelle * prelevementMax / 100) + "m3 pour notre parcelle)." +
-                            "<br><font color='#e14b4b'>Volume prélevé : "+ df.format(volumeTotalBoisMartele) + "m3 (" +
-                            df.format(volumeMartelePourcent) + "%)</font>" ));
+                    "<i>Prélever entre " + prelevementMin + "% et " + prelevementMax + "% du volume de bois de la parcelle." +
+                            "<br>(Entre " + (int)(volumeBoisTotalParcelle * prelevementMin / 100)  + " et " + (int)(volumeBoisTotalParcelle * prelevementMax / 100) + " m3 pour notre parcelle)</i>" +
+                            "<br><font color='#e14b4b'>Volume prélevé : "+ df.format(volumeTotalBoisMartele) + " m3 (" + df.format(volumeMartelePourcent) + "%)</font>" ));
             ivPrelevementVolumeR.setColorFilter(getResources().getColor(R.color.colorRed));
             ivPrelevementVolumeR.setImageResource(R.drawable.cross);
         }
@@ -267,12 +292,16 @@ public class AnalyseResultatFragment extends Fragment {
 
         /*tvGrosDiametreR.setText(String.format("Conserver au moins 3 arbres de gros diamètre par hectare.\nArbres conservés: %s",
                 (nbArbresDiamSup50conserve)));*/
-        tvGrosDiametreR.setText(Html.fromHtml("Conserver au moins 3 arbres de gros diamètre par hectare (Soit " +  (int)Math.ceil(3*surfaceParcelle) + " arbres pour notre parcelle)." +
-                "<br><font color='#32af4b'>Arbres conservés : " + nbArbresDiamSup50conserve + "</font>"));
+
+        int arbreParcelleGrosDiametre = (int)Math.ceil(3*surfaceParcelle);
+        tvGrosDiametreR.setText(Html.fromHtml("<i>Conserver au moins 3 arbres de gros diamètre par hectare." +
+                        "<br>(Soit " +  arbreParcelleGrosDiametre + (arbreParcelleGrosDiametre < 2 ? " arbre" : " arbres") + " pour notre parcelle)</i>" +
+                        "<br><font color='#32af4b'>Arbres conservés : " + nbArbresDiamSup50conserve + "</font>"));
         // Moins de 3 * surfaceParcelle arbres de diamètre > 50 à la fin de l'exercice
         if (nbArbresDiamSup50conserve < (3*surfaceParcelle)) {
             //tvGrosDiametreR.setTextColor(getResources().getColor(R.color.colorRed));
-            tvGrosDiametreR.setText(Html.fromHtml("Conserver au moins 3 arbres de gros diamètre par hectare (Soit " + (int)Math.ceil(3*surfaceParcelle) + " arbres pour notre parcelle)." +
+            tvGrosDiametreR.setText(Html.fromHtml("<i>Conserver au moins 3 arbres de gros diamètre par hectare." +
+                            "<br>(Soit " + arbreParcelleGrosDiametre + (arbreParcelleGrosDiametre < 2 ? " arbre" : " arbres") + " pour notre parcelle)</i>" +
                     "<br><font color='#e14b4b'>Arbres conservés : " + nbArbresDiamSup50conserve + "</font>"));
             ivGrosDiametreR.setColorFilter(getResources().getColor(R.color.colorRed));
             ivGrosDiametreR.setImageResource(R.drawable.cross);
@@ -289,7 +318,7 @@ public class AnalyseResultatFragment extends Fragment {
             Avoir conservé au moins 2 arbres porteurs de micros habitats
         */
 
-        int nbArbreEcoConserves =0;
+        int nbArbreEcoConserves = 0;
 
         // Nombre d'abres à NoteEco > 6
         cur = dbHelper.getAllDataFromTableWithCondition(
@@ -304,12 +333,17 @@ public class AnalyseResultatFragment extends Fragment {
         }
         /*tvEcoR.setText(String.format("Conserver au moins 2 arbres porteurs de micros-habitats par hectare.\nArbres conservés: %s",
                 (nbArbreEcoConserves)));*/
-        tvEcoR.setText(Html.fromHtml("Conserver au moins 2 arbres porteurs de micros-habitats par hectare (Soit " +  (int)Math.ceil(2*surfaceParcelle) +" arbres pour notre parcelle)." +
+
+        int arbreParcelleEco = (int)Math.ceil(2*surfaceParcelle);
+
+        tvEcoR.setText(Html.fromHtml("<i>Conserver au moins 2 arbres porteurs de micros-habitats par hectare." +
+                        "<br>(Soit " +  arbreParcelleEco + (arbreParcelleEco < 2 ? " arbre" : " arbres") + " pour notre parcelle)</i>" +
                 "<br><font color='#32af4b'>Arbres conservés : " + nbArbreEcoConserves + "</font>"));
         // Moins de 2 * surfaceParcelle arbres ECO à la fin de l'exercice
         if (nbArbreEcoConserves < (2*surfaceParcelle)) {
             //tvEcoR.setTextColor(getResources().getColor(R.color.colorRed));
-            tvEcoR.setText(Html.fromHtml("Conserver au moins 2 arbres porteurs de micros-habitats par hectare (Soit " +  (int)Math.ceil(2*surfaceParcelle) +" arbres pour notre parcelle)." +
+            tvEcoR.setText(Html.fromHtml("<i>Conserver au moins 2 arbres porteurs de micros-habitats par hectare." +
+                            "<br>(Soit " +  arbreParcelleEco + (arbreParcelleEco < 2 ? " arbre" : " arbres") + " pour notre parcelle)</i>" +
                     "<br><font color='#e14b4b'>Arbres conservés : " + nbArbreEcoConserves + "</font>"));
             ivEcoR.setColorFilter(getResources().getColor(R.color.colorRed));
             ivEcoR.setImageResource(R.drawable.cross);
@@ -319,6 +353,45 @@ public class AnalyseResultatFragment extends Fragment {
         /*
             CONSIGNE 3
         */
+
+
+        /*
+         **************************
+         ***** SYNTHESE PICTO *****
+         **************************
+         */
+
+        tvVolumePreleve.setText(df.format(volumeTotalBoisMartele) + " m3\n" +
+                                "volume de bois prélevé");
+
+        cur = dbHelper.getDataFromTableWithCondition("SUM(ap." + DatabaseHelper.VALEUR_ECONOMIQUE + ")",
+                DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap, " + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
+                "ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = am." + DatabaseHelper.NUMERO_ARBRE_MART);
+        cur.moveToFirst();
+        gainCoupe = cur.getFloat(0);
+
+        tvGainCoupe.setText(Integer.toString((int)gainCoupe) + " € \n" +
+                "Valeur de la coupe");
+
+
+        cur = dbHelper.getDataFromTable("SUM(" + DatabaseHelper.NOTE_ECO_ARBRE + ")", DatabaseHelper.ARBRES_PARCELLE_TABLE);
+        cur.moveToFirst();
+        noteEcoAvant = cur.getInt(0);
+
+        cur = dbHelper.getDataFromTableWithCondition("SUM(ap." + DatabaseHelper.NOTE_ECO_ARBRE + ")",
+                DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap, " + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
+                "ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = am." + DatabaseHelper.NUMERO_ARBRE_MART);
+        cur.moveToFirst();
+        noteEcoMartele = cur.getInt(0);
+
+        System.out.println(noteEcoAvant + " - " + noteEcoMartele);
+
+        pourcentageNoteEcoMartelage = ((float)noteEcoMartele / (float)noteEcoAvant) * 100;
+
+        System.out.println(noteEcoAvant + " - " + noteEcoMartele);
+
+        tvNoteEco.setText("Vous avez martelé " + Integer.toString((int)pourcentageNoteEcoMartelage) + "% de la biodiversité de la parcelle");
+
         dbHelper.close();
         cur.close();
     }

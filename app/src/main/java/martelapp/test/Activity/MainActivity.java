@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(checkDatabase()) {
-                    dbHelper.clearTableExercice();
                     Intent intent = new Intent(getApplicationContext(), NomEquipeActivity.class);
                     startActivity(intent);
                 }
