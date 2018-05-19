@@ -91,9 +91,11 @@
     <string name="titre_pourcentage_raison">
         Pourcentage des raisons de martelage
     </string>
-    <string name="titre_volume_categorie_diametre">
-        Pourcentage de tiges sur la parcelle par catégorie de diamètre
+
+    <string name="titre_nb_tige_categorie_diametre">
+        Evolution du nombre de tige par classe de diamètre
     </string>
+
     <string name="prelevement_volume_consigne">
         Prelevement entre 1/5 et 1/3 du volume présent sur la parcelle
     </string>
@@ -137,6 +139,14 @@
         <b>Je conserve cet arbre pour la biodiversité</b>
     </string>
 
+    <string name="type_arbres_liste_marteles">
+        Arbres Martelés
+    </string>
+
+
+    <string name="type_arbres_liste_conserves">
+        Arbres Conservés
+    </string>
 
     <string name="textImgBoutonConserver">
         Je le conserve

@@ -1,10 +1,11 @@
-package martelapp.test.Fragment.Analyse;
+package martelapp.test.Class;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Typeface;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.BubbleChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.charts.ScatterChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -15,6 +16,9 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.BubbleData;
+import com.github.mikephil.charting.data.BubbleDataSet;
+import com.github.mikephil.charting.data.BubbleEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -23,6 +27,7 @@ import com.github.mikephil.charting.data.ScatterData;
 import com.github.mikephil.charting.data.ScatterDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.interfaces.datasets.IBubbleDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IScatterDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.EntryXComparator;
@@ -35,15 +40,644 @@ import martelapp.test.Class.VectorShapeRenderer;
 import martelapp.test.Formatter.IndexAxisValueLimitCharacterFormatter;
 import martelapp.test.Formatter.PercentWithoutSmallValueFormatter;
 import martelapp.test.Formatter.StackedBarFormatter;
+import martelapp.test.Formatter.WithoutSmallValueFormatter;
 import martelapp.test.R;
 
 /**
  * Created by Baptiste on 18/05/2018.
  */
 
-public class AnalyseGraphe {
+public class GrapheHelper {
     public static final int PETIT_BOIS = 25;
     public static final int GROS_BOIS = 40;
+
+
+    public static void getBarChartInfosDiametre(Context context, BarChart barChart){
+        Cursor cur1, cur2;
+        DatabaseHelper dbHelper;
+
+        dbHelper = new DatabaseHelper(context);
+
+
+        ArrayList<BarEntry> entriesArbres = new ArrayList<>();
+        ArrayList<String> entriesDiametre = new ArrayList<>();
+        int diametre;
+        int i = 0;
+        int nbArbreVivant;
+        int nbArbreMortPied;
+        int nbArbreMortSol;
+
+
+        /*
+         *  Cursor cur1 : Cursor pointant sur tout les diamètres d'arbre dans la base de données
+         *
+         *  On trie le graphe par diamètre donc on parcourt jusqu'à
+         *  ce que le cur1 n'ai plus de diamètre disponible
+         */
+        cur1 = dbHelper.getDataFromTable("DISTINCT " + DatabaseHelper.DIAMETRE_ARBRE, DatabaseHelper.ARBRES_PARCELLE_TABLE + " ORDER BY " + DatabaseHelper.DIAMETRE_ARBRE + " ASC");
+        while (cur1.moveToNext()) {
+
+            // Récupération de le diamètre actuelle et ajout dans la liste des diamètres
+            diametre = cur1.getInt(cur1.getColumnIndex(DatabaseHelper.DIAMETRE_ARBRE));
+            entriesDiametre.add(Integer.toString(diametre));
+
+
+            cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE,
+                    DatabaseHelper.DIAMETRE_ARBRE + " = " + diametre +
+                            " AND " + DatabaseHelper.ETAT_ARBRE + " = 'v'");
+            cur2.moveToFirst();
+            nbArbreVivant = cur2.getCount();
+
+            cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE,
+                    DatabaseHelper.DIAMETRE_ARBRE + " = " + diametre +
+                            " AND " + DatabaseHelper.ETAT_ARBRE + " = 'mp'");
+            cur2.moveToFirst();
+            nbArbreMortPied = cur2.getCount();
+
+            cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE,
+                    DatabaseHelper.DIAMETRE_ARBRE + " = " + diametre +
+                            " AND " + DatabaseHelper.ETAT_ARBRE + " = 'ms'");
+            cur2.moveToFirst();
+            nbArbreMortSol = cur2.getCount();
+
+            /*
+             *  On ajoute dans la liste des données du graphe les deux valeurs que l'on vient
+             *  de calculer sous forme de tableau de float car on veut que les données soit
+             *  sous forme de bar chart stack
+             */
+            entriesArbres.add(new BarEntry(i, new float[]{nbArbreVivant, nbArbreMortPied, nbArbreMortSol}));
+
+            i++;
+
+            cur2.close();
+        }
+        dbHelper.close();
+        cur1.close();
+
+         /*
+         *
+         *
+         *
+         *#######################################################################
+         *#################### GESTION DE LA FORME DU GRAPHE ####################
+         *#######################################################################
+         *
+         *
+         *
+         */
+
+        BarDataSet barDataSet = new BarDataSet(entriesArbres, "");
+
+        //add colors to dataset
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(context.getResources().getColor(R.color.colorBarBlue));
+        colors.add(context.getResources().getColor(R.color.colorBarOrange));
+        colors.add(context.getResources().getColor(R.color.colorBarGreen));
+
+        barDataSet.setColors(colors);
+        barDataSet.setValueFormatter(new StackedBarFormatter(" | ", 0));
+
+        BarData barData = new BarData(barDataSet);
+        barChart.setData(barData);
+
+
+        XAxis xAxis = barChart.getXAxis();
+        YAxis yAxisLeft = barChart.getAxisLeft();
+
+        // Empêcher zoom
+        barChart.setScaleEnabled(false);
+        barChart.setTouchEnabled(false);
+
+
+        // Afficher toutes les valeurs en X
+        xAxis.setLabelCount(entriesDiametre.size());
+
+        // Axe des X affiche les essences
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(entriesDiametre));
+        // Axe des X en bas du graphe
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        xAxis.setTextSize(18f);
+        yAxisLeft.setTextSize(18f);
+
+        // Axe des Y droit désactivé
+        barChart.getAxisRight().setEnabled(false);
+
+
+        // Ne pas dessiner la grille de fond
+        yAxisLeft.setDrawGridLines(false);
+        xAxis.setDrawGridLines(false);
+
+        // Enlever espace entre axe des X et les stack bars
+        yAxisLeft.setDrawZeroLine(true);
+        yAxisLeft.setAxisMinimum(0f);
+
+        barChart.getDescription().setText(context.getResources().getString(R.string.axe_diametre_cm));
+        barChart.getDescription().setYOffset(-50f);
+        barChart.getDescription().setTextSize(18f);
+        barChart.getDescription().setTextColor(context.getResources().getColor(R.color.colorBlack));
+
+
+        //barChart.getXAxis().setDrawLabels(true);
+
+        /* ************************ LEGENDE ****************
+         *
+         *
+         */
+        // Récupération de la légende du graphe
+        Legend legende = barChart.getLegend();
+        // Forme de la légende
+        legende.setForm(Legend.LegendForm.SQUARE);
+        legende.setTextSize(20f);
+        legende.setFormSize(12f);
+        legende.setXEntrySpace(15f);
+        // Position de la légende (changer si besoin)
+        //legende.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
+
+        // ArrayList contenant les textes des états des arbres pour la légende
+        ArrayList<String> titleList = new ArrayList<>();
+        titleList.add("Arbres Vivant");
+        titleList.add("Arbres Mort sur Pied");
+        titleList.add("Arbres Mort sur Sol");
+
+        // Listes des Entrées de la légende
+        ArrayList<LegendEntry> legendeEntrees = new ArrayList<>();
+        for (int k = 0; k < titleList.size(); k++) {
+            // Création d'une nouvelle entrée de légende
+            LegendEntry entree = new LegendEntry();
+            // Récupération de la couleur "k" de l'arrayList colors
+            entree.formColor = colors.get(k);
+            // Récupération du label "k" de l'arrayList titleList
+            entree.label = titleList.get(k);
+            legendeEntrees.add(entree);
+        }
+
+        // Set la légende avec les entrées
+        legende.setCustom(legendeEntrees);
+
+
+        // Refresh le graphe
+        barChart.invalidate();
+    }
+
+    public static void getBarChartInfosNoteEcologique(Context context, BarChart barChart) {
+        Cursor cur1, cur2;
+        DatabaseHelper dbHelper;
+
+        dbHelper = new DatabaseHelper(context);
+
+        ArrayList<BarEntry> entriesArbres = new ArrayList<>();
+        ArrayList<String> entriesNoteEco = new ArrayList<>();
+        int noteEco;
+        int i = 0;
+        int nbArbreVivant;
+        int nbArbreMortPied;
+        int nbArbreMortSol;
+
+        /*
+         *  Cursor cur1 : Cursor pointant sur toutes les notes écologique dans la base de données des arbres de la parcelle
+         *
+         *  On trie le graphe par note écologique donc on parcourt jusqu'à
+         *  ce que le cur1 n'ai plus de notes écologique disponible
+         */
+        cur1 = dbHelper.getDataFromTable("DISTINCT " + DatabaseHelper.NOTE_ECO_ARBRE, DatabaseHelper.ARBRES_PARCELLE_TABLE + " ORDER BY " + DatabaseHelper.NOTE_ECO_ARBRE + " ASC");
+        while (cur1.moveToNext()) {
+
+            // Récupération de la note écologique actuelle et ajout dans la liste des notes écologique
+            noteEco = cur1.getInt(cur1.getColumnIndex(DatabaseHelper.NOTE_ECO_ARBRE));
+            entriesNoteEco.add(Integer.toString(noteEco));
+
+            cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE,
+                    DatabaseHelper.NOTE_ECO_ARBRE + " = " + noteEco +
+                            " AND " + DatabaseHelper.ETAT_ARBRE + " = 'v'");
+            cur2.moveToFirst();
+            nbArbreVivant = cur2.getCount();
+
+            cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE,
+                    DatabaseHelper.NOTE_ECO_ARBRE + " = " + noteEco +
+                            " AND " + DatabaseHelper.ETAT_ARBRE + " = 'mp'");
+            cur2.moveToFirst();
+            nbArbreMortPied = cur2.getCount();
+
+            cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE,
+                    DatabaseHelper.NOTE_ECO_ARBRE + " = " + noteEco +
+                            " AND " + DatabaseHelper.ETAT_ARBRE + " = 'ms'");
+            cur2.moveToFirst();
+            nbArbreMortSol = cur2.getCount();
+
+
+            /*
+             *  On ajoute dans la liste des données du graphe les deux valeurs que l'on vient
+             *  de calculer sous forme de tableau de float car on veut que les données soit
+             *  sous forme de bar chart stack
+             */
+            entriesArbres.add(new BarEntry(i, new float[]{nbArbreVivant, nbArbreMortPied, nbArbreMortSol}));
+
+            i++;
+
+            cur2.close();
+        }
+        dbHelper.close();
+        cur1.close();
+
+        /*
+         *
+         *
+         *
+         *#######################################################################
+         *#################### GESTION DE LA FORME DU GRAPHE ####################
+         *#######################################################################
+         *
+         *
+         *
+         */
+
+        BarDataSet barDataSet = new BarDataSet(entriesArbres, "");
+
+        //add colors to dataset
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(context.getResources().getColor(R.color.colorBarBlue));
+        colors.add(context.getResources().getColor(R.color.colorBarOrange));
+        colors.add(context.getResources().getColor(R.color.colorBarGreen));
+
+        barDataSet.setColors(colors);
+
+        barDataSet.setValueFormatter(new StackedBarFormatter(" | ", 0));
+
+        BarData barData = new BarData(barDataSet);
+        barChart.setData(barData);
+
+
+        XAxis xAxis = barChart.getXAxis();
+        YAxis yAxisLeft = barChart.getAxisLeft();
+
+        // Empêcher zoom
+        barChart.setScaleEnabled(false);
+        barChart.setTouchEnabled(false);
+
+
+        // Afficher toutes les valeurs en X
+        xAxis.setLabelCount(entriesNoteEco.size());
+
+        // Axe des X affiche les essences
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(entriesNoteEco));
+        // Axe des X en bas du graphe
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        xAxis.setTextSize(18f);
+        yAxisLeft.setTextSize(18f);
+
+        // Axe des Y droit désactivé
+        barChart.getAxisRight().setEnabled(false);
+
+
+        // Ne pas dessiner la grille de fond
+        yAxisLeft.setDrawGridLines(false);
+        xAxis.setDrawGridLines(false);
+
+        // Enlever espace entre axe des X et les stack bars
+        yAxisLeft.setDrawZeroLine(true);
+        yAxisLeft.setAxisMinimum(0f);
+
+        barChart.getDescription().setText(context.getResources().getString(R.string.axe_note_eco));
+        barChart.getDescription().setYOffset(-50f);
+        barChart.getDescription().setTextSize(18f);
+        barChart.getDescription().setTextColor(context.getResources().getColor(R.color.colorBlack));
+
+        //barChart.getXAxis().setDrawLabels(true);
+
+        /* ************************ LEGENDE ****************
+         *
+         *
+         */
+        // Récupération de la légende du graphe
+        Legend legende = barChart.getLegend();
+        // Forme de la légende
+        legende.setForm(Legend.LegendForm.SQUARE);
+        legende.setTextSize(20f);
+        legende.setFormSize(12f);
+        legende.setXEntrySpace(15f);
+        // Position de la légende (changer si besoin)
+        //legende.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
+
+        // ArrayList contenant les textes des états des arbres pour la légende
+        ArrayList<String> titleList = new ArrayList<>();
+        titleList.add("Arbres Vivant");
+        titleList.add("Arbres Mort sur Pied");
+        titleList.add("Arbres Mort sur Sol");
+
+        // Listes des Entrées de la légende
+        ArrayList<LegendEntry> legendeEntrees = new ArrayList<>();
+        for (int k = 0; k < titleList.size(); k++) {
+            // Création d'une nouvelle entrée de légende
+            LegendEntry entree = new LegendEntry();
+            // Récupération de la couleur "k" de l'arrayList colors
+            entree.formColor = colors.get(k);
+            // Récupération du label "k" de l'arrayList titleList
+            entree.label = titleList.get(k);
+            legendeEntrees.add(entree);
+        }
+
+        // Set la légende avec les entrées
+        legende.setCustom(legendeEntrees);
+
+        // Refresh le graphe
+        barChart.invalidate();
+    }
+
+    public static void getPieChartInfosEssence(Context context, PieChart pieChart) {
+        Cursor cur1, cur2;
+        DatabaseHelper dbHelper;
+
+        dbHelper = new DatabaseHelper(context);
+
+        ArrayList<PieEntry> entriesArbres = new ArrayList<>();
+        ArrayList<String> entriesEssences = new ArrayList<>();
+        String essence;
+        int i = 0;
+        int nbArbre;
+
+
+
+        /*
+         *  Récupération de la position x, y des arbres NON MARTELES
+         *  et vérification de la note écologique pour différencier les
+         *  arbres écologiques et les autres
+         */
+        cur1 = dbHelper.executeQuery("SELECT * FROM "+DatabaseHelper.ARBRES_PARCELLE_TABLE+" GROUP BY "+DatabaseHelper.ESSENCE_ARBRE);
+        cur1.moveToFirst();
+        int nbEssences = cur1.getCount();
+        ArrayList<Integer> colors = AdaptableColorSet.createColorSet(nbEssences);
+
+        /*
+         *  Cursor cur1 : Cursor pointant sur toutes les essences disponibles dans la base de données
+         *
+         *  On trie le graphe par essence donc on parcourt jusqu'à
+         *  ce que le cur1 n'ai plus d'essence disponible
+         */
+        cur1 = dbHelper.getDataFromTable("DISTINCT " + DatabaseHelper.ESSENCE_ARBRE, DatabaseHelper.ARBRES_PARCELLE_TABLE + " ORDER BY " + DatabaseHelper.ESSENCE_ARBRE);
+        while (cur1.moveToNext()) {
+
+            // Récupération de l'essence actuelle et ajout dans la liste des essences
+            essence = cur1.getString(cur1.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE));
+            entriesEssences.add(essence);
+
+            /*
+             *  Récupération du nombre d'arbres martelés de l'essence actuelle
+             *  et enregistrement de ce nombre dans nbArbreCoupe
+             */
+            cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE,
+                    DatabaseHelper.ESSENCE_ARBRE + " = '" + essence + "'");
+            cur2.moveToFirst();
+            nbArbre = cur2.getCount();
+
+            /*
+             *  On ajoute dans la liste des données du graphe les deux valeurs que l'on vient
+             *  de calculer sous forme de tableau de float car on veut que les données soit
+             *  sous forme de bar chart stack
+             */
+            entriesArbres.add(new PieEntry(nbArbre, i));
+
+            i++;
+
+            cur2.close();
+        }
+        dbHelper.close();
+        cur1.close();
+
+        /*
+         *
+         *
+         *
+         *#######################################################################
+         *#################### GESTION DE LA FORME DU GRAPHE ####################
+         *#######################################################################
+         *
+         *
+         *
+         */
+
+
+        /*
+         *##################################
+         *########## GRAPHE AVANT ##########
+         *##################################
+         */
+        PieDataSet pieDataSet = new PieDataSet(entriesArbres, "");
+
+
+
+        pieDataSet.setColors(colors);
+
+        //pieDataSet.setDrawValues(false);
+        pieDataSet.setValueTextSize(22f);
+        pieDataSet.setValueTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        pieDataSet.setValueTextColor(context.getResources().getColor(R.color.colorWhite));
+        pieDataSet.setValueFormatter(new WithoutSmallValueFormatter());
+
+        PieData pieData = new PieData(pieDataSet);
+        pieChart.setData(pieData);
+
+        pieChart.getDescription().setText("Seulement les valeurs ≥ 5 sont affichées");
+        pieChart.getDescription().setTextSize(18f);
+        pieChart.getDescription().setXOffset(70f);
+        pieChart.getDescription().setYOffset(-15f);
+
+        // Enlever "description label"
+        pieChart.setTouchEnabled(false);
+
+        // Désactiver le trou du pie chart
+        pieChart.setDrawHoleEnabled(false);
+
+
+        pieChart.setExtraOffsets(0, 0, 0f, 10f);
+
+        /* ************************ LEGENDE ****************
+         *
+         *
+         */
+        // Récupération de la légende du graphe
+        Legend legende = pieChart.getLegend();
+        // Forme de la légende
+
+        //legende.setXOffset(140f);
+        legende.setYOffset(-140f);
+        legende.setForm(Legend.LegendForm.SQUARE);
+        legende.setTextSize(20f);
+        legende.setFormSize(12f);
+
+
+        // Listes des Entrées de la légende
+        ArrayList<LegendEntry> legendeEntrees = new ArrayList<>();
+
+        for (int k = 0; k < entriesEssences.size(); k++) {
+
+            // Création d'une nouvelle entrée de légende
+            LegendEntry entree = new LegendEntry();
+            // Récupération de la couleur "k" de l'arrayList colors
+            entree.formColor = colors.get(k);
+            // Récupération du label "k" de l'arrayList titleList
+            entree.label = entriesEssences.get(k);
+            legendeEntrees.add(entree);
+        }
+
+        // Set la légende avec les entrées
+        legende.setCustom(legendeEntrees);
+        legende.setVerticalAlignment(Legend.LegendVerticalAlignment.CENTER);
+        legende.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        legende.setOrientation(Legend.LegendOrientation.VERTICAL);
+        legende.setYEntrySpace(5f);
+        legende.setDrawInside(false);
+
+        // Refresh le graphe
+        pieChart.invalidate();
+    }
+
+    public static void getBubbleChartInfosCarte(Context context, BubbleChart bubbleChart){
+        Cursor cur1, cur2;
+        DatabaseHelper dbHelper;
+
+        dbHelper = new DatabaseHelper(context);
+
+
+        /*
+         *
+         *
+         *
+         *######################################################################
+         *################### GESTION DES DONNEES DU GRAPHES ###################
+         *######################################################################
+         *
+         *
+         *
+         */
+
+
+
+
+
+        /*
+         *  ArrayList<Entry> entriesPositionArbreNonMartele : Liste des position des arbres NON MARTELES pour le graphe
+         *  ArrayList<Entry> entriesPositionArbreMartele : Liste des position des arbres MARTELES pour le graphe
+         *  ArrayList<Entry> entriesPositionArbreEco : Liste des position des arbres ECOLOGIQUE pour le graphe
+         *  float x, y : variable intermédiaire pour enregistrer la position dans les listes
+         *  int noteEco : note écologique d'un arbre pour savoir dans quelle liste l'enregistrer
+         */
+        ArrayList<BubbleEntry> entriesPositionArbre;
+        ArrayList<IBubbleDataSet> listBubbleData = new ArrayList<>();
+        BubbleDataSet bubbleDataSet;
+
+        String essence;
+        float x, y;
+        int diametre;
+        int i = 0;
+        /*
+         *  Récupération de la position x, y des arbres NON MARTELES
+         *  et vérification de la note écologique pour différencier les
+         *  arbres écologiques et les autres
+         */
+        cur1 = dbHelper.executeQuery("SELECT * FROM "+DatabaseHelper.ARBRES_PARCELLE_TABLE+" GROUP BY "+DatabaseHelper.ESSENCE_ARBRE);
+        cur1.moveToFirst();
+        int nbEssences = cur1.getCount();
+        ArrayList<Integer> colors = AdaptableColorSet.createColorSet(nbEssences);
+
+        cur1 = dbHelper.getDataFromTable("DISTINCT " + DatabaseHelper.ESSENCE_ARBRE, DatabaseHelper.ARBRES_PARCELLE_TABLE + " ORDER BY " + DatabaseHelper.ESSENCE_ARBRE);
+        while (cur1.moveToNext()) {
+
+            essence = cur1.getString(cur1.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE));
+
+            cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE,
+                    DatabaseHelper.ESSENCE_ARBRE + " = '" + essence + "'");
+
+            entriesPositionArbre = new ArrayList<>();
+            while(cur2.moveToNext()) {
+
+                x = (float) cur2.getDouble(cur2.getColumnIndex(DatabaseHelper.COORD_X_ARBRE));
+                y = (float) cur2.getDouble(cur2.getColumnIndex(DatabaseHelper.COORD_Y_ARBRE));
+                diametre = cur2.getInt(cur2.getColumnIndex(DatabaseHelper.DIAMETRE_ARBRE));
+                entriesPositionArbre.add(new BubbleEntry(x, y, (float)diametre));
+            }
+            Collections.sort(entriesPositionArbre, new EntryXComparator());
+            bubbleDataSet = new BubbleDataSet(entriesPositionArbre, essence);
+
+            bubbleDataSet.setColor(colors.get(i));
+
+            bubbleDataSet.setDrawValues(false);
+            listBubbleData.add(bubbleDataSet);
+
+            i++;
+
+            cur2.close();
+        }
+        dbHelper.close();
+        cur1.close();
+
+
+        /*
+         *
+         *
+         *
+         *#######################################################################
+         *#################### GESTION DE LA FORME DU GRAPHE ####################
+         *#######################################################################
+         *
+         *
+         *
+         */
+
+        // Forme des arbres non martelés = cercle
+
+        BubbleData bubbleData = new BubbleData(listBubbleData);
+
+        bubbleChart.setHardwareAccelerationEnabled(false);
+
+        bubbleChart.setData(bubbleData);
+
+        // Enlever indication de la sélection d'un point lorsqu'on appuie sur le graphe
+        bubbleChart.getData().setHighlightEnabled(false);
+
+        // Empêcher zoom des axes
+        //bubbleChart.setScaleEnabled(false);
+
+        // Autoriser PinchZoom
+        bubbleChart.setPinchZoom(true);
+
+        // Désactiver le clic
+        //bubbleChart.setTouchEnabled(false);
+
+        // Enlever "description label"
+        bubbleChart.getDescription().setEnabled(false);
+
+        // Axe des X en bas du graphe
+        bubbleChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        // Axe des Y droit désactivé
+        bubbleChart.getAxisRight().setEnabled(false);
+
+        // Enlever espace entre axe des X et les stack bars
+        bubbleChart.getAxisLeft().setDrawZeroLine(true);
+        bubbleChart.getAxisLeft().setAxisMinimum(0f);
+
+        // Ne pas dessiner la grille de fond
+        bubbleChart.getAxisLeft().setDrawGridLines(false);
+        bubbleChart.getXAxis().setDrawGridLines(false);
+
+        // Récupération de la légende du graphe
+        Legend legende = bubbleChart.getLegend();
+
+        bubbleChart.setExtraOffsets(0f,0f,20f,0f);
+        legende.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        legende.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        legende.setOrientation(Legend.LegendOrientation.VERTICAL);
+
+        // Forme de la légende
+        legende.setForm(Legend.LegendForm.CIRCLE);
+        legende.setTextSize(20f);
+        legende.setFormSize(12f);
+        legende.setYEntrySpace(5f);
+        // Refresh le graphe
+        bubbleChart.invalidate();
+    }
 
 
     public static void getBarChartAnalyseEssence(Context context, BarChart barChart){
@@ -745,7 +1379,7 @@ public class AnalyseGraphe {
 
         barDataSet.setColors(colors);
 
-        barDataSet.setValueFormatter(new StackedBarFormatter(" | ", 2));
+        barDataSet.setValueFormatter(new StackedBarFormatter(" | ", 1));
 
 
         BarData barData = new BarData(barDataSet);
@@ -830,7 +1464,7 @@ public class AnalyseGraphe {
         barChart.invalidate();
     }
 
-    public static void getPieChartAnalyseAvantApresVolumeCategorie(Context context, PieChart pieChartAvant, PieChart pieChartApres){
+    public static void getPieChartAnalyseAvantApresNbTigesCategorie(Context context, PieChart pieChartAvant, PieChart pieChartApres){
         Cursor cur1;
         DatabaseHelper dbHelper;
 
@@ -859,90 +1493,87 @@ public class AnalyseGraphe {
          *  float[][] volumeBois
          *
          *  indice 0 :
-         *  - volumePBAvant
-         *  - volumePBApres
+         *  - NbTigesPBAvant
+         *  - NbTigesPBApres
          *  - pourcentagePBAvant
          *  - pourcentagePBApres
          *
          *  indice 1 :
-         *  - volumeBMAvant
-         *  - volumeBMApres
+         *  - NbTigesBMAvant
+         *  - NbTigesBMApres
          *  - pourcentageBMAvant
          *  - pourcentageBMApres
          *
          *  indice 2 :
-         *  - volumeGBAvant
-         *  - volumeGBApres
+         *  - NbTigesGBAvant
+         *  - NbTigesGBApres
          *  - pourcentageGBAvant
          *  - pourcentageGBApres
 
          */
-        float[][] volumeBois = new float[3][4];
-        float totalVolumeAvant;
-        float totalVolumeApres;
+        float[][] nbTiges = new float[3][4];
+        float totalNbTigesAvant;
+        float totalNbTigesApres;
 
         // AVANT
-        cur1 = dbHelper.getDataFromTableWithCondition("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL + ")", DatabaseHelper.ARBRES_PARCELLE_TABLE,
+        cur1 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE,
                 DatabaseHelper.DIAMETRE_ARBRE + " <= " + PETIT_BOIS);
         cur1.moveToFirst();
-        volumeBois[0][0] = cur1.getFloat(0);
+        nbTiges[0][0] = (float) cur1.getCount();
 
-        cur1 = dbHelper.getDataFromTableWithCondition("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL + ")", DatabaseHelper.ARBRES_PARCELLE_TABLE,
+        cur1 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE,
                 DatabaseHelper.DIAMETRE_ARBRE + " > " + PETIT_BOIS + " AND " + DatabaseHelper.DIAMETRE_ARBRE + " <= " + GROS_BOIS);
         cur1.moveToFirst();
-        volumeBois[1][0] = cur1.getFloat(0);
+        nbTiges[1][0] = (float) cur1.getCount();
 
 
-        cur1 = dbHelper.getDataFromTableWithCondition("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL + ")", DatabaseHelper.ARBRES_PARCELLE_TABLE,
+        cur1 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE,
                 DatabaseHelper.DIAMETRE_ARBRE + " > " +  GROS_BOIS);
         cur1.moveToFirst();
-        volumeBois[2][0] = cur1.getFloat(0);
+        nbTiges[2][0] = (float) cur1.getCount();
 
-        totalVolumeAvant = volumeBois[0][0] + volumeBois[1][0] + volumeBois[2][0];
+        totalNbTigesAvant = nbTiges[0][0] + nbTiges[1][0] + nbTiges[2][0];
 
         // APRES
-        cur1 = dbHelper.getDataFromTableWithCondition("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL + ")",
-                DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap, " + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
+        cur1 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap, " + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
                 "ap." + dbHelper.NUMERO_ARBRE_PARC + " = am." + dbHelper.NUMERO_ARBRE_MART
                         + " AND " + DatabaseHelper.DIAMETRE_ARBRE + " <= " + PETIT_BOIS);
         cur1.moveToFirst();
-        volumeBois[0][1] =  volumeBois[0][0] - cur1.getFloat(0);
+        nbTiges[0][1] =  nbTiges[0][0] - (float) cur1.getCount();
 
-        cur1 = dbHelper.getDataFromTableWithCondition("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL + ")",
-                DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap, " + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
+        cur1 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap, " + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
                 "ap." + dbHelper.NUMERO_ARBRE_PARC + " = am." + dbHelper.NUMERO_ARBRE_MART
                         + " AND " + DatabaseHelper.DIAMETRE_ARBRE + " > " + PETIT_BOIS + " AND " + DatabaseHelper.DIAMETRE_ARBRE + " <= " + GROS_BOIS);
         cur1.moveToFirst();
-        volumeBois[1][1] = volumeBois[1][0] - cur1.getFloat(0);
+        nbTiges[1][1] = nbTiges[1][0] - (float) cur1.getCount();
 
-        cur1 = dbHelper.getDataFromTableWithCondition("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL + ")",
-                DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap, " + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
+        cur1 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap, " + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
                 "ap." + dbHelper.NUMERO_ARBRE_PARC + " = am." + dbHelper.NUMERO_ARBRE_MART
                         + " AND " + DatabaseHelper.DIAMETRE_ARBRE + " > " +  GROS_BOIS);
         cur1.moveToFirst();
-        volumeBois[2][1] = volumeBois[2][0] - cur1.getFloat(0);
+        nbTiges[2][1] = nbTiges[2][0] - (float) cur1.getCount();
 
-        totalVolumeApres = volumeBois[0][1] + volumeBois[1][1] + volumeBois[2][1];
+        totalNbTigesApres = nbTiges[0][1] + nbTiges[1][1] + nbTiges[2][1];
 
         // Pourcentage volume Avant
-        volumeBois[0][2] = (volumeBois[0][0] / totalVolumeAvant) * 100;
+        nbTiges[0][2] = (nbTiges[0][0] / totalNbTigesAvant) * 100;
 
-        volumeBois[1][2] = (volumeBois[1][0] / totalVolumeAvant) * 100;
+        nbTiges[1][2] = (nbTiges[1][0] / totalNbTigesAvant) * 100;
 
-        volumeBois[2][2] = (volumeBois[2][0] / totalVolumeAvant) * 100;
+        nbTiges[2][2] = (nbTiges[2][0] / totalNbTigesAvant) * 100;
 
 
         // Pourcentage volume Apres
-        volumeBois[0][3] = (volumeBois[0][1] / totalVolumeApres) * 100;
+        nbTiges[0][3] = (nbTiges[0][1] / totalNbTigesApres) * 100;
 
-        volumeBois[1][3] = (volumeBois[1][1] / totalVolumeApres) * 100;
+        nbTiges[1][3] = (nbTiges[1][1] / totalNbTigesApres) * 100;
 
-        volumeBois[2][3] = (volumeBois[2][1] / totalVolumeApres) * 100;
+        nbTiges[2][3] = (nbTiges[2][1] / totalNbTigesApres) * 100;
 
 
         for(int i = 0; i < 3; i++){
-            entriesVolumeAvant.add(new PieEntry(volumeBois[i][2], i));
-            entriesVolumeApres.add(new PieEntry(volumeBois[i][3], i));
+            entriesVolumeAvant.add(new PieEntry(nbTiges[i][2], i));
+            entriesVolumeApres.add(new PieEntry(nbTiges[i][3], i));
             entriesLabel.add(categorie_bois[i]);
         }
 
@@ -997,7 +1628,7 @@ public class AnalyseGraphe {
 
         pieChartAvant.setTouchEnabled(false);
 
-        pieChartAvant.setExtraOffsets(10f,10f,10f,10f);
+        pieChartAvant.setExtraOffsets(0f,10f,0f,0f);
 
         // Désactiver le trou du pie chart
         pieChartAvant.setDrawHoleEnabled(false);
@@ -1027,10 +1658,10 @@ public class AnalyseGraphe {
 
         pieChartApres.getDescription().setText("Après");
         pieChartApres.getDescription().setTextSize(18f);
-        pieChartApres.getDescription().setPosition(70f,70f);
+        pieChartApres.getDescription().setPosition(500f,70f);
         pieChartApres.setTouchEnabled(false);
 
-        pieChartApres.setExtraOffsets(10f,10f,10f,10f);
+        pieChartApres.setExtraOffsets(0f,10f,0f,0f);
 
         // Désactiver le trou du pie chart
         pieChartApres.setDrawHoleEnabled(false);
@@ -1076,6 +1707,9 @@ public class AnalyseGraphe {
         legendeAvant.setCustom(legendeEntrees);
         legendeApres.setCustom(legendeEntrees);
 
+        legendeApres.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+
+
 
         // Refresh le graphe
         pieChartAvant.invalidate();
@@ -1083,7 +1717,7 @@ public class AnalyseGraphe {
 
     }
 
-    public static void getGrapheAnalyseRaisons(Context context, BarChart barChart){
+    public static void getBarChartAnalyseRaisons(Context context, BarChart barChart){
         Cursor cur1, cur2;
         DatabaseHelper dbHelper;
 

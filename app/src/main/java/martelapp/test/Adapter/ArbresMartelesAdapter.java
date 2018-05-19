@@ -53,7 +53,7 @@ public class ArbresMartelesAdapter extends CursorAdapter {
         if(analyse){
             noteEcoArbreTraite.setText(Integer.toString(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.NOTE_ECO_ARBRE))));
             noteEcoArbreTraite.setVisibility(View.VISIBLE);
-            if(noteEcologique > ChoixMartelageFragment.noteEcologiqueHaute) {
+            if(noteEcologique >= ChoixMartelageFragment.noteEcologiqueHaute) {
                 numeroArbreTraite.setTextColor(view.getResources().getColor(R.color.colorRed));
                 essenceArbreTraite.setTextColor(view.getResources().getColor(R.color.colorRed));
                 diameteArbreTraite.setTextColor(view.getResources().getColor(R.color.colorRed));

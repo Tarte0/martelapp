@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:weightSum="5"
-            android:layout_above="@+id/bottom_navigation_graphe">
+            android:layout_above="@+id/bottom_navigation_graphe_nombre_tiges_analyse">
 
             <TextView
                 android:id="@+id/title_graphe"
@@ -77,10 +77,10 @@
                             android:id="@+id/text_axe"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="1"
+                            android:layout_weight="0.5"
                             android:text=""
                             android:textColor="@color/colorBlack"
-                            android:textSize="22sp" />
+                            android:textSize="18sp" />
 
                         <com.github.mikephil.charting.charts.BarChart
                             android:id="@+id/bar_chart_essence_graphe"
@@ -102,28 +102,8 @@
                             android:layout_weight="9.5" />
 
 
-                        <com.github.mikephil.charting.charts.BarChart
-                            android:id="@+id/bar_chart_volume_graphe"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="9.5" />
-
-
-                        <com.github.mikephil.charting.charts.BarChart
-                            android:id="@+id/bar_chart_raison_graphe"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="9.5" />
-
-
-                        <com.github.mikephil.charting.charts.ScatterChart
-                            android:id="@+id/scatter_chart_carte_graphe"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="9.5" />
-
                         <LinearLayout
-                            android:id="@+id/layout_pie_chart_volume"
+                            android:id="@+id/layout_pie_chart_nb_tiges"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:weightSum="10"
@@ -131,31 +111,20 @@
                             android:orientation="horizontal">
 
                             <com.github.mikephil.charting.charts.PieChart
-                                android:id="@+id/pie_chart_volume_avant_graphe"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
+                                android:id="@+id/pie_chart_nb_tiges_avant_graphe"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
                                 android:layout_weight="5" />
 
 
                             <com.github.mikephil.charting.charts.PieChart
-                                android:id="@+id/pie_chart_volume_apres_graphe"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
+                                android:id="@+id/pie_chart_nb_tiges_apres_graphe"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
                                 android:layout_weight="5" />
 
                         </LinearLayout>
-
                     </LinearLayout>
-
-                    <Button
-                        android:id="@+id/button_terminer_analyse_save_pdf"
-                        style="@style/button_vert"
-                        android:layout_width="0dp"
-                        android:layout_height="100dp"
-                        android:layout_gravity="bottom|end"
-                        android:layout_weight="3"
-                        android:text="@string/button_go_to_carte" />
-
                 </LinearLayout>
 
                 <ImageButton
@@ -172,7 +141,7 @@
         </LinearLayout>
 
         <android.support.design.widget.BottomNavigationView
-            android:id="@+id/bottom_navigation_graphe"
+            android:id="@+id/bottom_navigation_graphe_nombre_tiges_analyse"
             android:layout_width="match_parent"
             android:layout_height="72dp"
             android:layout_alignParentBottom="true"
@@ -180,7 +149,7 @@
             app:itemBackground="@color/colorWhite"
             app:itemIconTint="@drawable/bottom_nav_color_selector"
             app:itemTextColor="@drawable/bottom_nav_color_selector"
-            app:menu="@menu/graphe_bottom_nav"
+            app:menu="@menu/analyse_graphe_nombre_tiges_bottom_nav"
             />
 
     </RelativeLayout>

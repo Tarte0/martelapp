@@ -35,6 +35,7 @@ import java.util.Random;
 
 import martelapp.test.Class.AdaptableColorSet;
 import martelapp.test.Class.DatabaseHelper;
+import martelapp.test.Class.GrapheHelper;
 import martelapp.test.R;
 
 /**
@@ -43,155 +44,16 @@ import martelapp.test.R;
 
 public class CarteParcelleFragment extends Fragment implements OnChartValueSelectedListener {
 
-    ArrayList<IBubbleDataSet> listBubbleData;
-    DatabaseHelper dbHelper;
-    Cursor cur1, cur2;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.view_page_parcelle, null);
 
-        dbHelper = new DatabaseHelper(view.getContext());
-
-
-        /*
-         *
-         *
-         *
-         *######################################################################
-         *################### GESTION DES DONNEES DU GRAPHES ###################
-         *######################################################################
-         *
-         *
-         *
-         */
-
-
-
-
-
-        /*
-         *  ArrayList<Entry> entriesPositionArbreNonMartele : Liste des position des arbres NON MARTELES pour le graphe
-         *  ArrayList<Entry> entriesPositionArbreMartele : Liste des position des arbres MARTELES pour le graphe
-         *  ArrayList<Entry> entriesPositionArbreEco : Liste des position des arbres ECOLOGIQUE pour le graphe
-         *  float x, y : variable intermédiaire pour enregistrer la position dans les listes
-         *  int noteEco : note écologique d'un arbre pour savoir dans quelle liste l'enregistrer
-         */
-        ArrayList<BubbleEntry> entriesPositionArbre;
-        BubbleDataSet bubbleDataSet;
-        //ArrayList<IBubbleDataSet> listBubbleData = new ArrayList<>();
-        listBubbleData = new ArrayList<>();
-        String essence;
-        float x, y;
-        int diametre;
-        int i = 0;
-        /*
-         *  Récupération de la position x, y des arbres NON MARTELES
-         *  et vérification de la note écologique pour différencier les
-         *  arbres écologiques et les autres
-         */
-        cur1 = dbHelper.executeQuery("SELECT * FROM "+DatabaseHelper.ARBRES_PARCELLE_TABLE+" GROUP BY "+DatabaseHelper.ESSENCE_ARBRE);
-        cur1.moveToFirst();
-        int nbEssences = cur1.getCount();
-        ArrayList<Integer> colors = AdaptableColorSet.createColorSet(nbEssences);
-
-        cur1 = dbHelper.getDataFromTable("DISTINCT " + DatabaseHelper.ESSENCE_ARBRE, DatabaseHelper.ARBRES_PARCELLE_TABLE + " ORDER BY " + DatabaseHelper.ESSENCE_ARBRE);
-        while (cur1.moveToNext()) {
-
-            essence = cur1.getString(cur1.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE));
-
-            cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE,
-                    DatabaseHelper.ESSENCE_ARBRE + " = '" + essence + "'");
-
-            entriesPositionArbre = new ArrayList<>();
-            while(cur2.moveToNext()) {
-
-                x = (float) cur2.getDouble(cur2.getColumnIndex(DatabaseHelper.COORD_X_ARBRE));
-                y = (float) cur2.getDouble(cur2.getColumnIndex(DatabaseHelper.COORD_Y_ARBRE));
-                diametre = cur2.getInt(cur2.getColumnIndex(DatabaseHelper.DIAMETRE_ARBRE));
-                entriesPositionArbre.add(new BubbleEntry(x, y, (float)diametre));
-            }
-            Collections.sort(entriesPositionArbre, new EntryXComparator());
-            bubbleDataSet = new BubbleDataSet(entriesPositionArbre, essence);
-
-            bubbleDataSet.setColor(colors.get(i));
-
-            bubbleDataSet.setDrawValues(false);
-            listBubbleData.add(bubbleDataSet);
-
-            i++;
-        }
-        dbHelper.close();
-        cur1.close();
-        cur2.close();
-
-
-        /*
-         *
-         *
-         *
-         *#######################################################################
-         *#################### GESTION DE LA FORME DU GRAPHE ####################
-         *#######################################################################
-         *
-         *
-         *
-         */
-
-        // Forme des arbres non martelés = cercle
-
-        BubbleData bubbleData = new BubbleData(listBubbleData);
-
         BubbleChart bubbleChart = view.findViewById(R.id.bubble_chart_parcelle);
-        bubbleChart.setHardwareAccelerationEnabled(false);
 
-        bubbleChart.setData(bubbleData);
-
-        // Enlever indication de la sélection d'un point lorsqu'on appuie sur le graphe
-        bubbleChart.getData().setHighlightEnabled(false);
-
-        // Empêcher zoom des axes
-        //bubbleChart.setScaleEnabled(false);
-
-        // Autoriser PinchZoom
-        bubbleChart.setPinchZoom(true);
-
-        // Désactiver le clic
-        //bubbleChart.setTouchEnabled(false);
-
-        // Enlever "description label"
-        bubbleChart.getDescription().setEnabled(false);
-
-        // Axe des X en bas du graphe
-        bubbleChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-
-        // Axe des Y droit désactivé
-        bubbleChart.getAxisRight().setEnabled(false);
-
-        // Enlever espace entre axe des X et les stack bars
-        bubbleChart.getAxisLeft().setDrawZeroLine(true);
-        bubbleChart.getAxisLeft().setAxisMinimum(0f);
-
-        // Ne pas dessiner la grille de fond
-        bubbleChart.getAxisLeft().setDrawGridLines(false);
-        bubbleChart.getXAxis().setDrawGridLines(false);
-
-        // Récupération de la légende du graphe
-        Legend legende = bubbleChart.getLegend();
-
-        bubbleChart.setExtraOffsets(0f,0f,20f,0f);
-        legende.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        legende.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        legende.setOrientation(Legend.LegendOrientation.VERTICAL);
-
-        // Forme de la légende
-        legende.setForm(Legend.LegendForm.CIRCLE);
-        legende.setTextSize(20f);
-        legende.setFormSize(12f);
-        legende.setYEntrySpace(5f);
-        // Refresh le graphe
-        bubbleChart.invalidate();
+        GrapheHelper.getBubbleChartInfosCarte(view.getContext(), bubbleChart);
 
         return view;
     }
@@ -208,8 +70,3 @@ public class CarteParcelleFragment extends Fragment implements OnChartValueSelec
 
 
 }
-
-
-/* tri données pour le zoom
-https://github.com/PhilJay/MPAndroidChart/issues/718
- */

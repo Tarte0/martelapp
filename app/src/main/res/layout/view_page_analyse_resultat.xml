@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:orientation="vertical"
+    android:weightSum="10"
+    tools:context="martelapp.test.Activity.AnalyseActivity">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/GrapheDetails"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="5"
+            android:layout_above="@+id/bottom_navigation_resultat_analyse">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top"
+                android:orientation="horizontal"
+                android:weightSum="12"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:id="@+id/previousInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:scaleX="-1"
+                    android:tint="@color/colorPrimary"
+                    app:srcCompat="@drawable/arrow" />
+
+
+                <LinearLayout
+                    android:id="@+id/layout_respect_consigne"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="10"
+                    android:weightSum="3">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <ImageView
+                            android:id="@+id/ivPrelevementVolumeR"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/check"
+                            android:tint="@color/colorGreen"/>
+
+                        <TextView
+                            android:id="@+id/tvPrelevementVolumeR"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="9"
+                            android:layout_marginLeft="20dp"
+                            android:gravity="center|left"
+                            android:text=""
+                            android:textSize="30sp"
+                            android:textColor="@color/colorBlack"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <ImageView
+                            android:id="@+id/ivGrosDiametreR"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/check"
+                            android:tint="@color/colorGreen"/>
+
+                        <TextView
+                            android:id="@+id/tvGrosDiametreR"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="9"
+                            android:layout_marginLeft="20dp"
+                            android:gravity="center|left"
+                            android:text=""
+                            android:textSize="30sp"
+                            android:textColor="@color/colorBlack"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <ImageView
+                            android:id="@+id/ivEcoR"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/check"
+                            android:tint="@color/colorGreen"/>
+
+                        <TextView
+                            android:id="@+id/tvEcoR"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="9"
+                            android:layout_marginLeft="20dp"
+                            android:gravity="center|left"
+                            android:text=""
+                            android:textSize="30sp"
+                            android:textColor="@color/colorBlack"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_synthese_picto"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="10">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="WAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" />
+                </LinearLayout>
+
+
+
+                <ImageButton
+                    android:id="@+id/nextInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:tint="@color/colorPrimary"
+                    app:srcCompat="@drawable/arrow" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottom_navigation_resultat_analyse"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            app:itemBackground="@color/colorWhite"
+            app:itemIconTint="@drawable/bottom_nav_color_selector"
+            app:itemTextColor="@drawable/bottom_nav_color_selector"
+            app:menu="@menu/analyse_resultat_bottom_nav"
+            />
+
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

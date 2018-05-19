@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="40dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,31 +17,30 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/text_titre_coupe_diametre"
+            android:id="@+id/text_titre_volume_graphe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/titre_pourcentage_raison"
             android:textAlignment="center"
-            android:textSize="30sp"
-            android:textStyle="bold"
             android:textColor="@color/colorPrimaryDark"
-            android:text="@string/titre_coupe_diametre" />
+            android:textSize="36sp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="60dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginTop="40dp"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/axe_nb_tiges2"
+                android:id="@+id/text_axe_volume_graphe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:textColor="@color/colorBlack"
-                android:text="@string/axe_nombre_tiges" />
+                android:text="@string/axe_volume_m3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -49,7 +48,7 @@
                 android:orientation="horizontal">
 
                 <com.github.mikephil.charting.charts.BarChart
-                    android:id="@+id/bar_chart_coupe_diametre"
+                    android:id="@+id/bar_chart_volume_graphe"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
@@ -57,5 +56,6 @@
         </LinearLayout>
 
     </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>

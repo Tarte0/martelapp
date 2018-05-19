@@ -7,25 +7,16 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import martelapp.test.Fragment.Analyse.AnalyseListeArbresConservesFragment;
-import martelapp.test.Fragment.Analyse.AnalyseListeArbresMartelesFragment;
-import martelapp.test.Fragment.Analyse.AnalyseParcelleFragment;
-import martelapp.test.Fragment.Analyse.AnalyseRaisonsFragment;
-import martelapp.test.Fragment.Analyse.AnalyseRespectConsignesFragment;
-import martelapp.test.Fragment.Analyse.AnalyseSyntheseFragment;
-import martelapp.test.Fragment.Analyse.AnalyseTigesDiametreFragment;
-import martelapp.test.Fragment.Analyse.AnalyseTigesEcoFragment;
-import martelapp.test.Fragment.Analyse.AnalyseTigesEssencesFragment;
-import martelapp.test.Fragment.Analyse.AnalyseVolumeCategorieFragment;
-import martelapp.test.Fragment.Analyse.AnalyseVolumeDiametreFragment;
-import martelapp.test.Fragment.Analyse.GrapheFragment;
+import martelapp.test.Fragment.Analyse.AnalyseGrapheCarteFragment;
+import martelapp.test.Fragment.Analyse.AnalyseGrapheRaisonsFragment;
+import martelapp.test.Fragment.Analyse.AnalyseGrapheVolumeFragment;
+import martelapp.test.Fragment.Analyse.AnalyseListeArbresSelectionnesFragment;
+import martelapp.test.Fragment.Analyse.AnalyseResultatFragment;
+import martelapp.test.Fragment.Analyse.AnalyseGrapheNombreTigesFragment;
 import martelapp.test.R;
 
 
@@ -35,9 +26,9 @@ public class AnalyseActivity extends AppCompatActivity {
      */
     ViewPager viewPager;
 
-
-
-    GrapheFragment gf;
+    AnalyseResultatFragment analyseResultatFragment;
+    AnalyseListeArbresSelectionnesFragment analyseListeArbresSelectionnesFragment;
+    AnalyseGrapheNombreTigesFragment analyseGrapheNombreTigesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,13 +70,21 @@ public class AnalyseActivity extends AppCompatActivity {
     // Ajout et associations des Fragments aux onglets
     private void setupViewPager(ViewPager viewPager) {
         ExerciceActivity.Adapter adapter = new ExerciceActivity.Adapter(getSupportFragmentManager());
-        gf = new GrapheFragment();
-        gf.setVp(viewPager);
-        adapter.addFragment(new AnalyseRespectConsignesFragment(), "Consignes");
-        adapter.addFragment(new AnalyseSyntheseFragment(), "Synthèse");
-        adapter.addFragment(new AnalyseListeArbresMartelesFragment(), "Arbres martelés");
-        adapter.addFragment(new AnalyseListeArbresConservesFragment(), "Arbres conservés");
-        adapter.addFragment(gf, "Graphe wesh");
+        analyseResultatFragment = new AnalyseResultatFragment();
+        analyseResultatFragment.setVp(viewPager);
+
+        analyseListeArbresSelectionnesFragment = new AnalyseListeArbresSelectionnesFragment();
+        analyseListeArbresSelectionnesFragment.setVp(viewPager);
+
+        analyseGrapheNombreTigesFragment = new AnalyseGrapheNombreTigesFragment();
+        analyseGrapheNombreTigesFragment.setVp(viewPager);
+
+        adapter.addFragment(analyseResultatFragment, "Résultats");
+        adapter.addFragment(analyseListeArbresSelectionnesFragment, "Arbres Sélectionnes");
+        adapter.addFragment(new AnalyseGrapheVolumeFragment(), "Graphe volume");
+        adapter.addFragment(analyseGrapheNombreTigesFragment, "Graphe nombre de tiges");
+        adapter.addFragment(new AnalyseGrapheRaisonsFragment(), "Graphe raisons");
+        adapter.addFragment(new AnalyseGrapheCarteFragment(), "Carte parcelle");
         viewPager.setAdapter(adapter);
     }
 

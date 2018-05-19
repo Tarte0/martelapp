@@ -19,10 +19,11 @@
         android:icon="@drawable/info_eco"
         android:title="@string/graphe_note_eco_caps"
         app:showAsAction="ifRoom" />
+
     <item
-        android:id="@+id/action_graphe_volume_analyse"
+        android:id="@+id/action_graphe_evolution_nb_tiges"
         android:enabled="true"
-        android:icon="@drawable/info_essences"
-        android:title="@string/graphe_essence_caps"
+        android:icon="@drawable/info_eco"
+        android:title="@string/graphe_note_eco_caps"
         app:showAsAction="ifRoom" />
 </menu>
