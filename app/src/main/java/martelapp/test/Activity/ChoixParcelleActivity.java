@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -200,7 +201,7 @@ public class ChoixParcelleActivity extends AppCompatActivity {
             }
         });
 
-        Button buttonRefreshList = findViewById(R.id.button_refresh_liste);
+        ImageButton buttonRefreshList = findViewById(R.id.button_refresh_liste);
         buttonRefreshList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

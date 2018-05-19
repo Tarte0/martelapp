@@ -40,4 +40,6 @@
 
     <color name="button_vert_pressed">#006c4e</color>
     <color name="button_vert_focused">#006c4e</color>
+
+    <color name="bouton_actualiser_liste">#9ea4a3</color>
 </resources>
