@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
@@ -34,15 +35,7 @@ public class AnalyseActivity extends AppCompatActivity {
      */
     ViewPager viewPager;
 
-    /**
-     * Bouton permettant d'aller sur le fragment à gauche
-     */
-    ImageButton previous;
 
-    /**
-     * Bouton permettant d'aller sur le fragment à gauche
-     */
-    ImageButton next;
 
     GrapheFragment gf;
 
@@ -50,6 +43,8 @@ public class AnalyseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analyse);
+
+
 
         // On configure notre ViewPager pour chaque onglet
         // Un fragment pour chaque onglet
@@ -60,26 +55,11 @@ public class AnalyseActivity extends AppCompatActivity {
         final TabLayout tabs = (TabLayout) findViewById(R.id.tabsAnalyse);
         tabs.setupWithViewPager(viewPager);
 
-        previous = (ImageButton) findViewById(R.id.previousAnalyse);
-        next = (ImageButton) findViewById(R.id.nextAnalyse);
 
-        // Bouton fragment précédent invisible sur le premier fragment
-        previous.setVisibility(View.INVISIBLE);
 
-        // On gère l'affichage des flèches pour naviguer entre les fragments en fonction de leur position
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if(tab.getPosition() == 0){
-                    previous.setVisibility(View.INVISIBLE);
-                    next.setVisibility(View.VISIBLE);
-                }else if(tab.getPosition() == tabs.getTabCount()-1){
-                    previous.setVisibility(View.VISIBLE);
-                    next.setVisibility(View.INVISIBLE);
-                }else{
-                    previous.setVisibility(View.VISIBLE);
-                    next.setVisibility(View.VISIBLE);
-                }
             }
 
             @Override
@@ -93,26 +73,7 @@ public class AnalyseActivity extends AppCompatActivity {
             }
         });
 
-        // Cliquer sur le bouton suivant mène au fragment suivant
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int step = (viewPager.getCurrentItem()+1)%tabs.getTabCount();
-                viewPager.setCurrentItem(step);
-            }
-        });
 
-        // Cliquer sur le bouton précédent mène au fragment précédent
-        previous.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if(viewPager.getCurrentItem()>0){
-                    int step = (viewPager.getCurrentItem()-1)%tabs.getTabCount();
-                    viewPager.setCurrentItem(step);
-                }
-            }
-        });
     }
 
     // Ajout et associations des Fragments aux onglets
