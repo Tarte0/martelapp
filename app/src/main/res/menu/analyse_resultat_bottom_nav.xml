@@ -5,12 +5,12 @@
         android:id="@+id/action_respect_consigne_analyse"
         android:enabled="true"
         android:icon="@drawable/info_carac_parcelle"
-        android:title="@string/caracteristique_parcelle_caps"
+        android:title="@string/analyse_respect_consignes"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_synthese_picto_analyse"
         android:enabled="true"
         android:icon="@drawable/info_diametre"
-        android:title="@string/graphe_diametre_caps"
+        android:title="@string/analyse_synthese"
         app:showAsAction="ifRoom" />
 </menu>

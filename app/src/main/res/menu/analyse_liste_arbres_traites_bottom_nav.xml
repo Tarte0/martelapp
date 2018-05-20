@@ -5,13 +5,13 @@
         android:id="@+id/action_liste_arbres_marteles"
         android:enabled="true"
         android:icon="@drawable/info_carac_parcelle"
-        android:title="@string/caracteristique_parcelle_caps"
+        android:title="@string/analyse_arbres_selectionnes_marteles"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_liste_arbres_conserves"
         android:enabled="true"
         android:icon="@drawable/info_diametre"
-        android:title="@string/graphe_diametre_caps"
+        android:title="@string/analyse_arbres_selectionnes_conserves"
         app:showAsAction="ifRoom" />
 
 </menu>

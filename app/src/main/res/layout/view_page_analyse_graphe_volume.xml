@@ -20,7 +20,7 @@
             android:id="@+id/text_titre_volume_graphe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/titre_pourcentage_raison"
+            android:text="@string/titre_coupe_volume"
             android:textAlignment="center"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="36sp"/>

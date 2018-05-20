@@ -21,6 +21,20 @@
     <string name="graphe_essence_caps">ESSENCE</string>
     <string name="information_supplementaire_caps">INFORMATIONS</string>
 
+    <string name="analyse_respect_consignes">RESPECT DES CONSIGNES</string>
+    <string name="analyse_synthese">SYNTHESE</string>
+
+    <string name="analyse_arbres_selectionnes_marteles">ARBRES MARTELES</string>
+    <string name="analyse_arbres_selectionnes_conserves">ARBRES CONSERVES</string>
+
+    <string name="analyse_graphe_Essence">ESSENCE</string>
+    <string name="analyse_graphe_Diametre">DIAMETRE</string>
+    <string name="analyse_graphe_Note_Eco">NOTE ECOLOGIQUE</string>
+    <string name="analyse_graphe_Classe_Diametre">CLASSE DE DIAMETRE</string>
+
+
+    <string name="titre_respect_consignes">Ai-je respecté les consignes?</string>
+
     <string name="titre_graphe_nbtige_diametre_info">Nombre de tiges par classe de diamètre</string>
     <string name="titre_graphe_nbtige_noteeco_info">Nombre de tiges / Note écologique</string>
     <string name="titre_graphe_nbtige_essence_info">Nombre de tiges / Essence</string>

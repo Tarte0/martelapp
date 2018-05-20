@@ -41,7 +41,7 @@ public class AnalyseResultatFragment extends Fragment {
     TextView tvPrelevementVolumeR, tvGrosDiametreR, tvEcoR;
     ImageView ivPrelevementVolumeR, ivGrosDiametreR, ivEcoR;
 
-    TextView tvVolumePreleve, tvGainCoupe, tvNoteEco;
+    TextView tvVolumePreleve, tvGainCoupe, tvNoteEco, tvTitreRespect;
 
     DecimalFormat df;
 
@@ -89,7 +89,7 @@ public class AnalyseResultatFragment extends Fragment {
         tvVolumePreleve = view.findViewById(R.id.tvVolumePreleve);
         tvGainCoupe = view.findViewById(R.id.tvGainCoupe);
         tvNoteEco = view.findViewById(R.id.tvNoteEco);
-
+        tvTitreRespect = view.findViewById(R.id.tvTitreRespect);
 
         bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation_resultat_analyse);
         previous = (ImageButton) view.findViewById(R.id.previousInfo);
@@ -158,6 +158,7 @@ public class AnalyseResultatFragment extends Fragment {
                                 previous.setVisibility(View.INVISIBLE);
                                 next.setVisibility(View.VISIBLE);
 
+                                tvTitreRespect.setText("Ai-je respecté les consignes?");
                                 layoutRespectConsignes.setVisibility(View.VISIBLE);
                                 layoutSynthesePicto.setVisibility(View.GONE);
 
@@ -172,6 +173,7 @@ public class AnalyseResultatFragment extends Fragment {
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.INVISIBLE);
 
+                                tvTitreRespect.setText("Votre martelage a permis de : ");
                                 layoutRespectConsignes.setVisibility(View.GONE);
                                 layoutSynthesePicto.setVisibility(View.VISIBLE);
 

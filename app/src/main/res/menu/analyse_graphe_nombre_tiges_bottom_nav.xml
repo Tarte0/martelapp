@@ -5,25 +5,25 @@
         android:id="@+id/action_graphe_essence_analyse"
         android:enabled="true"
         android:icon="@drawable/info_carac_parcelle"
-        android:title="@string/caracteristique_parcelle_caps"
+        android:title="@string/analyse_graphe_Essence"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_graphe_diametre_analyse"
         android:enabled="true"
         android:icon="@drawable/info_diametre"
-        android:title="@string/graphe_diametre_caps"
+        android:title="@string/analyse_graphe_Diametre"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_graphe_note_eco_analyse"
         android:enabled="true"
         android:icon="@drawable/info_eco"
-        android:title="@string/graphe_note_eco_caps"
+        android:title="@string/analyse_graphe_Note_Eco"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_graphe_evolution_nb_tiges"
         android:enabled="true"
         android:icon="@drawable/info_eco"
-        android:title="@string/graphe_note_eco_caps"
+        android:title="@string/analyse_graphe_Classe_Diametre"
         app:showAsAction="ifRoom" />
 </menu>
