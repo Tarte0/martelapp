@@ -43,7 +43,8 @@ public class SelectionArbreFragment extends Fragment {
 
 
     LinearLayout conserverButtonTreeCard,
-                 martelerButtonTreeCard;
+                 martelerButtonTreeCard,
+                 prochaineFoisButtonTreeCard;
 
     ImageView dejaSelectionneImage;
 
@@ -84,6 +85,7 @@ public class SelectionArbreFragment extends Fragment {
         mButtonOk = (Button) view.findViewById(R.id.buttonOk);
         martelerButtonTreeCard = view.findViewById(R.id.imgMarteler);
         conserverButtonTreeCard = view.findViewById(R.id.imgConserver);
+        prochaineFoisButtonTreeCard = view.findViewById(R.id.imgProchaineFois);
         tvNum = (TextView) view.findViewById(R.id.numero_tree_card);
         tvEssence = (TextView) view.findViewById(R.id.essence_tree_card);
         tvEtat = (TextView) view.findViewById(R.id.etat_tree_card);
@@ -308,6 +310,17 @@ public class SelectionArbreFragment extends Fragment {
             public void onClick(View view) {
                 if (!numArbreCourant.equals("")) {
                     ((ExerciceActivity) getActivity()).openConserverPopup(numArbreCourant);
+                    cleanCard();
+                    numArbreCourant = "";
+                }
+
+            }
+        });
+
+        prochaineFoisButtonTreeCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!numArbreCourant.equals("")) {
                     cleanCard();
                     numArbreCourant = "";
                 }

@@ -168,6 +168,9 @@
     <string name="textImgBoutonMarteler">
         Je le martèle
     </string>
+    <string name="textImgBoutonProchaineFois">
+        Je le martèlerai une prochaine fois
+    </string>
 
     <string name="bouton_terminer_analyse">
         Terminer analyse
