@@ -1,47 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="4"
     tools:context="martelapp.test.Activity.MainActivity">
 
-    <Button
-        android:id="@+id/nouvel_exercice"
-        style="@style/button_vert"
-        android:layout_width="500dp"
-        android:layout_height="153dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="Nouvel Exercice"
-        app:layout_constraintBottom_toTopOf="@+id/continuer_exercice"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/continuer_exercice"
-        style="@style/button_vert"
-        android:layout_width="500dp"
-        android:layout_height="67dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="Continuer Exercice"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:weightSum="7">
 
-    <Button
-        android:id="@+id/test_maj_bdd"
-        android:layout_width="500dp"
-        android:layout_height="58dp"
-        android:layout_marginBottom="72dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:background="@color/colorWhite"
-        android:text="                "
-        app:layout_constraintBottom_toTopOf="@+id/nouvel_exercice"
-        app:layout_constraintEnd_toEndOf="@+id/nouvel_exercice"
-        app:layout_constraintStart_toStartOf="@+id/nouvel_exercice" />
-</android.support.constraint.ConstraintLayout>
+        <android.support.v4.widget.Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2" />
+
+        <TextView
+            android:id="@+id/AppName"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="3"
+            android:text="Martel'App"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="55sp"
+            android:textStyle="bold" />
+
+        <android.support.v4.widget.Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/test_maj_bdd"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:text="                " />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:weightSum="3">
+
+        <android.support.v4.widget.Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:weightSum="5">
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/nouvel_exercice"
+                style="@style/button_vert"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:textSize="30sp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="3"
+                android:text="Nouvel Exercice" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:weightSum="4">
+
+    <android.support.v4.widget.Space
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"/>
+
+        <Button
+            android:id="@+id/continuer_exercice"
+            style="@style/button_vert"
+            android:layout_width="0dp"
+            android:layout_height="70sp"
+            android:textSize="20sp"
+            android:layout_weight="1"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="Continuer un ancien exercice"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>
