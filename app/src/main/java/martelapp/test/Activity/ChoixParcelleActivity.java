@@ -1,6 +1,7 @@
 package martelapp.test.Activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -191,9 +192,9 @@ public class ChoixParcelleActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(spinnerParcelles.getSelectedItem() != null) {
                     if (DatabaseHelper.isNetworkAvailable(getApplicationContext())) {
+                        textTemoin.setText("Mise à jour en cours");
                         miseAJourConstantesTable();
                         miseAJourParcelle(idNomParcelle.get(spinnerParcelles.getSelectedItem().toString()));
-                        textTemoin.setText("Mise a jour de la base de données avec la parcelle : " + spinnerParcelles.getSelectedItem().toString() + " - id : " + idNomParcelle.get(spinnerParcelles.getSelectedItem().toString()));
                     } else {
                         textTemoin.setText("Pas de connexion internet maj bdd");
                     }
@@ -212,6 +213,16 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                 } else {
                     textTemoin.setText("Pas de connexion internet get all parcelle");
                 }
+            }
+        });
+
+        Button buttonRetour = findViewById(R.id.button_retour);
+        buttonRetour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -389,6 +400,8 @@ public class ChoixParcelleActivity extends AppCompatActivity {
 
                             it.remove();
                         }
+
+                        textTemoin.setText("La base de données de l'application a été mise à jour avec la parcelle : " + spinnerParcelles.getSelectedItem().toString());
                     }
                 }
             }

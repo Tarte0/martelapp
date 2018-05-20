@@ -22,7 +22,7 @@
     <string name="information_supplementaire_caps">INFORMATIONS</string>
 
     <string name="analyse_respect_consignes">RESPECT DES CONSIGNES</string>
-    <string name="analyse_synthese">SYNTHESE</string>
+    <string name="analyse_synthese">RESULTAT DU MARTELAGE</string>
 
     <string name="analyse_arbres_selectionnes_marteles">ARBRES MARTELES</string>
     <string name="analyse_arbres_selectionnes_conserves">ARBRES CONSERVES</string>
@@ -77,7 +77,7 @@
     </string>
 
     <string name="choix_raison_martelage">
-        <b>Je martèle :</b>
+        <b>Je le martèle :</b>
     </string>
 
     <string name="titre_carte">
@@ -150,7 +150,7 @@
 
 
     <string name="choix_conserver">
-        <b>Je conserve cet arbre pour la biodiversité</b>
+        <b>Je le conserve pour la biodiversité</b>
     </string>
 
     <string name="type_arbres_liste_marteles">

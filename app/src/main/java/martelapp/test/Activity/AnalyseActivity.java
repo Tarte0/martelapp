@@ -1,47 +1,28 @@
 package martelapp.test.Activity;
 
-import android.content.Context;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.pdf.PdfDocument;
-import android.os.Build;
-import android.os.Environment;
-import android.print.PrintAttributes;
-import android.print.pdf.PrintedPdfDocument;
-import android.provider.ContactsContract;
-import android.support.annotation.RequiresApi;
+import android.os.Handler;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import martelapp.test.Class.DatabaseHelper;
+import martelapp.test.Class.PdfCreator;
 import martelapp.test.Fragment.Analyse.AnalyseGrapheCarteFragment;
 import martelapp.test.Fragment.Analyse.AnalyseGrapheRaisonsFragment;
 import martelapp.test.Fragment.Analyse.AnalyseGrapheVolumeFragment;
 import martelapp.test.Fragment.Analyse.AnalyseListeArbresSelectionnesFragment;
 import martelapp.test.Fragment.Analyse.AnalyseResultatFragment;
 import martelapp.test.Fragment.Analyse.AnalyseGrapheNombreTigesFragment;
+import martelapp.test.Fragment.Exercice.ChoixConserverFragment;
 import martelapp.test.R;
 
 
@@ -53,9 +34,14 @@ public class AnalyseActivity extends AppCompatActivity {
 
     AnalyseResultatFragment analyseResultatFragment;
     AnalyseListeArbresSelectionnesFragment analyseListeArbresSelectionnesFragment;
+    AnalyseGrapheVolumeFragment analyseGrapheVolumeFragment;
     AnalyseGrapheNombreTigesFragment analyseGrapheNombreTigesFragment;
+    AnalyseGrapheRaisonsFragment analyseGrapheRaisonsFragment;
+    AnalyseGrapheCarteFragment analyseGrapheCarteFragment;
 
     View listeViewPdf[];
+
+    BottomNavigationView btv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +59,7 @@ public class AnalyseActivity extends AppCompatActivity {
         final TabLayout tabs = (TabLayout) findViewById(R.id.tabsAnalyse);
         tabs.setupWithViewPager(viewPager);
 
-        listeViewPdf = new View[4];
+        listeViewPdf = new View[9];
 
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -103,15 +89,21 @@ public class AnalyseActivity extends AppCompatActivity {
         analyseListeArbresSelectionnesFragment = new AnalyseListeArbresSelectionnesFragment();
         analyseListeArbresSelectionnesFragment.setVp(viewPager);
 
+        analyseGrapheVolumeFragment = new AnalyseGrapheVolumeFragment();
+
         analyseGrapheNombreTigesFragment = new AnalyseGrapheNombreTigesFragment();
         analyseGrapheNombreTigesFragment.setVp(viewPager);
 
-        adapter.addFragment(analyseResultatFragment, "Résultats");
+        analyseGrapheRaisonsFragment = new AnalyseGrapheRaisonsFragment();
+
+        analyseGrapheCarteFragment = new AnalyseGrapheCarteFragment();
+
+        adapter.addFragment(analyseResultatFragment, "Résumé");
         adapter.addFragment(analyseListeArbresSelectionnesFragment, "Arbres Sélectionnes");
-        adapter.addFragment(new AnalyseGrapheVolumeFragment(), "Graphe volume");
+        adapter.addFragment(analyseGrapheVolumeFragment, "Graphe volume");
         adapter.addFragment(analyseGrapheNombreTigesFragment, "Graphe nombre de tiges");
-        adapter.addFragment(new AnalyseGrapheRaisonsFragment(), "Graphe raisons");
-        adapter.addFragment(new AnalyseGrapheCarteFragment(), "Carte parcelle");
+        adapter.addFragment(analyseGrapheRaisonsFragment, "Graphe raisons");
+        adapter.addFragment(analyseGrapheCarteFragment, "Carte parcelle");
         viewPager.setAdapter(adapter);
     }
 
@@ -150,257 +142,184 @@ public class AnalyseActivity extends AppCompatActivity {
 
     }
 
+    public void openCreationPdfPopup(){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        ChoixConserverFragment newFragment = new ChoixConserverFragment();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.replace(android.R.id.content, newFragment);
+        transaction.addToBackStack(null).commit();
+    }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void createPdf(){
-        DatabaseHelper dbHelper;
-        Cursor cur;
+    public void getAllViewAndCreatePdf(){
 
-        dbHelper = new DatabaseHelper(getApplicationContext());
-
-        String nomEquipe;
-
-        cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
-        cur.moveToFirst();
-        nomEquipe = cur.getString(cur.getColumnIndex(DatabaseHelper.NOM_EQUIPE));
-        cur.close();
-        dbHelper.close();
-
-        PrintAttributes attributes = new PrintAttributes.Builder()
-                .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
-                .setResolution(new PrintAttributes.Resolution("id", Context.PRINT_SERVICE, 200, 200))
-                .setColorMode(PrintAttributes.COLOR_MODE_COLOR)
-                .setMinMargins(PrintAttributes.Margins.NO_MARGINS)
-                .build();
-
-        PrintedPdfDocument document = new PrintedPdfDocument(getApplicationContext(), attributes);
+        int delay = 0;
+        int addDelay = 500;
 
         /*
-         ************************************************************************
-         ******************************** PAGE 0 ********************************
-         ************************************************************************
+         ******************
+         ***** PAGE 0 *****
+         ******************
          */
-
-        PdfDocument.Page page = document.startPage(0);
-
-        Canvas pageCanvas = page.getCanvas();
-        float pageWidth = pageCanvas.getWidth();
-        float pageHeight = pageCanvas.getHeight();
-
-        Rect src;
-        RectF dst;
-
-        float top;
-        float bottom;
-        float left;
-        float right;
-
-        float marginLeft = 20f;
-        float marginRight = 20f;
-
-        // Rectangle en-tête "Marteloscope du parc des Massifs des Bauges"
-        Paint paint = new Paint();
-        paint.setColor(Color.GREEN);
-        paint.setStrokeWidth(5f);
-        paint.setStyle(Paint.Style.STROKE);
-        top = 5f;
-        bottom = 100f;
-        pageCanvas.drawRect(marginLeft,top,pageCanvas.getWidth()-marginRight,bottom, paint);
-
-        // Texte "Equipe : <nomEquipe>"
-        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(Color.BLACK);
-        paint.setTextSize(14f);
-
-        bottom = bottom + 20f; // 120f
-
-        pageCanvas.drawText("Equipe : " + nomEquipe, marginLeft ,bottom, paint);
-
-        // Texte "<date>"
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date();
-        pageCanvas.drawText(dateFormat.format(date), pageCanvas.getWidth() - 100, bottom, paint);
-
-
-        // Texte "Commentaire :" à l'intérieur du rectangle
-        bottom = bottom + 50f; // 170f
-        pageCanvas.drawText("Commentaire sur l'exercice : ", 25f, bottom, paint);
-
-
-        // Rectangle retour sur l'exercice, commentaire/appréciation
-        paint = new Paint();
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(1f);
-        paint.setStyle(Paint.Style.STROKE);
-
-        bottom = bottom + 100f; // 350f
-        pageCanvas.drawRect(marginLeft, 150f,pageCanvas.getWidth() - marginRight, bottom, paint);
-
-
-        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(Color.BLACK);
-        paint.setTextSize(18f);
-
-        bottom = bottom + 35f; // 385f
-        pageCanvas.drawText("I) Synthèse de l'exercice", marginLeft, bottom, paint);
-
-        paint.setTextSize(14f);
-
-        bottom = bottom + 35f; // 420f
-        pageCanvas.drawText("1) Respect des consignes", marginLeft*3, bottom, paint);
-
-
-        /*
-         ****************************************
-         ******** View RESPECT CONSIGNE *********
-         ****************************************
-         */
-
-        View mView = listeViewPdf[0];
-        Bitmap bitmap = Bitmap.createBitmap(mView.getWidth(), mView.getHeight(),
-                Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        mView.draw(canvas);
-
-        // Création d'un rectangle avec les dimensions de la View
-        src = new Rect(0, 0, mView.getWidth(), mView.getHeight());
-
-        // Mise à l'échelle de la View par rapport à la taille de la page
-        float scale = Math.min(pageWidth / src.width(), pageHeight / src.height());
-
-        // Positionnement de la View sur la page
-
-        top = bottom;
-        right = (float) ((src.width() * scale)/ 1.5);
-        left = marginLeft*3 + 8f;
-        right = right + left;
-        bottom = (float) ((src.height() * scale)/ 1.5 + top);
-
-        // Rectangle emplacement de la View sur la page
-        dst = new RectF(left, top, right, bottom);
-
-        pageCanvas.drawBitmap(bitmap, src, dst, null);
-
-
-        bottom = bottom + 10f;
-        pageCanvas.drawText("2) Résultat du martelage", marginLeft*3, bottom, paint);
-
-
-        /*
-         ****************************************
-         ******** View SYNTHESE PICTO *********
-         ****************************************
-         */
-
-        mView = listeViewPdf[1];
-        bitmap = Bitmap.createBitmap(mView.getWidth(), mView.getHeight(),
-                Bitmap.Config.ARGB_8888);
-        canvas = new Canvas(bitmap);
-        mView.draw(canvas);
-
-        // Création d'un rectangle avec les dimensions de la View
-        src = new Rect(0, 0, mView.getWidth(), mView.getHeight());
-
-        // Mise à l'échelle de la View par rapport à la taille de la page
-        scale = Math.min(pageWidth / src.width(), pageHeight / src.height());
-
-        // Positionnement de la View sur la page
-
-        top = bottom;
-        right = (float) ((src.width() * scale)/ 1.5);
-        left = marginLeft*3 + 8f;;
-        right = right + left;
-        bottom = (float) ((src.height() * scale)/ 1.5 + top);
-
-        // Rectangle emplacement de la View sur la page
-        dst = new RectF(left, top, right, bottom);
-
-        pageCanvas.drawBitmap(bitmap, src, dst, null);
-
-        document.finishPage(page);
-
-
-        /*
-         ************************************************************************
-         ******************************** PAGE 1 ********************************
-         ************************************************************************
-         */
-
-        page = document.startPage(1);
-        pageCanvas = page.getCanvas();
-
-
-        // View graphe Nombre de tiges / Diamètre
-        mView = listeViewPdf[2];
-        bitmap = Bitmap.createBitmap(mView.getWidth(), mView.getHeight(),
-                Bitmap.Config.ARGB_8888);
-        canvas = new Canvas(bitmap);
-        mView.draw(canvas);
-
-        // Création d'un rectangle avec les dimensions de la View
-        src = new Rect(0, 0, mView.getWidth(), mView.getHeight());
-
-        // Mise à l'échelle de la View par rapport à la taille de la page
-        scale = Math.min(pageWidth / src.width(), pageHeight / src.height());
-
-        // Positionnement de la View sur la page
-
-        top = 20f;
-        left = marginLeft / 2;
-        right = (src.width() * scale)/2 + left - (marginRight / 2);
-        bottom = (src.height() * scale)/2 + top - (marginRight / 2);
-
-        // Rec
-        dst = new RectF(left, top, right, bottom);
-
-        pageCanvas.drawBitmap(bitmap, src, dst, null);
-
-
-        // View graphe Nombre de tiges / Essence
-        mView = listeViewPdf[3];
-        bitmap = Bitmap.createBitmap(mView.getWidth(), mView.getHeight(),
-                Bitmap.Config.ARGB_8888);
-        canvas = new Canvas(bitmap);
-        mView.draw(canvas);
-
-        // Création d'un rectangle avec les dimensions de la View
-        src = new Rect(0, 0, mView.getWidth(), mView.getHeight());
-
-        // Mise à l'échelle de la View par rapport à la taille de la page
-        scale = Math.min(pageWidth / src.width(), pageHeight / src.height());
-
-        // Positionnement de la View sur la page
-
-
-        left = right;
-        right = (src.width() * scale)/2 + left - 10f;
-        bottom = (src.height() * scale)/2 + top - 10f;
-
-        // Rec
-        dst = new RectF(left, top, right, bottom);
-
-        pageCanvas.drawBitmap(bitmap, src, dst, null);
-
-        document.finishPage(page);
-
-        File root = Environment.getExternalStorageDirectory();
-        File dir = new File(root.getAbsolutePath() + "/documents");
-        dir.mkdirs();
-
-        File file = new File(dir, "test.pdf");
-        FileOutputStream f;
-        try {
-            f = new FileOutputStream(file);
-
-            document.writeTo(f);
-            System.out.println("C'est bon sa passe");
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(!analyseResultatFragment.getRespectConsigneViewAdded()){
+            viewPager.setCurrentItem(0);
+            btv = analyseResultatFragment.getBottomNavigationView();
+            btv.setSelectedItemId(R.id.action_respect_consigne_analyse);
+
+            delay += addDelay;
         }
 
-        document.close();
+        if(!analyseResultatFragment.getSynthesePictoViewAdded()){
+            Handler handler0 = new Handler();
+            handler0.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    viewPager.setCurrentItem(0);
+                    btv = analyseResultatFragment.getBottomNavigationView();
+                    btv.setSelectedItemId(R.id.action_synthese_picto_analyse);
+                }
+            },delay);
+
+            delay+= addDelay;
+        }
+
+        /*
+         ******************
+         ***** PAGE 2 *****
+         ******************
+         */
+
+        if(!analyseGrapheVolumeFragment.getViewBarChartVolumeAdded()){
+            Handler handler1 = new Handler();
+            handler1.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    viewPager.setCurrentItem(2);
+                }
+            },delay);
+
+            delay+= addDelay;
+        }
+
+        /*
+         ******************
+         ***** PAGE 3 *****
+         ******************
+         */
+        if(!analyseGrapheNombreTigesFragment.getViewBarChartEssenceAdded()){
+            Handler handler2 = new Handler();
+            handler2.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    viewPager.setCurrentItem(3);
+                    btv = analyseGrapheNombreTigesFragment.getBottomNavigationView();
+                    btv.setSelectedItemId(R.id.action_graphe_essence_analyse);
+                }
+            },delay);
+
+            delay+= addDelay;
+        }
+
+        if(!analyseGrapheNombreTigesFragment.getViewBarChartDiametreAdded()){
+            Handler handler3 = new Handler();
+            handler3.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    viewPager.setCurrentItem(3);
+                    btv = analyseGrapheNombreTigesFragment.getBottomNavigationView();
+                    btv.setSelectedItemId(R.id.action_graphe_diametre_analyse);
+                }
+            },delay);
+
+            delay+= addDelay;
+        }
+
+        if(!analyseGrapheNombreTigesFragment.getViewBarChartNoteEcologiqueAdded()){
+            Handler handler4 = new Handler();
+            handler4.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    viewPager.setCurrentItem(3);
+                    btv = analyseGrapheNombreTigesFragment.getBottomNavigationView();
+                    btv.setSelectedItemId(R.id.action_graphe_note_eco_analyse);
+                }
+            },delay);
+
+            delay+= addDelay;
+        }
+
+        if(!analyseGrapheNombreTigesFragment.getViewPieChartEvolutionAdded()){
+            Handler handler5 = new Handler();
+            handler5.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    viewPager.setCurrentItem(3);
+                    btv = analyseGrapheNombreTigesFragment.getBottomNavigationView();
+                    btv.setSelectedItemId(R.id.action_graphe_evolution_nb_tiges);
+                }
+            },delay);
+
+            delay+= addDelay;
+        }
+
+        /*
+         ******************
+         ***** PAGE 4 *****
+         ******************
+         */
+
+        if(!analyseGrapheRaisonsFragment.getViewBarChartRaisonsAdded()){
+            Handler handler6 = new Handler();
+            handler6.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    viewPager.setCurrentItem(4);
+                }
+            },delay);
+
+            delay+= addDelay;
+        }
+
+        /*
+         ******************
+         ***** PAGE 5 *****
+         ******************
+         */
+
+        if(!analyseGrapheCarteFragment.getViewScatterChartCarteAdeed()){
+            Handler handler7 = new Handler();
+            handler7.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    viewPager.setCurrentItem(5);
+                }
+            },delay);
+
+            delay+= addDelay;
+        }
+
+        Handler handler8 = new Handler();
+        handler8.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                viewPager.setCurrentItem(5);
+            }
+        }, delay);
+
+        delay+= addDelay;
+
+        Handler handler9 = new Handler();
+        handler9.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Je fait le pdf !!!!!!!!!!!!!!!!!!!");
+                PdfCreator pdfCreator = new PdfCreator(getApplicationContext());
+                pdfCreator.execute(listeViewPdf);
+            }
+        },delay);
     }
+
+
 
     public void addViewPdf(View view, int index){
         listeViewPdf[index] = view;

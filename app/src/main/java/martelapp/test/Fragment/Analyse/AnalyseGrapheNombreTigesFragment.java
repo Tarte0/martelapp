@@ -39,8 +39,10 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
     PieChart pieChartNbTigesAvant;
     PieChart pieChartNbTigesApres;
 
-    private boolean viewBarChartDiametreAdded = false;
     private boolean viewBarChartEssenceAdded = false;
+    private boolean viewBarChartDiametreAdded = false;
+    private boolean viewBarChartNoteEcologiqueAdded = false;
+    private boolean viewPieChartEvolutionAdded = false;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -164,7 +166,7 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
                                 layoutPieChartNbTige.setVisibility(View.GONE);
 
                                 if(!viewBarChartEssenceAdded){
-                                    ((AnalyseActivity) getActivity()).addViewPdf(barChartEssenceAnalyse,2);
+                                    ((AnalyseActivity) getActivity()).addViewPdf(barChartEssenceAnalyse,3);
                                     viewBarChartEssenceAdded = true;
                                 }
                                 break;
@@ -185,10 +187,9 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
                                 layoutPieChartNbTige.setVisibility(View.GONE);
 
                                 if(!viewBarChartDiametreAdded){
-                                    ((AnalyseActivity) getActivity()).addViewPdf(barChartDiametreAnalyse,3);
+                                    ((AnalyseActivity) getActivity()).addViewPdf(barChartDiametreAnalyse,4);
                                     viewBarChartDiametreAdded = true;
                                 }
-
                                 break;
 
 
@@ -206,6 +207,10 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
 
                                 layoutPieChartNbTige.setVisibility(View.GONE);
 
+                                if(!viewBarChartNoteEcologiqueAdded){
+                                    ((AnalyseActivity) getActivity()).addViewPdf(barChartNoteEcoAnalyse,5);
+                                    viewBarChartNoteEcologiqueAdded = true;
+                                }
                                 break;
 
 
@@ -221,6 +226,12 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
                                 barChartNoteEcoAnalyse.setVisibility(View.GONE);
 
                                 layoutPieChartNbTige.setVisibility(View.VISIBLE);
+
+                                if(!viewPieChartEvolutionAdded){
+                                    ((AnalyseActivity) getActivity()).addViewPdf(layoutPieChartNbTige,6);
+                                    viewPieChartEvolutionAdded = true;
+                                }
+
                             break;
                         }
                         return true;
@@ -240,4 +251,24 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
         bottomNavigationView.setSelectedItemId(R.id.action_graphe_essence_analyse);
     }
 
+    public boolean getViewBarChartEssenceAdded(){
+        return viewBarChartEssenceAdded;
+    }
+
+    public boolean getViewBarChartDiametreAdded(){
+        return viewBarChartDiametreAdded;
+    }
+
+    public boolean getViewBarChartNoteEcologiqueAdded(){
+        return viewBarChartNoteEcologiqueAdded;
+    }
+
+    public boolean getViewPieChartEvolutionAdded(){
+        return viewPieChartEvolutionAdded;
+    }
+
+
+    public BottomNavigationView getBottomNavigationView(){
+        return bottomNavigationView;
+    }
 }

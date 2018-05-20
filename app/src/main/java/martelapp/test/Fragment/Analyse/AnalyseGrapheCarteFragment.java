@@ -37,12 +37,21 @@ import martelapp.test.R;
 
 public class AnalyseGrapheCarteFragment extends Fragment {
 
+    ScatterChart scatterChart;
+
+    private boolean viewScatterChartCarteAdded = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.view_page_analyse_parcelle, null);
 
-        ScatterChart scatterChart = view.findViewById(R.id.scatter_chart_carte);
+        scatterChart = view.findViewById(R.id.scatter_chart_carte);
+
+        if(!viewScatterChartCarteAdded){
+            ((AnalyseActivity) getActivity()).addViewPdf(scatterChart,8);
+            viewScatterChartCarteAdded = true;
+        }
 
         GrapheHelper.getScatterChartAnalyseCarte(view.getContext(), scatterChart);
 
@@ -51,10 +60,14 @@ public class AnalyseGrapheCarteFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View view) {
-                ((AnalyseActivity) getActivity()).createPdf();
+                ((AnalyseActivity) getActivity()).getAllViewAndCreatePdf();
             }
         });
 
         return view;
+    }
+
+    public boolean getViewScatterChartCarteAdeed(){
+        return viewScatterChartCarteAdded;
     }
 }

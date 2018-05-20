@@ -173,7 +173,7 @@ public class AnalyseResultatFragment extends Fragment {
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.INVISIBLE);
 
-                                tvTitreRespect.setText("Votre martelage a permis de : ");
+                                tvTitreRespect.setText("Résultat de votre martelage");
                                 layoutRespectConsignes.setVisibility(View.GONE);
                                 layoutSynthesePicto.setVisibility(View.VISIBLE);
 
@@ -392,10 +392,21 @@ public class AnalyseResultatFragment extends Fragment {
 
         System.out.println(noteEcoAvant + " - " + noteEcoMartele);
 
-        tvNoteEco.setText("Vous avez martelé " + Integer.toString((int)pourcentageNoteEcoMartelage) + "% de la biodiversité de la parcelle");
+        tvNoteEco.setText(Integer.toString((int)pourcentageNoteEcoMartelage) + "% du total des notes écologique martelés");
 
         dbHelper.close();
         cur.close();
     }
 
+    public boolean getRespectConsigneViewAdded(){
+        return respectConsigneViewAdded;
+    }
+
+    public boolean getSynthesePictoViewAdded(){
+        return synthesePictoViewAdded;
+    }
+
+    public BottomNavigationView getBottomNavigationView(){
+        return bottomNavigationView;
+    }
 }

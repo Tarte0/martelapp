@@ -58,9 +58,6 @@
             </LinearLayout>
 
 
-
-
-
                 <ImageButton
                     android:id="@+id/button_refresh_liste"
                     android:layout_width="0dp"
@@ -69,7 +66,6 @@
                     android:scaleType="fitCenter"
                     android:tint="@color/bouton_actualiser_liste"
                     app:srcCompat="@drawable/arrows_circle" />
-
 
 
             <ProgressBar
@@ -116,7 +112,25 @@
         <TextView
             android:id="@+id/text_temoin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text=""
+            android:textColor="@color/colorBlack"
+            android:textSize="26sp" />
+
+        <android.support.v4.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3" />
+
+        <Button
+            android:id="@+id/button_retour"
+            style="@style/button_vert"
+            android:layout_width="150dp"
+            android:layout_margin="16dp"
+            android:layout_height="0dp"
+            android:layout_gravity="bottom|left"
+            android:layout_weight="1"
+            android:text="Retour" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
