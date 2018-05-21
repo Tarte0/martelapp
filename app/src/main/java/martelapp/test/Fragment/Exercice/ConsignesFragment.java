@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.view.menu.MenuItemImpl;
 import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,7 +59,7 @@ public class ConsignesFragment extends Fragment {
     double volumeBoisTotalParcelle= 0f;
     double  surfaceParcelle = 0f;
 
-    String objectifs = "";
+    Spanned objectifs;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -112,7 +113,7 @@ public class ConsignesFragment extends Fragment {
                             "<br>- Frêne, Érables : à partir de 50 cm</i>" +
                             "<br><br><b>Biodiversité</b>" +
                             "<br>• Conservez sciemment au moins 3 arbres de gros diamètre par hectare." +
-                            "<br>• Conservez sciemment au moins 2 arbres porteurs de micros-habitats par hectare.").toString();
+                            "<br>• Conservez sciemment au moins 2 arbres porteurs de micros-habitats par hectare.");
 
             //on gere le swipe gauche et droite (un peu brute)
             view.setOnTouchListener(new OnSwipeTouchListener(view.getContext()) {

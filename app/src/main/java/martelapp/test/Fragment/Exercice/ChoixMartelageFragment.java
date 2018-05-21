@@ -106,7 +106,7 @@ public class ChoixMartelageFragment extends DialogFragment {
                     }
 
 
-                    if (cur.getInt(cur.getColumnIndex(DatabaseHelper.NOTE_ECO_ARBRE)) > noteEcologiqueHaute) {
+                    if (cur.getInt(cur.getColumnIndex(DatabaseHelper.NOTE_ECO_ARBRE)) >= noteEcologiqueHaute) {
                         Intent intent = new Intent(view.getContext(), MessageErreurArbreMarteleActivity.class);
                         startActivity(intent);
                     }
