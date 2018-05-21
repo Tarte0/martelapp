@@ -10,6 +10,8 @@
     <string name="choix_parcelle_titre">Choix d\'une parcelle pour l\'exercice de martelage</string>
     <string name="choix_parcelle_select">Sélectionner une parcelle :</string>
     <string name="pas_de_co">Pas de connexion internet get all parcelle</string>
+    <string name="pas_de_co_maj">Pas de connexion internet maj bdd</string>
+    <string name="maj_en_cours">Mise à jour en cours</string>
     <string name="maj_bdd">Mise à jour Parcelle</string>
     <string name="retour_main">Retour</string>
     <!-- CHOIX PARCELLE -->

@@ -196,11 +196,11 @@ public class ChoixParcelleActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(spinnerParcelles.getSelectedItem() != null) {
                     if (DatabaseHelper.isNetworkAvailable(getApplicationContext())) {
-                        textTemoin.setText("Mise à jour en cours");
+                        textTemoin.setText(R.string.maj_en_cours);
                         miseAJourConstantesTable();
                         miseAJourParcelle(idNomParcelle.get(spinnerParcelles.getSelectedItem().toString()));
                     } else {
-                        textTemoin.setText("Pas de connexion internet maj bdd");
+                        textTemoin.setText(R.string.pas_de_co_maj);
                     }
                 }
             }
@@ -215,7 +215,7 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                     getAllParcelle();
                     textTemoin.setText("");
                 } else {
-                    textTemoin.setText("Pas de connexion internet get all parcelle");
+                    textTemoin.setText(R.string.pas_de_co);
                 }
             }
         });
