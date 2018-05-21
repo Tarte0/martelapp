@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="4"
+    android:weightSum="6"
     android:background="@color/colorBackground"
     tools:context="martelapp.test.Activity.MainActivity">
 
@@ -70,7 +70,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="4"
         android:orientation="horizontal"
         android:padding="8dp"
         android:weightSum="3">
@@ -115,12 +115,36 @@
         android:layout_weight="1"
         android:orientation="horizontal"
         android:padding="8dp"
-        android:weightSum="4">
+        android:weightSum="5">
 
-    <android.support.v4.widget.Space
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3"/>
+        <ImageView
+            android:id="@+id/logo1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/logo_iseta_2" />
+        <ImageView
+            android:id="@+id/logo2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/logo_ufp74_bauges" />
+        <ImageView
+            android:id="@+id/logo3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/logo_crpf_3" />
+        <ImageView
+            android:id="@+id/logo4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/logo_parc_geoparks_unesco_signature" />
 
         <Button
             android:id="@+id/continuer_exercice"
