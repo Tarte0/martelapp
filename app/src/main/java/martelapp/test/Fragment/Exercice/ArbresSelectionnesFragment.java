@@ -193,10 +193,4 @@ public class ArbresSelectionnesFragment extends Fragment {
 
         dbHelper.close();
     }
-
-    @Override
-    public void onPause(){
-        super.onPause();
-        System.out.println("onPause SelectionArbre");
-    }
 }

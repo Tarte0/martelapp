@@ -316,7 +316,6 @@ public class AnalyseActivity extends AppCompatActivity {
         handler9.postDelayed(new Runnable() {
             @Override
             public void run() {
-                System.out.println("Je fait le pdf !!!!!!!!!!!!!!!!!!!");
                 pdfCreator = new PdfCreator(getApplicationContext(), creationPdfFragment);
                 pdfCreator.execute(listeViewPdf);
             }

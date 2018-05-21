@@ -357,7 +357,6 @@ public class PdfCreator extends AsyncTask<View, String, String>{
             f = new FileOutputStream(file);
 
             document.writeTo(f);
-            System.out.println("C'est bon sa passe");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -946,7 +945,6 @@ public class PdfCreator extends AsyncTask<View, String, String>{
             f = new FileOutputStream(file);
 
             document.writeTo(f);
-            System.out.println("C'est bon sa passe");
 
         } catch (IOException e) {
             e.printStackTrace();
