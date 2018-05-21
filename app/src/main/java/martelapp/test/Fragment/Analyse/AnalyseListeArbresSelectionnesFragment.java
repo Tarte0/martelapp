@@ -57,31 +57,32 @@ public class AnalyseListeArbresSelectionnesFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mainView = inflater.inflate(R.layout.view_page_analyse_liste_arbres_selectionnes, null);
+        if(mainView == null) {
+            mainView = inflater.inflate(R.layout.view_page_analyse_liste_arbres_selectionnes, null);
 
-        bottomNavigationView = (BottomNavigationView) mainView.findViewById(R.id.bottom_navigation_liste_arbres_traites_analyse);
-        previous = (ImageButton) mainView.findViewById(R.id.previousInfo);
-        next = (ImageButton) mainView.findViewById(R.id.nextInfo);
+            bottomNavigationView = (BottomNavigationView) mainView.findViewById(R.id.bottom_navigation_liste_arbres_traites_analyse);
+            previous = (ImageButton) mainView.findViewById(R.id.previousInfo);
+            next = (ImageButton) mainView.findViewById(R.id.nextInfo);
 
-        listeArbresMarteles = mainView.findViewById(R.id.liste_arbres_marteles_analyse);
-        listeArbresConserves = mainView.findViewById(R.id.liste_arbres_conserves_analyse);
+            listeArbresMarteles = mainView.findViewById(R.id.liste_arbres_marteles_analyse);
+            listeArbresConserves = mainView.findViewById(R.id.liste_arbres_conserves_analyse);
 
-        treeCardNumber = (LinearLayout) mainView.findViewById(R.id.arbreLayout);
+            treeCardNumber = (LinearLayout) mainView.findViewById(R.id.arbreLayout);
 
-        textComplementArbresMarteles = mainView.findViewById(R.id.text_complement_arbres);
-        textCouleurArbre = mainView.findViewById(R.id.text_couleur_arbre);
-        textTypeListeArbres = mainView.findViewById(R.id.text_type_liste_arbres);
+            textComplementArbresMarteles = mainView.findViewById(R.id.text_complement_arbres);
+            textCouleurArbre = mainView.findViewById(R.id.text_couleur_arbre);
+            textTypeListeArbres = mainView.findViewById(R.id.text_type_liste_arbres);
 
-        textRaison = mainView.findViewById(R.id.raison_martele_card);
-        textRaison.setTextSize(26f);
+            textRaison = mainView.findViewById(R.id.raison_martele_card);
+            textRaison.setTextSize(26f);
 
-        dbHelper = new DatabaseHelper(mainView.getContext());
+            dbHelper = new DatabaseHelper(mainView.getContext());
 
-        getListeArbresMarteles();
-        getListeArbresConserves();
+            getListeArbresMarteles();
+            getListeArbresConserves();
 
-        dbHelper.close();
-
+            dbHelper.close();
+        }
         //on gere le swipe gauche et droite (un peu brute)
         mainView.setOnTouchListener(new OnSwipeTouchListener(mainView.getContext()) {
             public void onSwipeRight() {

@@ -68,9 +68,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Récupération de la base de données SQLITE locale
-        dbHelper = new DatabaseHelper(getApplicationContext());
-
         //getApplicationContext().deleteDatabase(DatabaseHelper.DATABASE_NAME);
 
         /*#################################
@@ -91,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "Y'a rien dans la bdd", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Mettez à jour la base de données", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -106,7 +103,20 @@ public class MainActivity extends AppCompatActivity {
          * ou de crash de l'application pour que l'utilisateur puisse
          * retrouver sa progression de l'exercice.
          */
+
         Button buttonContinuerExercice = findViewById(R.id.continuer_exercice);
+
+        if(checkDatabase()) {
+            if (checkAncienExercice()) {
+                buttonContinuerExercice.setVisibility(View.VISIBLE);
+            } else {
+                buttonContinuerExercice.setVisibility(View.GONE);
+            }
+
+        } else {
+            buttonContinuerExercice.setVisibility(View.GONE);
+        }
+
         buttonContinuerExercice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,13 +124,14 @@ public class MainActivity extends AppCompatActivity {
                     if(checkAncienExercice()) {
                         Intent intent = new Intent(getApplicationContext(), ExerciceActivity.class);
                         startActivity(intent);
+                        finish();
                     }
                     else{
-                        Toast.makeText(getApplicationContext(), "Y'a pas d'ancien exercice", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Aucune sauvegarde d'un exercice de martelage est disponible", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "Y'a rien dans la bdd", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Mettez à jour la base de données", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -133,9 +144,10 @@ public class MainActivity extends AppCompatActivity {
                 if(DatabaseHelper.isNetworkAvailable(getApplicationContext())) {
                     Intent intent = new Intent(getApplicationContext(), ChoixParcelleActivity.class);
                     startActivity(intent);
+                    finish();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "Y'a pas de coco", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Aucune connexion à internet disponible", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -143,22 +155,31 @@ public class MainActivity extends AppCompatActivity {
 
 
     private boolean checkDatabase(){
+        dbHelper = new DatabaseHelper(getApplicationContext());
+
+
         boolean res;
 
         cur = dbHelper.getAllDataFromTable(DatabaseHelper.ARBRES_PARCELLE_TABLE);
         res = cur.moveToFirst();
+
         cur.close();
+        dbHelper.close();
 
         return res;
     }
 
     private boolean checkAncienExercice(){
+        dbHelper = new DatabaseHelper(getApplicationContext());
+
         boolean res;
 
         cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
         cur.moveToFirst();
         res = cur.getString(cur.getColumnIndex(DatabaseHelper.NOM_EQUIPE)) != null;
+
         cur.close();
+        dbHelper.close();
 
         return res;
     }

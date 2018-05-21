@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.commonsware.cwac.merge.MergeAdapter;
 
 import martelapp.test.Activity.AnalyseActivity;
+import martelapp.test.Activity.ExerciceActivity;
 import martelapp.test.Adapter.ArbresConservesAdapter;
 import martelapp.test.Adapter.ArbresMartelesAdapter;
 import martelapp.test.Class.DatabaseHelper;
@@ -36,7 +37,7 @@ public class ArbresSelectionnesFragment extends Fragment {
 
     View mainView;
     DatabaseHelper dbHelper;
-    Cursor cur1, cur2;
+    Cursor cur, cur1, cur2;
     LinearLayout treeCardNumber;
 
     Button finishButton;
@@ -44,85 +45,97 @@ public class ArbresSelectionnesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mainView = inflater.inflate(R.layout.view_page_arbresmarteles, null);
+        if(mainView == null) {
+            mainView = inflater.inflate(R.layout.view_page_arbresmarteles, null);
 
-        dbHelper = new DatabaseHelper(mainView.getContext());
-        finishButton = (Button) mainView.findViewById(R.id.finish);
+            finishButton = (Button) mainView.findViewById(R.id.finish);
 
-        treeCardNumber = (LinearLayout) mainView.findViewById(R.id.arbreLayout);
-        listeArbresMarteles = mainView.findViewById(R.id.liste_arbres_marteles);
+            treeCardNumber = (LinearLayout) mainView.findViewById(R.id.arbreLayout);
+            listeArbresMarteles = mainView.findViewById(R.id.liste_arbres_marteles);
 
 
-        listeArbresMarteles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
-                TextView text = view.findViewById(R.id.numero_arbre_traite);
+            listeArbresMarteles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
+                    TextView text = view.findViewById(R.id.numero_arbre_traite);
 
-                String numero = text.getText().toString();
-                cur1 = dbHelper.executeQuery("Select *"
-                        + " FROM " + DatabaseHelper.RAISON_TABLE
-                        + " WHERE " + DatabaseHelper.NUMERO_ARBRE_TRAITE_RAISON + " = " + numero);
-                cur1.moveToFirst();
-                TextView textRaison = mainView.findViewById(R.id.raison_martele_card);
+                    dbHelper = new DatabaseHelper(mainView.getContext());
 
-                String raison = cur1.getString(cur1.getColumnIndex(DatabaseHelper.RAISON));
+                    String numero = text.getText().toString();
+                    cur = dbHelper.executeQuery("Select *"
+                            + " FROM " + DatabaseHelper.RAISON_TABLE
+                            + " WHERE " + DatabaseHelper.NUMERO_ARBRE_TRAITE_RAISON + " = " + numero);
+                    cur.moveToFirst();
+                    TextView textRaison = mainView.findViewById(R.id.raison_martele_card);
 
-                if (raison.equals(DatabaseHelper.BIODIVERSITE)) {
-                    textRaison.setText("Arbre conservé pour la Biodiversité");
-                } else {
-                    textRaison.setText(String.format("Raisons du Martelage : \n\n- %s\n", raisonToString(raison)));
-                    while (cur1.moveToNext()) {
-                        textRaison.setText(String.format("%s\n- %s\n", textRaison.getText(),
-                                raisonToString(cur1.getString(cur1.getColumnIndex(DatabaseHelper.RAISON)))));
+                    String raison = cur.getString(cur.getColumnIndex(DatabaseHelper.RAISON));
+
+                    if (raison.equals(DatabaseHelper.BIODIVERSITE)) {
+                        textRaison.setText("Arbre conservé pour la Biodiversité");
+                    } else {
+                        textRaison.setText(String.format("Raisons du Martelage : \n\n- %s\n", raisonToString(raison)));
+                        while (cur.moveToNext()) {
+                            textRaison.setText(String.format("%s\n- %s\n", textRaison.getText(),
+                                    raisonToString(cur.getString(cur.getColumnIndex(DatabaseHelper.RAISON)))));
+                        }
                     }
+                    cur = dbHelper.executeQuery("SELECT * FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE + " WHERE " + DatabaseHelper.NUMERO_ARBRE_PARC + " = " + numero);
+                    cur.moveToFirst();
+                    TextView numCard = mainView.findViewById(R.id.numero_martele_card);
+                    TextView detailCard = mainView.findViewById(R.id.details_martele_card);
+                    numCard.setText(cur.getString(cur.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC)));
+                    detailCard.setText(String.format("%s",
+                            cur.getString(cur.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE))));
+
+                    treeCardNumber.setVisibility(View.VISIBLE);
+
+                    cur.close();
+                    dbHelper.close();
                 }
-                cur1 = dbHelper.executeQuery("SELECT * FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE + " WHERE " + DatabaseHelper.NUMERO_ARBRE_PARC + " = " + numero);
-                cur1.moveToFirst();
-                TextView numCard = mainView.findViewById(R.id.numero_martele_card);
-                TextView detailCard = mainView.findViewById(R.id.details_martele_card);
-                numCard.setText(cur1.getString(cur1.getColumnIndex(DatabaseHelper.NUMERO_ARBRE_PARC)));
-                detailCard.setText(String.format("%s",
-                        cur1.getString(cur1.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE))));
+            });
 
-                treeCardNumber.setVisibility(View.VISIBLE);
-            }
-        });
 
-        reload();
+            finishButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View view) {
 
-        finishButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                cur1 = dbHelper.getAllDataFromTable(DatabaseHelper.ARBRES_MARTELES_TABLE);
+                    dbHelper = new DatabaseHelper(mainView.getContext());
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(view.getContext(), R.style.AlertDialogCustom));
-                builder.setTitle("Êtes vous sur de vouloir terminer l'exercice ?");
-                builder.setMessage("Vous ne pourrez plus revenir en arrière");
+                    cur = dbHelper.getAllDataFromTable(DatabaseHelper.ARBRES_MARTELES_TABLE);
 
-                builder.setPositiveButton("OUI", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dbHelper.close();
-                        cur1.close();
-                        Intent intent = new Intent(view.getContext(), AnalyseActivity.class);
-                        startActivity(intent);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(view.getContext(), R.style.AlertDialogCustom));
+                    builder.setTitle("Êtes vous sur de vouloir terminer l'exercice ?");
+                    builder.setMessage("Vous ne pourrez plus revenir en arrière");
+
+                    builder.setPositiveButton("OUI", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            cur1.close();
+                            cur2.close();
+                            Intent intent = new Intent(view.getContext(), AnalyseActivity.class);
+                            startActivity(intent);
+                            ((ExerciceActivity) getActivity()).finish();
+                        }
+                    });
+
+                    builder.setNegativeButton("NON", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+
+                    if (cur1.moveToFirst()) {
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                    } else {
+                        Snackbar.make(view, "Mais vous n'avez rien martelé !", Snackbar.LENGTH_LONG).show();
                     }
-                });
 
-                builder.setNegativeButton("NON", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-
-                if(cur1.moveToFirst()) {
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
+                    dbHelper.close();
                 }
-                else{
-                    Snackbar.make(view, "Mais vous n'avez rien martelé !", Snackbar.LENGTH_LONG).show();
-                }
-            }
-        });
+            });
+
+            reload();
+        }
 
         treeCardNumber.setVisibility(View.INVISIBLE);
         return mainView;
@@ -177,5 +190,13 @@ public class ArbresSelectionnesFragment extends Fragment {
         mergeAdapter.addAdapter(arbresMartelesAdapter);
         mergeAdapter.addAdapter(arbresConservesAdapter);
         listeArbresMarteles.setAdapter(mergeAdapter);
+
+        dbHelper.close();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        System.out.println("onPause SelectionArbre");
     }
 }

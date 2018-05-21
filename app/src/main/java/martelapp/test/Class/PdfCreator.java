@@ -1,6 +1,8 @@
 package martelapp.test.Class;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -16,6 +18,7 @@ import android.print.PrintAttributes;
 import android.print.pdf.PrintedPdfDocument;
 import android.support.annotation.RequiresApi;
 import android.view.View;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -25,6 +28,9 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import martelapp.test.Activity.AnalyseActivity;
+import martelapp.test.Activity.MainActivity;
+import martelapp.test.Fragment.Analyse.CreationPdfFragment;
 import martelapp.test.R;
 
 /**
@@ -34,9 +40,11 @@ import martelapp.test.R;
 public class PdfCreator extends AsyncTask<View, String, String>{
 
     Context context;
+    CreationPdfFragment fragment;
 
-    public PdfCreator(Context context){
+    public PdfCreator(Context context, CreationPdfFragment fragment){
         this.context = context;
+        this.fragment = fragment;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -597,6 +605,7 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         }
 
         document.close();
+
 
         return "";
     }

@@ -1,7 +1,10 @@
 package martelapp.test.Activity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Handler;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +26,7 @@ import martelapp.test.Fragment.Analyse.AnalyseGrapheVolumeFragment;
 import martelapp.test.Fragment.Analyse.AnalyseListeArbresSelectionnesFragment;
 import martelapp.test.Fragment.Analyse.AnalyseResultatFragment;
 import martelapp.test.Fragment.Analyse.AnalyseGrapheNombreTigesFragment;
+import martelapp.test.Fragment.Analyse.CreationPdfFragment;
 import martelapp.test.Fragment.Exercice.ChoixConserverFragment;
 import martelapp.test.R;
 
@@ -40,6 +45,9 @@ public class AnalyseActivity extends AppCompatActivity {
     AnalyseGrapheCarteFragment analyseGrapheCarteFragment;
 
     View listeViewPdf[];
+
+    PdfCreator pdfCreator;
+    CreationPdfFragment creationPdfFragment;
 
     BottomNavigationView btv;
 
@@ -142,16 +150,19 @@ public class AnalyseActivity extends AppCompatActivity {
 
     }
 
-    public void openCreationPdfPopup(){
+    public CreationPdfFragment openCreationPdfPopup(){
         FragmentManager fragmentManager = getSupportFragmentManager();
-        ChoixConserverFragment newFragment = new ChoixConserverFragment();
+        CreationPdfFragment newFragment = new CreationPdfFragment();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.replace(android.R.id.content, newFragment);
         transaction.addToBackStack(null).commit();
+        return newFragment;
     }
 
     public void getAllViewAndCreatePdf(){
+
+        creationPdfFragment = openCreationPdfPopup();
 
         int delay = 0;
         int addDelay = 500;
@@ -298,25 +309,29 @@ public class AnalyseActivity extends AppCompatActivity {
             delay+= addDelay;
         }
 
-        Handler handler8 = new Handler();
-        handler8.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                viewPager.setCurrentItem(5);
-            }
-        }, delay);
-
-        delay+= addDelay;
 
         Handler handler9 = new Handler();
         handler9.postDelayed(new Runnable() {
             @Override
             public void run() {
                 System.out.println("Je fait le pdf !!!!!!!!!!!!!!!!!!!");
-                PdfCreator pdfCreator = new PdfCreator(getApplicationContext());
+                pdfCreator = new PdfCreator(getApplicationContext(), creationPdfFragment);
                 pdfCreator.execute(listeViewPdf);
             }
         },delay);
+
+        delay += addDelay*4;
+
+        Handler handler8 = new Handler();
+        handler8.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+
+                finish();
+            }
+        }, delay);
     }
 
 

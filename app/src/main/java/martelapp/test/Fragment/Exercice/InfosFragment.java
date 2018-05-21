@@ -44,17 +44,28 @@ import martelapp.test.R;
 
 public class InfosFragment extends Fragment {
 
+    View view;
+
     ViewPager viewPager;
 
     BottomNavigationView bottomNavigationView;
-    TextView textViewInfos, textViewTitleInfos;
-    LinearLayout layoutInfo;
+    TextView textViewCaracteristiques, textViewTitleInfos;
     ImageButton previous, next;
     Button buttonGoToCarte;
     BarChart barChartDiametre;
     BarChart barChartNoteEco;
     PieChart pieChartEssence;
 
+    LinearLayout layout_caracteristique;
+    LinearLayout layout_graphe_info_diametre;
+    LinearLayout layout_graphe_info_note_eco;
+    LinearLayout layout_graphe_info_essence;
+
+    LinearLayout.LayoutParams layoutParamsTextViewInfoCaracteristique;
+    LinearLayout.LayoutParams layoutParamsTextViewInfoGraphe;
+
+    LinearLayout.LayoutParams layoutParamsLinearLayoutGraphe;
+    LinearLayout.LayoutParams layoutParamsLinearLayoutAvecBouton;
 
     DecimalFormat df;
 
@@ -68,187 +79,218 @@ public class InfosFragment extends Fragment {
 
     String habitat = "";
 
+    String caracteristique = "";
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.view_page_infos, null);
 
-        textViewInfos = (TextView) view.findViewById(R.id.textViewInfo);
-        textViewTitleInfos = (TextView) view.findViewById(R.id.titleInfo);
-        layoutInfo = view.findViewById(R.id.layout_info);
-        bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation_info);
-        previous = (ImageButton) view.findViewById(R.id.previousInfo);
-        next = (ImageButton) view.findViewById(R.id.nextInfo);
-        buttonGoToCarte = (Button) view.findViewById((R.id.button_go_to_carte));
-        barChartDiametre = view.findViewById(R.id.bar_chart_diametre_info);
-        barChartNoteEco = view.findViewById(R.id.bar_chart_note_eco_info);
-        pieChartEssence = view.findViewById(R.id.pie_chart_essence_info);
+        if(view == null) {
+            view = inflater.inflate(R.layout.view_page_infos, null);
 
-        df = new DecimalFormat("#0.00");
+            textViewCaracteristiques = (TextView) view.findViewById(R.id.text_view_caracteristique);
+            textViewTitleInfos = (TextView) view.findViewById(R.id.titleInfo);
+
+            layout_caracteristique = view.findViewById(R.id.layout_caracteristique);
+            layout_graphe_info_diametre = view.findViewById(R.id.layout_graphe_info_diametre);
+            layout_graphe_info_note_eco = view.findViewById(R.id.layout_graphe_info_note_eco);
+            layout_graphe_info_essence = view.findViewById(R.id.layout_graphe_info_essence);
+
+            bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation_info);
+            previous = (ImageButton) view.findViewById(R.id.previousInfo);
+            next = (ImageButton) view.findViewById(R.id.nextInfo);
+            buttonGoToCarte = (Button) view.findViewById((R.id.button_go_to_carte));
+            barChartDiametre = view.findViewById(R.id.bar_chart_diametre_info);
+            barChartNoteEco = view.findViewById(R.id.bar_chart_note_eco_info);
+            pieChartEssence = view.findViewById(R.id.pie_chart_essence_info);
+
+            df = new DecimalFormat("#0.00");
 
 
-        caracteristiqueParcelle(view.getContext());
+            caracteristiqueParcelle(view.getContext());
 
-        GrapheHelper.getBarChartInfosDiametre(view.getContext(), barChartDiametre);
-        GrapheHelper.getBarChartInfosNoteEcologique(view.getContext(), barChartNoteEco);
-        GrapheHelper.getPieChartInfosEssence(view.getContext(), pieChartEssence);
+            GrapheHelper.getBarChartInfosDiametre(view.getContext(), barChartDiametre);
+            GrapheHelper.getBarChartInfosNoteEcologique(view.getContext(), barChartNoteEco);
+            GrapheHelper.getPieChartInfosEssence(view.getContext(), pieChartEssence);
+
+            caracteristique = String.format("• altitude : %d mètres\n\n"
+                            + "• habitat naturel : %s\n\n"
+                            + "• surface : %s ha\n\n"
+                            + "• densité (vivants et morts sur pied) : %d tiges/ha\n\n"
+                            + "• volume : %d m3/ha\n\n"
+                            + "• densité de bois mort au sol : %d tiges/ha\n\n"
+                            + "• volume de bois mort au sol : %d m3/ha",
+                    altitude, habitat, df.format(surfaceParcelle), densiteVivantMortPied, (int) volumeVivantMortPied, densiteMortSol, (int) volumeMortSol);
+
+            layoutParamsTextViewInfoCaracteristique = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 9);
+            layoutParamsTextViewInfoGraphe = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.5f);
+            layoutParamsLinearLayoutGraphe = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 10);
+            layoutParamsLinearLayoutAvecBouton = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 7f);
 
 
-        buttonGoToCarte.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+            buttonGoToCarte.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
 
-            }
-        });
-
-        //on gere le swipe gauche et droite (un peu brute)
-        view.setOnTouchListener(new OnSwipeTouchListener(view.getContext()) {
-            public void onSwipeRight() {
-                switch (bottomNavigationView.getSelectedItemId()) {
-                    case R.id.action_carte_id:
-                        break;
-                    case R.id.action_graphe_diametre:
-                        bottomNavigationView.setSelectedItemId(R.id.action_carte_id);
-                        break;
-                    case R.id.action_graphe_note_eco:
-                        bottomNavigationView.setSelectedItemId(R.id.action_graphe_diametre);
-                        break;
-                    case R.id.action_graphe_essence:
-                        bottomNavigationView.setSelectedItemId(R.id.action_graphe_note_eco);
-                        break;
                 }
+            });
 
-            }
-
-            public void onSwipeLeft() {
-                switch (bottomNavigationView.getSelectedItemId()) {
-                    case R.id.action_carte_id:
-                        bottomNavigationView.setSelectedItemId(R.id.action_graphe_diametre);
-                        break;
-                    case R.id.action_graphe_diametre:
-                        bottomNavigationView.setSelectedItemId(R.id.action_graphe_note_eco);
-                        break;
-                    case R.id.action_graphe_note_eco:
-                        bottomNavigationView.setSelectedItemId(R.id.action_graphe_essence);
-                        break;
-                    case R.id.action_graphe_essence:
-                        break;
-                }
-            }
-        });
-
-
-        previous.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (bottomNavigationView.getSelectedItemId()) {
-                    case R.id.action_carte_id:
-                        break;
-                    case R.id.action_graphe_diametre:
-                        bottomNavigationView.setSelectedItemId(R.id.action_carte_id);
-                        break;
-                    case R.id.action_graphe_note_eco:
-                        bottomNavigationView.setSelectedItemId(R.id.action_graphe_diametre);
-                        break;
-                    case R.id.action_graphe_essence:
-                        bottomNavigationView.setSelectedItemId(R.id.action_graphe_note_eco);
-                        break;
-                }
-            }
-        });
-
-
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (bottomNavigationView.getSelectedItemId()) {
-                    case R.id.action_carte_id:
-                        bottomNavigationView.setSelectedItemId(R.id.action_graphe_diametre);
-                        break;
-                    case R.id.action_graphe_diametre:
-                        bottomNavigationView.setSelectedItemId(R.id.action_graphe_note_eco);
-                        break;
-                    case R.id.action_graphe_note_eco:
-                        bottomNavigationView.setSelectedItemId(R.id.action_graphe_essence);
-                        break;
-                    case R.id.action_graphe_essence:
-                        break;
-                }
-            }
-        });
-
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.action_carte_id:
-                                textViewTitleInfos.setText(R.string.caracteristique_parcelle_caps);
-                                textViewInfos.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 9));
-                                layoutInfo.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 10));
-                                textViewInfos.setTextSize(24f);
-                                textViewInfos.setText(
-                                        "• altitude : " + Integer.toString(altitude) + " mètres\n\n"
-                                                + "• habitat naturel : " + habitat + "\n\n"
-                                                + "• surface : " + df.format(surfaceParcelle) + " ha\n\n"
-                                                + "• densité (vivants et morts sur pied) : " + Integer.toString(densiteVivantMortPied) + " tiges/ha\n\n"
-                                                + "• volume : " + Integer.toString((int) volumeVivantMortPied) + " m3/ha\n\n"
-                                                + "• densité de bois mort au sol : " + Integer.toString(densiteMortSol) + " tiges/ha\n\n"
-                                                + "• volume de bois mort au sol : " + Integer.toString((int) volumeMortSol) + " m3/ha");
-                                textViewInfos.setVisibility(View.VISIBLE);
-                                previous.setVisibility(View.INVISIBLE);
-                                next.setVisibility(View.VISIBLE);
-                                buttonGoToCarte.setVisibility(View.GONE);
-                                barChartDiametre.setVisibility(View.GONE);
-                                barChartNoteEco.setVisibility(View.GONE);
-                                pieChartEssence.setVisibility(View.GONE);
-                                break;
-                            case R.id.action_graphe_diametre:
-                                textViewTitleInfos.setText(R.string.titre_graphe_nbtige_diametre_info);
-                                textViewInfos.setVisibility(View.VISIBLE);
-                                layoutInfo.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 10));
-                                textViewInfos.setTextSize(18f);
-                                textViewInfos.setText(R.string.axe_nombre_tiges);
-                                textViewInfos.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.5f));
-                                previous.setVisibility(View.VISIBLE);
-                                next.setVisibility(View.VISIBLE);
-                                buttonGoToCarte.setVisibility(View.GONE);
-                                barChartDiametre.setVisibility(View.VISIBLE);
-                                barChartNoteEco.setVisibility(View.GONE);
-                                pieChartEssence.setVisibility(View.GONE);
-                                break;
-                            case R.id.action_graphe_note_eco:
-                                textViewTitleInfos.setText(R.string.titre_graphe_nbtige_noteeco_info);
-                                textViewInfos.setVisibility(View.VISIBLE);
-                                textViewInfos.setTextSize(18f);
-                                textViewInfos.setText(R.string.axe_nombre_tiges);
-                                layoutInfo.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 10));
-                                textViewInfos.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.5f));
-                                previous.setVisibility(View.VISIBLE);
-                                next.setVisibility(View.VISIBLE);
-                                buttonGoToCarte.setVisibility(View.GONE);
-                                barChartDiametre.setVisibility(View.GONE);
-                                barChartNoteEco.setVisibility(View.VISIBLE);
-                                pieChartEssence.setVisibility(View.GONE);
-                                break;
-                            case R.id.action_graphe_essence:
-                                textViewTitleInfos.setText(R.string.titre_graphe_nbtige_essence_info);
-                                layoutInfo.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 7f));
-                                textViewInfos.setVisibility(View.GONE);
-                                previous.setVisibility(View.VISIBLE);
-                                next.setVisibility(View.INVISIBLE);
-                                buttonGoToCarte.setVisibility(View.VISIBLE);
-                                barChartDiametre.setVisibility(View.GONE);
-                                barChartNoteEco.setVisibility(View.GONE);
-                                pieChartEssence.setVisibility(View.VISIBLE);
-                                break;
-                        }
-                        return true;
+            //on gere le swipe gauche et droite (un peu brute)
+            view.setOnTouchListener(new OnSwipeTouchListener(view.getContext()) {
+                public void onSwipeRight() {
+                    switch (bottomNavigationView.getSelectedItemId()) {
+                        case R.id.action_carte_id:
+                            break;
+                        case R.id.action_graphe_diametre:
+                            bottomNavigationView.setSelectedItemId(R.id.action_carte_id);
+                            break;
+                        case R.id.action_graphe_note_eco:
+                            bottomNavigationView.setSelectedItemId(R.id.action_graphe_diametre);
+                            break;
+                        case R.id.action_graphe_essence:
+                            bottomNavigationView.setSelectedItemId(R.id.action_graphe_note_eco);
+                            break;
                     }
-                });
+
+                }
+
+                public void onSwipeLeft() {
+                    switch (bottomNavigationView.getSelectedItemId()) {
+                        case R.id.action_carte_id:
+                            bottomNavigationView.setSelectedItemId(R.id.action_graphe_diametre);
+                            break;
+                        case R.id.action_graphe_diametre:
+                            bottomNavigationView.setSelectedItemId(R.id.action_graphe_note_eco);
+                            break;
+                        case R.id.action_graphe_note_eco:
+                            bottomNavigationView.setSelectedItemId(R.id.action_graphe_essence);
+                            break;
+                        case R.id.action_graphe_essence:
+                            break;
+                    }
+                }
+            });
 
 
+            previous.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    switch (bottomNavigationView.getSelectedItemId()) {
+                        case R.id.action_carte_id:
+                            break;
+                        case R.id.action_graphe_diametre:
+                            bottomNavigationView.setSelectedItemId(R.id.action_carte_id);
+                            break;
+                        case R.id.action_graphe_note_eco:
+                            bottomNavigationView.setSelectedItemId(R.id.action_graphe_diametre);
+                            break;
+                        case R.id.action_graphe_essence:
+                            bottomNavigationView.setSelectedItemId(R.id.action_graphe_note_eco);
+                            break;
+                    }
+                }
+            });
+
+
+            next.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    switch (bottomNavigationView.getSelectedItemId()) {
+                        case R.id.action_carte_id:
+                            bottomNavigationView.setSelectedItemId(R.id.action_graphe_diametre);
+                            break;
+                        case R.id.action_graphe_diametre:
+                            bottomNavigationView.setSelectedItemId(R.id.action_graphe_note_eco);
+                            break;
+                        case R.id.action_graphe_note_eco:
+                            bottomNavigationView.setSelectedItemId(R.id.action_graphe_essence);
+                            break;
+                        case R.id.action_graphe_essence:
+                            break;
+                    }
+                }
+            });
+
+
+            bottomNavigationView.setOnNavigationItemSelectedListener(
+                    new BottomNavigationView.OnNavigationItemSelectedListener() {
+                        @Override
+                        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.action_carte_id:
+                                    previous.setVisibility(View.INVISIBLE);
+                                    next.setVisibility(View.VISIBLE);
+
+                                    textViewTitleInfos.setText(R.string.caracteristique_parcelle_caps);
+                                /*
+                                textViewInfos.setLayoutParams(layoutParamsTextViewInfoCaracteristique);
+                                layoutInfo.setLayoutParams(layoutParamsLinearLayoutGraphe);
+                                */
+                                    textViewCaracteristiques.setText(caracteristique);
+
+                                    buttonGoToCarte.setVisibility(View.GONE);
+
+                                    layout_caracteristique.setVisibility(View.VISIBLE);
+                                    layout_graphe_info_diametre.setVisibility(View.GONE);
+                                    layout_graphe_info_note_eco.setVisibility(View.GONE);
+                                    layout_graphe_info_essence.setVisibility(View.GONE);
+                                    break;
+                                case R.id.action_graphe_diametre:
+                                    previous.setVisibility(View.VISIBLE);
+                                    next.setVisibility(View.VISIBLE);
+
+                                    textViewTitleInfos.setText(R.string.titre_graphe_nbtige_diametre_info);
+                                /*
+                                layoutInfo.setLayoutParams(layoutParamsLinearLayoutGraphe);
+                                textViewInfos.setLayoutParams(layoutParamsTextViewInfoGraphe);
+                                */
+
+                                    buttonGoToCarte.setVisibility(View.GONE);
+
+                                    layout_caracteristique.setVisibility(View.GONE);
+                                    layout_graphe_info_diametre.setVisibility(View.VISIBLE);
+                                    layout_graphe_info_note_eco.setVisibility(View.GONE);
+                                    layout_graphe_info_essence.setVisibility(View.GONE);
+
+                                    break;
+                                case R.id.action_graphe_note_eco:
+                                    previous.setVisibility(View.VISIBLE);
+                                    next.setVisibility(View.VISIBLE);
+
+                                    textViewTitleInfos.setText(R.string.titre_graphe_nbtige_noteeco_info);
+
+                                /*
+                                layoutInfo.setLayoutParams(layoutParamsLinearLayoutGraphe);
+                                textViewInfos.setLayoutParams(layoutParamsTextViewInfoGraphe);
+                                */
+                                    buttonGoToCarte.setVisibility(View.GONE);
+
+                                    layout_caracteristique.setVisibility(View.GONE);
+                                    layout_graphe_info_diametre.setVisibility(View.GONE);
+                                    layout_graphe_info_note_eco.setVisibility(View.VISIBLE);
+                                    layout_graphe_info_essence.setVisibility(View.GONE);
+                                    break;
+                                case R.id.action_graphe_essence:
+                                    previous.setVisibility(View.VISIBLE);
+                                    next.setVisibility(View.INVISIBLE);
+
+                                    textViewTitleInfos.setText(R.string.titre_graphe_nbtige_essence_info);
+
+                                    //layoutInfo.setLayoutParams(layoutParamsLinearLayoutAvecBouton);
+
+                                    buttonGoToCarte.setVisibility(View.VISIBLE);
+
+                                    layout_caracteristique.setVisibility(View.GONE);
+                                    layout_graphe_info_diametre.setVisibility(View.GONE);
+                                    layout_graphe_info_note_eco.setVisibility(View.GONE);
+                                    layout_graphe_info_essence.setVisibility(View.VISIBLE);
+                                    break;
+                            }
+                            return true;
+                        }
+                    });
+
+        }
         return view;
     }
 

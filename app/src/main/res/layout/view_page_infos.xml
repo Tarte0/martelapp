@@ -63,9 +63,8 @@
                     android:weightSum="10"
                     android:orientation="horizontal">
 
-
                     <LinearLayout
-                        android:id="@+id/layout_info"
+                        android:id="@+id/layout_caracteristique"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="10"
@@ -73,13 +72,31 @@
                         android:weightSum="10">
 
                         <TextView
-                            android:id="@+id/textViewInfo"
+                            android:id="@+id/text_view_caracteristique"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="9"
                             android:text=""
                             android:textColor="@color/colorBlack"
-                            android:textSize="22sp" />
+                            android:textSize="24sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_graphe_info_diametre"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="10"
+                        android:orientation="vertical"
+                        android:weightSum="10">
+
+                        <TextView
+                            android:id="@+id/text_view_infos_axe_nb_tige"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.5"
+                            android:text="@string/axe_nombre_tiges"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="18sp" />
 
                         <com.github.mikephil.charting.charts.BarChart
                             android:id="@+id/bar_chart_diametre_info"
@@ -87,21 +104,43 @@
                             android:layout_height="0dp"
                             android:layout_weight="9.5" />
 
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_graphe_info_note_eco"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="10"
+                        android:orientation="vertical"
+                        android:weightSum="10">
+
+                        <TextView
+                            android:id="@+id/text_view_infos_axe_nb_tige2"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.5"
+                            android:text="@string/axe_nombre_tiges"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="18sp" />
 
                         <com.github.mikephil.charting.charts.BarChart
                             android:id="@+id/bar_chart_note_eco_info"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="9.5" />
+                    </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/layout_graphe_info_essence"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="7"
+                        android:orientation="vertical">
 
                         <com.github.mikephil.charting.charts.PieChart
                             android:id="@+id/pie_chart_essence_info"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                        </com.github.mikephil.charting.charts.PieChart>
-
+                            android:layout_height="match_parent" />
                     </LinearLayout>
 
                     <Button

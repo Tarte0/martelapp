@@ -35,10 +35,10 @@ public class NomEquipeActivity extends AppCompatActivity {
                     dbHelper.clearTableExercice();
                     nomEquipe = editTextTeamName.getText().toString();
                     dbHelper.updateNomEquipeConstante(nomEquipe);
+                    dbHelper.close();
                     Intent intent = new Intent(getApplicationContext(), ExerciceActivity.class);
-                    intent.putExtra("nomEquipe", nomEquipe);
                     startActivity(intent);
-
+                    finish();
             }
         });
     }

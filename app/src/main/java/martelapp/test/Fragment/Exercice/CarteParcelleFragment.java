@@ -44,17 +44,21 @@ import martelapp.test.R;
 
 public class CarteParcelleFragment extends Fragment implements OnChartValueSelectedListener {
 
+    View view;
 
+    BubbleChart bubbleChart;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.view_page_parcelle, null);
 
-        BubbleChart bubbleChart = view.findViewById(R.id.bubble_chart_parcelle);
+        if(view == null) {
+            view = inflater.inflate(R.layout.view_page_parcelle, null);
 
-        GrapheHelper.getBubbleChartInfosCarte(view.getContext(), bubbleChart);
+            bubbleChart = view.findViewById(R.id.bubble_chart_parcelle);
 
+            GrapheHelper.getBubbleChartInfosCarte(view.getContext(), bubbleChart);
+        }
         return view;
     }
 

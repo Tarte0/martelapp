@@ -18,6 +18,8 @@ import martelapp.test.R;
 
 public class AnalyseGrapheRaisonsFragment extends Fragment {
 
+    View view;
+
     BarChart barChart;
 
     private boolean viewBarChartRaisonsAdded = false;
@@ -25,18 +27,18 @@ public class AnalyseGrapheRaisonsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        if(view == null) {
+            view = inflater.inflate(R.layout.view_page_analyse_raisons, null);
 
-        View view = inflater.inflate(R.layout.view_page_analyse_raisons, null);
+            barChart = view.findViewById(R.id.bar_chart_pourcentage_raison);
 
-        barChart = view.findViewById(R.id.bar_chart_pourcentage_raison);
+            GrapheHelper.getBarChartAnalyseRaisons(view.getContext(), barChart);
 
-        GrapheHelper.getBarChartAnalyseRaisons(view.getContext(), barChart);
-
-        if(!viewBarChartRaisonsAdded){
-            ((AnalyseActivity) getActivity()).addViewPdf(barChart,7);
-            viewBarChartRaisonsAdded = true;
+            if (!viewBarChartRaisonsAdded) {
+                ((AnalyseActivity) getActivity()).addViewPdf(barChart, 7);
+                viewBarChartRaisonsAdded = true;
+            }
         }
-
         return view;
     }
 

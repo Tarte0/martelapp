@@ -60,7 +60,7 @@ public class ChoixMartelageFragment extends DialogFragment {
 
         boutonMarteler = (Button) view.findViewById(R.id.boutonMarteler);
         buttonCancel = (Button) view.findViewById(R.id.cancel);
-        //buttonConserver = view.findViewById(R.id.conserver);
+        //buttonConserver = mainView.findViewById(R.id.conserver);
 
         tvNum = (TextView) view.findViewById(R.id.numero_tree_card);
         tvEssence = (TextView) view.findViewById(R.id.essence_tree_card);
@@ -123,14 +123,6 @@ public class ChoixMartelageFragment extends DialogFragment {
             }
         });
 
-        /*buttonConserver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dbHelper.insertArbreConserve(numeroArbre);
-                dbHelper.insertRaison(numeroArbre, DatabaseHelper.BIODIVERSITE);
-                dismiss();
-            }
-        });*/
         return view;
     }
 
@@ -189,10 +181,4 @@ public class ChoixMartelageFragment extends DialogFragment {
         this.numeroArbre = numeroArbre;
     }
 
-    /*
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        getActivity().getMenuInflater().inflate(R.menu.menu_ak, menu);
-    }*/
 }

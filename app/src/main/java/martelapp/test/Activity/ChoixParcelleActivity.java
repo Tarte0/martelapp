@@ -166,7 +166,6 @@ public class ChoixParcelleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choix_parcelle);
 
-        dbHelper = new DatabaseHelper(getApplicationContext());
 
         // Récupération de la base de données firebase
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
@@ -311,6 +310,8 @@ public class ChoixParcelleActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                dbHelper = new DatabaseHelper(getApplicationContext());
+
                 // Suppression des données de ARBRES_PARCELLE_TABLE
                 dbHelper.clearTable(DatabaseHelper.ARBRES_PARCELLE_TABLE);
 
@@ -404,6 +405,8 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                         textTemoin.setText("La base de données de l'application a été mise à jour avec la parcelle : " + spinnerParcelles.getSelectedItem().toString());
                     }
                 }
+                cur.close();
+                dbHelper.close();
             }
 
             @Override
@@ -450,6 +453,8 @@ public class ChoixParcelleActivity extends AppCompatActivity {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                dbHelper = new DatabaseHelper(getApplicationContext());
 
                 // Suppression des données de la table CONSTANTES_TABLE et TYPE_ARBRE_TABLE
                 dbHelper.clearTable(DatabaseHelper.CONSTANTES_TABLE);
@@ -519,6 +524,8 @@ public class ChoixParcelleActivity extends AppCompatActivity {
 
                     dbHelper.insertTypeArbre(essence, type);
                 }
+
+                dbHelper.close();
             }
 
             @Override

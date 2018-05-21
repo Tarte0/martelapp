@@ -34,8 +34,9 @@ import martelapp.test.R;
 
 public class ConsignesFragment extends Fragment {
 
-    ViewPager viewPager;
+    View view;
 
+    ViewPager viewPager;
 
     BottomNavigationView bottomNavigationView;
     TextView textViewConsignes, textViewTitleConsignes;
@@ -54,140 +55,144 @@ public class ConsignesFragment extends Fragment {
     double volumeBoisTotalParcelle= 0f;
     double  surfaceParcelle = 0f;
 
+    String objectifs = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if(view == null) {
+            view = inflater.inflate(R.layout.view_page_consignes, null);
 
-        View view = inflater.inflate(R.layout.view_page_consignes, null);
+            dbHelper = new DatabaseHelper(view.getContext());
 
-        dbHelper = new DatabaseHelper(view.getContext());
+            textViewConsignes = (TextView) view.findViewById(R.id.textViewConsignes);
+            textViewConsignes.setTextSize(22f);
+            textViewTitleConsignes = (TextView) view.findViewById(R.id.titleConsignes);
+            bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation_consignes);
+            previous = (ImageButton) view.findViewById(R.id.previousConsignes);
+            next = (ImageButton) view.findViewById(R.id.nextConsignes);
+            buttonGoToInfos = (Button) view.findViewById(R.id.button_go_to_info);
 
-        textViewConsignes = (TextView) view.findViewById(R.id.textViewConsignes);
-        textViewConsignes.setTextSize(22f);
-        textViewTitleConsignes = (TextView) view.findViewById(R.id.titleConsignes);
-        bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation_consignes);
-        previous = (ImageButton) view.findViewById(R.id.previousConsignes);
-        next = (ImageButton) view.findViewById(R.id.nextConsignes);
-        buttonGoToInfos = (Button) view.findViewById(R.id.button_go_to_info);
+            cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
+            cur.moveToFirst();
+            prelevementMin = (int) cur.getFloat(cur.getColumnIndex(DatabaseHelper.PRELEVEMENT_VOLUME_MIN));
+            prelevementMax = (int) cur.getFloat(cur.getColumnIndex(DatabaseHelper.PRELEVEMENT_VOLUME_MAX));
 
-        cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
-        cur.moveToFirst();
-        prelevementMin = (int) cur.getFloat(cur.getColumnIndex(DatabaseHelper.PRELEVEMENT_VOLUME_MIN));
-        prelevementMax = (int) cur.getFloat(cur.getColumnIndex(DatabaseHelper.PRELEVEMENT_VOLUME_MAX));
+            surfaceParcelle = cur.getDouble(cur.getColumnIndex(DatabaseHelper.SURFACE_PARCELLE));
 
-        surfaceParcelle = cur.getDouble(cur.getColumnIndex(DatabaseHelper.SURFACE_PARCELLE));
-
-        df = new DecimalFormat("#0.00");
+            df = new DecimalFormat("#0.00");
 
 
-        cur = dbHelper.getDataFromTable("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL +")",
-                                        DatabaseHelper.ARBRES_PARCELLE_TABLE);
-        cur.moveToFirst();
-        volumeBoisTotalParcelle = cur.getDouble(0);
-        volumeBoisTotalParcelleHa = volumeBoisTotalParcelle / surfaceParcelle;
+            cur = dbHelper.getDataFromTable("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL + ")",
+                    DatabaseHelper.ARBRES_PARCELLE_TABLE);
+            cur.moveToFirst();
+            volumeBoisTotalParcelle = cur.getDouble(0);
+            volumeBoisTotalParcelleHa = volumeBoisTotalParcelle / surfaceParcelle;
 
-        dbHelper.close();
-        cur.close();
+            dbHelper.close();
+            cur.close();
 
-        //on gere le swipe gauche et droite (un peu brute)
-        view.setOnTouchListener(new OnSwipeTouchListener(view.getContext()) {
-            public void onSwipeRight() {
-                switch (bottomNavigationView.getSelectedItemId()) {
-                    case R.id.action_general:
-                        break;
-                    case R.id.action_objectif:
-                        bottomNavigationView.setSelectedItemId(R.id.action_general);
-                        break;
-                }
+            objectifs = Html.fromHtml(
+                    "Compte tenu d'une période de rotation fixée entre 5 et 15 ans et des diamètres d'exploitabilité(*) sur cette parcelle :" +
+                            "<br><br><b>Volume</b>" +
+                            "<br>• Prélever entre " + Integer.toString(prelevementMin) + " % et " + Integer.toString(prelevementMax) + " % du volume de bois de la parcelle" +
+                            " soit entre " + Integer.toString((int) (volumeBoisTotalParcelleHa * prelevementMin / 100)) + " et " + Integer.toString((int) (volumeBoisTotalParcelleHa * prelevementMax / 100)) + " m3/ha." +
+                            "<br>Pour notre parcelle de " + df.format(surfaceParcelle) + " ha, il faut donc prélever entre " + Integer.toString((int) (volumeBoisTotalParcelle * prelevementMin / 100)) + " et " + Integer.toString((int) (volumeBoisTotalParcelle * prelevementMax / 100)) + " m3." +
+                            "<br>" +
+                            "<br><i>(*)Pour les principales essences : " +
+                            "<br>- Épicéa : de 50 à 70 cm" +
+                            "<br>- Sapin pectiné : de 45 à 50 cm" +
+                            "<br>- Hêtre : jusqu'à 50 cm" +
+                            "<br>- Frêne, Érables : à partir de 50 cm</i>" +
+                            "<br><br><b>Biodiversité</b>" +
+                            "<br>• Conservez sciemment au moins 3 arbres de gros diamètre par hectare." +
+                            "<br>• Conservez sciemment au moins 2 arbres porteurs de micros-habitats par hectare.").toString();
 
-            }
-            public void onSwipeLeft() {
-                switch (bottomNavigationView.getSelectedItemId()) {
-                    case R.id.action_general:
-                        bottomNavigationView.setSelectedItemId(R.id.action_objectif);
-                        break;
-                    case R.id.action_objectif:
-                        break;
-                }
-            }
-        });
-
-        previous.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (bottomNavigationView.getSelectedItemId()) {
-                    case R.id.action_general:
-                        break;
-                    case R.id.action_objectif:
-                        bottomNavigationView.setSelectedItemId(R.id.action_general);
-                        break;
-                }
-            }
-        });
-
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (bottomNavigationView.getSelectedItemId()) {
-                    case R.id.action_general:
-                        bottomNavigationView.setSelectedItemId(R.id.action_objectif);
-                        break;
-                    case R.id.action_objectif:
-                        break;
-                }
-            }
-        });
-
-        //on gere les selection des items du bnv
-        bottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.action_general:
-                                textViewConsignes.setText(R.string.consignes_general);
-                                textViewConsignes.setTextSize(22);
-                                textViewTitleConsignes.setText(R.string.general_caps);
-                                previous.setVisibility(View.INVISIBLE);
-                                next.setVisibility(View.VISIBLE);
-                                buttonGoToInfos.setVisibility((View.INVISIBLE));
-                                break;
-                            case R.id.action_objectif:
-                                textViewTitleConsignes.setText(R.string.objectif_caps);
-                                textViewConsignes.setText(Html.fromHtml(
-                                        "Compte tenu d'une période de rotation fixée entre 5 et 15 ans et des diamètres d'exploitabilité(*) sur cette parcelle :" +
-                                        "<br><br><b>Volume</b>" +
-                                        "<br>• Prélever entre " + Integer.toString(prelevementMin) + " % et " + Integer.toString(prelevementMax) + " % du volume de bois de la parcelle" +
-                                        " soit entre " + Integer.toString((int)(volumeBoisTotalParcelleHa * prelevementMin / 100)) + " et " + Integer.toString((int)(volumeBoisTotalParcelleHa * prelevementMax / 100)) + " m3/ha." +
-                                        "<br>Pour notre parcelle de " + df.format(surfaceParcelle) + " ha, il faut donc prélever entre " + Integer.toString((int)(volumeBoisTotalParcelle * prelevementMin / 100)) + " et " + Integer.toString((int)(volumeBoisTotalParcelle * prelevementMax / 100)) + " m3." +
-                                        "<br>" +
-                                        "<br><i>(*)Pour les principales essences : " +
-                                        "<br>- Épicéa : de 50 à 70 cm" +
-                                        "<br>- Sapin pectiné : de 45 à 50 cm" +
-                                        "<br>- Hêtre : jusqu'à 50 cm" +
-                                        "<br>- Frêne, Érables : à partir de 50 cm</i>" +
-                                        "<br><br><b>Biodiversité</b>" +
-                                        "<br>• Conservez sciemment au moins 3 arbres de gros diamètre par hectare." +
-                                        "<br>• Conservez sciemment au moins 2 arbres porteurs de micros-habitats par hectare." ));
-                                textViewConsignes.setTextSize(21);
-                                previous.setVisibility(View.VISIBLE);
-                                next.setVisibility(View.INVISIBLE);
-                                buttonGoToInfos.setVisibility((View.VISIBLE));
-
-                                buttonGoToInfos.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
-
-                                    }
-                                });
-                                break;
-                        }
-                        return true;
+            //on gere le swipe gauche et droite (un peu brute)
+            view.setOnTouchListener(new OnSwipeTouchListener(view.getContext()) {
+                public void onSwipeRight() {
+                    switch (bottomNavigationView.getSelectedItemId()) {
+                        case R.id.action_general:
+                            break;
+                        case R.id.action_objectif:
+                            bottomNavigationView.setSelectedItemId(R.id.action_general);
+                            break;
                     }
-                });
 
+                }
+
+                public void onSwipeLeft() {
+                    switch (bottomNavigationView.getSelectedItemId()) {
+                        case R.id.action_general:
+                            bottomNavigationView.setSelectedItemId(R.id.action_objectif);
+                            break;
+                        case R.id.action_objectif:
+                            break;
+                    }
+                }
+            });
+
+            previous.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    switch (bottomNavigationView.getSelectedItemId()) {
+                        case R.id.action_general:
+                            break;
+                        case R.id.action_objectif:
+                            bottomNavigationView.setSelectedItemId(R.id.action_general);
+                            break;
+                    }
+                }
+            });
+
+            next.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    switch (bottomNavigationView.getSelectedItemId()) {
+                        case R.id.action_general:
+                            bottomNavigationView.setSelectedItemId(R.id.action_objectif);
+                            break;
+                        case R.id.action_objectif:
+                            break;
+                    }
+                }
+            });
+
+            //on gere les selection des items du bnv
+            bottomNavigationView.setOnNavigationItemSelectedListener(
+                    new BottomNavigationView.OnNavigationItemSelectedListener() {
+                        @Override
+                        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.action_general:
+                                    textViewConsignes.setText(R.string.consignes_general);
+                                    textViewConsignes.setTextSize(22);
+                                    textViewTitleConsignes.setText(R.string.general_caps);
+                                    previous.setVisibility(View.INVISIBLE);
+                                    next.setVisibility(View.VISIBLE);
+                                    buttonGoToInfos.setVisibility((View.INVISIBLE));
+                                    break;
+                                case R.id.action_objectif:
+                                    textViewTitleConsignes.setText(R.string.objectif_caps);
+                                    textViewConsignes.setText(objectifs);
+                                    textViewConsignes.setTextSize(21);
+                                    previous.setVisibility(View.VISIBLE);
+                                    next.setVisibility(View.INVISIBLE);
+                                    buttonGoToInfos.setVisibility((View.VISIBLE));
+
+                                    buttonGoToInfos.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+
+                                        }
+                                    });
+                                    break;
+                            }
+                            return true;
+                        }
+                    });
+        }
         return view;
     }
 

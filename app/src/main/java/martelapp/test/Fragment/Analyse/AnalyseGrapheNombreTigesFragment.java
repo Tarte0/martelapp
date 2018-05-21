@@ -25,6 +25,7 @@ import martelapp.test.R;
 public class AnalyseGrapheNombreTigesFragment extends Fragment {
 
     ViewPager viewPager;
+    View view;
 
     BottomNavigationView bottomNavigationView;
     TextView textAxe, textTitleGraphe;
@@ -46,30 +47,36 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.view_page_analyse_graphe_nombre_tiges, null);
+        if(view == null) {
+            view = inflater.inflate(R.layout.view_page_analyse_graphe_nombre_tiges, null);
 
-        textAxe = (TextView) view.findViewById(R.id.text_axe);
-        textTitleGraphe = (TextView) view.findViewById(R.id.title_graphe);
+            textAxe = (TextView) view.findViewById(R.id.text_axe);
+            textTitleGraphe = (TextView) view.findViewById(R.id.title_graphe);
 
-        bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation_graphe_nombre_tiges_analyse);
-        previous = (ImageButton) view.findViewById(R.id.previousInfo);
-        next = (ImageButton) view.findViewById(R.id.nextInfo);
+            bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation_graphe_nombre_tiges_analyse);
+            previous = (ImageButton) view.findViewById(R.id.previousInfo);
+            next = (ImageButton) view.findViewById(R.id.nextInfo);
 
-        layoutPieChartNbTige = view.findViewById(R.id.layout_pie_chart_nb_tiges);
-
-        barChartEssenceAnalyse = view.findViewById(R.id.bar_chart_essence_graphe);
-        barChartDiametreAnalyse = view.findViewById(R.id.bar_chart_diametre_graphe);
-        barChartNoteEcoAnalyse = view.findViewById(R.id.bar_chart_note_eco_graphe);
-
-        pieChartNbTigesAvant = view.findViewById(R.id.pie_chart_nb_tiges_avant_graphe);
-        pieChartNbTigesApres = view.findViewById(R.id.pie_chart_nb_tiges_apres_graphe);
-        GrapheHelper.getPieChartAnalyseAvantApresNbTigesCategorie(view.getContext(), pieChartNbTigesAvant, pieChartNbTigesApres);
-
-        GrapheHelper.getBarChartAnalyseEssence(view.getContext(), barChartEssenceAnalyse);
-        GrapheHelper.getBarChartAnalyseDiametre(view.getContext(), barChartDiametreAnalyse);
-        GrapheHelper.getBarChartAnalyseNoteEcologique(view.getContext(), barChartNoteEcoAnalyse);
+            layoutPieChartNbTige = view.findViewById(R.id.layout_pie_chart_nb_tiges);
 
 
+            barChartEssenceAnalyse = view.findViewById(R.id.bar_chart_essence_graphe);
+            GrapheHelper.getBarChartAnalyseEssence(view.getContext(), barChartEssenceAnalyse);
+
+
+
+            barChartDiametreAnalyse = view.findViewById(R.id.bar_chart_diametre_graphe);
+            GrapheHelper.getBarChartAnalyseDiametre(view.getContext(), barChartDiametreAnalyse);
+
+
+            barChartNoteEcoAnalyse = view.findViewById(R.id.bar_chart_note_eco_graphe);
+            GrapheHelper.getBarChartAnalyseNoteEcologique(view.getContext(), barChartNoteEcoAnalyse);
+
+
+            pieChartNbTigesAvant = view.findViewById(R.id.pie_chart_nb_tiges_avant_graphe);
+            pieChartNbTigesApres = view.findViewById(R.id.pie_chart_nb_tiges_apres_graphe);
+            GrapheHelper.getPieChartAnalyseAvantApresNbTigesCategorie(view.getContext(), pieChartNbTigesAvant, pieChartNbTigesApres);
+        }
         //on gere le swipe gauche et droite (un peu brute)
         view.setOnTouchListener(new OnSwipeTouchListener(view.getContext()) {
             public void onSwipeRight() {
@@ -157,6 +164,7 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
 
                                 textTitleGraphe.setText(R.string.titre_graphe_nbtige_essence_info);
                                 textAxe.setText(R.string.axe_nombre_tiges);
+                                textAxe.setVisibility(View.VISIBLE);
 
 
                                 barChartEssenceAnalyse.setVisibility(View.VISIBLE);
@@ -178,6 +186,7 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
 
                                 textTitleGraphe.setText(R.string.titre_graphe_nbtige_diametre_info);
                                 textAxe.setText(R.string.axe_nombre_tiges);
+                                textAxe.setVisibility(View.VISIBLE);
 
 
                                 barChartEssenceAnalyse.setVisibility(View.GONE);
@@ -199,7 +208,7 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
 
                                 textTitleGraphe.setText(R.string.titre_graphe_nbtige_noteeco_info);
                                 textAxe.setText(R.string.axe_nombre_tiges);
-
+                                textAxe.setVisibility(View.VISIBLE);
 
                                 barChartEssenceAnalyse.setVisibility(View.GONE);
                                 barChartDiametreAnalyse.setVisibility(View.GONE);
