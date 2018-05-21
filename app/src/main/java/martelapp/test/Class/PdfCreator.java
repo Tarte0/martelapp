@@ -75,6 +75,7 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         dbHelper = new DatabaseHelper(context);
 
         String nomEquipe;
+        String lieu;
 
         double surface;
         int nbTiges;
@@ -84,6 +85,7 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         cur.moveToFirst();
         nomEquipe = cur.getString(cur.getColumnIndex(DatabaseHelper.NOM_EQUIPE));
         surface = cur.getDouble(cur.getColumnIndex(DatabaseHelper.SURFACE_PARCELLE));
+        lieu = cur.getString(cur.getColumnIndex(DatabaseHelper.LIEU_PARCELLE));
 
         cur = dbHelper.getAllDataFromTable(DatabaseHelper.ARBRES_PARCELLE_TABLE);
         cur.moveToFirst();
@@ -137,7 +139,7 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         paint.setTextSize(30f);
 
         top = 40f;
-        pageCanvas.drawText("Marteloscope biodiversité de Faverges", pageWidth/2, top, paint);
+        pageCanvas.drawText("Marteloscope biodiversité de " + lieu, pageWidth/2, top, paint);
 
         paint.setTextSize(24f);
         top = top + 30f;
@@ -372,6 +374,7 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         dbHelper = new DatabaseHelper(context);
 
         String nomEquipe;
+        String lieu;
 
         double surface;
         int nbTiges;
@@ -381,6 +384,7 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         cur.moveToFirst();
         nomEquipe = cur.getString(cur.getColumnIndex(DatabaseHelper.NOM_EQUIPE));
         surface = cur.getDouble(cur.getColumnIndex(DatabaseHelper.SURFACE_PARCELLE));
+        lieu = cur.getString(cur.getColumnIndex(DatabaseHelper.LIEU_PARCELLE));
 
         cur = dbHelper.getAllDataFromTable(DatabaseHelper.ARBRES_PARCELLE_TABLE);
         cur.moveToFirst();
@@ -434,7 +438,7 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         paint.setTextSize(30f);
 
         top = 40f;
-        pageCanvas.drawText("Marteloscope biodiversité de Faverges", pageWidth/2, top, paint);
+        pageCanvas.drawText("Marteloscope biodiversité de " + lieu, pageWidth/2, top, paint);
 
         paint.setTextSize(24f);
         top = top + 30f;
@@ -538,41 +542,6 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         dst = new RectF(left, top, right, bottom);
 
         pageCanvas.drawBitmap(bitmap, src, dst, null);
-
-        top = (pageHeight - 40);
-        bottom = pageHeight - 10f;
-
-        left = marginLeft;
-        right = left + 30f;
-
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.logo_iseta_2);
-        Drawable d1 = new BitmapDrawable(bitmap);
-        d1.setBounds((int)left,(int)top,(int)right,(int)bottom);
-        d1.draw(pageCanvas);
-
-        left = right+5;
-        right = left + 50f;
-
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.logo_ufp74_bauges);
-        Drawable d2 = new BitmapDrawable(bitmap);
-        d2.setBounds((int)left,(int)top,(int)right,(int)bottom);
-        d2.draw(pageCanvas);
-
-        left = right+5;
-        right = left + 30f;
-
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.logo_crpf_3);
-        Drawable d3 = new BitmapDrawable(bitmap);
-        d3.setBounds((int)left,(int)top,(int)right,(int)bottom);
-        d3.draw(pageCanvas);
-
-        left = right+5;
-        right = left + 70f;
-
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.logo_parc_geoparks_unesco_signature);
-        Drawable d4 = new BitmapDrawable(bitmap);
-        d4.setBounds((int)left,(int)top,(int)right,(int)bottom);
-        d4.draw(pageCanvas);
 
         paint.setColor(context.getResources().getColor(R.color.colorBlack));
         paint.setTypeface(Typeface.DEFAULT);
@@ -703,11 +672,6 @@ public class PdfCreator extends AsyncTask<View, String, String>{
 
         pageCanvas.drawBitmap(bitmap, src, dst, null);
 
-        d1.draw(pageCanvas);
-        d2.draw(pageCanvas);
-        d3.draw(pageCanvas);
-        d4.draw(pageCanvas);
-
 
         paint.setColor(context.getResources().getColor(R.color.colorBlack));
         paint.setTypeface(Typeface.DEFAULT);
@@ -833,11 +797,6 @@ public class PdfCreator extends AsyncTask<View, String, String>{
 
         pageCanvas.drawBitmap(bitmap, src, dst, null);
 
-        d1.draw(pageCanvas);
-        d2.draw(pageCanvas);
-        d3.draw(pageCanvas);
-        d4.draw(pageCanvas);
-
         paint.setColor(context.getResources().getColor(R.color.colorBlack));
         paint.setTypeface(Typeface.DEFAULT);
         paint.setTextSize(12f);
@@ -936,7 +895,7 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         paint.setTextSize(15f);
 
         bottom = bottom - 5f;
-        pageCanvas.drawText("Carte de la parcelle", marginLeft + 5f, bottom, paint);
+        pageCanvas.drawText("Récapitulatif géographique de l'exercice", marginLeft + 5f, bottom, paint);
 
         mView = views[8];
         bitmap = Bitmap.createBitmap(mView.getWidth(), mView.getHeight(),
@@ -961,11 +920,6 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         dst = new RectF(left, top, right, bottom);
 
         pageCanvas.drawBitmap(bitmap, src, dst, null);
-
-        d1.draw(pageCanvas);
-        d2.draw(pageCanvas);
-        d3.draw(pageCanvas);
-        d4.draw(pageCanvas);
 
         paint.setColor(context.getResources().getColor(R.color.colorBlack));
         paint.setTypeface(Typeface.DEFAULT);

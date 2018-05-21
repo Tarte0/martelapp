@@ -322,7 +322,7 @@ public class AnalyseActivity extends AppCompatActivity {
             }
         },delay);
 
-        delay += addDelay*15;
+        delay += addDelay*8;
 
         Handler handler8 = new Handler();
         handler8.postDelayed(new Runnable() {

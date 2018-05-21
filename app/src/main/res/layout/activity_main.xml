@@ -18,10 +18,14 @@
         android:padding="8dp"
         android:weightSum="7">
 
-        <android.support.v4.widget.Space
+        <TextView
+            android:id="@+id/text_parcelle_en_cours"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2" />
+            android:textColor="@color/colorBlack"
+            android:textSize="22sp"
+            android:layout_weight="2"
+            android:text="" />
 
         <TextView
             android:id="@+id/AppName"

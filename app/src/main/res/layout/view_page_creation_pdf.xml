@@ -19,7 +19,7 @@
         android:textSize="36sp"
         android:textColor="@color/colorBlack"
         android:gravity="center"
-        android:text="Sauvegarde de l'exercice de martelage en cours\nVeuillez patientez"
+        android:text="Sauvegarde de l'exercice de martelage en cours\nVeuillez patienter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

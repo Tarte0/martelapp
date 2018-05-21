@@ -54,6 +54,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String CONSTANTES_TABLE             = "constantes_table";
     public static final String ID_CONSTANTE                 = "_id";
     public static final String NOM_EQUIPE                   = "NOM_EQUIPE";
+    public static final String NOM_PARCELLE                 = "NOM_PARCELLE";
+    public static final String LIEU_PARCELLE                = "LIEU_PARCELLE";
     public static final String SURFACE_PARCELLE             = "SURFACE_PARCELLE";
     public static final String ALTITUDE_PARCELLE            = "ALTITUDE_PARCELLE";
     public static final String HABITAT_PARCELLE             = "HABITAT_PARCELLE";
@@ -166,6 +168,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL("CREATE TABLE " + CONSTANTES_TABLE + "("
                 + ID_CONSTANTE                  + " INTEGER PRIMARY KEY, "
                 + NOM_EQUIPE                    + " TEXT, "
+                + NOM_PARCELLE                  + " TEXT, "
+                + LIEU_PARCELLE                 + " TEXT, "
                 + SURFACE_PARCELLE              + " REAL, "
                 + ALTITUDE_PARCELLE             + " REAL, "
                 + HABITAT_PARCELLE              + " TEXT, "
@@ -296,10 +300,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return res != -1;
     }
 
-    public void updateInfosParcelleConstante(double altitude, String habitat, double surfaceParcelle, double prelevementMin, double prelevementMax, int rotationMin, int rotationMax){
+    public void updateInfosParcelleConstante(String nomParcelle, String lieuParcelle, double altitude, String habitat, double surfaceParcelle, double prelevementMin, double prelevementMax, int rotationMin, int rotationMax){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE " + CONSTANTES_TABLE
                 + " SET " + ALTITUDE_PARCELLE + " = " + altitude
+                + ", " + NOM_PARCELLE + " = '" + nomParcelle + "'"
+                + ", " + LIEU_PARCELLE + " = '" + lieuParcelle + "'"
                 + ", " + HABITAT_PARCELLE + " = '" + habitat + "'"
                 + ", " + SURFACE_PARCELLE + " = " + surfaceParcelle
                 + ", " + PRELEVEMENT_VOLUME_MIN + " = " + prelevementMin

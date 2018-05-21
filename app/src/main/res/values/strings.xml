@@ -134,6 +134,8 @@
     <string name="titre_pourcentage_raison">Pourcentage des raisons de martelage</string>
     <!-- GRAPHE RAISONS -->
 
+    <!-- GRAPHE CARTE ANALYSE -->
+    <string name="titre_carte_analyse">Récapitulatif géographique de l\'exercice</string>
 
     <!-- CARTE PARCELLE -->
     <string name="bouton_terminer_analyse">Sauvegarder l\'exercice et terminer l\'analyse</string>

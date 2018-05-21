@@ -366,6 +366,8 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                     double altitude = parcelle.altitude;
                     String habitat = parcelle.habitat;
                     double surface = parcelle.surface;
+                    String lieu = parcelle.lieu;
+                    String nom = parcelle.nom;
 
                     double prelevementMin = dataSnapshot.child(CHAMP_CONSTANTES).child(CHAMP_PRELEVEMENT).child(CHAMP_MIN).getValue(Double.class);
                     double prelevementMax = dataSnapshot.child(CHAMP_CONSTANTES).child(CHAMP_PRELEVEMENT).child(CHAMP_MAX).getValue(Double.class);
@@ -373,7 +375,7 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                     int rotationMin = dataSnapshot.child(CHAMP_CONSTANTES).child(CHAMP_ROTATION).child(CHAMP_MIN).getValue(Integer.class);
                     int rotationMax = dataSnapshot.child(CHAMP_CONSTANTES).child(CHAMP_ROTATION).child(CHAMP_MAX).getValue(Integer.class);
 
-                    dbHelper.updateInfosParcelleConstante(altitude, habitat, surface, prelevementMin, prelevementMax, rotationMin, rotationMax);
+                    dbHelper.updateInfosParcelleConstante(nom, lieu, altitude, habitat, surface, prelevementMin, prelevementMax, rotationMin, rotationMax);
 
                     /*
                      * Récupération des arbres de la parcelle dans une Hashmap.

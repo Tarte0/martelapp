@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -71,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
 
         //getApplicationContext().deleteDatabase(DatabaseHelper.DATABASE_NAME);
 
+        TextView textParcelleEnCours = findViewById(R.id.text_parcelle_en_cours);
+
         /*#################################
          *###  Bouton "Nouvel Exercice" ###
          *#################################
@@ -108,6 +111,15 @@ public class MainActivity extends AppCompatActivity {
         Button buttonContinuerExercice = findViewById(R.id.continuer_exercice);
 
         if(checkDatabase()) {
+            dbHelper = new DatabaseHelper(getApplicationContext());
+            cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
+            cur.moveToFirst();
+
+            textParcelleEnCours.setText("Parcelle actuelle :\n" + cur.getString(cur.getColumnIndex(DatabaseHelper.NOM_PARCELLE)) +
+                                        "\nMarteloscope de " + cur.getString(cur.getColumnIndex(DatabaseHelper.LIEU_PARCELLE)));
+            cur.close();
+            dbHelper.close();
+
             if (checkAncienExercice()) {
                 buttonContinuerExercice.setVisibility(View.VISIBLE);
             } else {
@@ -115,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         } else {
+            textParcelleEnCours.setText("Aucune parcelle sélectionnée");
             buttonContinuerExercice.setVisibility(View.GONE);
         }
 
