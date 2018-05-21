@@ -367,7 +367,7 @@ public class AnalyseResultatFragment extends Fragment {
          */
 
         tvVolumePreleve.setText(df.format(volumeTotalBoisMartele) + " m3\n" +
-                                "volume de bois prélevé");
+                                "Volume de bois prélevé");
 
         cur = dbHelper.getDataFromTableWithCondition("SUM(ap." + DatabaseHelper.VALEUR_ECONOMIQUE + ")",
                 DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap, " + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
@@ -395,7 +395,7 @@ public class AnalyseResultatFragment extends Fragment {
 
         System.out.println(noteEcoAvant + " - " + noteEcoMartele);
 
-        tvNoteEco.setText(Integer.toString((int)pourcentageNoteEcoMartelage) + "% du total des notes écologique martelés");
+        tvNoteEco.setText(Integer.toString((int)pourcentageNoteEcoMartelage) + "%\nDu total des notes écologique martelés");
 
         dbHelper.close();
         cur.close();

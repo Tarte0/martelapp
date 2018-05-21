@@ -2,6 +2,7 @@ package martelapp.test.Activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
@@ -10,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -320,7 +322,7 @@ public class AnalyseActivity extends AppCompatActivity {
             }
         },delay);
 
-        delay += addDelay*4;
+        delay += addDelay*12;
 
         Handler handler8 = new Handler();
         handler8.postDelayed(new Runnable() {

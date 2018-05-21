@@ -850,7 +850,7 @@ public class GrapheHelper {
         // ArrayList contenant les textes des états des arbres pour la légende
         ArrayList<String> titleList = new ArrayList<>();
         titleList.add("Arbres Restants");
-        titleList.add("Arbres Marteles");
+        titleList.add("Arbres Martelés");
 
         // Listes des Entrées de la légende
         ArrayList<LegendEntry> legendeEntrees = new ArrayList<>();
@@ -1045,7 +1045,7 @@ public class GrapheHelper {
         // ArrayList contenant les textes des états des arbres pour la légende
         ArrayList<String> titleList = new ArrayList<>();
         titleList.add("Arbres Restants");
-        titleList.add("Arbres Marteles");
+        titleList.add("Arbres Martelés");
 
         // Listes des Entrées de la légende
         ArrayList<LegendEntry> legendeEntrees = new ArrayList<>();
@@ -1240,7 +1240,7 @@ public class GrapheHelper {
         // ArrayList contenant les textes des états des arbres pour la légende
         ArrayList<String> titleList = new ArrayList<>();
         titleList.add("Arbres Restants");
-        titleList.add("Arbres Marteles");
+        titleList.add("Arbres Martelés");
 
         // Listes des Entrées de la légende
         ArrayList<LegendEntry> legendeEntrees = new ArrayList<>();
@@ -1443,7 +1443,7 @@ public class GrapheHelper {
         // ArrayList contenant les textes des états des arbres pour la légende
         ArrayList<String> titleList = new ArrayList<>();
         titleList.add("Arbres Restants");
-        titleList.add("Arbres Marteles");
+        titleList.add("Arbres Martelés");
 
         // Listes des Entrées de la légende
         ArrayList<LegendEntry> legendeEntrees = new ArrayList<>();

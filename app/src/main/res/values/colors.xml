@@ -12,6 +12,7 @@
     <color name="colorBarOrange">#e1af4b</color>
     <color name="colorBarGreen">#d34141</color>
 
+    <color name="pdfGrey">#707070</color>
 
     <color name="colorRed">#e14b4b</color>
     <color name="colorGreen">#32af4b</color>
@@ -29,4 +30,7 @@
     <color name="button_vert_focused">#006c4e</color>
 
     <color name="bouton_actualiser_liste">#9ea4a3</color>
+
+    <color name="rectangle_pdf">#8BC63E</color>
+
 </resources>

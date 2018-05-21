@@ -51,6 +51,9 @@ public class ConsignesFragment extends Fragment {
     int     prelevementMin = 0,
             prelevementMax = 0;
 
+    int rotationMin = 0,
+        rotationMax = 0;
+
     double  volumeBoisTotalParcelleHa = 0f;
     double volumeBoisTotalParcelle= 0f;
     double  surfaceParcelle = 0f;
@@ -75,8 +78,11 @@ public class ConsignesFragment extends Fragment {
 
             cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
             cur.moveToFirst();
+
             prelevementMin = (int) cur.getFloat(cur.getColumnIndex(DatabaseHelper.PRELEVEMENT_VOLUME_MIN));
             prelevementMax = (int) cur.getFloat(cur.getColumnIndex(DatabaseHelper.PRELEVEMENT_VOLUME_MAX));
+            rotationMin = cur.getInt(cur.getColumnIndex(DatabaseHelper.ROTATION_MIN));
+            rotationMax = cur.getInt(cur.getColumnIndex(DatabaseHelper.ROTATION_MAX));
 
             surfaceParcelle = cur.getDouble(cur.getColumnIndex(DatabaseHelper.SURFACE_PARCELLE));
 
@@ -93,7 +99,7 @@ public class ConsignesFragment extends Fragment {
             cur.close();
 
             objectifs = Html.fromHtml(
-                    "Compte tenu d'une période de rotation fixée entre 5 et 15 ans et des diamètres d'exploitabilité(*) sur cette parcelle :" +
+                    "Compte tenu d'une période de rotation fixée entre " + Integer.toString(rotationMin) + " et " + Integer.toString(rotationMax) + " ans et des diamètres d'exploitabilité(*) sur cette parcelle :" +
                             "<br><br><b>Volume</b>" +
                             "<br>• Prélever entre " + Integer.toString(prelevementMin) + " % et " + Integer.toString(prelevementMax) + " % du volume de bois de la parcelle" +
                             " soit entre " + Integer.toString((int) (volumeBoisTotalParcelleHa * prelevementMin / 100)) + " et " + Integer.toString((int) (volumeBoisTotalParcelleHa * prelevementMax / 100)) + " m3/ha." +

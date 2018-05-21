@@ -71,6 +71,11 @@ public class ChoixParcelleActivity extends AppCompatActivity {
     public static final String CHAMP_PRELEVEMENT        = "prelevement";
 
     /**
+     * Champ de la base de données firebase "rotation"
+     */
+    public static final String CHAMP_ROTATION        = "rotation";
+
+    /**
      * Champ de la base de données firebase "hauteurMoyenne"
      */
     public static final String CHAMP_HAUTEUR_MOYENNE    = "hauteurMoyenne";
@@ -326,7 +331,7 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                 HashMap<String, Double> constants = new HashMap<>();
                 Cursor cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
                 cur.moveToFirst();
-                for(int i = 7; i < cur.getColumnCount(); i++){
+                for(int i = 9; i < cur.getColumnCount(); i++){
                     constants.put(cur.getColumnName(i), cur.getDouble(i));
                 }
 
@@ -358,10 +363,17 @@ public class ChoixParcelleActivity extends AppCompatActivity {
 
 
                     // Mis à jour des informations de la parcelle dans la table CONSTANTES_TABLE
-                    double altitude = Double.parseDouble(parcelle.altitude);
+                    double altitude = parcelle.altitude;
                     String habitat = parcelle.habitat;
-                    double surface = Double.parseDouble(parcelle.surface);
-                    dbHelper.updateInfosParcelleConstante(altitude, habitat, surface);
+                    double surface = parcelle.surface;
+
+                    double prelevementMin = dataSnapshot.child(CHAMP_CONSTANTES).child(CHAMP_PRELEVEMENT).child(CHAMP_MIN).getValue(Double.class);
+                    double prelevementMax = dataSnapshot.child(CHAMP_CONSTANTES).child(CHAMP_PRELEVEMENT).child(CHAMP_MAX).getValue(Double.class);
+
+                    int rotationMin = dataSnapshot.child(CHAMP_CONSTANTES).child(CHAMP_ROTATION).child(CHAMP_MIN).getValue(Integer.class);
+                    int rotationMax = dataSnapshot.child(CHAMP_CONSTANTES).child(CHAMP_ROTATION).child(CHAMP_MAX).getValue(Integer.class);
+
+                    dbHelper.updateInfosParcelleConstante(altitude, habitat, surface, prelevementMin, prelevementMax, rotationMin, rotationMax);
 
                     /*
                      * Récupération des arbres de la parcelle dans une Hashmap.
@@ -438,7 +450,7 @@ public class ChoixParcelleActivity extends AppCompatActivity {
      * @see DatabaseHelper#CONSTANTES_TABLE
      * @see DatabaseHelper#TYPE_ARBRE_TABLE
      * @see DatabaseHelper#clearTable(String)
-     * @see DatabaseHelper#insertConstante(double, double, double, double, double, double, double, double, double, double, double, double, double, double, double)
+     * @see DatabaseHelper#insertConstante(double, double, double, double, double, double, double, double, double, double, double, double, double)
      * @see DatabaseHelper#insertTypeArbre(String, String)
      *
      */
@@ -466,11 +478,6 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                  */
                 DataSnapshot dataConstantes = dataSnapshot.child(CHAMP_CONSTANTES);
 
-                // Récupération des constantes "prelevement"
-                DataSnapshot dataPrelevement = dataConstantes.child(CHAMP_PRELEVEMENT);
-                Double prelevementMin = dataPrelevement.child(CHAMP_MIN).getValue(Double.class);
-                Double prelevementMax = dataPrelevement.child(CHAMP_MAX).getValue(Double.class);
-
                 // Récupération des constantes "hauteurMoyenne"
                 DataSnapshot dataHauteurMoyenne = dataConstantes.child(CHAMP_HAUTEUR_MOYENNE);
                 Double hauteurMoyenneFeuillu = dataHauteurMoyenne.child(CHAMP_FEUILLU).getValue(Double.class);
@@ -496,8 +503,6 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                 Double volumeCommercialResineux = dataVolumeCommercial.child(CHAMP_RESINEUX).getValue(Double.class);
 
                 dbHelper.insertConstante(
-                        prelevementMin,
-                        prelevementMax,
                         hauteurMoyenneFeuillu,
                         hauteurMoyennePetitBois,
                         hauteurMoyenneResineux,

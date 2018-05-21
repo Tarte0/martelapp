@@ -59,6 +59,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String HABITAT_PARCELLE             = "HABITAT_PARCELLE";
     public static final String PRELEVEMENT_VOLUME_MIN       = "PRELEVEMENT_VOLUME_MIN";
     public static final String PRELEVEMENT_VOLUME_MAX       = "PRELEVEMENT_VOLUME_MAX";
+    public static final String ROTATION_MIN                 = "ROTATION_MIN";
+    public static final String ROTATION_MAX                 = "ROTATION_MAX";
     public static final String HAUTEUR_MOYENNE_FEUILLU      = "HAUTEUR_MOYENNE_FEUILLU";
     public static final String HAUTEUR_MOYENNE_PETIT_BOIS   = "HAUTEUR_MOYENNE_PETIT_BOIS";
     public static final String HAUTEUR_MOYENNE_RESINEUX     = "HAUTEUR_MOYENNE_RESINEUX";
@@ -169,6 +171,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 + HABITAT_PARCELLE              + " TEXT, "
                 + PRELEVEMENT_VOLUME_MIN        + " REAL, "
                 + PRELEVEMENT_VOLUME_MAX        + " REAL, "
+                + ROTATION_MIN                  + " INTEGER, "
+                + ROTATION_MAX                  + " INTEGER, "
                 + HAUTEUR_MOYENNE_FEUILLU       + " REAL, "
                 + HAUTEUR_MOYENNE_PETIT_BOIS    + " REAL, "
                 + HAUTEUR_MOYENNE_RESINEUX      + " REAL, "
@@ -263,8 +267,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return res != -1;
     }
 
-    public boolean insertConstante( double prelevementMin, double prelevementMax,
-                                    double hauteurFeuillu, double hauteurPetitBois, double hauteurResineux,
+    public boolean insertConstante( double hauteurFeuillu, double hauteurPetitBois, double hauteurResineux,
                                     double prixChauffageFeuillu, double prixChauffageResineux,
                                     double prixIndustrieFeuillu, double prixIndustrieResineux,
                                     double prixOeuvreEpicea, double prixOeuvreFeuillu, double prixOeuvreResineux, double prixOeuvreSapin,
@@ -274,8 +277,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(ID_CONSTANTE, 0);
-        contentValues.put(PRELEVEMENT_VOLUME_MIN,       prelevementMin);
-        contentValues.put(PRELEVEMENT_VOLUME_MAX,       prelevementMax);
         contentValues.put(HAUTEUR_MOYENNE_FEUILLU,      hauteurFeuillu);
         contentValues.put(HAUTEUR_MOYENNE_PETIT_BOIS,   hauteurPetitBois);
         contentValues.put(HAUTEUR_MOYENNE_RESINEUX,     hauteurResineux);
@@ -295,12 +296,16 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return res != -1;
     }
 
-    public void updateInfosParcelleConstante(double altitude, String habitat,double surfaceParcelle){
+    public void updateInfosParcelleConstante(double altitude, String habitat, double surfaceParcelle, double prelevementMin, double prelevementMax, int rotationMin, int rotationMax){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE " + CONSTANTES_TABLE
                 + " SET " + ALTITUDE_PARCELLE + " = " + altitude
                 + ", " + HABITAT_PARCELLE + " = '" + habitat + "'"
                 + ", " + SURFACE_PARCELLE + " = " + surfaceParcelle
+                + ", " + PRELEVEMENT_VOLUME_MIN + " = " + prelevementMin
+                + ", " + PRELEVEMENT_VOLUME_MAX + " = " + prelevementMax
+                + ", " + ROTATION_MIN + " = " + rotationMin
+                + ", " + ROTATION_MAX + " = " + rotationMax
                 + " WHERE " + ID_CONSTANTE + " = 0";
 
         db.execSQL(query);

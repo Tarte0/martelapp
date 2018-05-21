@@ -19,29 +19,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:layout_weight="9"
-        >
+        android:layout_weight="8.4"
+        android:orientation="horizontal">
 
         <com.github.mikephil.charting.charts.ScatterChart
             android:id="@+id/scatter_chart_carte"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="8" />
-
-        <Button
-            android:id="@+id/button_terminer_analyse"
-            style="@style/button_vert"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_gravity="bottom|end"
-            android:layout_marginBottom="30dp"
-            android:layout_weight="2"
-            android:text="@string/bouton_terminer_analyse" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button_terminer_analyse"
+        style="@style/button_rouge_fin_exercice"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="0.8"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="@string/bouton_terminer_analyse" />
+
 
 </LinearLayout>
