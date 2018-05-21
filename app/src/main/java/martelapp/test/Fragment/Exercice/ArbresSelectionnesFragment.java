@@ -71,7 +71,7 @@ public class ArbresSelectionnesFragment extends Fragment {
                     String raison = cur.getString(cur.getColumnIndex(DatabaseHelper.RAISON));
 
                     if (raison.equals(DatabaseHelper.BIODIVERSITE)) {
-                        textRaison.setText("Arbre conservé pour la Biodiversité");
+                        textRaison.setText(R.string.raison_conserve);
                     } else {
                         textRaison.setText(String.format("Raisons du Martelage : \n\n- %s\n", raisonToString(raison)));
                         while (cur.moveToNext()) {

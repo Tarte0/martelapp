@@ -56,7 +56,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:gravity="left|bottom"
-                        android:text="@string/analyse_synthese"
+                        android:text=""
                         android:textColor="@color/colorBlack"
                         android:textSize="30sp" />
 
@@ -175,8 +175,8 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:tint="@color/colorGreen"
-                            app:srcCompat="@drawable/check" />
+                            android:tint="@color/colorPrimary"
+                            app:srcCompat="@drawable/volume_preleve" />
 
                         <TextView
                             android:id="@+id/tvVolumePreleve"
@@ -202,8 +202,8 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:tint="@color/colorGreen"
-                            app:srcCompat="@drawable/check" />
+                            android:tint="@color/colorPrimary"
+                            app:srcCompat="@drawable/valeur_coupe" />
 
                         <TextView
                             android:id="@+id/tvGainCoupe"
@@ -229,8 +229,8 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:tint="@color/colorGreen"
-                            app:srcCompat="@drawable/check" />
+                            android:tint="@color/colorPrimary"
+                            app:srcCompat="@drawable/conserver" />
 
                         <TextView
                             android:id="@+id/tvNoteEco"

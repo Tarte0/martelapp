@@ -4,13 +4,13 @@
     <item
         android:id="@+id/action_respect_consigne_analyse"
         android:enabled="true"
-        android:icon="@drawable/info_carac_parcelle"
-        android:title="@string/analyse_respect_consignes"
+        android:icon="@drawable/check"
+        android:title="@string/analyse_respect_consignes_nav"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_synthese_picto_analyse"
         android:enabled="true"
-        android:icon="@drawable/info_diametre"
-        android:title="@string/analyse_synthese"
+        android:icon="@drawable/resultats"
+        android:title="@string/analyse_synthese_nav"
         app:showAsAction="ifRoom" />
 </menu>

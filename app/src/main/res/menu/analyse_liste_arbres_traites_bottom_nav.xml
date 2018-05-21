@@ -5,13 +5,13 @@
         android:id="@+id/action_liste_arbres_marteles"
         android:enabled="true"
         android:icon="@drawable/marteau_martele"
-        android:title="@string/analyse_arbres_selectionnes_marteles"
+        android:title="@string/analyse_arbres_selectionnes_marteles_nav"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_liste_arbres_conserves"
         android:enabled="true"
         android:icon="@drawable/conserver"
-        android:title="@string/analyse_arbres_selectionnes_conserves"
+        android:title="@string/analyse_arbres_selectionnes_conserves_nav"
         app:showAsAction="ifRoom" />
 
 </menu>

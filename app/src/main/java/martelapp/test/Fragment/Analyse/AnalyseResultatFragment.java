@@ -164,7 +164,7 @@ public class AnalyseResultatFragment extends Fragment {
                                 previous.setVisibility(View.INVISIBLE);
                                 next.setVisibility(View.VISIBLE);
 
-                                tvTitreRespect.setText("Ai-je respecté les consignes?");
+                                tvTitreRespect.setText(R.string.titre_respect_consignes);
                                 layoutRespectConsignes.setVisibility(View.VISIBLE);
                                 layoutSynthesePicto.setVisibility(View.GONE);
 
@@ -179,7 +179,7 @@ public class AnalyseResultatFragment extends Fragment {
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.INVISIBLE);
 
-                                tvTitreRespect.setText("Résultat de votre martelage");
+                                tvTitreRespect.setText(R.string.titre_resultats);
                                 layoutRespectConsignes.setVisibility(View.GONE);
                                 layoutSynthesePicto.setVisibility(View.VISIBLE);
 

@@ -102,7 +102,7 @@ public class SelectionArbreFragment extends Fragment {
             treeCardNumber = mainView.findViewById(R.id.arbreLayout);
 
 
-            mEditText.setHint("Saisie n° d'arbre");
+            mEditText.setHint(R.string.hint_saisie);
 
             // Bouton 0
             mButton0.setOnClickListener(new View.OnClickListener() {
@@ -234,7 +234,7 @@ public class SelectionArbreFragment extends Fragment {
                             dejaSelectionneImage.setColorFilter(dejaSelectionneImage.getContext().getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
 
                             tvDejaSelectionne.setVisibility(View.VISIBLE);
-                            tvDejaSelectionne.setText("Cet arbre a déjà été martelé !");
+                            tvDejaSelectionne.setText(R.string.deja_martele);
                             cleanCard();
                         } else if (cur2.moveToFirst()) {
                             dejaSelectionneImage.setVisibility(View.VISIBLE);
@@ -242,7 +242,7 @@ public class SelectionArbreFragment extends Fragment {
                             dejaSelectionneImage.setColorFilter(dejaSelectionneImage.getContext().getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
 
                             tvDejaSelectionne.setVisibility(View.VISIBLE);
-                            tvDejaSelectionne.setText("Cet arbre a déjà été conservé !");
+                            tvDejaSelectionne.setText(R.string.deja_conserve);
 
                             cleanCard();
                         } else {
@@ -269,7 +269,7 @@ public class SelectionArbreFragment extends Fragment {
                             // Si l'arbre cherché n'existe pas, un message d'erreur est affiché
                             else {
                                 tvDejaSelectionne.setVisibility(View.VISIBLE);
-                                tvDejaSelectionne.setText("Cet arbre n'existe pas !");
+                                tvDejaSelectionne.setText(R.string.existe_pas);
 
                                 dejaSelectionneImage.setVisibility(View.VISIBLE);
                                 dejaSelectionneImage.setImageResource(R.drawable.alerte);

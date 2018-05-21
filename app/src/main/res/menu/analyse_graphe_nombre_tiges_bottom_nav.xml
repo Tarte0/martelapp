@@ -4,26 +4,26 @@
     <item
         android:id="@+id/action_graphe_essence_analyse"
         android:enabled="true"
-        android:icon="@drawable/info_carac_parcelle"
-        android:title="@string/analyse_graphe_Essence"
+        android:icon="@drawable/info_essences"
+        android:title="@string/analyse_graphe_Essence_nav"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_graphe_diametre_analyse"
         android:enabled="true"
         android:icon="@drawable/info_diametre"
-        android:title="@string/analyse_graphe_Diametre"
+        android:title="@string/analyse_graphe_Diametre_nav"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_graphe_note_eco_analyse"
         android:enabled="true"
         android:icon="@drawable/info_eco"
-        android:title="@string/analyse_graphe_Note_Eco"
+        android:title="@string/analyse_graphe_Note_Eco_nav"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_graphe_evolution_nb_tiges"
         android:enabled="true"
-        android:icon="@drawable/info_eco"
-        android:title="@string/analyse_graphe_Classe_Diametre"
+        android:icon="@drawable/classe_diametre"
+        android:title="@string/analyse_graphe_Classe_Diametre_nav"
         app:showAsAction="ifRoom" />
 </menu>

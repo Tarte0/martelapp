@@ -15,21 +15,8 @@
 
     <color name="colorRed">#e14b4b</color>
     <color name="colorGreen">#32af4b</color>
-    <color name="colorGrapheBlack">#000000</color>
 
-    <color name="colorGrapheRed">#ff0000</color>
-    <color name="colorGrapheLightPink">#FB8CFF</color>
-    <color name="colorGraphePurple">#8E24AA</color>
-    <color name="colorGrapheBlue">#1E88E5</color>
-    <color name="colorGrapheGreen">#43A047</color>
-    <color name="colorGrapheLime">#C0CA33</color>
-    <color name="colorGrapheYellow">#FDD835</color>
-    <color name="colorGrapheOrange">#FB8C00</color>
-    <color name="colorGrapheBrown">#c3834c</color>
-    <color name="colorGrapheGrey">#9E9E9E</color>
-    <color name="holoBlack">#000000aa</color>
 
-    <color name="background_conserve">#c6ffb3</color>
 
     <color name="button_pave_pressed">#777e84</color>
     <color name="button_pave_focused">#4f5459</color>

@@ -167,7 +167,7 @@
                         android:background="@color/colorPrimary"
                         android:scaleType="fitCenter"
                         android:tint="@color/colorWhite"
-                        app:srcCompat="@drawable/conserver" />
+                        app:srcCompat="@drawable/prochaine_fois" />
 
                     <TextView
                         android:id="@+id/imgProchaineFoisText"

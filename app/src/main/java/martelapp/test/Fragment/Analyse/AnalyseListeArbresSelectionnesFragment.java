@@ -269,7 +269,7 @@ public class AnalyseListeArbresSelectionnesFragment extends Fragment {
                         + " WHERE " + DatabaseHelper.NUMERO_ARBRE_TRAITE_RAISON + " = " + numero);
                 cur1.moveToFirst();
 
-                textRaison.setText("Arbre conservé pour la Biodiversité");
+                textRaison.setText(R.string.raison_conserve);
 
                 cur1 = dbHelper.executeQuery("SELECT * FROM " + DatabaseHelper.ARBRES_PARCELLE_TABLE + " WHERE " + DatabaseHelper.NUMERO_ARBRE_PARC + " = " + numero);
                 cur1.moveToFirst();

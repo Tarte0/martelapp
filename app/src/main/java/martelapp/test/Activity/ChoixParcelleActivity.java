@@ -546,7 +546,7 @@ public class ChoixParcelleActivity extends AppCompatActivity {
             getAllParcelle();
             textTemoin.setText("");
         } else {
-            textTemoin.setText("Pas de connexion internet get all parcelle");
+            textTemoin.setText(R.string.pas_de_co);
         }
     }
 }

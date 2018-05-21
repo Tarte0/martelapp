@@ -72,11 +72,6 @@
         <item name="android:clickable">true</item>
     </style>
 
-    <style name="button_tree_finder" parent="@android:style/Widget.Material.Button">
-        <item name="android:textSize">35sp</item>
-    </style>
-
-
 
     <style name="MatchSpinnerStyle" parent="android:style/Widget.ListView.DropDown">
         <item name="android:divider">#9ea4a3</item>

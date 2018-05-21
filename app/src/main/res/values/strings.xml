@@ -1,44 +1,30 @@
 <resources>
-    <string name="app_name">MartelApp</string>
-    <string name="angry_response">
-        Ça va pas la tête ?!\nOù est-ce que va habiter la faune qui entretient votre forêt si vous coupez des arbres aussi importants ?!
-    </string>
-    <string name="app_name_caps">MARTEL\'APP</string>
-    <string name="start">Démarrer</string>
-    <string name="consignes">CONSIGNES</string>
-    <string name="parcelle">PARCELLE</string>
-    <string name="arbres_marteles">ARBRES MARTELÉS</string>
+    <!-- ActivityMain -->
+    <string name="app_name">Martel\'App</string>
+    <string name="bouton_nouvel_exercice">Nouvel Exercice</string>
+    <string name="bouton_continuer_exercice">Continuer un ancien exercice</string>
+    <!-- ActivityMain -->
+
+
+    <!-- CHOIX PARCELLE -->
+    <string name="choix_parcelle_titre">Choix d\'une parcelle pour l\'exercice de martelage</string>
+    <string name="choix_parcelle_select">Sélectionner une parcelle :</string>
+    <string name="pas_de_co">Pas de connexion internet get all parcelle</string>
+    <string name="maj_bdd">Mise à jour Parcelle</string>
+    <string name="retour_main">Retour</string>
+    <!-- CHOIX PARCELLE -->
+
+
+    <!-- NOM EQUIPE -->
+    <string name="hint_nom_equipe">Nom Equipe</string>
+    <string name="saisir_nom">Veuillez saisir un nom</string>
+    <string name="bouton_commencer">Commencer</string>
+    <!-- NOM EQUIPE -->
+
+    <!--****************************************************** EXERCICE ******************************************************-->
+
+    <!-- Consignes -->
     <string name="general_caps">GÉNÉRAL</string>
-    <string name="volume_caps">VOLUME</string>
-    <string name="objectif_caps">OBJECTIFS</string>
-    <string name="biodiversite_caps">BIODIVERSITÉ</string>
-    <string name="exploitabilite_caps">EXPLOITABILITÉ</string>
-    <string name="rotations_caps">ROTATIONS</string>
-
-    <string name="caracteristique_parcelle_caps">CARACTERISTIQUES</string>
-    <string name="graphe_diametre_caps">DIAMETRE</string>
-    <string name="graphe_note_eco_caps">NOTE ECOLOGIQUE</string>
-    <string name="graphe_essence_caps">ESSENCE</string>
-    <string name="information_supplementaire_caps">INFORMATIONS</string>
-
-    <string name="analyse_respect_consignes">RESPECT DES CONSIGNES</string>
-    <string name="analyse_synthese">RESULTAT DU MARTELAGE</string>
-
-    <string name="analyse_arbres_selectionnes_marteles">ARBRES MARTELES</string>
-    <string name="analyse_arbres_selectionnes_conserves">ARBRES CONSERVES</string>
-
-    <string name="analyse_graphe_Essence">ESSENCE</string>
-    <string name="analyse_graphe_Diametre">DIAMETRE</string>
-    <string name="analyse_graphe_Note_Eco">NOTE ECOLOGIQUE</string>
-    <string name="analyse_graphe_Classe_Diametre">CLASSE DE DIAMETRE</string>
-
-
-    <string name="titre_respect_consignes">Ai-je respecté les consignes?</string>
-
-    <string name="titre_graphe_nbtige_diametre_info">Nombre de tiges par classe de diamètre</string>
-    <string name="titre_graphe_nbtige_noteeco_info">Nombre de tiges / Note écologique</string>
-    <string name="titre_graphe_nbtige_essence_info">Nombre de tiges / Essence</string>
-
     <string name="consignes_general">
         A travers l’exercice de martelage, il s’agit de vous :\n\n
         - Former au martelage et aux modes de gestion favorables à la biodiversité, à la naturalité,
@@ -47,79 +33,112 @@
         sur le peuplement.\n
     </string>
 
+    <string name="objectif_caps">OBJECTIFS</string>
 
-    <string name="consignes_exploitabilite">
-        Le diamètre d’exploitabilité est défini selon l’essence et la qualité.
-        \nPour les principales essences, ils correspondent à :
-        \n\n- Epicéa : de 50 à 70 cm\n- Sapin pectiné : de 45 à 50 cm\n- Hêtre : jusqu’à 50 cm
-        \n- Frêne, érables : à partir de 50 cm.;\n
-    </string>
+    <string name="button_go_to_info">> Consulter les infos de la parcelle</string>
+    <!-- Consignes -->
 
-    <string name="consignes_rotations">
-        C’est le nombre d’années entre 2 coupes.
-        \nEn général, il varie entre 5 et 15 ans mais il peut dépendre de la station
-        (sol, exposition, altitude…), des essences et des évènements extérieurs
-        (sécheresse, attaques parasitaires…).\n
-    </string>
 
-    <string name="info_exploitabilite_rotation">
-        <b>Exploitabilité</b>
-        \n
-        \nPour les principales essences :
-        \n- Epicéa : de 50 à 70 cm\n- Sapin pectiné : de 45 à 50 cm\n- Hêtre : jusqu’à 50 cm
-        \n- Frêne, érables : à partir de 50 cm
-        \n
-        \n
-        \n<b>Rotation</b>
-        \n
-        \nEn général, la rotation varie entre 5 et 15 ans.
+    <!-- INFOS -->
+    <string name="caracteristique_parcelle_caps">CARACTERISTIQUES</string>
 
-    </string>
+    <string name="graphe_diametre_caps">DIAMETRE</string>
+    <string name="titre_graphe_nbtige_diametre_info">Nombre de tiges par classe de diamètre</string>
 
-    <string name="choix_raison_martelage">
-        <b>Je le martèle :</b>
-    </string>
+    <string name="graphe_note_eco_caps">NOTE ECOLOGIQUE</string>
+    <string name="titre_graphe_nbtige_noteeco_info">Nombre de tiges / Note écologique</string>
 
-    <string name="titre_carte">
-        Carte de la parcelle
-    </string>
+    <string name="graphe_essence_caps">ESSENCE</string>
+    <string name="titre_graphe_nbtige_essence_info">Nombre de tiges / Essence</string>
 
-    <string name="titre_resume_exerice">
-        Point important de l\'exercice de martelage
-    </string>
+    <string name="button_go_to_carte">> Consulter la carte de la parcelle</string>
+    <!-- INFOS -->
 
-    <string name="titre_coupe_essence">
-        Répartition du prélèvement, nombre de tiges/essence
-    </string>
-    <string name="titre_coupe_diametre">
-        Répartition du prélèvement par classe de diamètre
-    </string>
-    <string name="titre_coupe_note_eco">
-        Répartition du prélèvement, nombre de tiges/note écologique
-    </string>
 
-    <string name="titre_coupe_volume">
-        Répartition du prélèvement, volume/diamètre
-    </string>
+    <!-- CARTE -->
+    <string name="titre_carte">Carte de la parcelle</string>
+    <!-- CARTE -->
 
-    <string name="titre_pourcentage_raison">
-        Pourcentage des raisons de martelage
-    </string>
 
-    <string name="titre_nb_tige_categorie_diametre">
-        Evolution du nombre de tige par classe de diamètre
-    </string>
+    <!-- SELECTION -->
+    <string name="hint_saisie">Saisie n° d\'arbre</string>
 
-    <string name="prelevement_volume_consigne">
-        Prelevement entre 1/5 et 1/3 du volume présent sur la parcelle
-    </string>
-    <string name="gros_diametre">
-        A gardé au moins 3 arbres de gros diamètre par hectare
-    </string>
-    <string name="eco_respect">
-        A gardé au moins 2 arbres porteurs de micros-habitats
-    </string>
+    <string name="textImgBoutonConserver">Je le conserve</string>
+    <string name="choix_conserver"><b>Je le conserve pour la biodiversité</b></string>
+    <string name="deja_conserve">Cet arbre a déjà été conservé !</string>
+    <string name="raison_conserve">Arbre conservé pour la Biodiversité</string>
 
+    <string name="textImgBoutonProchaineFois">Je le martèlerai une prochaine fois</string>
+
+    <string name="textImgBoutonMarteler">Je le martèle</string>
+    <string name="choix_raison_martelage"><b>Je le martèle :</b></string>
+    <string name="deja_martele">Cet arbre a déjà été martelé !</string>
+
+    <string name="existe_pas">Cet arbre n\'existe pas !</string>
+
+    <string name="angry_response">Ça va pas la tête ?!\nOù est-ce que va habiter la faune qui entretient votre forêt si vous coupez des arbres aussi importants ?!</string>
+    <!-- SELECTION -->
+
+    <!-- ARBRES SELECTIONNES -->
+    <string name="header_Numero">Numero</string>
+    <string name="header_Essence">Essence</string>
+    <string name="header_Diametre">Diamètre</string>
+    <string name="header_NoteEco">Note Ecologique</string>
+    <string name="bouton_terminer_exercice">Terminer l\'exercice</string>
+    <!-- ARBRES SELECTIONNES -->
+
+
+
+    <!--****************************************************** ANALYSE ******************************************************-->
+
+
+    <!-- RESUME -->
+    <string name="titre_respect_consignes">Ai-je respecté les consignes?</string>
+    <string name="titre_resultats">Résultat de votre martelage</string>
+
+    <string name="analyse_respect_consignes_nav">RESPECT DES CONSIGNES</string>
+    <string name="analyse_synthese_nav">RESULTAT DU MARTELAGE</string>
+    <!-- RESUME -->
+
+
+    <!-- LISTE ARBRES SELECTIONNES -->
+    <string name="type_arbres_liste_marteles">Arbres Martelés</string>
+    <string name="type_arbres_liste_conserves">Arbres Conservés</string>
+
+    <string name="analyse_arbres_selectionnes_marteles_nav">ARBRES MARTELES</string>
+    <string name="analyse_arbres_selectionnes_conserves_nav">ARBRES CONSERVES</string>
+    <!-- LISTE ARBRES SELECTIONNES -->
+
+
+    <!-- GRAPHE VOLUME -->
+    <string name="titre_coupe_volume">Répartition du prélèvement, volume/diamètre</string>
+    <!-- GRAPHE VOLUME -->
+
+
+    <!-- GRAPHE NB TIGES -->
+    <string name="titre_nb_tige_essence">Nombre de tiges / Essence</string>
+    <string name="titre_nb_tige_diametre">Nombre de tiges par classe de diamètre</string>
+    <string name="titre_nb_tige_note_eco">Nombre de tiges / Note écologique</string>
+    <string name="titre_nb_tige_categorie_diametre">Evolution du nombre de tige par classe de diamètre</string>
+
+    <string name="analyse_graphe_Essence_nav">ESSENCE</string>
+    <string name="analyse_graphe_Diametre_nav">DIAMETRE</string>
+    <string name="analyse_graphe_Note_Eco_nav">NOTE ECOLOGIQUE</string>
+    <string name="analyse_graphe_Classe_Diametre_nav">CLASSE DE DIAMETRE</string>
+    <!-- GRAPHE NB TIGES -->
+
+
+    <!-- GRAPHE RAISONS -->
+    <string name="titre_pourcentage_raison">Pourcentage des raisons de martelage</string>
+    <!-- GRAPHE RAISONS -->
+
+
+    <!-- CARTE PARCELLE -->
+    <string name="bouton_terminer_analyse">Terminer analyse</string>
+    <!-- CARTE PARCELLE -->
+
+
+    <!-- GRAPHE LEGENDE -->
     <string name="axe_volume_m3">
         Volume (m3)
     </string>
@@ -141,38 +160,7 @@
     <string name="axe_pourcentage_raison">
         Pourcentage (Nombre raison / Total arbres martelés)
     </string>
-    <string name="button_go_to_info">
-        > Consulter les infos de la parcelle
-    </string>
-    <string name="button_go_to_carte">
-        > Consulter la carte de la parcelle
-    </string>
+    <!-- GRAPHE LEGENDE -->
 
 
-    <string name="choix_conserver">
-        <b>Je le conserve pour la biodiversité</b>
-    </string>
-
-    <string name="type_arbres_liste_marteles">
-        Arbres Martelés
-    </string>
-
-
-    <string name="type_arbres_liste_conserves">
-        Arbres Conservés
-    </string>
-
-    <string name="textImgBoutonConserver">
-        Je le conserve
-    </string>
-    <string name="textImgBoutonMarteler">
-        Je le martèle
-    </string>
-    <string name="textImgBoutonProchaineFois">
-        Je le martèlerai une prochaine fois
-    </string>
-
-    <string name="bouton_terminer_analyse">
-        Terminer analyse
-    </string>
 </resources>

@@ -29,7 +29,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:layout_weight="3"
-            android:text="Martel'App"
+            android:text="@string/app_name"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="55sp"
@@ -48,15 +48,18 @@
             android:padding="8dp"
             android:weightSum="2">
 
-            <Button
+            <ImageButton
                 android:id="@+id/test_maj_bdd"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
+                android:scaleType="fitCenter"
                 android:background="@color/colorWhite"
-                android:text="                " />
+                android:tint="@color/bouton_actualiser_liste"
+                android:text=""
+                app:srcCompat="@drawable/parametres_maj_bdd"/>
 
 
         </LinearLayout>
@@ -99,7 +102,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_weight="3"
-                android:text="Nouvel Exercice" />
+                android:text="@string/bouton_nouvel_exercice" />
         </LinearLayout>
 
     </LinearLayout>
@@ -129,7 +132,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:text="Continuer un ancien exercice"/>
+            android:text="@string/bouton_continuer_exercice"/>
 
 
     </LinearLayout>

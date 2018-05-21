@@ -162,7 +162,7 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
                                 previous.setVisibility(View.INVISIBLE);
                                 next.setVisibility(View.VISIBLE);
 
-                                textTitleGraphe.setText(R.string.titre_graphe_nbtige_essence_info);
+                                textTitleGraphe.setText(R.string.titre_nb_tige_essence);
                                 textAxe.setText(R.string.axe_nombre_tiges);
                                 textAxe.setVisibility(View.VISIBLE);
 
@@ -184,7 +184,7 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.VISIBLE);
 
-                                textTitleGraphe.setText(R.string.titre_graphe_nbtige_diametre_info);
+                                textTitleGraphe.setText(R.string.titre_nb_tige_diametre);
                                 textAxe.setText(R.string.axe_nombre_tiges);
                                 textAxe.setVisibility(View.VISIBLE);
 
@@ -206,7 +206,7 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.VISIBLE);
 
-                                textTitleGraphe.setText(R.string.titre_graphe_nbtige_noteeco_info);
+                                textTitleGraphe.setText(R.string.titre_nb_tige_note_eco);
                                 textAxe.setText(R.string.axe_nombre_tiges);
                                 textAxe.setVisibility(View.VISIBLE);
 
