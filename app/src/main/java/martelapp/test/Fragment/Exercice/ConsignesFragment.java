@@ -112,8 +112,8 @@ public class ConsignesFragment extends Fragment {
                             "<br>- Hêtre : jusqu'à 50 cm" +
                             "<br>- Frêne, Érables : à partir de 50 cm</i>" +
                             "<br><br><b>Biodiversité</b>" +
-                            "<br>• Conservez sciemment au moins 3 arbres de gros diamètre par hectare." +
-                            "<br>• Conservez sciemment au moins 2 arbres porteurs de micros-habitats par hectare.");
+                            "<br>• Conserver sciemment au moins 3 arbres de gros diamètre par hectare." +
+                            "<br>• Conserver sciemment au moins 2 arbres porteurs de micros-habitats par hectare.");
 
             //on gere le swipe gauche et droite (un peu brute)
             view.setOnTouchListener(new OnSwipeTouchListener(view.getContext()) {
