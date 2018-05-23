@@ -165,6 +165,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+        Button enSavoirPlus = findViewById(R.id.en_savoir_plus);
+        enSavoirPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), EnSavoirPlusActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
     }
 
 

@@ -42,7 +42,7 @@
                 android:checked="false"
                 android:gravity="left|center"
                 android:layoutDirection="ltr"
-                android:text="Parce que l'arbre est mûr"
+                android:text="@string/raison_1"
                 android:textSize="24sp" />
 
             <CheckBox
@@ -52,7 +52,7 @@
                 android:layout_weight="1"
                 android:gravity="left|center"
                 android:layoutDirection="ltr"
-                android:text="Pour apporter de l'éclaircie au profit d'un arbre d'avenir"
+                android:text="@string/raison_2"
                 android:textSize="24sp" />
 
             <CheckBox
@@ -62,7 +62,7 @@
                 android:layout_weight="1"
                 android:gravity="left|center"
                 android:layoutDirection="ltr"
-                android:text="Pour des raisons sanitaire"
+                android:text="@string/raison_3"
                 android:textSize="24sp" />
 
             <CheckBox
@@ -72,7 +72,7 @@
                 android:layout_weight="1"
                 android:gravity="left|center"
                 android:layoutDirection="ltr"
-                android:text="Pour la régénération"
+                android:text="@string/raison_4"
                 android:textSize="24sp" />
 
             <CheckBox
@@ -82,17 +82,7 @@
                 android:layout_weight="1"
                 android:gravity="left|center"
                 android:layoutDirection="ltr"
-                android:text="Pour l'exploitation"
-                android:textSize="24sp" />
-
-            <CheckBox
-                android:id="@+id/stabilite"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="left|center"
-                android:layoutDirection="ltr"
-                android:text="Pour la stabilité"
+                android:text="@string/raison_5"
                 android:textSize="24sp" />
 
         </LinearLayout>

@@ -88,7 +88,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String SANITAIRE        = "Sanitaire";
     public static final String REGENERATION     = "Régénération";
     public static final String EXPLOITATION     = "Exploitation";
-    public static final String STABILITE        = "Stabilité";
     public static final String BIODIVERSITE     = "Biodiversité";
 
     public static final int MIN_PRELEVEMENT = 90;

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="6"
+    android:background="@color/colorBackground"
+    tools:context="martelapp.test.Activity.MainActivity">
+
+
+    <TextView
+        android:id="@+id/titre_en_savoir_plus"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/bouton_en_savoir_plus"
+        android:textColor="@color/colorPrimary"
+        android:textSize="40sp"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/text_en_savoir_plus"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:layout_margin="8dp"
+        android:text="Cette application à été réalisée dans le cadre d'un projet de licence 3 d'informatique."
+        android:textColor="@color/colorBlack"
+        android:textSize="25sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:weightSum="10">
+
+        <TextView
+            android:id="@+id/text_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:text="Parc régional du Massif des Bauges"
+            android:textColor="@color/colorBlack"
+            android:textSize="25sp"/>
+
+
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="fill_parent"
+            android:background="@color/colorPrimary" />
+
+
+        <TextView
+            android:id="@+id/text_2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="5"
+            android:text="Etudiants de l'Université de Savoie Mont Blanc : \n-Truc\n-Truc\n-Truc\n-Truc\n-Truc"
+            android:textColor="@color/colorBlack"
+            android:textSize="25sp"/>
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bouton_retour"
+        style="@style/button_vert"
+        android:layout_width="150dp"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        android:layout_weight="0.5"
+        android:layout_gravity="bottom|left"
+        android:text="@string/retour_main" />
+
+
+</LinearLayout>
+

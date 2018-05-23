@@ -12,6 +12,13 @@
     <color name="colorBarOrange">#e1af4b</color>
     <color name="colorBarGreen">#d34141</color>
 
+    <color name="colorBarVivant">#4fb286</color>
+    <color name="colorBarMortPied">#b5845f</color>
+    <color name="colorBarMortSol">#553d36</color>
+
+    <color name="colorPieRaison">#b2b8c4</color>
+
+
     <color name="pdfGrey">#707070</color>
 
     <color name="colorRed">#e14b4b</color>

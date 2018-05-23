@@ -24,17 +24,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:weightSum="10"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/textViewConserver"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="4dp"
                     android:text="@string/choix_conserver"
                     android:textColor="@color/colorBlack"
                     android:textSize="30sp"/>
+
+                <TextView
+                    android:id="@+id/textViewConserverExplication"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="9"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/raison_conserve_text"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="25sp"/>
 
 
 

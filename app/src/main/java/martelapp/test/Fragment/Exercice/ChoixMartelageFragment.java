@@ -26,7 +26,7 @@ import martelapp.test.R;
  */
 
 public class ChoixMartelageFragment extends DialogFragment {
-    CheckBox arbreMur, eclaircie, sanitaire, regeneration, exploitation, stabilite;
+    CheckBox arbreMur, eclaircie, sanitaire, regeneration, exploitation;
     Button  boutonMarteler,
             buttonCancel;
 
@@ -56,7 +56,6 @@ public class ChoixMartelageFragment extends DialogFragment {
         sanitaire = (CheckBox) view.findViewById(R.id.sanitaire);
         regeneration = (CheckBox) view.findViewById(R.id.regeneration);
         exploitation = (CheckBox) view.findViewById(R.id.exploitation);
-        stabilite = (CheckBox) view.findViewById(R.id.stabilite);
 
         boutonMarteler = (Button) view.findViewById(R.id.boutonMarteler);
         buttonCancel = (Button) view.findViewById(R.id.cancel);
@@ -141,7 +140,7 @@ public class ChoixMartelageFragment extends DialogFragment {
 
     // Savoir si une raison est bien cochée au minimum
     public boolean possedeRaison() {
-        if (arbreMur.isChecked() || eclaircie.isChecked() || sanitaire.isChecked() || regeneration.isChecked() || exploitation.isChecked() || stabilite.isChecked()) {
+        if (arbreMur.isChecked() || eclaircie.isChecked() || sanitaire.isChecked() || regeneration.isChecked() || exploitation.isChecked()) {
             return true;
         }
         return false;
@@ -163,9 +162,6 @@ public class ChoixMartelageFragment extends DialogFragment {
         }
         if (exploitation.isChecked()) {
             dbHelper.insertRaison(numeroArbre, DatabaseHelper.EXPLOITATION);
-        }
-        if (stabilite.isChecked()) {
-            dbHelper.insertRaison(numeroArbre, DatabaseHelper.STABILITE);
         }
     }
 

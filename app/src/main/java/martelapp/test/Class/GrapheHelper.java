@@ -130,9 +130,9 @@ public class GrapheHelper {
 
         //add colors to dataset
         ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(context.getResources().getColor(R.color.colorBarBlue));
-        colors.add(context.getResources().getColor(R.color.colorBarOrange));
-        colors.add(context.getResources().getColor(R.color.colorBarGreen));
+        colors.add(context.getResources().getColor(R.color.colorBarVivant));
+        colors.add(context.getResources().getColor(R.color.colorBarMortPied));
+        colors.add(context.getResources().getColor(R.color.colorBarMortSol));
 
         barDataSet.setColors(colors);
         barDataSet.setValueFormatter(new StackedBarFormatter(" | ", 0));
@@ -196,9 +196,9 @@ public class GrapheHelper {
 
         // ArrayList contenant les textes des états des arbres pour la légende
         ArrayList<String> titleList = new ArrayList<>();
-        titleList.add("Arbres Vivant");
-        titleList.add("Arbres Mort sur Pied");
-        titleList.add("Arbres Mort sur Sol");
+        titleList.add("Arbres vivant");
+        titleList.add("Arbres morts sur pied");
+        titleList.add("Arbres morts au sol");
 
         // Listes des Entrées de la légende
         ArrayList<LegendEntry> legendeEntrees = new ArrayList<>();
@@ -296,9 +296,9 @@ public class GrapheHelper {
 
         //add colors to dataset
         ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(context.getResources().getColor(R.color.colorBarBlue));
-        colors.add(context.getResources().getColor(R.color.colorBarOrange));
-        colors.add(context.getResources().getColor(R.color.colorBarGreen));
+        colors.add(context.getResources().getColor(R.color.colorBarVivant));
+        colors.add(context.getResources().getColor(R.color.colorBarMortPied));
+        colors.add(context.getResources().getColor(R.color.colorBarMortSol));
 
         barDataSet.setColors(colors);
 
@@ -363,8 +363,8 @@ public class GrapheHelper {
         // ArrayList contenant les textes des états des arbres pour la légende
         ArrayList<String> titleList = new ArrayList<>();
         titleList.add("Arbres Vivant");
-        titleList.add("Arbres Mort sur Pied");
-        titleList.add("Arbres Mort sur Sol");
+        titleList.add("Arbres morts sur pied");
+        titleList.add("Arbres morts au sol");
 
         // Listes des Entrées de la légende
         ArrayList<LegendEntry> legendeEntrees = new ArrayList<>();
@@ -1661,7 +1661,7 @@ public class GrapheHelper {
         pieChartApres.getDescription().setPosition(500f,70f);
         pieChartApres.setTouchEnabled(false);
 
-        pieChartApres.setExtraOffsets(0f,10f,0f,0f);
+        pieChartApres.setExtraOffsets(35f,10f,0f,35f);
 
         // Désactiver le trou du pie chart
         pieChartApres.setDrawHoleEnabled(false);
@@ -1677,19 +1677,14 @@ public class GrapheHelper {
          */
         // Récupération de la légende du graphe
         Legend legendeAvant = pieChartAvant.getLegend();
-        Legend legendeApres = pieChartApres.getLegend();
+        //Pas de légende sur le deuxième graphe
+        pieChartApres.getLegend().setEnabled(false);
         // Forme de la légende
         legendeAvant.setYOffset(20f);
         legendeAvant.setForm(Legend.LegendForm.SQUARE);
         legendeAvant.setTextSize(20f);
         legendeAvant.setFormSize(12f);
         legendeAvant.setXEntrySpace(15f);
-
-        legendeApres.setYOffset(20f);
-        legendeApres.setForm(Legend.LegendForm.SQUARE);
-        legendeApres.setTextSize(20f);
-        legendeApres.setFormSize(12f);
-        legendeApres.setXEntrySpace(15f);
 
         // Listes des Entrées de la légende
         ArrayList<LegendEntry> legendeEntrees = new ArrayList<>();
@@ -1705,9 +1700,8 @@ public class GrapheHelper {
 
         // Set la légende avec les entrées
         legendeAvant.setCustom(legendeEntrees);
-        legendeApres.setCustom(legendeEntrees);
 
-        legendeApres.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        //legendeAvant.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
 
 
 
@@ -1810,7 +1804,7 @@ public class GrapheHelper {
 
         BarDataSet barDataSet = new BarDataSet(entriesRaisonPercentage, "");
 
-        barDataSet.setColors(context.getResources().getColor(R.color.colorBarBlue));
+        barDataSet.setColors(context.getResources().getColor(R.color.colorPieRaison));
 
 
         barChart.setTouchEnabled(false);

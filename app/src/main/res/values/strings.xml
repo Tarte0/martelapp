@@ -1,8 +1,9 @@
 <resources>
     <!-- ActivityMain -->
     <string name="app_name">Martel\'App</string>
-    <string name="bouton_nouvel_exercice">Nouvel Exercice</string>
+    <string name="bouton_nouvel_exercice">Nouvel exercice</string>
     <string name="bouton_continuer_exercice">Continuer un ancien exercice</string>
+    <string name="bouton_en_savoir_plus">En savoir plus</string>
     <!-- ActivityMain -->
 
 
@@ -48,10 +49,10 @@
     <string name="titre_graphe_nbtige_diametre_info">Nombre de tiges par classe de diamètre</string>
 
     <string name="graphe_note_eco_caps">NOTE ECOLOGIQUE</string>
-    <string name="titre_graphe_nbtige_noteeco_info">Nombre de tiges / Note écologique</string>
+    <string name="titre_graphe_nbtige_noteeco_info">Nombre de tiges par note écologique</string>
 
     <string name="graphe_essence_caps">ESSENCE</string>
-    <string name="titre_graphe_nbtige_essence_info">Nombre de tiges / Essence</string>
+    <string name="titre_graphe_nbtige_essence_info">Nombre de tiges par essence</string>
 
     <string name="button_go_to_carte">> Consulter la carte de la parcelle</string>
     <!-- INFOS -->
@@ -63,12 +64,17 @@
 
 
     <!-- SELECTION -->
-    <string name="hint_saisie">Saisie n° d\'arbre</string>
+    <string name="hint_saisie">Saisir le numéro d\'un arbre</string>
 
-    <string name="textImgBoutonConserver">Je le conserve</string>
-    <string name="choix_conserver"><b>Je le conserve pour la biodiversité</b></string>
+    <string name="textImgBoutonConserver">Je le conserve pour la biodiversité</string>
+    <string name="choix_conserver"><b>Je le conserve pour la biodiversité :</b></string>
     <string name="deja_conserve">Cet arbre a déjà été conservé !</string>
     <string name="raison_conserve">Arbre conservé pour la Biodiversité</string>
+    <string name="raison_conserve_text">Cet arbre sera immobilisé sur plusieurs dizaines d\'années pour permettre la réalisation du stade final du cycle naturel de l\'arbre. Il s\'agit de le laisser vieillir jusqu\'à son écroulement.
+        \nEn vieillissant, il développe des micro-habitats (cavité, fissure, décollement d\'écorce&#8230;) pour l\'accueil de nombreuses espèces (pics, chouettes, petits mammifères, insectes, champignons&#8230;).
+        Puis en tombant au sol, il sera décomposé par les micro-organismes, pour réintégrer le sol forestier.
+        \nPlus son diamètre est important, plus sa capacité d\'accueil de la biodiversité est favorable.
+    </string>
 
     <string name="textImgBoutonProchaineFois">Je le martèlerai une prochaine fois</string>
 
@@ -76,16 +82,22 @@
     <string name="choix_raison_martelage"><b>Je le martèle :</b></string>
     <string name="deja_martele">Cet arbre a déjà été martelé !</string>
 
+    <string name="raison_1">Parce que l\'arbre est mûr</string>
+    <string name="raison_2">Pour éclaircir au profit d\'un arbre d\'avenir</string>
+    <string name="raison_3">Pour des raisons sanitaires</string>
+    <string name="raison_4">Pour favoriser la régénération</string>
+    <string name="raison_5">Pour faciliter l\'exploitation</string>
+
     <string name="existe_pas">Cet arbre n\'existe pas !</string>
 
     <string name="angry_response">Ça va pas la tête ?!\nOù est-ce que va habiter la faune qui entretient votre forêt si vous coupez des arbres aussi importants ?!</string>
     <!-- SELECTION -->
 
     <!-- ARBRES SELECTIONNES -->
-    <string name="header_Numero">Numero</string>
+    <string name="header_Numero">Numéro</string>
     <string name="header_Essence">Essence</string>
     <string name="header_Diametre">Diamètre</string>
-    <string name="header_NoteEco">Note Ecologique</string>
+    <string name="header_NoteEco">Note écologique</string>
     <string name="bouton_terminer_exercice">Terminer l\'exercice</string>
     <!-- ARBRES SELECTIONNES -->
 
@@ -95,11 +107,11 @@
 
 
     <!-- RESUME -->
-    <string name="titre_respect_consignes">Ai-je respecté les consignes?</string>
+    <string name="titre_respect_consignes">Ai-je respecté les consignes ?</string>
     <string name="titre_resultats">Résultat de votre martelage</string>
 
     <string name="analyse_respect_consignes_nav">RESPECT DES CONSIGNES</string>
-    <string name="analyse_synthese_nav">RESULTAT DU MARTELAGE</string>
+    <string name="analyse_synthese_nav">SYNTHESE DE L\'EXERCICE</string>
     <!-- RESUME -->
 
 
@@ -113,15 +125,15 @@
 
 
     <!-- GRAPHE VOLUME -->
-    <string name="titre_coupe_volume">Répartition du prélèvement, volume/diamètre</string>
+    <string name="titre_coupe_volume">Répartition du prélèvement en volume par classe de diamètre</string>
     <!-- GRAPHE VOLUME -->
 
 
     <!-- GRAPHE NB TIGES -->
-    <string name="titre_nb_tige_essence">Nombre de tiges / Essence</string>
-    <string name="titre_nb_tige_diametre">Nombre de tiges par classe de diamètre</string>
-    <string name="titre_nb_tige_note_eco">Nombre de tiges / Note écologique</string>
-    <string name="titre_nb_tige_categorie_diametre">Evolution du nombre de tige par classe de diamètre</string>
+    <string name="titre_nb_tige_essence">Répartition du prélèvement en nombre de tiges par essence</string>
+    <string name="titre_nb_tige_diametre">Répartition du prélèvement en nombre de tiges par classe de diamètre</string>
+    <string name="titre_nb_tige_note_eco">Répartition du prélèvement en nombre de tiges par note écologique</string>
+    <string name="titre_nb_tige_categorie_diametre">Evolution du nombre de tiges par classe de diamètre</string>
 
     <string name="analyse_graphe_Essence_nav">ESSENCE</string>
     <string name="analyse_graphe_Diametre_nav">DIAMETRE</string>
@@ -131,14 +143,14 @@
 
 
     <!-- GRAPHE RAISONS -->
-    <string name="titre_pourcentage_raison">Pourcentage des raisons de martelage</string>
+    <string name="titre_pourcentage_raison">Répartition des raisons de martelage</string>
     <!-- GRAPHE RAISONS -->
 
     <!-- GRAPHE CARTE ANALYSE -->
-    <string name="titre_carte_analyse">Récapitulatif géographique de l\'exercice</string>
+    <string name="titre_carte_analyse">Carte des arbres martelés et conservés</string>
 
     <!-- CARTE PARCELLE -->
-    <string name="bouton_terminer_analyse">Sauvegarder l\'exercice et terminer l\'analyse</string>
+    <string name="bouton_terminer_analyse"> Terminer l\'exercice et sauvegarder l\'analyse</string>
     <!-- CARTE PARCELLE -->
 
 
@@ -162,7 +174,7 @@
         Raison
     </string>
     <string name="axe_pourcentage_raison">
-        Pourcentage (Nombre raison / Total arbres martelés)
+        Pourcentage
     </string>
     <!-- GRAPHE LEGENDE -->
 

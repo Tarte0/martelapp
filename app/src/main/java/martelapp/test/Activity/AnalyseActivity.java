@@ -108,7 +108,7 @@ public class AnalyseActivity extends AppCompatActivity {
 
         analyseGrapheCarteFragment = new AnalyseGrapheCarteFragment();
 
-        adapter.addFragment(analyseResultatFragment, "Résumé");
+        adapter.addFragment(analyseResultatFragment, "Résultats");
         adapter.addFragment(analyseListeArbresSelectionnesFragment, "Arbres Sélectionnes");
         adapter.addFragment(analyseGrapheVolumeFragment, "Graphe volume");
         adapter.addFragment(analyseGrapheNombreTigesFragment, "Graphe nombre de tiges");

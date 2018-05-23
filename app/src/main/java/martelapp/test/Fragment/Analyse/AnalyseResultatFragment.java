@@ -259,7 +259,7 @@ public class AnalyseResultatFragment extends Fragment {
             //tvPrelevementVolumeR.setTextColor(getResources().getColor(R.color.colorRed));
             tvPrelevementVolumeR.setText(Html.fromHtml(
                     "<i>Prélever entre " + prelevementMin + "% et " + prelevementMax + "% du volume de bois de la parcelle." +
-                            "<br>(Entre " + (int)(volumeBoisTotalParcelle * prelevementMin / 100)  + " et " + (int)(volumeBoisTotalParcelle * prelevementMax / 100) + " m3 pour notre parcelle)</i>" +
+                            "<br>(Soit entre " + (int)(volumeBoisTotalParcelle * prelevementMin / 100)  + " et " + (int)(volumeBoisTotalParcelle * prelevementMax / 100) + " m3 pour notre parcelle)</i>" +
                             "<br><font color='#e14b4b'>Volume prélevé : "+ df.format(volumeTotalBoisMartele) + " m3 (" + df.format(volumeMartelePourcent) + "%)</font>" ));
             ivPrelevementVolumeR.setColorFilter(getResources().getColor(R.color.colorRed));
             ivPrelevementVolumeR.setImageResource(R.drawable.cross);
@@ -267,7 +267,7 @@ public class AnalyseResultatFragment extends Fragment {
         else{
             tvPrelevementVolumeR.setText(Html.fromHtml(
                     "<i>Prélever entre " + prelevementMin + "% et " + prelevementMax + "% du volume de bois de la parcelle." +
-                            "<br>(Entre " + (int)(volumeBoisTotalParcelle * prelevementMin / 100)  + " et " + (int)(volumeBoisTotalParcelle * prelevementMax / 100) + "m3 pour notre parcelle)</i>" +
+                            "<br>(Soit entre " + (int)(volumeBoisTotalParcelle * prelevementMin / 100)  + " et " + (int)(volumeBoisTotalParcelle * prelevementMax / 100) + "m3 pour notre parcelle)</i>" +
                             "<br><font color='#32af4b'>Volume prélevé : "+ df.format(volumeTotalBoisMartele) + " m3 (" + df.format(volumeMartelePourcent) + "%)</font>"));
         }
 
@@ -395,7 +395,7 @@ public class AnalyseResultatFragment extends Fragment {
 
         System.out.println(noteEcoAvant + " - " + noteEcoMartele);
 
-        tvNoteEco.setText(Integer.toString((int)pourcentageNoteEcoMartelage) + "%\nDu total des notes écologique martelés");
+        tvNoteEco.setText(Integer.toString((int)pourcentageNoteEcoMartelage) + "%\nDu total des notes écologiques ont été martelés");
 
         dbHelper.close();
         cur.close();

@@ -113,7 +113,9 @@ public class ConsignesFragment extends Fragment {
                             "<br>- Frêne, Érables : à partir de 50 cm</i>" +
                             "<br><br><b>Biodiversité</b>" +
                             "<br>• Conserver sciemment au moins 3 arbres de gros diamètre par hectare." +
-                            "<br>• Conserver sciemment au moins 2 arbres porteurs de micros-habitats par hectare.");
+                            "<br>• Conserver sciemment au moins 2 arbres porteurs de micros-habitats par hectare." +
+                            "<br>Les arbres ainsi conservés seront immobilisés sur plusieurs dizaines d'années pour permettre la réalisation du stade final du cycle naturel de la forêt, particulièrement favorable à la biodiversité. " +
+                            "<br>Il s'agit de les laisser vieillir jusqu'à leurs écroulements. ");
 
             //on gere le swipe gauche et droite (un peu brute)
             view.setOnTouchListener(new OnSwipeTouchListener(view.getContext()) {
@@ -182,7 +184,7 @@ public class ConsignesFragment extends Fragment {
                                 case R.id.action_objectif:
                                     textViewTitleConsignes.setText(R.string.objectif_caps);
                                     textViewConsignes.setText(objectifs);
-                                    textViewConsignes.setTextSize(21);
+                                    textViewConsignes.setTextSize(18);
                                     previous.setVisibility(View.VISIBLE);
                                     next.setVisibility(View.INVISIBLE);
                                     buttonGoToInfos.setVisibility((View.VISIBLE));

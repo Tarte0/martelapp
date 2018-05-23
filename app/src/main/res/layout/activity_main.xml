@@ -113,62 +113,35 @@
     </LinearLayout>
 
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        android:weightSum="10">
+        android:padding="8dp">
 
-        <ImageView
-            android:id="@+id/logo1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/logo_iseta_2" />
-        <ImageView
-            android:id="@+id/logo2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/logo_ufp74_bauges" />
-        <ImageView
-            android:id="@+id/logo3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/logo_crpf_3" />
-        <ImageView
-            android:id="@+id/logo4"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/logo_parc_geoparks_unesco_signature" />
-
-        <android.support.v4.widget.Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3" />
 
         <Button
             android:id="@+id/continuer_exercice"
             style="@style/button_vert"
-            android:layout_width="0dp"
+            android:layout_width="250dp"
             android:layout_height="70sp"
+            android:layout_margin="8dp"
+            android:text="@string/bouton_continuer_exercice"
             android:textSize="20sp"
-            android:layout_weight="2"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:text="@string/bouton_continuer_exercice"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <Button
+            android:id="@+id/en_savoir_plus"
+            style="@style/button_vert"
+            android:layout_width="250dp"
+            android:layout_height="70sp"
+            android:layout_margin="8dp"
+            android:text="@string/bouton_en_savoir_plus"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </LinearLayout>

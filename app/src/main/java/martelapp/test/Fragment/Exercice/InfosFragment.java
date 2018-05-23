@@ -70,8 +70,7 @@ public class InfosFragment extends Fragment {
     DecimalFormat df;
 
     int altitude = 0,
-            densiteVivantMortPied = 0,
-            densiteMortSol = 0;
+            densiteVivantMortPied = 0;
 
     double surfaceParcelle = 0f,
             volumeVivantMortPied = 0f,
@@ -112,14 +111,24 @@ public class InfosFragment extends Fragment {
             GrapheHelper.getBarChartInfosNoteEcologique(view.getContext(), barChartNoteEco);
             GrapheHelper.getPieChartInfosEssence(view.getContext(), pieChartEssence);
 
-            caracteristique = String.format("• altitude : %d mètres\n\n"
-                            + "• habitat naturel : %s\n\n"
-                            + "• surface : %s ha\n\n"
-                            + "• densité (vivants et morts sur pied) : %d tiges/ha\n\n"
-                            + "• volume : %d m3/ha\n\n"
-                            + "• densité de bois mort au sol : %d tiges/ha\n\n"
-                            + "• volume de bois mort au sol : %d m3/ha",
-                    altitude, habitat, df.format(surfaceParcelle), densiteVivantMortPied, (int) volumeVivantMortPied, densiteMortSol, (int) volumeMortSol);
+            if((int) volumeMortSol == 0 ) {
+                caracteristique = String.format("• altitude : %d mètres\n\n"
+                                + "• habitat naturel : %s\n\n"
+                                + "• surface : %s ha\n\n"
+                                + "• densité (vivants et morts sur pied) : %d tiges/ha\n\n"
+                                + "• volume : %d m3/ha\n\n"
+                                + "• volume de bois mort au sol : inconnu",
+                        altitude, habitat, df.format(surfaceParcelle), densiteVivantMortPied, (int) volumeVivantMortPied);
+            }
+            else{
+                caracteristique = String.format("• altitude : %d mètres\n\n"
+                                + "• habitat naturel : %s\n\n"
+                                + "• surface : %s ha\n\n"
+                                + "• densité (vivants et morts sur pied) : %d tiges/ha\n\n"
+                                + "• volume : %d m3/ha\n\n"
+                                + "• volume de bois mort au sol : %d m3/ha",
+                        altitude, habitat, df.format(surfaceParcelle), densiteVivantMortPied, (int) volumeVivantMortPied, (int) volumeMortSol);
+            }
 
             layoutParamsTextViewInfoCaracteristique = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 9);
             layoutParamsTextViewInfoGraphe = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.5f);
@@ -338,17 +347,13 @@ public class InfosFragment extends Fragment {
         cur1.moveToFirst();
         volumeMortSol = cur1.getDouble(0);
 
-        cur1 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE,
-                DatabaseHelper.ETAT_ARBRE + " = 'ms'");
-        cur1.moveToFirst();
-        densiteMortSol = cur1.getCount();
+
 
         // Valeurs ramenées à l'hectare
         volumeVivantMortPied = volumeVivantMortPied / surfaceParcelle;
         volumeMortSol = volumeMortSol / surfaceParcelle;
 
         densiteVivantMortPied = (int) (densiteVivantMortPied / surfaceParcelle);
-        densiteMortSol = (int) (densiteMortSol / surfaceParcelle);
 
         dbHelper.close();
         cur1.close();
