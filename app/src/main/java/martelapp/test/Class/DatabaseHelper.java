@@ -379,7 +379,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         contentValues.put(NOM_TARIF, nomTarif);
         contentValues.put(VERSION_TARIF, versionTarif);
 
-        long res = db.insert(TYPE_ARBRE_TABLE, null, contentValues);
+        long res = db.insert(TARIF_VOLUME_TABLE, null, contentValues);
 
         return res != -1;
     }

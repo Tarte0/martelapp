@@ -441,7 +441,7 @@ public class ChoixParcelleActivity extends AppCompatActivity {
 
 
                     cur.close();
-                    
+
                     VolumeCalculator volumeCalculator = new VolumeCalculator(prixBoisChauffage, prixBoisIndustrie, prixBoisOeuvre, essence_type, nomTarifResineux, versionTarifResineux, nomTarifFeuillus, versionTarifFeuillus);
 
                     /*
@@ -463,10 +463,12 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                             HashMap.Entry pair = (HashMap.Entry)it.next();
                             Tree arbre = (Tree) pair.getValue();
 
-                            //Double volumeCom = volumeCalculator.getVolumeCommercial(arbre);
-                            //Double valeurEco = volumeCalculator.getValeurEco(arbre);
+                            Double volumeCom = volumeCalculator.getVolumeCommercial(arbre);
+                            Double valeurEco = volumeCalculator.getValeurEco(arbre);
 
-                            /*dbHelper.insertArbreParcelle(
+                            System.out.println("Arbre n°" + arbre.getNumero() + " Volume : " + Double.toString(volumeCom) + " - Valeur Eco : " + Double.toString(valeurEco));
+
+                            dbHelper.insertArbreParcelle(
                                     arbre.numero,
                                     arbre.essence,
                                     arbre.diametre,
@@ -478,7 +480,7 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                                     arbre.utilisationBois.industrie,
                                     arbre.utilisationBois.oeuvre,
                                     volumeCom,
-                                    valeurEco);*/
+                                    valeurEco);
 
                             it.remove();
                         }

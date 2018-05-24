@@ -107,11 +107,11 @@ public class VolumeCalculator {
 
     private HashMap<String, String> essences = new HashMap<>();
 
-    String nomTarifResineux;
-    int versionTarifResineux;
+    private String nomTarifResineux;
+    private int versionTarifResineux;
 
-    String nomTarifFeuillus;
-    int versionTarifFeuillus;
+    private String nomTarifFeuillus;
+    private int versionTarifFeuillus;
 
     public VolumeCalculator(HashMap<String, Double> prixBoixChauffage, HashMap<String, Double> prixBoixIndustrie, HashMap<String, Double> prixBoixOeuvre, HashMap<String, String> essences,
                             String nomTarifResineux, int versionTarifResineux, String nomTarifFeuillus, int versionTarifFeuillus) {
@@ -130,29 +130,26 @@ public class VolumeCalculator {
         return (res - 15) / 5;
     }
 
-    ;
+
 
     public double getVersionDiametre(double[][] tarifMat, int version, int diametre) {
-        return tarifMat[getIndexDiametreTarif(diametre)][version];
+        return tarifMat[getIndexDiametreTarif(diametre)][version-1];
     }
 
-    ;
 
     public double getDiametreVersion(double[][] tarifMat, int diametre, int version) {
         return getVersionDiametre(tarifMat, version, diametre);
     }
 
-    ;
-
     public String getType(Tree tree) {
-        return Normalizer.normalize(essences.get((tree.getEssence()).toLowerCase()), Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+        return essences.get(tree.getEssence()).toLowerCase();
     }
 
     public double getVolumeCommercial(Tree tree) {
         double[][] tarifMatFeuillus = getTarifFromName(nomTarifFeuillus);
         double[][] tarifMatResineux = getTarifFromName(nomTarifResineux);
         if (tree.getEtat().equals(ETAT_VIVANT)) {
-            if (essences.get(tree.essence) == "feuillu") {
+            if (getType(tree).equals("feuillu")) {
                 return getVersionDiametre(tarifMatFeuillus, versionTarifFeuillus, tree.diametre);
             } else {
                 return getVersionDiametre(tarifMatResineux, versionTarifResineux, tree.diametre);
