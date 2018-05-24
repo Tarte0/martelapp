@@ -2,7 +2,6 @@ package martelapp.test.Fragment.Exercice;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -19,27 +18,12 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.LegendEntry;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 
-import martelapp.test.Class.AdaptableColorSet;
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.Class.GrapheHelper;
 import martelapp.test.Class.OnSwipeTouchListener;
-import martelapp.test.Formatter.StackedBarFormatter;
-import martelapp.test.Formatter.WithoutSmallValueFormatter;
 import martelapp.test.R;
 
 public class InfosFragment extends Fragment {
@@ -52,7 +36,7 @@ public class InfosFragment extends Fragment {
     TextView textViewCaracteristiques, textViewTitleInfos;
     ImageButton previous, next;
     Button buttonGoToCarte;
-    BarChart barChartDiametre;
+    BarChart barChartVolume;
     BarChart barChartNoteEco;
     PieChart pieChartEssence;
 
@@ -98,7 +82,7 @@ public class InfosFragment extends Fragment {
             previous = (ImageButton) view.findViewById(R.id.previousInfo);
             next = (ImageButton) view.findViewById(R.id.nextInfo);
             buttonGoToCarte = (Button) view.findViewById((R.id.button_go_to_carte));
-            barChartDiametre = view.findViewById(R.id.bar_chart_diametre_info);
+            barChartVolume = view.findViewById(R.id.bar_chart_volume_info);
             barChartNoteEco = view.findViewById(R.id.bar_chart_note_eco_info);
             pieChartEssence = view.findViewById(R.id.pie_chart_essence_info);
 
@@ -107,7 +91,7 @@ public class InfosFragment extends Fragment {
 
             caracteristiqueParcelle(view.getContext());
 
-            GrapheHelper.getBarChartInfosDiametre(view.getContext(), barChartDiametre);
+            GrapheHelper.getBarChartInfosVolume(view.getContext(), barChartVolume);
             GrapheHelper.getBarChartInfosNoteEcologique(view.getContext(), barChartNoteEco);
             GrapheHelper.getPieChartInfosEssence(view.getContext(), pieChartEssence);
 
@@ -231,10 +215,7 @@ public class InfosFragment extends Fragment {
                                     next.setVisibility(View.VISIBLE);
 
                                     textViewTitleInfos.setText(R.string.caracteristique_parcelle_caps);
-                                /*
-                                textViewInfos.setLayoutParams(layoutParamsTextViewInfoCaracteristique);
-                                layoutInfo.setLayoutParams(layoutParamsLinearLayoutGraphe);
-                                */
+
                                     textViewCaracteristiques.setText(caracteristique);
 
                                     buttonGoToCarte.setVisibility(View.GONE);
@@ -248,11 +229,8 @@ public class InfosFragment extends Fragment {
                                     previous.setVisibility(View.VISIBLE);
                                     next.setVisibility(View.VISIBLE);
 
-                                    textViewTitleInfos.setText(R.string.titre_graphe_nbtige_diametre_info);
-                                /*
-                                layoutInfo.setLayoutParams(layoutParamsLinearLayoutGraphe);
-                                textViewInfos.setLayoutParams(layoutParamsTextViewInfoGraphe);
-                                */
+                                    textViewTitleInfos.setText(R.string.titre_graphe_volume_diametre_info);
+
 
                                     buttonGoToCarte.setVisibility(View.GONE);
 
@@ -268,10 +246,7 @@ public class InfosFragment extends Fragment {
 
                                     textViewTitleInfos.setText(R.string.titre_graphe_nbtige_noteeco_info);
 
-                                /*
-                                layoutInfo.setLayoutParams(layoutParamsLinearLayoutGraphe);
-                                textViewInfos.setLayoutParams(layoutParamsTextViewInfoGraphe);
-                                */
+
                                     buttonGoToCarte.setVisibility(View.GONE);
 
                                     layout_caracteristique.setVisibility(View.GONE);

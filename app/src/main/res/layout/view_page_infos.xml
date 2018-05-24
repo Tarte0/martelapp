@@ -94,12 +94,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="0.5"
-                            android:text="@string/axe_nombre_tiges"
+                            android:text="@string/axe_volume_m3"
                             android:textColor="@color/colorBlack"
                             android:textSize="18sp" />
 
                         <com.github.mikephil.charting.charts.BarChart
-                            android:id="@+id/bar_chart_diametre_info"
+                            android:id="@+id/bar_chart_volume_info"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="9.5" />

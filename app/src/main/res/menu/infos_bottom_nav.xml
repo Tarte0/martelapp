@@ -11,7 +11,7 @@
         android:id="@+id/action_graphe_diametre"
         android:enabled="true"
         android:icon="@drawable/info_diametre"
-        android:title="@string/graphe_diametre_caps"
+        android:title="@string/graphe_volume_caps"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_graphe_note_eco"

@@ -45,8 +45,8 @@
     <!-- INFOS -->
     <string name="caracteristique_parcelle_caps">CARACTERISTIQUES</string>
 
-    <string name="graphe_diametre_caps">DIAMETRE</string>
-    <string name="titre_graphe_nbtige_diametre_info">Nombre de tiges par classe de diamètre</string>
+    <string name="graphe_volume_caps">VOLUME</string>
+    <string name="titre_graphe_volume_diametre_info">Volume par classe de diamètre</string>
 
     <string name="graphe_note_eco_caps">NOTE ECOLOGIQUE</string>
     <string name="titre_graphe_nbtige_noteeco_info">Nombre de tiges par note écologique</string>
