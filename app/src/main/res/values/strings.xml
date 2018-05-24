@@ -108,10 +108,10 @@
 
     <!-- RESUME -->
     <string name="titre_respect_consignes">Ai-je respecté les consignes ?</string>
-    <string name="titre_resultats">Résultat de votre martelage</string>
+    <string name="titre_synthese">Synthèse de votre martelage</string>
 
     <string name="analyse_respect_consignes_nav">RESPECT DES CONSIGNES</string>
-    <string name="analyse_synthese_nav">SYNTHESE DE L\'EXERCICE</string>
+    <string name="analyse_synthese_nav">SYNTHESE MARTELAGE</string>
     <!-- RESUME -->
 
 

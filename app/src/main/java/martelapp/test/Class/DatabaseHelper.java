@@ -16,6 +16,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 
     public static final String DATABASE_NAME = "martelapp.db";
+    public static final int DATABASE_VERSION = 4;
 
     // Table "arbres_parcelle"
     public static final String ARBRES_PARCELLE_TABLE    = "arbres_parcelle_table";
@@ -63,25 +64,43 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String PRELEVEMENT_VOLUME_MAX       = "PRELEVEMENT_VOLUME_MAX";
     public static final String ROTATION_MIN                 = "ROTATION_MIN";
     public static final String ROTATION_MAX                 = "ROTATION_MAX";
-    public static final String HAUTEUR_MOYENNE_FEUILLU      = "HAUTEUR_MOYENNE_FEUILLU";
-    public static final String HAUTEUR_MOYENNE_PETIT_BOIS   = "HAUTEUR_MOYENNE_PETIT_BOIS";
-    public static final String HAUTEUR_MOYENNE_RESINEUX     = "HAUTEUR_MOYENNE_RESINEUX";
-    public static final String PRIX_BOIS_CHAUFFAGE_FEUILLU  = "PRIX_BOIS_CHAUFFAGE_FEUILLU";
-    public static final String PRIX_BOIS_CHAUFFAGE_RESINEUX = "PRIX_BOIS_CHAUFFAGE_RESINEUX";
-    public static final String PRIX_BOIS_INDUSTRIE_FEUILLU  = "PRIX_BOIS_INDUSTRIE_FEUILLU";
-    public static final String PRIX_BOIS_INDUSTRIE_RESINEUX = "PRIX_BOIS_INDUSTRIE_RESINEUX";
-    public static final String PRIX_BOIS_OEUVRE_EPICEA      = "PRIX_BOIS_OEUVRE_EPICEA";
-    public static final String PRIX_BOIS_OEUVRE_FEUILLU     = "PRIX_BOIS_OEUVRE_FEUILLU";
-    public static final String PRIX_BOIS_OEUVRE_RESINEUX    = "PRIX_BOIS_OEUVRE_RESINEUX";
-    public static final String PRIX_BOIS_OEUVRE_SAPIN       = "PRIX_BOIS_OEUVRE_SAPIN";
-    public static final String VOLUME_COMMERCIAL_FEUILLU    = "VOLUME_COMMERCIAL_FEUILLU";
-    public static final String VOLUME_COMMERCIAL_RESINEUX   = "VOLUME_COMMERCIAL_RESINEUX";
+
+
+    public static final String PRIX_BOIS_CHAUFFAGE_TABLE    = "prix_bois_chauffage_table";
+    public static final String ID_PRIX_BOIS_CHAUFFAGE       = "_id";
+    public static final String TYPE_ESSENCE_ARBRE_CHAUFFAGE = "TYPE_ESSENCE_ARBRE_CHAUFFAGE";
+    public static final String PRIX_CHAUFFAGE               = "PRIX_CHAUFFAGE";
+
+
+    public static final String PRIX_BOIS_INDUSTRIE_TABLE    = "prix_bois_industrie_table";
+    public static final String ID_PRIX_BOIS_INDUSTRIE       = "_id";
+    public static final String TYPE_ESSENCE_ARBRE_INDUSTRIE = "TYPE_ESSENCE_ARBRE_INDUSTRIE";
+    public static final String PRIX_INDUSTRIE               = "PRIX_INDUSTRIE";
+
+
+    public static final String PRIX_BOIS_OEUVRE_TABLE       = "prix_bois_oeuvre_table";
+    public static final String ID_PRIX_BOIS_OEUVRE          = "_id";
+    public static final String TYPE_ESSENCE_ARBRE_OEUVRE    = "TYPE_ESSENCE_ARBRE_OEUVRE";
+    public static final String PRIX_OEUVRE                  = "PRIX_OEUVRE";
+
+
+    public static final String TARIF_VOLUME_TABLE       = "tarif_volume_table";
+    public static final String ID_TARIF                 = "_id";
+    public static final String TYPE_ARBRE_TARIF         = "TYPE_ARBRE";
+    public static final String NOM_TARIF                = "NOM_TARIF";
+    public static final String VERSION_TARIF            = "VERSION_TARIF";
+
 
     // Table "type_arbre", référençant chaque essence à un certain type d'arbre
     public static final String TYPE_ARBRE_TABLE         = "type_arbre_table";
     public static final String ID_TYPE                  = "_id";
     public static final String ESSENCE_TYPE             = "ESSENCE_TYPE";
     public static final String TYPE_ARBRE               = "TYPE_ARBRE";
+
+    public static final String DIAMETRE_EXPLOIT_TABLE   = "diametre_exploitabilite_table";
+    public static final String ID_DIAMETRE_EXPLOIT      = "_id";
+    public static final String ESSENCE_DIAM_EXPLOIT     = "ESSENCE_DIAM_EXPLOIT";
+    public static final String DIAMETRE_EXPLOITABILITE  = "DIAMETRE_EXPLOITABILITE";
 
     public static final String ARBRE_MUR        = "Arbre Mûr";
     public static final String ECLAIRCIE        = "Eclaircie";
@@ -90,11 +109,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String EXPLOITATION     = "Exploitation";
     public static final String BIODIVERSITE     = "Biodiversité";
 
-    public static final int MIN_PRELEVEMENT = 90;
-    public static final int MAX_PRELEVEMENT = 140;
 
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
         SQLiteDatabase db = this.getWritableDatabase();
     }
 
@@ -154,7 +171,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
          */
         db.execSQL("CREATE TABLE " + RAISON_TABLE + "("
                 + ID_RAISON                     + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + NUMERO_ARBRE_TRAITE_RAISON   + " TEXT, "
+                + NUMERO_ARBRE_TRAITE_RAISON    + " TEXT, "
                 + RAISON                        + " TEXT, "
                 + "FOREIGN KEY(" + NUMERO_ARBRE_TRAITE_RAISON + ") REFERENCES " + ARBRES_MARTELES_TABLE + "(" + NUMERO_ARBRE_MART + "))"
         );
@@ -175,20 +192,56 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 + PRELEVEMENT_VOLUME_MIN        + " REAL, "
                 + PRELEVEMENT_VOLUME_MAX        + " REAL, "
                 + ROTATION_MIN                  + " INTEGER, "
-                + ROTATION_MAX                  + " INTEGER, "
-                + HAUTEUR_MOYENNE_FEUILLU       + " REAL, "
-                + HAUTEUR_MOYENNE_PETIT_BOIS    + " REAL, "
-                + HAUTEUR_MOYENNE_RESINEUX      + " REAL, "
-                + PRIX_BOIS_CHAUFFAGE_FEUILLU   + " REAL, "
-                + PRIX_BOIS_CHAUFFAGE_RESINEUX  + " REAL, "
-                + PRIX_BOIS_INDUSTRIE_FEUILLU   + " REAL, "
-                + PRIX_BOIS_INDUSTRIE_RESINEUX  + " REAL, "
-                + PRIX_BOIS_OEUVRE_EPICEA       + " REAL, "
-                + PRIX_BOIS_OEUVRE_FEUILLU      + " REAL, "
-                + PRIX_BOIS_OEUVRE_RESINEUX     + " REAL, "
-                + PRIX_BOIS_OEUVRE_SAPIN        + " REAL, "
-                + VOLUME_COMMERCIAL_FEUILLU     + " REAL, "
-                + VOLUME_COMMERCIAL_RESINEUX    + " REAL)"
+                + ROTATION_MAX                  + " INTEGER)"
+        );
+
+        /*
+         *  Création de la table "tarif_volume"
+         *  PRIMARY KEY : ID_TARIF
+         *  FOREIGN KEY : TYPE_ARBRE_TARIF sur TYPE_ARBRE de la table type_arbre_table
+         */
+        db.execSQL("CREATE TABLE " + TARIF_VOLUME_TABLE + "("
+                + ID_TARIF          + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + TYPE_ARBRE_TARIF  + " TEXT, "
+                + NOM_TARIF         + " TEXT, "
+                + VERSION_TARIF     + " INTEGER, "
+                + "FOREIGN KEY(" + TYPE_ARBRE_TARIF + ") REFERENCES " + TYPE_ARBRE_TABLE + "(" + TYPE_ARBRE + "))"
+        );
+
+        /*
+         *  Création de la table "prix_bois_chauffage"
+         *  PRIMARY KEY : ID_PRIX_BOIS_CHAUFFAGE
+         *  FOREIGN KEY : TYPE_ESSENCE_ARBRE_CHAUFFAGE sur TYPE_ARBRE de la table type_arbre_table
+         */
+        db.execSQL("CREATE TABLE " + PRIX_BOIS_CHAUFFAGE_TABLE + "("
+                + ID_PRIX_BOIS_CHAUFFAGE        + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + TYPE_ESSENCE_ARBRE_CHAUFFAGE  + " TEXT, "
+                + PRIX_CHAUFFAGE                + " REAL, "
+                + "FOREIGN KEY(" + TYPE_ESSENCE_ARBRE_CHAUFFAGE + ") REFERENCES " + TYPE_ARBRE_TABLE + "(" + TYPE_ARBRE + "))"
+        );
+
+        /*
+         *  Création de la table "prix_bois_industrie"
+         *  PRIMARY KEY : ID_PRIX_BOIS_INDUSTRIE
+         *  FOREIGN KEY : TYPE_ESSENCE_ARBRE_INDUSTRIE sur TYPE_ARBRE de la table type_arbre_table
+         */
+        db.execSQL("CREATE TABLE " + PRIX_BOIS_INDUSTRIE_TABLE + "("
+                + ID_PRIX_BOIS_INDUSTRIE        + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + TYPE_ESSENCE_ARBRE_INDUSTRIE  + " TEXT, "
+                + PRIX_INDUSTRIE                + " REAL, "
+                + "FOREIGN KEY(" + TYPE_ESSENCE_ARBRE_INDUSTRIE + ") REFERENCES " + TYPE_ARBRE_TABLE + "(" + TYPE_ARBRE + "))"
+        );
+
+        /*
+         *  Création de la table "prix_bois_oeuvre"
+         *  PRIMARY KEY : ID_PRIX_BOIS_OEUVRE
+         *  FOREIGN KEY : TYPE_ESSENCE_ARBRE_OEUVRE sur TYPE_ARBRE de la table type_arbre_table
+         */
+        db.execSQL("CREATE TABLE " + PRIX_BOIS_OEUVRE_TABLE + "("
+                + ID_PRIX_BOIS_OEUVRE        + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + TYPE_ESSENCE_ARBRE_OEUVRE  + " TEXT, "
+                + PRIX_OEUVRE                + " REAL, "
+                + "FOREIGN KEY(" + TYPE_ESSENCE_ARBRE_OEUVRE + ") REFERENCES " + TYPE_ARBRE_TABLE + "(" + TYPE_ARBRE + "))"
         );
 
         /*
@@ -202,16 +255,40 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 + TYPE_ARBRE        + " TEXT, "
                 + "FOREIGN KEY(" + ESSENCE_TYPE + ") REFERENCES " + ARBRES_PARCELLE_TABLE + "(" + ESSENCE_ARBRE + "))"
         );
+
+        /*
+         *  Création de la table "diametre_exploitabilite"
+         *  PRIMARY KEY : ID_TYPE
+         *  FOREIGN KEY : ESSENCE_DIAM_EXPLOIT sur ESSENCE_ARBRE de la table arbres_parcelle
+         */
+        db.execSQL("CREATE TABLE " + DIAMETRE_EXPLOIT_TABLE + "("
+                + ID_DIAMETRE_EXPLOIT       + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + ESSENCE_DIAM_EXPLOIT      + " TEXT, "
+                + DIAMETRE_EXPLOITABILITE   + " INTEGER, "
+                + "FOREIGN KEY(" + ESSENCE_DIAM_EXPLOIT + ") REFERENCES " + ARBRES_PARCELLE_TABLE + "(" + ESSENCE_ARBRE + "))"
+        );
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + ARBRES_PARCELLE_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + ARBRES_MARTELES_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + RAISON_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + CONSTANTES_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + TYPE_ARBRE_TABLE);
-        onCreate(db);
+        System.out.println("Sa passe dans onUpgrade !!!!!!!!!!!!!!");
+        System.out.println("newVersion : " + newVersion);
+        System.out.println("oldVersion : " + oldVersion);
+        if(newVersion > oldVersion) {
+            System.out.println("Sa passe dans le drop tout le bordel !!!!!!!!");
+            db.execSQL("DROP TABLE IF EXISTS " + ARBRES_PARCELLE_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + ARBRES_MARTELES_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + ARBRES_CONSERVES_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + RAISON_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + CONSTANTES_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + TARIF_VOLUME_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + PRIX_BOIS_CHAUFFAGE_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + PRIX_BOIS_INDUSTRIE_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + PRIX_BOIS_OEUVRE_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + TYPE_ARBRE_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + DIAMETRE_EXPLOIT_TABLE);
+            onCreate(db);
+        }
     }
 
 
@@ -270,50 +347,77 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return res != -1;
     }
 
-    public boolean insertConstante( double hauteurFeuillu, double hauteurPetitBois, double hauteurResineux,
-                                    double prixChauffageFeuillu, double prixChauffageResineux,
-                                    double prixIndustrieFeuillu, double prixIndustrieResineux,
-                                    double prixOeuvreEpicea, double prixOeuvreFeuillu, double prixOeuvreResineux, double prixOeuvreSapin,
-                                    double volumeFeuillu, double volumeResineux){
+    public boolean insertConstante(String nomParcelle, String lieuParcelle, double altitude, String habitat, double surfaceParcelle,
+                                   double prelevementMin, double prelevementMax, int rotationMin, int rotationMax){
+
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(ID_CONSTANTE, 0);
-        contentValues.put(HAUTEUR_MOYENNE_FEUILLU,      hauteurFeuillu);
-        contentValues.put(HAUTEUR_MOYENNE_PETIT_BOIS,   hauteurPetitBois);
-        contentValues.put(HAUTEUR_MOYENNE_RESINEUX,     hauteurResineux);
-        contentValues.put(PRIX_BOIS_CHAUFFAGE_FEUILLU,  prixChauffageFeuillu);
-        contentValues.put(PRIX_BOIS_CHAUFFAGE_RESINEUX, prixChauffageResineux);
-        contentValues.put(PRIX_BOIS_INDUSTRIE_FEUILLU,  prixIndustrieFeuillu);
-        contentValues.put(PRIX_BOIS_INDUSTRIE_RESINEUX, prixIndustrieResineux);
-        contentValues.put(PRIX_BOIS_OEUVRE_EPICEA,      prixOeuvreEpicea);
-        contentValues.put(PRIX_BOIS_OEUVRE_FEUILLU,     prixOeuvreFeuillu);
-        contentValues.put(PRIX_BOIS_OEUVRE_RESINEUX,    prixOeuvreResineux);
-        contentValues.put(PRIX_BOIS_OEUVRE_SAPIN,       prixOeuvreSapin);
-        contentValues.put(VOLUME_COMMERCIAL_FEUILLU,    volumeFeuillu);
-        contentValues.put(VOLUME_COMMERCIAL_RESINEUX,   volumeResineux);
+        contentValues.put(NOM_PARCELLE, nomParcelle);
+        contentValues.put(LIEU_PARCELLE, lieuParcelle);
+        contentValues.put(SURFACE_PARCELLE, surfaceParcelle);
+        contentValues.put(ALTITUDE_PARCELLE, altitude);
+        contentValues.put(HABITAT_PARCELLE, habitat);
+        contentValues.put(PRELEVEMENT_VOLUME_MIN, prelevementMin);
+        contentValues.put(PRELEVEMENT_VOLUME_MAX, prelevementMax);
+        contentValues.put(ROTATION_MIN, rotationMin);
+        contentValues.put(ROTATION_MAX, rotationMax);
+
 
         long res = db.insert(CONSTANTES_TABLE, null, contentValues);
 
         return res != -1;
     }
 
-    public void updateInfosParcelleConstante(String nomParcelle, String lieuParcelle, double altitude, String habitat, double surfaceParcelle, double prelevementMin, double prelevementMax, int rotationMin, int rotationMax){
+    public boolean insertTarifVolume(String typeArbre, String nomTarif, int versionTarif){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "UPDATE " + CONSTANTES_TABLE
-                + " SET " + ALTITUDE_PARCELLE + " = " + altitude
-                + ", " + NOM_PARCELLE + " = '" + nomParcelle + "'"
-                + ", " + LIEU_PARCELLE + " = '" + lieuParcelle + "'"
-                + ", " + HABITAT_PARCELLE + " = '" + habitat + "'"
-                + ", " + SURFACE_PARCELLE + " = " + surfaceParcelle
-                + ", " + PRELEVEMENT_VOLUME_MIN + " = " + prelevementMin
-                + ", " + PRELEVEMENT_VOLUME_MAX + " = " + prelevementMax
-                + ", " + ROTATION_MIN + " = " + rotationMin
-                + ", " + ROTATION_MAX + " = " + rotationMax
-                + " WHERE " + ID_CONSTANTE + " = 0";
+        ContentValues contentValues = new ContentValues();
 
-        db.execSQL(query);
+        contentValues.put(TYPE_ARBRE_TARIF, typeArbre);
+        contentValues.put(NOM_TARIF, nomTarif);
+        contentValues.put(VERSION_TARIF, versionTarif);
+
+        long res = db.insert(TYPE_ARBRE_TABLE, null, contentValues);
+
+        return res != -1;
+    }
+
+    public boolean insertPrixBoisChauffage(String typeOuEssence, double prixChauffage){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(TYPE_ESSENCE_ARBRE_CHAUFFAGE, typeOuEssence);
+        contentValues.put(PRIX_CHAUFFAGE, prixChauffage);
+
+        long res = db.insert(PRIX_BOIS_CHAUFFAGE_TABLE, null, contentValues);
+
+        return res != -1;
+    }
+
+    public boolean insertPrixBoisIndustrie(String typeOuEssence, double prixIndustrie){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(TYPE_ESSENCE_ARBRE_INDUSTRIE, typeOuEssence);
+        contentValues.put(PRIX_INDUSTRIE, prixIndustrie);
+
+        long res = db.insert(PRIX_BOIS_INDUSTRIE_TABLE, null, contentValues);
+
+        return res != -1;
+    }
+
+    public boolean insertPrixBoisOeuvre(String typeOuEssence, double prixOeuvre){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(TYPE_ESSENCE_ARBRE_OEUVRE, typeOuEssence);
+        contentValues.put(PRIX_OEUVRE, prixOeuvre);
+
+        long res = db.insert(PRIX_BOIS_OEUVRE_TABLE, null, contentValues);
+
+        return res != -1;
     }
 
     public boolean insertTypeArbre(String essence, String type){
@@ -324,6 +428,18 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         contentValues.put(TYPE_ARBRE, type);
 
         long res = db.insert(TYPE_ARBRE_TABLE, null, contentValues);
+
+        return res != -1;
+    }
+
+    public boolean insertDiametreExploitabilite(String essence, int diametre){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(ESSENCE_DIAM_EXPLOIT, essence);
+        contentValues.put(DIAMETRE_EXPLOITABILITE, diametre);
+
+        long res = db.insert(DIAMETRE_EXPLOIT_TABLE, null, contentValues);
 
         return res != -1;
     }

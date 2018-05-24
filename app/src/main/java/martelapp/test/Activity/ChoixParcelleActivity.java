@@ -61,6 +61,16 @@ public class ChoixParcelleActivity extends AppCompatActivity {
     public static final String CHAMP_CONSTANTES         = "constantes";
 
     /**
+     * Champ de la base de données firebase "exploitation"
+     */
+    public static final String CHAMP_EXPLOITATION       = "exploitation";
+
+    /**
+     * Champ de la base de données firebase "tarifs"
+     */
+    public static final String CHAMP_TARIFS             = "tarifs";
+
+    /**
      * Champ de la base de données firebase "essences"
      */
     public static final String CHAMP_ESSENCES           = "essences";
@@ -319,32 +329,14 @@ public class ChoixParcelleActivity extends AppCompatActivity {
 
                 // Suppression des données de ARBRES_PARCELLE_TABLE
                 dbHelper.clearTable(DatabaseHelper.ARBRES_PARCELLE_TABLE);
-
-                /*
-                 *----------------------------------------------------------------
-                 * Récupération des informations pour les calculs de volume et de
-                 * valeur économique d'un arbre.
-                 *----------------------------------------------------------------
-                 */
-
-                // Récupération de toutes les constantes nécessaire aux calculs depuis CONSTANTES_TABLE
-                HashMap<String, Double> constants = new HashMap<>();
-                Cursor cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
-                cur.moveToFirst();
-                for(int i = 9; i < cur.getColumnCount(); i++){
-                    constants.put(cur.getColumnName(i), cur.getDouble(i));
-                }
+                dbHelper.clearTable(DatabaseHelper.DIAMETRE_EXPLOIT_TABLE);
+                dbHelper.clearTable(DatabaseHelper.TARIF_VOLUME_TABLE);
+                dbHelper.clearTable(DatabaseHelper.CONSTANTES_TABLE);
 
 
-                // Récupération des informations des types de l'arbre selon l'essence depuis TYPE_ARBRE_TABLE
-                HashMap<String, String> essence_type = new HashMap<>();
-                cur = dbHelper.getAllDataFromTable(DatabaseHelper.TYPE_ARBRE_TABLE);
-                while(cur.moveToNext()){
-                    essence_type.put(cur.getString(cur.getColumnIndex(DatabaseHelper.ESSENCE_TYPE)), cur.getString(cur.getColumnIndex(DatabaseHelper.TYPE_ARBRE)));
-                }
 
                 // Nouvelle instance de VolumeCalculator avec les constantes "constants" et les types de l'arbre selon l'essence "essence_type"
-                VolumeCalculator volumeCalculator = new VolumeCalculator(constants, essence_type);
+                //VolumeCalculator volumeCalculator = new VolumeCalculator(constants, essence_type);
 
 
                 /*
@@ -375,7 +367,82 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                     int rotationMin = dataSnapshot.child(CHAMP_CONSTANTES).child(CHAMP_ROTATION).child(CHAMP_MIN).getValue(Integer.class);
                     int rotationMax = dataSnapshot.child(CHAMP_CONSTANTES).child(CHAMP_ROTATION).child(CHAMP_MAX).getValue(Integer.class);
 
-                    dbHelper.updateInfosParcelleConstante(nom, lieu, altitude, habitat, surface, prelevementMin, prelevementMax, rotationMin, rotationMax);
+                    dbHelper.insertConstante(nom, lieu, altitude, habitat, surface, prelevementMin, prelevementMax, rotationMin, rotationMax);
+
+
+                    for( DataSnapshot child : dataSnapshot.child(CHAMP_CONSTANTES).child(CHAMP_EXPLOITATION).getChildren()){
+                        String essence = child.getKey();
+                        Integer diametre = child.getValue(Integer.class);
+
+                        System.out.println("Essence : " + essence + " - diametre exploit : " + Integer.toString(diametre));
+
+                        dbHelper.insertDiametreExploitabilite(essence, diametre);
+                    }
+
+                    for( DataSnapshot child : dataSnapshot.child(CHAMP_CONSTANTES).child(CHAMP_TARIFS).child("feuillus").getChildren()){
+                        String nomTarif = child.getKey();
+                        Integer versionTarif = child.getValue(Integer.class);
+
+                        System.out.println("Feuillu : nomTarif : " + nomTarif + " - version : " + Integer.toString(versionTarif));
+
+                        dbHelper.insertTarifVolume(CHAMP_FEUILLU, nomTarif, versionTarif);
+                    }
+
+
+                    for( DataSnapshot child : dataSnapshot.child(CHAMP_CONSTANTES).child(CHAMP_TARIFS).child("resineux").getChildren()){
+                        String nomTarif = child.getKey();
+                        Integer versionTarif = child.getValue(Integer.class);
+
+                        System.out.println("Resineux : nomTarif : " + nomTarif + " - version : " + Integer.toString(versionTarif));
+
+                        dbHelper.insertTarifVolume(CHAMP_RESINEUX, nomTarif, versionTarif);
+                    }
+
+
+
+                    // Récupération des informations des types de l'arbre selon l'essence depuis TYPE_ARBRE_TABLE
+                    HashMap<String, String> essence_type = new HashMap<>();
+                    Cursor cur = dbHelper.getAllDataFromTable(DatabaseHelper.TYPE_ARBRE_TABLE);
+                    while(cur.moveToNext()){
+                        essence_type.put(cur.getString(cur.getColumnIndex(DatabaseHelper.ESSENCE_TYPE)), cur.getString(cur.getColumnIndex(DatabaseHelper.TYPE_ARBRE)));
+                    }
+
+                    HashMap<String, Double> prixBoisChauffage = new HashMap<>();
+                    cur = dbHelper.getAllDataFromTable(DatabaseHelper.PRIX_BOIS_CHAUFFAGE_TABLE);
+                    while(cur.moveToNext()){
+                        prixBoisChauffage.put(cur.getString(cur.getColumnIndex(DatabaseHelper.TYPE_ESSENCE_ARBRE_CHAUFFAGE)), cur.getDouble(cur.getColumnIndex(DatabaseHelper.PRIX_CHAUFFAGE)));
+                    }
+
+                    HashMap<String, Double> prixBoisIndustrie = new HashMap<>();
+                    cur = dbHelper.getAllDataFromTable(DatabaseHelper.PRIX_BOIS_INDUSTRIE_TABLE);
+                    while(cur.moveToNext()){
+                        prixBoisIndustrie.put(cur.getString(cur.getColumnIndex(DatabaseHelper.TYPE_ESSENCE_ARBRE_INDUSTRIE)), cur.getDouble(cur.getColumnIndex(DatabaseHelper.PRIX_INDUSTRIE)));
+                    }
+
+                    HashMap<String, Double> prixBoisOeuvre = new HashMap<>();
+                    cur = dbHelper.getAllDataFromTable(DatabaseHelper.PRIX_BOIS_OEUVRE_TABLE);
+                    while(cur.moveToNext()){
+                        prixBoisOeuvre.put(cur.getString(cur.getColumnIndex(DatabaseHelper.TYPE_ESSENCE_ARBRE_OEUVRE)), cur.getDouble(cur.getColumnIndex(DatabaseHelper.PRIX_OEUVRE)));
+                    }
+
+
+                    cur = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.TARIF_VOLUME_TABLE,
+                            DatabaseHelper.TYPE_ARBRE_TARIF + " = '" + CHAMP_RESINEUX + "'");
+                    cur.moveToFirst();
+                    String nomTarifResineux = cur.getString(cur.getColumnIndex(DatabaseHelper.NOM_TARIF));
+                    int versionTarifResineux = cur.getInt(cur.getColumnIndex(DatabaseHelper.VERSION_TARIF));
+
+
+                    cur = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.TARIF_VOLUME_TABLE,
+                            DatabaseHelper.TYPE_ARBRE_TARIF + " = '" + CHAMP_FEUILLU + "'");
+                    cur.moveToFirst();
+                    String nomTarifFeuillus = cur.getString(cur.getColumnIndex(DatabaseHelper.NOM_TARIF));
+                    int versionTarifFeuillus = cur.getInt(cur.getColumnIndex(DatabaseHelper.VERSION_TARIF));
+
+
+                    cur.close();
+                    
+                    VolumeCalculator volumeCalculator = new VolumeCalculator(prixBoisChauffage, prixBoisIndustrie, prixBoisOeuvre, essence_type, nomTarifResineux, versionTarifResineux, nomTarifFeuillus, versionTarifFeuillus);
 
                     /*
                      * Récupération des arbres de la parcelle dans une Hashmap.
@@ -396,10 +463,10 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                             HashMap.Entry pair = (HashMap.Entry)it.next();
                             Tree arbre = (Tree) pair.getValue();
 
-                            Double volumeCom = volumeCalculator.getVolumeCommercial(arbre);
-                            Double valeurEco = volumeCalculator.getValeurEco(arbre);
+                            //Double volumeCom = volumeCalculator.getVolumeCommercial(arbre);
+                            //Double valeurEco = volumeCalculator.getValeurEco(arbre);
 
-                            dbHelper.insertArbreParcelle(
+                            /*dbHelper.insertArbreParcelle(
                                     arbre.numero,
                                     arbre.essence,
                                     arbre.diametre,
@@ -411,7 +478,7 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                                     arbre.utilisationBois.industrie,
                                     arbre.utilisationBois.oeuvre,
                                     volumeCom,
-                                    valeurEco);
+                                    valeurEco);*/
 
                             it.remove();
                         }
@@ -419,7 +486,6 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                         textTemoin.setText("La base de données de l'application a été mise à jour avec la parcelle : " + spinnerParcelles.getSelectedItem().toString());
                     }
                 }
-                cur.close();
                 dbHelper.close();
             }
 
@@ -452,7 +518,6 @@ public class ChoixParcelleActivity extends AppCompatActivity {
      * @see DatabaseHelper#CONSTANTES_TABLE
      * @see DatabaseHelper#TYPE_ARBRE_TABLE
      * @see DatabaseHelper#clearTable(String)
-     * @see DatabaseHelper#insertConstante(double, double, double, double, double, double, double, double, double, double, double, double, double)
      * @see DatabaseHelper#insertTypeArbre(String, String)
      *
      */
@@ -471,54 +536,37 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                 dbHelper = new DatabaseHelper(getApplicationContext());
 
                 // Suppression des données de la table CONSTANTES_TABLE et TYPE_ARBRE_TABLE
-                dbHelper.clearTable(DatabaseHelper.CONSTANTES_TABLE);
                 dbHelper.clearTable(DatabaseHelper.TYPE_ARBRE_TABLE);
+                dbHelper.clearTable(DatabaseHelper.PRIX_BOIS_CHAUFFAGE_TABLE);
+                dbHelper.clearTable(DatabaseHelper.PRIX_BOIS_INDUSTRIE_TABLE);
+                dbHelper.clearTable(DatabaseHelper.PRIX_BOIS_OEUVRE_TABLE);
                 /*
                  *------------------------------
                  * Récupération des constantes et insertion dans CONSTANTES_TABLE
                  *------------------------------
                  */
-                DataSnapshot dataConstantes = dataSnapshot.child(CHAMP_CONSTANTES);
+                DataSnapshot dataConstantes = dataSnapshot.child(CHAMP_CONSTANTES).child(CHAMP_PRIX).child(CHAMP_BOIS);
 
-                // Récupération des constantes "hauteurMoyenne"
-                DataSnapshot dataHauteurMoyenne = dataConstantes.child(CHAMP_HAUTEUR_MOYENNE);
-                Double hauteurMoyenneFeuillu = dataHauteurMoyenne.child(CHAMP_FEUILLU).getValue(Double.class);
-                Double hauteurMoyennePetitBois = dataHauteurMoyenne.child(CHAMP_PETIT_BOIS).getValue(Double.class);
-                Double hauteurMoyenneResineux = dataHauteurMoyenne.child(CHAMP_RESINEUX).getValue(Double.class);
+                for( DataSnapshot child : dataConstantes.child(CHAMP_CHAUFFAGE).getChildren()){
+                    String typeOuEssence = child.getKey();
+                    Double prix = child.getValue(Double.class);
 
-                // Récupération des constantes "prix"
-                DataSnapshot dataPrixBois = dataConstantes.child(CHAMP_PRIX).child(CHAMP_BOIS);
-                Double prixBoisChauffageFeuillu = dataPrixBois.child(CHAMP_CHAUFFAGE).child(CHAMP_FEUILLU).getValue(Double.class);
-                Double prixBoisChauffageResineux = dataPrixBois.child(CHAMP_CHAUFFAGE).child(CHAMP_RESINEUX).getValue(Double.class);
+                    dbHelper.insertPrixBoisChauffage(typeOuEssence, prix);
+                }
 
-                Double prixBoisIndustrieFeuillu = dataPrixBois.child(CHAMP_INDUSTRIE).child(CHAMP_FEUILLU).getValue(Double.class);
-                Double prixBoisIndustrieResineux = dataPrixBois.child(CHAMP_INDUSTRIE).child(CHAMP_RESINEUX).getValue(Double.class);
+                for( DataSnapshot child : dataConstantes.child(CHAMP_INDUSTRIE).getChildren()){
+                    String typeOuEssence = child.getKey();
+                    Double prix = child.getValue(Double.class);
 
-                Double prixBoisOeuvreEpicea = dataPrixBois.child(CHAMP_OEUVRE).child(CHAMP_EPICEA).getValue(Double.class);
-                Double prixBoisOeuvreFeuillu = dataPrixBois.child(CHAMP_OEUVRE).child(CHAMP_FEUILLU).getValue(Double.class);
-                Double prixBoisOeuvreResineux = dataPrixBois.child(CHAMP_OEUVRE).child(CHAMP_RESINEUX).getValue(Double.class);
-                Double prixBoisOeuvreSapin = dataPrixBois.child(CHAMP_OEUVRE).child(CHAMP_SAPIN).getValue(Double.class);
+                    dbHelper.insertPrixBoisIndustrie(typeOuEssence, prix);
+                }
 
-                // Récupération des constantes "volume"
-                DataSnapshot dataVolumeCommercial = dataConstantes.child(CHAMP_VOLUME).child(CHAMP_COMMERCIAL);
-                Double volumeCommercialFeuillu = dataVolumeCommercial.child(CHAMP_FEUILLU).getValue(Double.class);
-                Double volumeCommercialResineux = dataVolumeCommercial.child(CHAMP_RESINEUX).getValue(Double.class);
+                for( DataSnapshot child : dataConstantes.child(CHAMP_OEUVRE).getChildren()){
+                    String typeOuEssence = child.getKey();
+                    Double prix = child.getValue(Double.class);
 
-                dbHelper.insertConstante(
-                        hauteurMoyenneFeuillu,
-                        hauteurMoyennePetitBois,
-                        hauteurMoyenneResineux,
-                        prixBoisChauffageFeuillu,
-                        prixBoisChauffageResineux,
-                        prixBoisIndustrieFeuillu,
-                        prixBoisIndustrieResineux,
-                        prixBoisOeuvreEpicea,
-                        prixBoisOeuvreFeuillu,
-                        prixBoisOeuvreResineux,
-                        prixBoisOeuvreSapin,
-                        volumeCommercialFeuillu,
-                        volumeCommercialResineux);
-
+                    dbHelper.insertPrixBoisOeuvre(typeOuEssence, prix);
+                }
 
                 /*
                  *------------------------------

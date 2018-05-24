@@ -127,6 +127,7 @@
             android:id="@+id/button_retour"
             style="@style/button_vert"
             android:layout_width="150dp"
+            android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:layout_gravity="bottom|left"
             android:layout_weight="1"

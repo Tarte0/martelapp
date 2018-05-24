@@ -136,12 +136,12 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         paint.setColor(context.getResources().getColor(R.color.colorPrimary));
         paint.setTypeface(ResourcesCompat.getFont(context, R.font.digital_medium));
         paint.setTextAlign(Paint.Align.CENTER);
-        paint.setTextSize(30f);
+        paint.setTextSize(22f);
 
         top = 40f;
         pageCanvas.drawText("Marteloscope biodiversité de " + lieu, pageWidth/2, top, paint);
 
-        paint.setTextSize(24f);
+        paint.setTextSize(18f);
         top = top + 30f;
         pageCanvas.drawText("Fiche récapitulative", pageWidth/2, top, paint);
 
@@ -210,7 +210,7 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         paint.setTextSize(15f);
 
         bottom = bottom - 5f;
-        pageCanvas.drawText("Ai-je respecté les consignes ?", marginLeft + 5f, bottom, paint);
+        pageCanvas.drawText(context.getResources().getString(R.string.titre_respect_consignes), marginLeft + 5f, bottom, paint);
 
 
         /*
@@ -260,7 +260,7 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         paint.setTextSize(15f);
 
         bottom = bottom - 5f;
-        pageCanvas.drawText("Résultat de votre martelage", marginLeft + 5f, bottom, paint);
+        pageCanvas.drawText(context.getResources().getString(R.string.titre_synthese), marginLeft + 5f, bottom, paint);
 
 
         /*
@@ -340,6 +340,123 @@ public class PdfCreator extends AsyncTask<View, String, String>{
 
         document.finishPage(page);
 
+        /*
+         *******************************************************************************************
+         ***************************************** PAGE 1 ******************************************
+         *******************************************************************************************
+         */
+
+        page = document.startPage(1);
+        pageCanvas = page.getCanvas();
+
+        /*
+         ***************************************************************************
+         ******** View GRAPHE EVOLUTION NB TIGES PAR CATEGORIE DE DIAMETRE *********
+         ***************************************************************************
+         */
+
+        paint = new Paint();
+        paint.setColor(context.getResources().getColor(R.color.colorPrimary));
+        paint.setStrokeWidth(5f);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        top = 40f;
+        bottom = top + 20f;
+        pageCanvas.drawRect(marginLeft,top,pageCanvas.getWidth()-marginRight,bottom, paint);
+
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setColor(context.getResources().getColor(R.color.colorWhite));
+        paint.setTypeface(ResourcesCompat.getFont(context, R.font.digital_medium));
+        paint.setTextSize(15f);
+
+
+        bottom = bottom - 5f;
+        pageCanvas.drawText(context.getResources().getString(R.string.titre_coupe_volume), marginLeft + 5f, bottom, paint);
+
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setColor(context.getResources().getColor(R.color.pdfGrey));
+        paint.setTypeface(Typeface.DEFAULT);
+        paint.setTextSize(10f);
+
+        bottom = bottom + 38f;
+        pageCanvas.drawText(context.getResources().getString(R.string.axe_volume_m3), marginLeft + 5f, bottom, paint);
+
+        mView = views[2];
+        bitmap = Bitmap.createBitmap(mView.getWidth(), mView.getHeight(),
+                Bitmap.Config.ARGB_8888);
+        canvas = new Canvas(bitmap);
+        mView.draw(canvas);
+
+        // Création d'un rectangle avec les dimensions de la View
+        src = new Rect(0, 0, mView.getWidth(), mView.getHeight());
+
+        // Mise à l'échelle de la View par rapport à la taille de la page
+        scale = Math.min(pageWidth / src.width(), pageHeight / src.height());
+
+        // Positionnement de la View sur la page
+
+        top = bottom + 2f;
+        left = marginLeft;
+        right = ((src.width() * scale) - marginRight);
+        bottom =  ((src.height() * scale) + top - marginLeft);
+
+        // Rec
+        dst = new RectF(left, top, right, bottom);
+
+        pageCanvas.drawBitmap(bitmap, src, dst, null);
+
+
+        //##########################################################
+
+        paint = new Paint();
+        paint.setColor(context.getResources().getColor(R.color.colorPrimary));
+        paint.setStrokeWidth(5f);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+        top = bottom + 40f;
+        bottom = top + 20f;
+        pageCanvas.drawRect(marginLeft,top,pageCanvas.getWidth()-marginRight,bottom, paint);
+
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setColor(context.getResources().getColor(R.color.colorWhite));
+        paint.setTypeface(ResourcesCompat.getFont(context, R.font.digital_medium));
+        paint.setTextSize(15f);
+
+        bottom = bottom - 5f;
+        pageCanvas.drawText(context.getResources().getString(R.string.titre_carte_analyse), marginLeft + 5f, bottom, paint);
+
+        mView = views[8];
+        bitmap = Bitmap.createBitmap(mView.getWidth(), mView.getHeight(),
+                Bitmap.Config.ARGB_8888);
+        canvas = new Canvas(bitmap);
+        mView.draw(canvas);
+
+        // Création d'un rectangle avec les dimensions de la View
+        src = new Rect(0, 0, mView.getWidth(), mView.getHeight());
+
+        // Mise à l'échelle de la View par rapport à la taille de la page
+        scale = Math.min(pageWidth / src.width(), pageHeight / src.height());
+
+        // Positionnement de la View sur la page
+
+        top = bottom + 40f;
+        left = marginLeft;
+        right = ((src.width() * scale) - marginRight);
+        bottom =  ((src.height() * scale) + top - marginLeft);
+
+        // Rec
+        dst = new RectF(left, top, right, bottom);
+
+        pageCanvas.drawBitmap(bitmap, src, dst, null);
+
+        paint.setColor(context.getResources().getColor(R.color.colorBlack));
+        paint.setTypeface(Typeface.DEFAULT);
+        paint.setTextSize(12f);
+        bottom = pageHeight - marginLeft;
+        pageCanvas.drawText("2", pageWidth - marginRight, bottom, paint);
+
+        document.finishPage(page);
+
+
         String name = "[Recapitulatif]" + nomEquipe + ".pdf";
 
         dateFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -352,12 +469,19 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         dir.mkdirs();
 
         File file = new File(dir, name);
+        int i = 1;
+        while(file.exists()){
+            name = "[Recapitulatif]" + nomEquipe + "(" + i + ").pdf";
+            file = new File(dir, name);
+            i++;
+        }
+
         FileOutputStream f;
         try {
             f = new FileOutputStream(file);
 
             document.writeTo(f);
-
+            System.out.println("C'est bon le premier!!!!!!!!!!!!!!!!!");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -434,14 +558,14 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         paint.setColor(context.getResources().getColor(R.color.colorPrimary));
         paint.setTypeface(ResourcesCompat.getFont(context, R.font.digital_medium));
         paint.setTextAlign(Paint.Align.CENTER);
-        paint.setTextSize(30f);
+        paint.setTextSize(22f);
 
         top = 40f;
         pageCanvas.drawText("Marteloscope biodiversité de " + lieu, pageWidth/2, top, paint);
 
-        paint.setTextSize(24f);
+        paint.setTextSize(18f);
         top = top + 30f;
-        pageCanvas.drawText("Pour en savoir plus", pageWidth/2, top, paint);
+        pageCanvas.drawText("Résultats", pageWidth/2, top, paint);
 
         // Rectangle en-tête "Marteloscope du parc des Massifs des Bauges"
         paint = new Paint();
@@ -493,6 +617,7 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         bottom = bottom + 25f;
         pageCanvas.drawText("■ Volume total de bois : " + df.format(volume) + " m3", pageWidth/2 + marginLeft*2, bottom, paint);
 
+
         paint = new Paint();
         paint.setColor(context.getResources().getColor(R.color.colorPrimary));
         paint.setStrokeWidth(5f);
@@ -506,19 +631,17 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         paint.setTypeface(ResourcesCompat.getFont(context, R.font.digital_medium));
         paint.setTextSize(15f);
 
-
         bottom = bottom - 5f;
-        pageCanvas.drawText("Répartition du prélèvement, Volume / Diamètre", marginLeft + 5f, bottom, paint);
+        pageCanvas.drawText(context.getResources().getString(R.string.titre_respect_consignes), marginLeft + 5f, bottom, paint);
 
-        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(context.getResources().getColor(R.color.pdfGrey));
-        paint.setTypeface(Typeface.DEFAULT);
-        paint.setTextSize(10f);
 
-        bottom = bottom + 38f;
-        pageCanvas.drawText("Volume (m3)", marginLeft + 5f, bottom, paint);
+        /*
+         ****************************************
+         ******** View RESPECT CONSIGNE *********
+         ****************************************
+         */
 
-        View mView = views[2];
+        View mView = views[0];
         Bitmap bitmap = Bitmap.createBitmap(mView.getWidth(), mView.getHeight(),
                 Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
@@ -532,15 +655,104 @@ public class PdfCreator extends AsyncTask<View, String, String>{
 
         // Positionnement de la View sur la page
 
-        top = bottom + 2f;
-        left = marginLeft;
-        right = ((src.width() * scale) - marginRight);
-        bottom =  ((src.height() * scale) + top - marginLeft);
+        top = bottom + 10f;
+        right = (float) ((src.width() * scale)/ 1.4);
+        left = marginLeft*3 + 8f;
+        right = right + left;
+        bottom = (float) ((src.height() * scale)/ 1.4 + top);
 
-        // Rec
+        // Rectangle emplacement de la View sur la page
         dst = new RectF(left, top, right, bottom);
 
         pageCanvas.drawBitmap(bitmap, src, dst, null);
+
+
+        paint = new Paint();
+        paint.setColor(context.getResources().getColor(R.color.colorPrimary));
+        paint.setStrokeWidth(5f);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+        top = bottom + 20f;
+        bottom = top + 20f;
+        pageCanvas.drawRect(marginLeft,top,pageCanvas.getWidth()-marginRight,bottom, paint);
+
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setColor(context.getResources().getColor(R.color.colorWhite));
+        paint.setTypeface(ResourcesCompat.getFont(context, R.font.digital_medium));
+        paint.setTextSize(15f);
+
+        bottom = bottom - 5f;
+        pageCanvas.drawText(context.getResources().getString(R.string.titre_synthese), marginLeft + 5f, bottom, paint);
+
+
+        /*
+         ****************************************
+         ******** View SYNTHESE PICTO *********
+         ****************************************
+         */
+
+        mView = views[1];
+        bitmap = Bitmap.createBitmap(mView.getWidth(), mView.getHeight(),
+                Bitmap.Config.ARGB_8888);
+        canvas = new Canvas(bitmap);
+        mView.draw(canvas);
+
+        // Création d'un rectangle avec les dimensions de la View
+        src = new Rect(0, 0, mView.getWidth(), mView.getHeight());
+
+        // Mise à l'échelle de la View par rapport à la taille de la page
+        scale = Math.min(pageWidth / src.width(), pageHeight / src.height());
+
+        // Positionnement de la View sur la page
+
+        top = bottom + 10f;
+        right = (float) ((src.width() * scale)/ 1.4);
+        left = marginLeft*3 + 8f;;
+        right = right + left;
+        bottom = (float) ((src.height() * scale)/ 1.4 + top);
+
+        // Rectangle emplacement de la View sur la page
+        dst = new RectF(left, top, right, bottom);
+
+        pageCanvas.drawBitmap(bitmap, src, dst, null);
+
+
+        top = (pageHeight - 40);
+        bottom = pageHeight - 10f;
+
+        left = marginLeft;
+        right = left + 30f;
+
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.logo_iseta_2);
+        Drawable d = new BitmapDrawable(bitmap);
+        d.setBounds((int)left,(int)top,(int)right,(int)bottom);
+        d.draw(pageCanvas);
+
+        left = right+5;
+        right = left + 50f;
+
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.logo_ufp74_bauges);
+        d = new BitmapDrawable(bitmap);
+        d.setBounds((int)left,(int)top,(int)right,(int)bottom);
+        d.draw(pageCanvas);
+
+        left = right+5;
+        right = left + 30f;
+
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.logo_crpf_3);
+        d = new BitmapDrawable(bitmap);
+        d.setBounds((int)left,(int)top,(int)right,(int)bottom);
+        d.draw(pageCanvas);
+
+        left = right+5;
+        right = left + 70f;
+
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.logo_parc_geoparks_unesco_signature);
+        d = new BitmapDrawable(bitmap);
+        d.setBounds((int)left,(int)top,(int)right,(int)bottom);
+        d.draw(pageCanvas);
+
+
 
         paint.setColor(context.getResources().getColor(R.color.colorBlack));
         paint.setTypeface(Typeface.DEFAULT);
@@ -581,7 +793,7 @@ public class PdfCreator extends AsyncTask<View, String, String>{
 
 
         bottom = bottom - 5f;
-        pageCanvas.drawText("Répartition du prélèvement, Nombre de tiges / Essence", marginLeft + 5f, bottom, paint);
+        pageCanvas.drawText(context.getResources().getString(R.string.titre_coupe_volume), marginLeft + 5f, bottom, paint);
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(context.getResources().getColor(R.color.pdfGrey));
@@ -589,9 +801,9 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         paint.setTextSize(10f);
 
         bottom = bottom + 38f;
-        pageCanvas.drawText("Nombre de tiges", marginLeft + 5f, bottom, paint);
+        pageCanvas.drawText(context.getResources().getString(R.string.axe_volume_m3), marginLeft + 5f, bottom, paint);
 
-        mView = views[3];
+        mView = views[2];
         bitmap = Bitmap.createBitmap(mView.getWidth(), mView.getHeight(),
                 Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
@@ -637,7 +849,7 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         paint.setTextSize(15f);
 
         bottom = bottom - 5f;
-        pageCanvas.drawText("Répartition du prélèvement, Nombre de tiges / Diamètre", marginLeft + 5f, bottom, paint);
+        pageCanvas.drawText(context.getResources().getString(R.string.titre_nb_tige_essence), marginLeft + 5f, bottom, paint);
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(context.getResources().getColor(R.color.pdfGrey));
@@ -645,9 +857,9 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         paint.setTextSize(10f);
 
         bottom = bottom + 38f;
-        pageCanvas.drawText("Nombre de tiges", marginLeft + 5f, bottom, paint);
+        pageCanvas.drawText(context.getResources().getString(R.string.axe_nombre_tiges), marginLeft + 5f, bottom, paint);
 
-        mView = views[4];
+        mView = views[3];
         bitmap = Bitmap.createBitmap(mView.getWidth(), mView.getHeight(),
                 Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
@@ -712,7 +924,7 @@ public class PdfCreator extends AsyncTask<View, String, String>{
 
 
         bottom = bottom - 5f;
-        pageCanvas.drawText("Répartition du prélèvement, Nombre de tiges / Note écologique", marginLeft + 5f, bottom, paint);
+        pageCanvas.drawText(context.getResources().getString(R.string.titre_nb_tige_diametre), marginLeft + 5f, bottom, paint);
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(context.getResources().getColor(R.color.pdfGrey));
@@ -720,9 +932,9 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         paint.setTextSize(10f);
 
         bottom = bottom + 38f;
-        pageCanvas.drawText("Nombre de tiges", marginLeft + 5f, bottom, paint);
+        pageCanvas.drawText(context.getResources().getString(R.string.axe_nombre_tiges), marginLeft + 5f, bottom, paint);
 
-        mView = views[5];
+        mView = views[4];
         bitmap = Bitmap.createBitmap(mView.getWidth(), mView.getHeight(),
                 Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
@@ -769,10 +981,17 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         paint.setTextSize(15f);
 
         bottom = bottom - 5f;
-        pageCanvas.drawText("Evolution du nombre de tiges par classe de diamètre", marginLeft + 5f, bottom, paint);
+        pageCanvas.drawText(context.getResources().getString(R.string.titre_nb_tige_note_eco), marginLeft + 5f, bottom, paint);
 
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setColor(context.getResources().getColor(R.color.pdfGrey));
+        paint.setTypeface(Typeface.DEFAULT);
+        paint.setTextSize(10f);
 
-        mView = views[6];
+        bottom = bottom + 38f;
+        pageCanvas.drawText(context.getResources().getString(R.string.axe_nombre_tiges), marginLeft + 5f, bottom, paint);
+
+        mView = views[5];
         bitmap = Bitmap.createBitmap(mView.getWidth(), mView.getHeight(),
                 Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
@@ -786,7 +1005,7 @@ public class PdfCreator extends AsyncTask<View, String, String>{
 
         // Positionnement de la View sur la page
 
-        top = bottom + 40f;
+        top = bottom + 2f;
         left = marginLeft;
         right = ((src.width() * scale) - marginRight);
         bottom =  ((src.height() * scale) + top - marginLeft);
@@ -837,17 +1056,15 @@ public class PdfCreator extends AsyncTask<View, String, String>{
 
 
         bottom = bottom - 5f;
-        pageCanvas.drawText("Pourcentage des raisons de martelage", marginLeft + 5f, bottom, paint);
+        pageCanvas.drawText(context.getResources().getString(R.string.titre_nb_tige_categorie_diametre), marginLeft + 5f, bottom, paint);
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(context.getResources().getColor(R.color.pdfGrey));
         paint.setTypeface(Typeface.DEFAULT);
         paint.setTextSize(10f);
 
-        bottom = bottom + 38f;
-        pageCanvas.drawText("Pourcentage (Nombre raison / Total arbres martelés)", marginLeft + 5f, bottom, paint);
 
-        mView = views[7];
+        mView = views[6];
         bitmap = Bitmap.createBitmap(mView.getWidth(), mView.getHeight(),
                 Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
@@ -861,7 +1078,7 @@ public class PdfCreator extends AsyncTask<View, String, String>{
 
         // Positionnement de la View sur la page
 
-        top = bottom  + 2f;
+        top = bottom + 20f;
         left = marginLeft;
         right = ((src.width() * scale) - marginRight);
         bottom =  ((src.height() * scale) + top - marginLeft);
@@ -884,7 +1101,7 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         paint.setStrokeWidth(5f);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-        top = bottom + 30f;
+        top = bottom + 60f;
         bottom = top + 20f;
         pageCanvas.drawRect(marginLeft,top,pageCanvas.getWidth()-marginRight,bottom, paint);
 
@@ -894,7 +1111,73 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         paint.setTextSize(15f);
 
         bottom = bottom - 5f;
-        pageCanvas.drawText("Récapitulatif géographique de l'exercice", marginLeft + 5f, bottom, paint);
+        pageCanvas.drawText(context.getResources().getString(R.string.titre_pourcentage_raison), marginLeft + 5f, bottom, paint);
+
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setColor(context.getResources().getColor(R.color.pdfGrey));
+        paint.setTypeface(Typeface.DEFAULT);
+        paint.setTextSize(10f);
+
+        bottom = bottom + 38f;
+        pageCanvas.drawText(context.getResources().getString(R.string.axe_pourcentage_raison), marginLeft + 5f, bottom, paint);
+
+        mView = views[7];
+        bitmap = Bitmap.createBitmap(mView.getWidth(), mView.getHeight(),
+                Bitmap.Config.ARGB_8888);
+        canvas = new Canvas(bitmap);
+        mView.draw(canvas);
+
+        // Création d'un rectangle avec les dimensions de la View
+        src = new Rect(0, 0, mView.getWidth(), mView.getHeight());
+
+        // Mise à l'échelle de la View par rapport à la taille de la page
+        scale = Math.min(pageWidth / src.width(), pageHeight / src.height());
+
+        // Positionnement de la View sur la page
+
+        top = bottom + 2f;
+        left = marginLeft;
+        right = ((src.width() * scale) - marginRight);
+        bottom =  ((src.height() * scale) + top - marginLeft);
+
+        // Rec
+        dst = new RectF(left, top, right, bottom);
+
+        pageCanvas.drawBitmap(bitmap, src, dst, null);
+
+        paint.setColor(context.getResources().getColor(R.color.colorBlack));
+        paint.setTypeface(Typeface.DEFAULT);
+        paint.setTextSize(12f);
+        bottom = pageHeight - marginLeft;
+        pageCanvas.drawText("4", pageWidth - marginRight, bottom, paint);
+
+        document.finishPage(page);
+
+
+        /*
+         *******************************************************************************************
+         ***************************************** PAGE 4 ******************************************
+         *******************************************************************************************
+         */
+
+        page = document.startPage(4);
+        pageCanvas = page.getCanvas();
+
+        paint = new Paint();
+        paint.setColor(context.getResources().getColor(R.color.colorPrimary));
+        paint.setStrokeWidth(5f);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        top = 40f;
+        bottom = top + 20f;
+        pageCanvas.drawRect(marginLeft,top,pageCanvas.getWidth()-marginRight,bottom, paint);
+
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setColor(context.getResources().getColor(R.color.colorWhite));
+        paint.setTypeface(ResourcesCompat.getFont(context, R.font.digital_medium));
+        paint.setTextSize(15f);
+
+        bottom = bottom - 5f;
+        pageCanvas.drawText(context.getResources().getString(R.string.titre_carte_analyse), marginLeft + 5f, bottom, paint);
 
         mView = views[8];
         bitmap = Bitmap.createBitmap(mView.getWidth(), mView.getHeight(),
@@ -924,11 +1207,11 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         paint.setTypeface(Typeface.DEFAULT);
         paint.setTextSize(12f);
         bottom = pageHeight - marginLeft;
-        pageCanvas.drawText("4", pageWidth - marginRight, bottom, paint);
+        pageCanvas.drawText("5", pageWidth - marginRight, bottom, paint);
 
         document.finishPage(page);
 
-        String name = "[EnSavoirPlus]" + nomEquipe + ".pdf";
+        String name = "[Resultats]" + nomEquipe + ".pdf";
 
         dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         String dateDir = dateFormat.format(date);
@@ -940,12 +1223,21 @@ public class PdfCreator extends AsyncTask<View, String, String>{
         dir.mkdirs();
 
         File file = new File(dir, name);
+
+        int i = 1;
+        while(file.exists()){
+            name = "[Resultats]" + nomEquipe + "(" + i + ").pdf";
+            file = new File(dir, name);
+            i++;
+        }
+
         FileOutputStream f;
         try {
             f = new FileOutputStream(file);
 
             document.writeTo(f);
 
+            System.out.println("C'est bon le deuxieme!!!!!!!!!!!!!!!!!");
         } catch (IOException e) {
             e.printStackTrace();
         }

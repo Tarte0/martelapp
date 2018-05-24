@@ -20,12 +20,28 @@ public class VolumeCalculator {
     private final String CHAUFFAGE = "chauffage";
     private final String INDUSTRIE = "industrie";
 
-    private HashMap<String, Double> constants = new HashMap<>();
+    private HashMap<String, Double> prixBoixChauffage = new HashMap<>();
+    private HashMap<String, Double> prixBoixIndustrie = new HashMap<>();
+    private HashMap<String, Double> prixBoixOeuvre = new HashMap<>();
+
     private HashMap<String, String> essences = new HashMap<>();
 
-    public VolumeCalculator(HashMap<String, Double> constants, HashMap<String, String> essences) {
-        this.constants = constants;
+    String nomTarifResineux;
+    int versionTarifResineux;
+
+    String nomTarifFeuillus;
+    int versionTarifFeuillus;
+
+    public VolumeCalculator(HashMap<String, Double> prixBoixChauffage, HashMap<String, Double> prixBoixIndustrie, HashMap<String, Double> prixBoixOeuvre, HashMap<String, String> essences,
+                            String nomTarifResineux, int versionTarifResineux, String nomTarifFeuillus, int versionTarifFeuillus) {
+        this.prixBoixChauffage = prixBoixChauffage;
+        this.prixBoixIndustrie = prixBoixIndustrie;
+        this.prixBoixOeuvre = prixBoixOeuvre;
         this.essences = essences;
+        this.nomTarifResineux = nomTarifResineux;
+        this.versionTarifResineux = versionTarifResineux;
+        this.nomTarifFeuillus = nomTarifFeuillus;
+        this.versionTarifFeuillus = versionTarifFeuillus;
     }
 
     public VolumeCalculator(String[] constantsKeys, double[] constantsValues,
@@ -73,7 +89,7 @@ public class VolumeCalculator {
     public double getHauteurDecoupe(Tree tree) {
         //si l'arbre est un petit bois on renvoie simplement sa constante
         if (tree.getDiametre() <= 30) {
-            return constants.get(DatabaseHelper.HAUTEUR_MOYENNE_PETIT_BOIS);
+            //return constants.get(DatabaseHelper.HAUTEUR_MOYENNE_PETIT_BOIS);
         }
         //sinon on va chercher la constante correspondant au type de son essence
         return constants.get(("HAUTEUR_MOYENNE_".concat(getType(tree))).toUpperCase());

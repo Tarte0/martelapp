@@ -179,7 +179,7 @@ public class AnalyseResultatFragment extends Fragment {
                                 previous.setVisibility(View.VISIBLE);
                                 next.setVisibility(View.INVISIBLE);
 
-                                tvTitreRespect.setText(R.string.titre_resultats);
+                                tvTitreRespect.setText(R.string.titre_synthese);
                                 layoutRespectConsignes.setVisibility(View.GONE);
                                 layoutSynthesePicto.setVisibility(View.VISIBLE);
 

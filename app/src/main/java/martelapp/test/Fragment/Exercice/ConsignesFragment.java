@@ -47,7 +47,7 @@ public class ConsignesFragment extends Fragment {
     DecimalFormat df;
 
     DatabaseHelper dbHelper;
-    Cursor cur;
+    Cursor cur, cur2;
 
     int     prelevementMin = 0,
             prelevementMax = 0;
@@ -59,6 +59,7 @@ public class ConsignesFragment extends Fragment {
     double volumeBoisTotalParcelle= 0f;
     double  surfaceParcelle = 0f;
 
+    StringBuffer diametreExploitabilite;
     Spanned objectifs;
 
     @Override
@@ -96,8 +97,29 @@ public class ConsignesFragment extends Fragment {
             volumeBoisTotalParcelle = cur.getDouble(0);
             volumeBoisTotalParcelleHa = volumeBoisTotalParcelle / surfaceParcelle;
 
+            diametreExploitabilite = new StringBuffer();
+
+            cur = dbHelper.getDataFromTableWithCondition("COUNT(*) AS nb_tiges_par_essence, ap." + DatabaseHelper.ESSENCE_ARBRE,
+                    DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.DIAMETRE_EXPLOIT_TABLE + " de",
+                            "ap." + DatabaseHelper.ESSENCE_ARBRE + " = de." + DatabaseHelper.ESSENCE_DIAM_EXPLOIT +
+                            " GROUP BY ap." + DatabaseHelper.ESSENCE_ARBRE +
+                            " ORDER BY nb_tiges_par_essence DESC" +
+                            " LIMIT 4");
+            while(cur.moveToNext()){
+                System.out.println("Essence : " + cur.getString(cur.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE)) + " nb tiges : " + Integer.toString(cur.getInt(0)));
+                cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.DIAMETRE_EXPLOIT_TABLE,
+                        DatabaseHelper.ESSENCE_DIAM_EXPLOIT + " = '" + cur.getString(cur.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE)) + "'");
+                cur2.moveToFirst();
+
+                String essence = cur2.getString(cur2.getColumnIndex(DatabaseHelper.ESSENCE_DIAM_EXPLOIT));
+                int diametre = cur2.getInt(cur2.getColumnIndex(DatabaseHelper.DIAMETRE_EXPLOITABILITE));
+
+                diametreExploitabilite.append("<br>" + essence + " : à partir de " + Integer.toString(diametre) + " cm");
+            }
+
             dbHelper.close();
             cur.close();
+            //cur2.close();
 
             objectifs = Html.fromHtml(
                     "Compte tenu d'une période de rotation fixée entre " + Integer.toString(rotationMin) + " et " + Integer.toString(rotationMax) + " ans et des diamètres d'exploitabilité(*) sur cette parcelle :" +
@@ -107,10 +129,7 @@ public class ConsignesFragment extends Fragment {
                             "<br>Pour notre parcelle de " + df.format(surfaceParcelle) + " ha, il faut donc prélever entre " + Integer.toString((int) (volumeBoisTotalParcelle * prelevementMin / 100)) + " et " + Integer.toString((int) (volumeBoisTotalParcelle * prelevementMax / 100)) + " m3." +
                             "<br>" +
                             "<br><i>(*)Pour les principales essences : " +
-                            "<br>- Épicéa : de 50 à 70 cm" +
-                            "<br>- Sapin pectiné : de 45 à 50 cm" +
-                            "<br>- Hêtre : jusqu'à 50 cm" +
-                            "<br>- Frêne, Érables : à partir de 50 cm</i>" +
+                            diametreExploitabilite + "</i>" +
                             "<br><br><b>Biodiversité</b>" +
                             "<br>• Conserver sciemment au moins 3 arbres de gros diamètre par hectare." +
                             "<br>• Conserver sciemment au moins 2 arbres porteurs de micros-habitats par hectare." +
