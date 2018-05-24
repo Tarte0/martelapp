@@ -35,6 +35,5 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation 'com.commonsware.cwac:merge:1.1.2'
 
-
 }
 apply plugin: 'com.google.gms.google-services'
