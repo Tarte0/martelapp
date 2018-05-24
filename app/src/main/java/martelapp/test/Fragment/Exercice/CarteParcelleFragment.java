@@ -39,7 +39,8 @@ import martelapp.test.Class.GrapheHelper;
 import martelapp.test.R;
 
 /**
- * Created by cimin on 04/04/2018.
+ * CarteParcelleFragment est un fragment contenant la Carte de la parcelle.
+ * On différencie les essences par des points de couleurs différentes.
  */
 
 public class CarteParcelleFragment extends Fragment implements OnChartValueSelectedListener {
@@ -57,6 +58,7 @@ public class CarteParcelleFragment extends Fragment implements OnChartValueSelec
 
             bubbleChart = view.findViewById(R.id.bubble_chart_parcelle);
 
+            // Affichage du BubbleChart correspondant à la carte de la parcelle
             GrapheHelper.getBubbleChartInfosCarte(view.getContext(), bubbleChart);
         }
         return view;

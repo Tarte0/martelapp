@@ -21,22 +21,34 @@ import martelapp.test.Class.GrapheHelper;
 import martelapp.test.Class.OnSwipeTouchListener;
 import martelapp.test.R;
 
+/**
+ * AnalyseGrapheNombreTigesFragment fragment contenant 4 pages :
+ *                  - Essence : Graphique de la Répartition du prélèvement en nombre de tiges par essence.
+ *                  - Diamètre : Graphique de la Répartition du prélèvement en nombre de tiges par classe de diamètre.
+ *                  - Note écologique : Graphique de la Répartition du prélèvement en nombre de tiges par note écologique.
+ *                  - Classe de diamètre : Graphique de l'évolution du nombre de tiges par classe de diamètre (Graphique avant et après martelage).
+ */
 
 public class AnalyseGrapheNombreTigesFragment extends Fragment {
 
     ViewPager viewPager;
     View view;
 
+    // Barre de navigation entre les pages
     BottomNavigationView bottomNavigationView;
     TextView textAxe, textTitleGraphe;
+    // Boutons latéraux permettant de naviguer entre les pages
     ImageButton previous, next;
 
+    // layout contenant les pieChart de l'évolution du nombre de tiges par classe de diamètre (Graphique avant et après martelage)
     LinearLayout layoutPieChartNbTige;
 
+    // Graphiques de la répartition du prélevement
     BarChart barChartEssenceAnalyse;
     BarChart barChartDiametreAnalyse;
     BarChart barChartNoteEcoAnalyse;
 
+    //Graphiques de l'évolution du nombre de tiges par classe de diamètre
     PieChart pieChartNbTigesAvant;
     PieChart pieChartNbTigesApres;
 
@@ -50,34 +62,32 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
         if(view == null) {
             view = inflater.inflate(R.layout.view_page_analyse_graphe_nombre_tiges, null);
 
-            textAxe = (TextView) view.findViewById(R.id.text_axe);
-            textTitleGraphe = (TextView) view.findViewById(R.id.title_graphe);
+            textAxe = view.findViewById(R.id.text_axe);
+            textTitleGraphe = view.findViewById(R.id.title_graphe);
 
-            bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation_graphe_nombre_tiges_analyse);
-            previous = (ImageButton) view.findViewById(R.id.previousInfo);
-            next = (ImageButton) view.findViewById(R.id.nextInfo);
+            bottomNavigationView = view.findViewById(R.id.bottom_navigation_graphe_nombre_tiges_analyse);
+            previous = view.findViewById(R.id.previousInfo);
+            next = view.findViewById(R.id.nextInfo);
 
             layoutPieChartNbTige = view.findViewById(R.id.layout_pie_chart_nb_tiges);
 
 
+            // Ajouts des graphiques
             barChartEssenceAnalyse = view.findViewById(R.id.bar_chart_essence_graphe);
             GrapheHelper.getBarChartAnalyseEssence(view.getContext(), barChartEssenceAnalyse);
-
-
 
             barChartDiametreAnalyse = view.findViewById(R.id.bar_chart_diametre_graphe);
             GrapheHelper.getBarChartAnalyseDiametre(view.getContext(), barChartDiametreAnalyse);
 
-
             barChartNoteEcoAnalyse = view.findViewById(R.id.bar_chart_note_eco_graphe);
             GrapheHelper.getBarChartAnalyseNoteEcologique(view.getContext(), barChartNoteEcoAnalyse);
-
 
             pieChartNbTigesAvant = view.findViewById(R.id.pie_chart_nb_tiges_avant_graphe);
             pieChartNbTigesApres = view.findViewById(R.id.pie_chart_nb_tiges_apres_graphe);
             GrapheHelper.getPieChartAnalyseAvantApresNbTigesCategorie(view.getContext(), pieChartNbTigesAvant, pieChartNbTigesApres);
         }
-        //on gere le swipe gauche et droite (un peu brute)
+
+        //on gere le swipe gauche et droite
         view.setOnTouchListener(new OnSwipeTouchListener(view.getContext()) {
             public void onSwipeRight() {
                 switch (bottomNavigationView.getSelectedItemId()) {
@@ -113,6 +123,7 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
         });
 
 
+        // On gere le click du bouton page précédente
         previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,6 +144,7 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
         });
 
 
+        // On gere le click du bouton page suivante
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -153,6 +165,7 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
         });
 
 
+        // traitement de l'affichage en fonction de la page dans laquelle on est
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -167,12 +180,14 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
                                 textAxe.setVisibility(View.VISIBLE);
 
 
+                                // On affiche uniquement barChartEssenceAnalyse
                                 barChartEssenceAnalyse.setVisibility(View.VISIBLE);
                                 barChartDiametreAnalyse.setVisibility(View.GONE);
                                 barChartNoteEcoAnalyse.setVisibility(View.GONE);
 
                                 layoutPieChartNbTige.setVisibility(View.GONE);
 
+                                // ajout de la view au PDF
                                 if(!viewBarChartEssenceAdded){
                                     ((AnalyseActivity) getActivity()).addViewPdf(barChartEssenceAnalyse,3);
                                     viewBarChartEssenceAdded = true;
@@ -189,12 +204,14 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
                                 textAxe.setVisibility(View.VISIBLE);
 
 
+                                // On affiche uniquement barChartDiametreAnalyse
                                 barChartEssenceAnalyse.setVisibility(View.GONE);
                                 barChartDiametreAnalyse.setVisibility(View.VISIBLE);
                                 barChartNoteEcoAnalyse.setVisibility(View.GONE);
 
                                 layoutPieChartNbTige.setVisibility(View.GONE);
 
+                                // ajout de la view au PDF
                                 if(!viewBarChartDiametreAdded){
                                     ((AnalyseActivity) getActivity()).addViewPdf(barChartDiametreAnalyse,4);
                                     viewBarChartDiametreAdded = true;
@@ -210,12 +227,14 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
                                 textAxe.setText(R.string.axe_nombre_tiges);
                                 textAxe.setVisibility(View.VISIBLE);
 
+                                // On affiche uniquement barChartNoteEcoAnalyse
                                 barChartEssenceAnalyse.setVisibility(View.GONE);
                                 barChartDiametreAnalyse.setVisibility(View.GONE);
                                 barChartNoteEcoAnalyse.setVisibility(View.VISIBLE);
 
                                 layoutPieChartNbTige.setVisibility(View.GONE);
 
+                                // ajout de la view au PDF
                                 if(!viewBarChartNoteEcologiqueAdded){
                                     ((AnalyseActivity) getActivity()).addViewPdf(barChartNoteEcoAnalyse,5);
                                     viewBarChartNoteEcologiqueAdded = true;
@@ -230,12 +249,14 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
                                 textTitleGraphe.setText(R.string.titre_nb_tige_categorie_diametre);
                                 textAxe.setVisibility(View.GONE);
 
+                                // On affiche uniquement layoutPieChartNbTige
                                 barChartEssenceAnalyse.setVisibility(View.GONE);
                                 barChartDiametreAnalyse.setVisibility(View.GONE);
                                 barChartNoteEcoAnalyse.setVisibility(View.GONE);
 
                                 layoutPieChartNbTige.setVisibility(View.VISIBLE);
 
+                                // ajout de la view au PDF
                                 if(!viewPieChartEvolutionAdded){
                                     ((AnalyseActivity) getActivity()).addViewPdf(layoutPieChartNbTige,6);
                                     viewPieChartEvolutionAdded = true;

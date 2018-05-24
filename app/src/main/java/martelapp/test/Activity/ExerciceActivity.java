@@ -23,6 +23,34 @@ import martelapp.test.Fragment.Exercice.CarteParcelleFragment;
 import martelapp.test.Fragment.Exercice.SelectionArbreFragment;
 import martelapp.test.R;
 
+
+
+/**
+ * ExerciceActivity est l'activité sur laquelle l'utilisateur arrive au début de l'exerice.
+ * C'est dans cette activité qu'il passera le plus de temps, puisqu'il devra réaliser l'exercice de martelage.
+ *
+ * Elle contient plusieurs fragments séparés en plusieurs pages :
+ * - Consignes :
+ *              - Général : Consignes générales de l'exercice de martelage.
+ *              - Objectifs : Objectifs de l'exercice de martelage.
+ *
+ * - Infos :
+ *              - Caractéristiques : Caractéristiques de la parcelle.
+ *              - Diamètre : Graphique du nombre de tiges par classe de diamètre.
+ *              - Note écologique : Graphique du nombre de tiges par note écologique.
+ *              - Essence : Graphique du nombre de tiges par essence.
+ *
+ * - Carte : Carte de la parcelle. On différencie les essences par des points de couleurs différentes.
+ *
+ * - Sélection : Fragment contenant un pavé numérique sur lequel l'utilisateur saisit un numéro d'arbre.
+ *               Une fois un arbre recherché ses caractéristiques s'affichent. 3 possibilités s'offrent à l'utilisateur :
+ *                  - Conserver l'arbres pour des raisons de biodiversité : Ouvre un popUp expliquant à l'utilisateur que l'arbre sera conservé pour des raisons écologiques.
+ *                  - Marteler une prochaine fois : L'utilisateur ne souhaite ni conserver ni marteler l'arbre.
+ *                  - Marteler : Ouvre un popUp contenant les raisons d'un martelage, l'utilisateur peut en saisir une ou plusieurs.
+ *
+ * - Arbres sélectionnés : Liste des arbres martelés ou conservés par l'utilisateur.
+ */
+
 public class ExerciceActivity extends AppCompatActivity {
     ViewPager viewPager;
     InfosFragment infosf;
@@ -45,7 +73,7 @@ public class ExerciceActivity extends AppCompatActivity {
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
-        //on ajoute un listener pour changer la couleur des icones dans les tabs
+        //on ajoute un listener pour changer la couleur des icones dans les tabs Blanc si selectionné, Noir sinon
         tabs.addOnTabSelectedListener(
                 new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
 
@@ -135,6 +163,11 @@ public class ExerciceActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Ouverture d'un popUp lorsque l'utilisateur appuie sur le bouton "Marteler un arbre"
+     *
+     * @param numeroArbre : Numéro de l'arbre que l'utilisateur souhaite marteler
+     */
     public void openMartelagePopup(String numeroArbre){
         FragmentManager fragmentManager = getSupportFragmentManager();
         ChoixMartelageFragment newFragment = new ChoixMartelageFragment();
@@ -145,6 +178,12 @@ public class ExerciceActivity extends AppCompatActivity {
         transaction.addToBackStack(null).commit();
     }
 
+
+    /**
+     * Ouverture d'un popUp lorsque l'utilisateur appuie sur le bouton "Conserver un arbre"
+     *
+     * @param numeroArbre : Numéro de l'arbre que l'utilisateur souhaite conserver
+     */
     public void openConserverPopup(String numeroArbre){
         FragmentManager fragmentManager = getSupportFragmentManager();
         ChoixConserverFragment newFragment = new ChoixConserverFragment();

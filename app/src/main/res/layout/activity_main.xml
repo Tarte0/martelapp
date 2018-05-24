@@ -54,7 +54,7 @@
             android:weightSum="2">
 
             <ImageButton
-                android:id="@+id/test_maj_bdd"
+                android:id="@+id/parametres_parcelle"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginEnd="8dp"

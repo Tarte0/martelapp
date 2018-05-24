@@ -30,6 +30,11 @@ import martelapp.test.Adapter.ArbresMartelesAdapter;
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.R;
 
+
+/**
+ * Arbres sélectionnés est un Fragment contenant la Liste
+ * des arbres martelés ou conservés par l'utilisateur.
+ */
 public class ArbresSelectionnesFragment extends Fragment {
     ListView listeArbresMarteles;
 
@@ -48,12 +53,15 @@ public class ArbresSelectionnesFragment extends Fragment {
         if(mainView == null) {
             mainView = inflater.inflate(R.layout.view_page_arbresmarteles, null);
 
-            finishButton = (Button) mainView.findViewById(R.id.finish);
-
-            treeCardNumber = (LinearLayout) mainView.findViewById(R.id.arbreLayout);
+            finishButton = mainView.findViewById(R.id.finish);
+            treeCardNumber = mainView.findViewById(R.id.arbreLayout);
             listeArbresMarteles = mainView.findViewById(R.id.liste_arbres_marteles);
 
 
+            /*
+             * Cliquer sur un arbre de la liste affiche dans la Card les
+             * raisons de sa conservation ou de son martelage.
+             */
             listeArbresMarteles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
@@ -62,6 +70,7 @@ public class ArbresSelectionnesFragment extends Fragment {
                     dbHelper = new DatabaseHelper(mainView.getContext());
 
                     String numero = text.getText().toString();
+                    // On récupère les raisons de la conservation ou du martelage dans la base de données
                     cur = dbHelper.executeQuery("Select *"
                             + " FROM " + DatabaseHelper.RAISON_TABLE
                             + " WHERE " + DatabaseHelper.NUMERO_ARBRE_TRAITE_RAISON + " = " + numero);
@@ -70,6 +79,7 @@ public class ArbresSelectionnesFragment extends Fragment {
 
                     String raison = cur.getString(cur.getColumnIndex(DatabaseHelper.RAISON));
 
+                    // Affichage des raisons du martelage ou de la conservation dans la Card
                     if (raison.equals(DatabaseHelper.BIODIVERSITE)) {
                         textRaison.setText(R.string.raison_conserve);
                     } else {
@@ -95,6 +105,18 @@ public class ArbresSelectionnesFragment extends Fragment {
             });
 
 
+
+            /*###################################
+             *###  Bouton "Fin de l'exercice" ###
+             *###################################
+             *
+             * Met fin à l'exercice de Martelage et mène
+             * à AnalyseActivity.
+             * Un popUp est affiché pour que l'utilisateur
+             * confirme son choix.
+             * On ne peut mettre fin à l'exercice que si au moins
+             * un arbre a été martelé.
+             */
             finishButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View view) {
@@ -103,6 +125,7 @@ public class ArbresSelectionnesFragment extends Fragment {
 
                     cur = dbHelper.getAllDataFromTable(DatabaseHelper.ARBRES_MARTELES_TABLE);
 
+                    // Affichage du popUp permettant de confirmer la fin de l'exercice
                     AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(view.getContext(), R.style.AlertDialogCustom));
                     builder.setTitle("Êtes vous sur de vouloir terminer l'exercice ?");
                     builder.setMessage("Vous ne pourrez plus revenir en arrière");
@@ -141,18 +164,6 @@ public class ArbresSelectionnesFragment extends Fragment {
         return mainView;
     }
 
-    private String etatToString(String etat) {
-        switch (etat) {
-            case "v":
-                return "Vivant";
-            case "mp":
-                return "Mort sur pied";
-            case "ms":
-                return "Mort sur sol";
-            default:
-                return "";
-        }
-    }
 
     private String raisonToString(String raison){
         if(raison.equals(DatabaseHelper.ECLAIRCIE)) {

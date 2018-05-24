@@ -10,6 +10,12 @@ import android.widget.TextView;
 
 import martelapp.test.R;
 
+
+/**
+ * MessageErreurArbreMarteleActivité est l'activité sur laquelle tombe l'utilisateur lorsqu'il a martelé
+ * un arbre à note écologique haute (>6). Marteler un arbre important pour la biodiversité est une erreur,
+ * c'est pourquoi on l'indique à l'utilisateur.
+ */
 public class MessageErreurArbreMarteleActivity extends AppCompatActivity {
     AnimationDrawable insecteAnimation;
 
@@ -25,6 +31,12 @@ public class MessageErreurArbreMarteleActivity extends AppCompatActivity {
 
         Button mButton = (Button) findViewById(R.id.badMoveButton);
 
+        /*####################################
+        *###  Bouton "badMoveButton"      ###
+        *####################################
+        *
+        * Bouton permettant de retourner dans le fragment "SelectionArbreFragment"
+        */
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

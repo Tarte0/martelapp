@@ -37,7 +37,7 @@ import martelapp.test.Class.VectorShapeRenderer;
 import martelapp.test.R;
 
 /**
- * Created by cimin on 24/04/2018.
+ * AnalyseGrapheCarteFragment : Carte des arbres martelés et conservés pendant l'exercice.
  */
 
 public class AnalyseGrapheCarteFragment extends Fragment {

@@ -13,7 +13,7 @@ import martelapp.test.Class.GrapheHelper;
 import martelapp.test.R;
 
 /**
- * Created by Baptiste on 19/05/2018.
+ * AnalyseGrapheRaisonsFragment : Graphique de la Répartition des raisons de martelage.
  */
 
 public class AnalyseGrapheRaisonsFragment extends Fragment {
@@ -32,8 +32,10 @@ public class AnalyseGrapheRaisonsFragment extends Fragment {
 
             barChart = view.findViewById(R.id.bar_chart_pourcentage_raison);
 
+            // ajout du graphique
             GrapheHelper.getBarChartAnalyseRaisons(view.getContext(), barChart);
 
+            // ajout de la view au PDF
             if (!viewBarChartRaisonsAdded) {
                 ((AnalyseActivity) getActivity()).addViewPdf(barChart, 7);
                 viewBarChartRaisonsAdded = true;

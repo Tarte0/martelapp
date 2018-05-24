@@ -2,6 +2,7 @@
     <!-- ActivityMain -->
     <string name="app_name">Martel\'App</string>
     <string name="bouton_nouvel_exercice">Nouvel exercice</string>
+    <string name="aucune_parcelle">Aucune parcelle sélectionnée</string>
     <string name="bouton_continuer_exercice">Continuer un ancien exercice</string>
     <string name="bouton_en_savoir_plus">En savoir plus</string>
     <!-- ActivityMain -->
@@ -21,6 +22,7 @@
     <!-- NOM EQUIPE -->
     <string name="hint_nom_equipe">Nom Equipe</string>
     <string name="saisir_nom">Veuillez saisir un nom</string>
+    <string name="saisir_pas_de_caracteres_speciaux">Veuillez saisir un nom sans caractères spéciaux (, \' \" ; : / ! ? ~) </string>
     <string name="bouton_commencer">Commencer</string>
     <!-- NOM EQUIPE -->
 

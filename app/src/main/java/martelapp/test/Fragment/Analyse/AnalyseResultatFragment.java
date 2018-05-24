@@ -25,7 +25,9 @@ import martelapp.test.Class.OnSwipeTouchListener;
 import martelapp.test.R;
 
 /**
- * Created by Baptiste on 19/05/2018.
+ * AnalyseResultatFragment : Fragment contenant 2 pages
+ *                  - Respect des consignes : L'utilisateur à-t-il respecté les consignes?
+ *                  - Synthèse du martelage : Différents nombres résumant l'exercice.
  */
 
 public class AnalyseResultatFragment extends Fragment {
@@ -37,7 +39,9 @@ public class AnalyseResultatFragment extends Fragment {
 
     ViewPager viewPager;
 
+    // Barre de navigation entre les pages
     BottomNavigationView bottomNavigationView;
+    // Boutons latéraux permettant de naviguer entre les pages
     ImageButton previous, next;
 
     LinearLayout layoutRespectConsignes;
@@ -50,16 +54,15 @@ public class AnalyseResultatFragment extends Fragment {
 
     DecimalFormat df;
 
+    // prélevement min et max (en %) à effectuer pendant l'exercice
     int     prelevementMin = 0,
             prelevementMax = 0;
 
     float volumeTotalBoisMartele;
 
-    float diametre;
-
-    float noteEcologique;
-
+    // Volume total de bois sur la parcelle
     double volumeBoisTotalParcelle = 0f;
+    // Volume total de bois sur la parcelle ramené à l'hectare
     double volumeBoisTotalParcelleHa = 0f;
     double  surfaceParcelle = 0f;
 
@@ -96,14 +99,14 @@ public class AnalyseResultatFragment extends Fragment {
             tvNoteEco = view.findViewById(R.id.tvNoteEco);
             tvTitreRespect = view.findViewById(R.id.tvTitreRespect);
 
-            bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation_resultat_analyse);
-            previous = (ImageButton) view.findViewById(R.id.previousInfo);
-            next = (ImageButton) view.findViewById(R.id.nextInfo);
+            bottomNavigationView = view.findViewById(R.id.bottom_navigation_resultat_analyse);
+            previous = view.findViewById(R.id.previousInfo);
+            next = view.findViewById(R.id.nextInfo);
 
             getValeur(view.getContext());
         }
 
-        //on gere le swipe gauche et droite (un peu brute)
+        //on gere le swipe gauche et droite
         view.setOnTouchListener(new OnSwipeTouchListener(view.getContext()) {
             public void onSwipeRight() {
                 switch (bottomNavigationView.getSelectedItemId()) {
@@ -127,6 +130,7 @@ public class AnalyseResultatFragment extends Fragment {
         });
 
 
+        // On gere le click du bouton page précédente
         previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,6 +145,7 @@ public class AnalyseResultatFragment extends Fragment {
         });
 
 
+        // On gere le click du bouton page suivante
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -155,6 +160,7 @@ public class AnalyseResultatFragment extends Fragment {
         });
 
 
+        // traitement de l'affichage en fonction de la page dans laquelle on est
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -165,9 +171,11 @@ public class AnalyseResultatFragment extends Fragment {
                                 next.setVisibility(View.VISIBLE);
 
                                 tvTitreRespect.setText(R.string.titre_respect_consignes);
+                                // Affichage du layout Respect des consignes
                                 layoutRespectConsignes.setVisibility(View.VISIBLE);
                                 layoutSynthesePicto.setVisibility(View.GONE);
 
+                                // ajout de la view au PDF
                                 if(!respectConsigneViewAdded){
                                     ((AnalyseActivity) getActivity()).addViewPdf(layoutRespectConsignes, 0);
                                     respectConsigneViewAdded = true;
@@ -183,6 +191,7 @@ public class AnalyseResultatFragment extends Fragment {
                                 layoutRespectConsignes.setVisibility(View.GONE);
                                 layoutSynthesePicto.setVisibility(View.VISIBLE);
 
+                                // ajout de la view au PDF
                                 if(!synthesePictoViewAdded){
                                     ((AnalyseActivity) getActivity()).addViewPdf(layoutSynthesePicto, 1);
                                     synthesePictoViewAdded = true;
@@ -208,7 +217,10 @@ public class AnalyseResultatFragment extends Fragment {
         bottomNavigationView.setSelectedItemId(R.id.action_respect_consigne_analyse);
     }
 
-
+    /**
+     * Fonction permettant d'effectuer les calculs permettant de valider ou non les consignes et d'avoir des statistiques sur le martelage
+     * @param context : contexte de la view
+     */
     private void getValeur(Context context){
         Cursor cur;
         DatabaseHelper dbHelper;
@@ -251,12 +263,13 @@ public class AnalyseResultatFragment extends Fragment {
         volumeTotalBoisMartele = cur.getFloat(0);
 
 
+        // On passe le volume de bois martelé en % pour le comparer aux bornes prelevementMin et prelevementMax
         volumeMartelePourcent = (float)(volumeTotalBoisMartele/volumeBoisTotalParcelle)*100;
-        /*tvPrelevementVolumeR.setText(String.format("Prélever entre %s et %s du volume de bois de la parcelle.\nVolume prélevé: %sm3 (%s)",
-                prelevementMin +"%" , prelevementMax +"%" ,df.format(volumeTotalBoisMartele),df.format(volumeMartelePourcent)+"%"));*/
 
+        /**
+         * Si le prélevement n'est pas dans l'intervalle de volume à prélever, on l'affiche en rouge
+         */
         if (prelevementMin >= volumeMartelePourcent || volumeMartelePourcent >= prelevementMax) {
-            //tvPrelevementVolumeR.setTextColor(getResources().getColor(R.color.colorRed));
             tvPrelevementVolumeR.setText(Html.fromHtml(
                     "<i>Prélever entre " + prelevementMin + "% et " + prelevementMax + "% du volume de bois de la parcelle." +
                             "<br>(Soit entre " + (int)(volumeBoisTotalParcelle * prelevementMin / 100)  + " et " + (int)(volumeBoisTotalParcelle * prelevementMax / 100) + " m3 pour notre parcelle)</i>" +
@@ -264,6 +277,9 @@ public class AnalyseResultatFragment extends Fragment {
             ivPrelevementVolumeR.setColorFilter(getResources().getColor(R.color.colorRed));
             ivPrelevementVolumeR.setImageResource(R.drawable.cross);
         }
+        /**
+         * Si le prélevement est dans l'intervalle de volume à prélever, on l'affiche en vert
+         */
         else{
             tvPrelevementVolumeR.setText(Html.fromHtml(
                     "<i>Prélever entre " + prelevementMin + "% et " + prelevementMax + "% du volume de bois de la parcelle." +
@@ -298,7 +314,6 @@ public class AnalyseResultatFragment extends Fragment {
 
         // Moins de 3 * surfaceParcelle arbres de diamètre > 50 à la fin de l'exercice
         if (nbArbresDiamSup50conserve < (3*surfaceParcelle)) {
-            //tvGrosDiametreR.setTextColor(getResources().getColor(R.color.colorRed));
             tvGrosDiametreR.setText(Html.fromHtml("<i>Conserver au moins 3 arbres de gros diamètre par hectare." +
                             "<br>(Soit " + arbreParcelleGrosDiametre + (arbreParcelleGrosDiametre < 2 ? " arbre" : " arbres") + " pour notre parcelle)</i>" +
                     "<br><font color='#e14b4b'>Arbres conservés : " + nbArbresDiamSup50conserve + "</font>"));
@@ -332,10 +347,6 @@ public class AnalyseResultatFragment extends Fragment {
 
         nbArbreEcoConserves = cur.getCount();
 
-
-        /*tvEcoR.setText(String.format("Conserver au moins 2 arbres porteurs de micros-habitats par hectare.\nArbres conservés: %s",
-                (nbArbreEcoConserves)));*/
-
         int arbreParcelleEco = (int)Math.ceil(2*surfaceParcelle);
 
 
@@ -366,9 +377,11 @@ public class AnalyseResultatFragment extends Fragment {
          **************************
          */
 
+        // Affichage du volume de bois prélevé
         tvVolumePreleve.setText(df.format(volumeTotalBoisMartele) + " m3\n" +
                                 "Volume de bois prélevé");
 
+        // Calcul du gain de la coupe
         cur = dbHelper.getDataFromTableWithCondition("SUM(ap." + DatabaseHelper.VALEUR_ECONOMIQUE + ")",
                 DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap, " + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
                 "ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = am." + DatabaseHelper.NUMERO_ARBRE_MART);
@@ -379,6 +392,7 @@ public class AnalyseResultatFragment extends Fragment {
                 "Valeur de la coupe");
 
 
+        // % de note ecologique martelé
         cur = dbHelper.getDataFromTable("SUM(" + DatabaseHelper.NOTE_ECO_ARBRE + ")", DatabaseHelper.ARBRES_PARCELLE_TABLE);
         cur.moveToFirst();
         noteEcoAvant = cur.getInt(0);

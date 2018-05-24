@@ -31,10 +31,6 @@ import martelapp.test.R;
  * l'utilisateur peut choisir de commencer un nouvel exercice ou de continuer un
  * exercice en cours </b>
  *
- * <p>
- * Dans cette activité est récupérée la base de données firebase de la parcelle
- * pour l'enregistrer localement dans l'appareil avec SQLITE.
- * </p>
  *
  * <p>
  * Deux boutons sont présent dans cette activité :
@@ -98,6 +94,35 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
+
+        Button buttonContinuerExercice = findViewById(R.id.continuer_exercice);
+
+        // On vérifie que la base de données locale contient des données
+        if(checkDatabase()) {
+            dbHelper = new DatabaseHelper(getApplicationContext());
+            cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
+            cur.moveToFirst();
+
+            // Affichage du nom et du lieu de la parcelle présente sur la base de données locale
+            textParcelleEnCours.setText("Parcelle actuelle :\n" + cur.getString(cur.getColumnIndex(DatabaseHelper.NOM_PARCELLE)) +
+                                        "\nMarteloscope de " + cur.getString(cur.getColumnIndex(DatabaseHelper.LIEU_PARCELLE)));
+            cur.close();
+            dbHelper.close();
+
+            // On affiche le bouton continuer exercice uniquement si un exercice à déja été réalisé
+            if (checkAncienExercice()) {
+                buttonContinuerExercice.setVisibility(View.VISIBLE);
+            } else {
+                buttonContinuerExercice.setVisibility(View.GONE);
+            }
+
+        } else { // Si aucune parcelle n'est dans la base de données locale, on l'affiche
+            textParcelleEnCours.setText(R.string.aucune_parcelle);
+            buttonContinuerExercice.setVisibility(View.GONE);
+        }
+
+
         /*####################################
          *###  Bouton "Continuer Exercice" ###
          *####################################
@@ -107,30 +132,6 @@ public class MainActivity extends AppCompatActivity {
          * ou de crash de l'application pour que l'utilisateur puisse
          * retrouver sa progression de l'exercice.
          */
-
-        Button buttonContinuerExercice = findViewById(R.id.continuer_exercice);
-
-        if(checkDatabase()) {
-            dbHelper = new DatabaseHelper(getApplicationContext());
-            cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
-            cur.moveToFirst();
-
-            textParcelleEnCours.setText("Parcelle actuelle :\n" + cur.getString(cur.getColumnIndex(DatabaseHelper.NOM_PARCELLE)) +
-                                        "\nMarteloscope de " + cur.getString(cur.getColumnIndex(DatabaseHelper.LIEU_PARCELLE)));
-            cur.close();
-            dbHelper.close();
-
-            if (checkAncienExercice()) {
-                buttonContinuerExercice.setVisibility(View.VISIBLE);
-            } else {
-                buttonContinuerExercice.setVisibility(View.GONE);
-            }
-
-        } else {
-            textParcelleEnCours.setText("Aucune parcelle sélectionnée");
-            buttonContinuerExercice.setVisibility(View.GONE);
-        }
-
         buttonContinuerExercice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,9 +151,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        ImageButton buttonTestMAJ = findViewById(R.id.test_maj_bdd);
-        buttonTestMAJ.setOnClickListener(new View.OnClickListener() {
+        /*####################################
+         *###  Bouton "boutonParametres"   ###
+         *####################################
+         *
+         * Lance l'activité "ChoixParcelleActivity" permettant de mettre à jour ou changer
+         * la parcelle sur laquelle on souhaite réaliser l'exercice.
+         * On regarde si une connexion internet est disponible :
+         * - Si oui, on peut accéder à l'activité et changer les paramètres de parcelle
+         * - Sinon, on affiche un Toast indiquant qu'aucune connexion est disponible. On
+         *   empêche l'accès aux paramètres dans ce cas pour éviter une suppression de la base.
+         *   Il serait alors impossible de réaliser l'exercice.
+         */
+        ImageButton boutonParametres = findViewById(R.id.parametres_parcelle);
+        boutonParametres.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(DatabaseHelper.isNetworkAvailable(getApplicationContext())) {
@@ -167,6 +179,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
+        /*####################################
+         *###  Bouton "En savoir Plus"     ###
+         *####################################
+         *
+         * Lance l'activité "EnSavoirPlusActivity" dans laquelle on retrouve des informations
+         * sur le contexte dans lequel a été réalisé l'application
+         */
         Button enSavoirPlus = findViewById(R.id.en_savoir_plus);
         enSavoirPlus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,6 +200,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Méthode permettant de savoir si la base de données locale contient des données ou non.
+     *
+     * @return res : Booléen indiquant si des données sont présentes dans la base de données locale.
+     */
     private boolean checkDatabase(){
         dbHelper = new DatabaseHelper(getApplicationContext());
 
@@ -195,6 +220,12 @@ public class MainActivity extends AppCompatActivity {
         return res;
     }
 
+    /**
+     * Méthode permettant de savoir si un exercicé à déja été réalisé ou non.
+     * Pour se faire, on regarde si la base de données locale contient un nom d'équipe.
+     *
+     * @return : Booléen indiquant si un exercice à déja été réalisé
+     */
     private boolean checkAncienExercice(){
         dbHelper = new DatabaseHelper(getApplicationContext());
 

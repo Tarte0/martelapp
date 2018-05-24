@@ -19,7 +19,11 @@ import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.R;
 
 /**
- * Created by cimin on 04/04/2018.
+ * SelectionArbreFragment : Fragment contenant un pavé numérique sur lequel l'utilisateur saisit un numéro d'arbre.
+ *               Une fois un arbre recherché ses caractéristiques s'affichent. 3 possibilités s'offrent à l'utilisateur :
+ *                  - Conserver l'arbres pour des raisons de biodiversité : Ouvre un popUp expliquant à l'utilisateur que l'arbre sera conservé pour des raisons écologiques.
+ *                  - Marteler une prochaine fois : L'utilisateur ne souhaite ni conserver ni marteler l'arbre.
+ *                  - Marteler : Ouvre un popUp contenant les raisons d'un martelage, l'utilisateur peut en saisir une ou plusieurs.
  */
 
 public class SelectionArbreFragment extends Fragment {
@@ -71,32 +75,33 @@ public class SelectionArbreFragment extends Fragment {
         if(mainView == null) {
             mainView = inflater.inflate(R.layout.view_page_selection, null);
 
-            mButton0 = (Button) mainView.findViewById(R.id.buttonZero);
-            mButton1 = (Button) mainView.findViewById(R.id.buttonOne);
-            mButton2 = (Button) mainView.findViewById(R.id.buttonTwo);
-            mButton3 = (Button) mainView.findViewById(R.id.buttonThree);
-            mButton4 = (Button) mainView.findViewById(R.id.buttonFour);
-            mButton5 = (Button) mainView.findViewById(R.id.buttonFive);
-            mButton6 = (Button) mainView.findViewById(R.id.buttonSix);
-            mButton7 = (Button) mainView.findViewById(R.id.buttonSeven);
-            mButton8 = (Button) mainView.findViewById(R.id.buttonEight);
-            mButton9 = (Button) mainView.findViewById(R.id.buttonNine);
-            mButtonClear = (Button) mainView.findViewById(R.id.buttonClear);
-            mButtonDel = (Button) mainView.findViewById(R.id.buttonDel);
-            mButtonOk = (Button) mainView.findViewById(R.id.buttonOk);
+            mButton0 = mainView.findViewById(R.id.buttonZero);
+            mButton1 = mainView.findViewById(R.id.buttonOne);
+            mButton2 = mainView.findViewById(R.id.buttonTwo);
+            mButton3 = mainView.findViewById(R.id.buttonThree);
+            mButton4 = mainView.findViewById(R.id.buttonFour);
+            mButton5 = mainView.findViewById(R.id.buttonFive);
+            mButton6 = mainView.findViewById(R.id.buttonSix);
+            mButton7 = mainView.findViewById(R.id.buttonSeven);
+            mButton8 = mainView.findViewById(R.id.buttonEight);
+            mButton9 = mainView.findViewById(R.id.buttonNine);
+            mButtonClear = mainView.findViewById(R.id.buttonClear);
+            mButtonDel = mainView.findViewById(R.id.buttonDel);
+            mButtonOk = mainView.findViewById(R.id.buttonOk);
+
             martelerButtonTreeCard = mainView.findViewById(R.id.imgMarteler);
             conserverButtonTreeCard = mainView.findViewById(R.id.imgConserver);
             prochaineFoisButtonTreeCard = mainView.findViewById(R.id.imgProchaineFois);
-            tvNum = (TextView) mainView.findViewById(R.id.numero_tree_card);
-            tvEssence = (TextView) mainView.findViewById(R.id.essence_tree_card);
-            tvEtat = (TextView) mainView.findViewById(R.id.etat_tree_card);
-            tvDiametre = (TextView) mainView.findViewById(R.id.diametre_tree_card);
+
+            tvNum = mainView.findViewById(R.id.numero_tree_card);
+            tvEssence = mainView.findViewById(R.id.essence_tree_card);
+            tvEtat = mainView.findViewById(R.id.etat_tree_card);
+            tvDiametre = mainView.findViewById(R.id.diametre_tree_card);
             tvDejaSelectionne = mainView.findViewById(R.id.Deja_selectionne);
 
-            mEditText = (EditText) mainView.findViewById(R.id.editText);
+            mEditText = mainView.findViewById(R.id.editText);
 
-            dejaSelectionneImage = (ImageView) mainView.findViewById(R.id.dejaSelectionneImage);
-            //dejaConserveImage = (ImageView) mainView.findViewById(R.id.dejaConserveImage);
+            dejaSelectionneImage = mainView.findViewById(R.id.dejaSelectionneImage);
 
 
             treeCardNumber = mainView.findViewById(R.id.arbreLayout);
@@ -329,6 +334,12 @@ public class SelectionArbreFragment extends Fragment {
         return mainView;
     }
 
+
+    /**
+     * Fonction permettant de convertir l'état d'un arbre en String
+     * @param etat : Etat de l'arbre
+     * @return String correspondant à l'état de l'arbre
+     */
     private String etatToString(String etat) {
         switch (etat) {
             case "v":
@@ -348,6 +359,7 @@ public class SelectionArbreFragment extends Fragment {
         errorsSnack.show();
     }
 
+    // Fonction pour enlever le contenu de la carte
     public void cleanCard() {
         treeCardNumber.setVisibility(View.INVISIBLE);
         tvEssence.setText("");

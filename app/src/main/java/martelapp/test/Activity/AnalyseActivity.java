@@ -32,6 +32,30 @@ import martelapp.test.Fragment.Analyse.CreationPdfFragment;
 import martelapp.test.Fragment.Exercice.ChoixConserverFragment;
 import martelapp.test.R;
 
+/**
+ * AnalyseActivity est l'activité sur laquelle l'utilisateur arrive une fois l'exercice de martelage terminé.
+ *
+ * Elle contient plusieurs fragments séparés en plusieurs pages :
+ * - Résultats :
+ *                  - Respect des consignes : L'utilisateur à-t-il respecté les consignes?
+ *                  - Synthèse du martelage : Différents nombres résumant l'exercice.
+ *
+ * - Arbres Sélectionnés :
+ *                  - Arbres Martelés : Liste des arbres martelés pendant l'exercice.
+ *                  - Arbres Conservés : Liste des arbres conservés pendant l'exercice.
+ *
+ * - Graphe Volume : Graphique de la Répartition du prélèvement en volume par classe de diamètre
+ *
+ * - Graphe Nombre de tiges :
+ *                  - Essence : Graphique de la Répartition du prélèvement en nombre de tiges par essence.
+ *                  - Diamètre : Graphique de la Répartition du prélèvement en nombre de tiges par classe de diamètre.
+ *                  - Note écologique : Graphique de la Répartition du prélèvement en nombre de tiges par note écologique.
+ *                  - Classe de diamètre : Graphique de l'évolution du nombre de tiges par classe de diamètre (Graphique avant et après martelage).
+ *
+ * - Graphe Raisons : Graphique de la Répartition des raisons de martelage.
+ *
+ * - Carte Parcelle : Carte des arbres martelés et conservés pendant l'exercice.
+ */
 
 public class AnalyseActivity extends AppCompatActivity {
     /**

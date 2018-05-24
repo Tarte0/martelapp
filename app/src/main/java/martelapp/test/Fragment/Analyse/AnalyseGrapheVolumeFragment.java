@@ -21,6 +21,9 @@ import martelapp.test.Class.GrapheHelper;
 import martelapp.test.Class.OnSwipeTouchListener;
 import martelapp.test.R;
 
+/**
+ * AnalyseGrapheVolumeFragment : Graphique de la Répartition du prélèvement en volume par classe de diamètre
+ */
 
 public class AnalyseGrapheVolumeFragment extends Fragment {
 
@@ -36,8 +39,10 @@ public class AnalyseGrapheVolumeFragment extends Fragment {
 
             barChart = view.findViewById(R.id.bar_chart_volume_graphe);
 
+            // Ajout du graphique
             GrapheHelper.getBarChartAnalyseVolume(view.getContext(), barChart);
 
+            // ajout de la view au PDF
             if (!viewBarChartVolumeAdded) {
                 ((AnalyseActivity) getActivity()).addViewPdf(barChart, 2);
                 viewBarChartVolumeAdded = true;

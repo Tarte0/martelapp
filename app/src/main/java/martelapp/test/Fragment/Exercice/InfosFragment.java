@@ -26,15 +26,26 @@ import martelapp.test.Class.GrapheHelper;
 import martelapp.test.Class.OnSwipeTouchListener;
 import martelapp.test.R;
 
+
+/**
+ * InfosFragment est un framgment contenant 4 pages :
+ * - Caractéristiques : Caractéristiques de la parcelle.
+ * - Diamètre : Graphique du nombre de tiges par classe de diamètre.
+ * - Note écologique : Graphique du nombre de tiges par note écologique.
+ * - Essence : Graphique du nombre de tiges par essence.
+ */
 public class InfosFragment extends Fragment {
 
     View view;
 
     ViewPager viewPager;
 
+    // Barre de navigation entre les pages
     BottomNavigationView bottomNavigationView;
     TextView textViewCaracteristiques, textViewTitleInfos;
+    // Boutons latéraux permettant de naviguer entre les pages
     ImageButton previous, next;
+    // Bouton permettant d'aller vers le fragment CarteParcelleFragment
     Button buttonGoToCarte;
     BarChart barChartVolume;
     BarChart barChartNoteEco;
@@ -67,21 +78,21 @@ public class InfosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        if(view == null) {
+        if (view == null) {
             view = inflater.inflate(R.layout.view_page_infos, null);
 
-            textViewCaracteristiques = (TextView) view.findViewById(R.id.text_view_caracteristique);
-            textViewTitleInfos = (TextView) view.findViewById(R.id.titleInfo);
+            textViewCaracteristiques = view.findViewById(R.id.text_view_caracteristique);
+            textViewTitleInfos = view.findViewById(R.id.titleInfo);
 
             layout_caracteristique = view.findViewById(R.id.layout_caracteristique);
             layout_graphe_info_diametre = view.findViewById(R.id.layout_graphe_info_diametre);
             layout_graphe_info_note_eco = view.findViewById(R.id.layout_graphe_info_note_eco);
             layout_graphe_info_essence = view.findViewById(R.id.layout_graphe_info_essence);
 
-            bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation_info);
-            previous = (ImageButton) view.findViewById(R.id.previousInfo);
-            next = (ImageButton) view.findViewById(R.id.nextInfo);
-            buttonGoToCarte = (Button) view.findViewById((R.id.button_go_to_carte));
+            bottomNavigationView = view.findViewById(R.id.bottom_navigation_info);
+            previous = view.findViewById(R.id.previousInfo);
+            next = view.findViewById(R.id.nextInfo);
+            buttonGoToCarte = view.findViewById((R.id.button_go_to_carte));
             barChartVolume = view.findViewById(R.id.bar_chart_volume_info);
             barChartNoteEco = view.findViewById(R.id.bar_chart_note_eco_info);
             pieChartEssence = view.findViewById(R.id.pie_chart_essence_info);
@@ -91,11 +102,13 @@ public class InfosFragment extends Fragment {
 
             caracteristiqueParcelle(view.getContext());
 
+            // Ajouts des graphiques
             GrapheHelper.getBarChartInfosVolume(view.getContext(), barChartVolume);
             GrapheHelper.getBarChartInfosNoteEcologique(view.getContext(), barChartNoteEco);
             GrapheHelper.getPieChartInfosEssence(view.getContext(), pieChartEssence);
 
-            if((int) volumeMortSol == 0 ) {
+            // Affichage des caractéristiques, on affiche inconnu lorsque le volume de bois mort au sol est inconnu
+            if ((int) volumeMortSol == 0) {
                 caracteristique = String.format("• altitude : %d mètres\n\n"
                                 + "• habitat naturel : %s\n\n"
                                 + "• surface : %s ha\n\n"
@@ -103,8 +116,7 @@ public class InfosFragment extends Fragment {
                                 + "• volume : %d m3/ha\n\n"
                                 + "• volume de bois mort au sol : inconnu",
                         altitude, habitat, df.format(surfaceParcelle), densiteVivantMortPied, (int) volumeVivantMortPied);
-            }
-            else{
+            } else {
                 caracteristique = String.format("• altitude : %d mètres\n\n"
                                 + "• habitat naturel : %s\n\n"
                                 + "• surface : %s ha\n\n"
@@ -128,7 +140,7 @@ public class InfosFragment extends Fragment {
                 }
             });
 
-            //on gere le swipe gauche et droite (un peu brute)
+            //on gere le swipe gauche et droite
             view.setOnTouchListener(new OnSwipeTouchListener(view.getContext()) {
                 public void onSwipeRight() {
                     switch (bottomNavigationView.getSelectedItemId()) {
@@ -165,6 +177,7 @@ public class InfosFragment extends Fragment {
             });
 
 
+            // On gere le click du bouton page précédente
             previous.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -184,7 +197,7 @@ public class InfosFragment extends Fragment {
                 }
             });
 
-
+            // On gere le click du bouton page suivante
             next.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -205,6 +218,7 @@ public class InfosFragment extends Fragment {
             });
 
 
+            // traitement de l'affichage en fonction de la page dans laquelle on est
             bottomNavigationView.setOnNavigationItemSelectedListener(
                     new BottomNavigationView.OnNavigationItemSelectedListener() {
                         @Override
@@ -220,6 +234,7 @@ public class InfosFragment extends Fragment {
 
                                     buttonGoToCarte.setVisibility(View.GONE);
 
+                                    // on affiche uniquemement layout_caracteristique
                                     layout_caracteristique.setVisibility(View.VISIBLE);
                                     layout_graphe_info_diametre.setVisibility(View.GONE);
                                     layout_graphe_info_note_eco.setVisibility(View.GONE);
@@ -234,6 +249,7 @@ public class InfosFragment extends Fragment {
 
                                     buttonGoToCarte.setVisibility(View.GONE);
 
+                                    // on affiche uniquemement layout_graphe_info_diametre
                                     layout_caracteristique.setVisibility(View.GONE);
                                     layout_graphe_info_diametre.setVisibility(View.VISIBLE);
                                     layout_graphe_info_note_eco.setVisibility(View.GONE);
@@ -249,6 +265,7 @@ public class InfosFragment extends Fragment {
 
                                     buttonGoToCarte.setVisibility(View.GONE);
 
+                                    // on affiche uniquemement layout_graphe_info_note_eco
                                     layout_caracteristique.setVisibility(View.GONE);
                                     layout_graphe_info_diametre.setVisibility(View.GONE);
                                     layout_graphe_info_note_eco.setVisibility(View.VISIBLE);
@@ -264,6 +281,7 @@ public class InfosFragment extends Fragment {
 
                                     buttonGoToCarte.setVisibility(View.VISIBLE);
 
+                                    // on affiche uniquemement layout_graphe_info_essence
                                     layout_caracteristique.setVisibility(View.GONE);
                                     layout_graphe_info_diametre.setVisibility(View.GONE);
                                     layout_graphe_info_note_eco.setVisibility(View.GONE);
@@ -289,6 +307,8 @@ public class InfosFragment extends Fragment {
     }
 
 
+
+    // Calcul des caractéristiques de la parcelle
     private void caracteristiqueParcelle(Context context) {
         DatabaseHelper dbHelper;
         Cursor cur1;
@@ -321,7 +341,6 @@ public class InfosFragment extends Fragment {
                 DatabaseHelper.ETAT_ARBRE + " = 'ms'");
         cur1.moveToFirst();
         volumeMortSol = cur1.getDouble(0);
-
 
 
         // Valeurs ramenées à l'hectare

@@ -34,7 +34,14 @@ import martelapp.test.Class.Tree;
 import martelapp.test.Class.VolumeCalculator;
 import martelapp.test.R;
 
-
+/**
+ * ChoixParcelleActivity est l'activité permettant à l'utilisateur de changer la parcelle
+ * sur laquelle il souhaite réaliser l'exercice.
+ *
+ * Dans cette activité est récupérée la base de données firebase de la parcelle
+ * pour l'enregistrer localement dans l'appareil avec SQLITE.
+ *
+ */
 public class ChoixParcelleActivity extends AppCompatActivity {
 
     /**
@@ -163,14 +170,40 @@ public class ChoixParcelleActivity extends AppCompatActivity {
      */
     public static final String CHAMP_MIN                = "min";
 
+    /**
+     * Liste des parcelles disponibles
+     */
     Spinner spinnerParcelles;
-    TextView textTemoin;
+
+    /**
+     * ProgressBar qui s'affiche pendant l'actualisation de la liste des parcelles
+     */
     ProgressBar progressBarListe;
+
+    /**
+     * Bouton pour mettre la base de donnée à jour
+     */
+    Button buttonMajBdd;
+
+    /**
+     * Bouton pour actualiser la liste des parcelles
+     */
+    ImageButton buttonRefreshList;
+
+    /**
+     * Bouton pour retourner dans MainActivity
+     */
+    Button buttonRetour;
+
+    TextView textTemoin;
+
+
     /**
      * Référence de la base de données firebase pour récupérer les données
      */
     private DatabaseReference firebaseDatabase;
 
+    // HashMap contenant le nom des parcelles disponibles dans la base de données Firebase
     HashMap<String, String> idNomParcelle;
 
     DatabaseHelper dbHelper;
@@ -189,6 +222,7 @@ public class ChoixParcelleActivity extends AppCompatActivity {
         textTemoin = findViewById(R.id.text_temoin);
         progressBarListe = findViewById(R.id.progressBar_liste);
 
+        // La progressBar n'est affichée que lorsqu'on actualise la liste des parcelles
         progressBarListe.setVisibility(View.INVISIBLE);
 
         /*##########################
@@ -200,7 +234,7 @@ public class ChoixParcelleActivity extends AppCompatActivity {
          * base de données Firebase en testant premièrement
          * s'il y a une connexion à internet.
          */
-        Button buttonMajBdd = findViewById(R.id.button_maj_bdd);
+        buttonMajBdd = findViewById(R.id.button_maj_bdd);
         buttonMajBdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -216,7 +250,16 @@ public class ChoixParcelleActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton buttonRefreshList = findViewById(R.id.button_refresh_liste);
+
+        /*##########################
+         *##  Bouton "Rafraîchir" ##
+         *##########################
+         *
+         * Met à jour la liste des parcelles disponnible depuis une
+         * base de données Firebase en testant premièrement
+         * s'il y a une connexion à internet.
+         */
+        buttonRefreshList = findViewById(R.id.button_refresh_liste);
         buttonRefreshList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -230,7 +273,13 @@ public class ChoixParcelleActivity extends AppCompatActivity {
             }
         });
 
-        Button buttonRetour = findViewById(R.id.button_retour);
+        /*########################
+         *###  Bouton "Retour" ###
+         *########################
+         *
+         * Permet de retourner à MainActivity
+         */
+        buttonRetour = findViewById(R.id.button_retour);
         buttonRetour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -241,6 +290,18 @@ public class ChoixParcelleActivity extends AppCompatActivity {
         });
     }
 
+
+    /**
+     * Récupère la liste des noms des parcelles présentes dans la base de données Firebase.
+     *
+     * <p>
+     * On commence par récupérer les ID et les noms de chaque parcelles disponibles dans notre base Firebase
+     * </p>
+     *
+     * <p>
+     * Le spinner contenant la liste des parcelles est alors créé
+     * </p>
+     */
     public void getAllParcelle(){
         ValueEventListener postListener = new ValueEventListener() {
             @Override
@@ -248,6 +309,7 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                 ArrayList<String> listeParcelle = new ArrayList<>();
                 idNomParcelle = new HashMap<>();
 
+                // On récupère pour chaque parcelle son ID et son nom et on les ajoute à l'ArrayList liste des parcelles
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     String idParcelle = child.getKey();
                     String nomParcelle = child.child("nom").getValue(String.class);
@@ -256,6 +318,7 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                     listeParcelle.add(nomParcelle);
                 }
 
+                // On crée notre spinner contenant la liste des parcelles disponibles
                 ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), R.layout.spinner_item, listeParcelle);
                 adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
 

@@ -26,7 +26,9 @@ import martelapp.test.Fragment.Exercice.ChoixMartelageFragment;
 import martelapp.test.R;
 
 /**
- * Created by Baptiste on 19/05/2018.
+ * AnalyseListeArbresSelectionnesFragment : Ce fragment contient 2 pages
+ *                  - Arbres Martelés : Liste des arbres martelés pendant l'exercice.
+ *                  - Arbres Conservés : Liste des arbres conservés pendant l'exercice.
  */
 
 public class AnalyseListeArbresSelectionnesFragment extends Fragment {
@@ -35,9 +37,12 @@ public class AnalyseListeArbresSelectionnesFragment extends Fragment {
 
     View mainView;
 
+    // Barre de navigation entre les pages
     BottomNavigationView bottomNavigationView;
+    // Boutons latéraux permettant de naviguer entre les pages
     ImageButton previous, next;
 
+    // Card contenant les raisons d'un martelage/conservation
     LinearLayout treeCardNumber;
 
     TextView textTypeListeArbres;
@@ -60,14 +65,14 @@ public class AnalyseListeArbresSelectionnesFragment extends Fragment {
         if(mainView == null) {
             mainView = inflater.inflate(R.layout.view_page_analyse_liste_arbres_selectionnes, null);
 
-            bottomNavigationView = (BottomNavigationView) mainView.findViewById(R.id.bottom_navigation_liste_arbres_traites_analyse);
-            previous = (ImageButton) mainView.findViewById(R.id.previousInfo);
-            next = (ImageButton) mainView.findViewById(R.id.nextInfo);
+            bottomNavigationView = mainView.findViewById(R.id.bottom_navigation_liste_arbres_traites_analyse);
+            previous = mainView.findViewById(R.id.previousInfo);
+            next = mainView.findViewById(R.id.nextInfo);
 
             listeArbresMarteles = mainView.findViewById(R.id.liste_arbres_marteles_analyse);
             listeArbresConserves = mainView.findViewById(R.id.liste_arbres_conserves_analyse);
 
-            treeCardNumber = (LinearLayout) mainView.findViewById(R.id.arbreLayout);
+            treeCardNumber = mainView.findViewById(R.id.arbreLayout);
 
             textComplementArbresMarteles = mainView.findViewById(R.id.text_complement_arbres);
             textCouleurArbre = mainView.findViewById(R.id.text_couleur_arbre);
@@ -78,12 +83,14 @@ public class AnalyseListeArbresSelectionnesFragment extends Fragment {
 
             dbHelper = new DatabaseHelper(mainView.getContext());
 
+            // Récupération des listes des arbres conservés et martelés
             getListeArbresMarteles();
             getListeArbresConserves();
 
             dbHelper.close();
         }
-        //on gere le swipe gauche et droite (un peu brute)
+
+        //on gere le swipe gauche et droite
         mainView.setOnTouchListener(new OnSwipeTouchListener(mainView.getContext()) {
             public void onSwipeRight() {
                 switch (bottomNavigationView.getSelectedItemId()) {
@@ -107,6 +114,7 @@ public class AnalyseListeArbresSelectionnesFragment extends Fragment {
         });
 
 
+        // On gere le click du bouton page précédente
         previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,6 +129,7 @@ public class AnalyseListeArbresSelectionnesFragment extends Fragment {
         });
 
 
+        // On gere le click du bouton page suivante
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -135,6 +144,7 @@ public class AnalyseListeArbresSelectionnesFragment extends Fragment {
         });
 
 
+        // traitement de l'affichage en fonction de la page dans laquelle on est
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -154,6 +164,7 @@ public class AnalyseListeArbresSelectionnesFragment extends Fragment {
                                 treeCardNumber.setVisibility(View.INVISIBLE);
                                 textRaison.setVisibility(View.INVISIBLE);
 
+                                // affichage de la liste des arbres martelés
                                 listeArbresMarteles.setVisibility(View.VISIBLE);
                                 listeArbresConserves.setVisibility(View.GONE);
 
@@ -174,6 +185,7 @@ public class AnalyseListeArbresSelectionnesFragment extends Fragment {
                                 treeCardNumber.setVisibility(View.INVISIBLE);
                                 textRaison.setVisibility(View.INVISIBLE);
 
+                                // affichage de la liste des arbres conservés
                                 listeArbresMarteles.setVisibility(View.GONE);
                                 listeArbresConserves.setVisibility(View.VISIBLE);
                                 break;
@@ -197,14 +209,21 @@ public class AnalyseListeArbresSelectionnesFragment extends Fragment {
     }
 
 
+    /**
+     * Methode permettant de récupérer la liste des arbres martelés dans la base de données locale
+     */
     private void getListeArbresMarteles(){
 
 
+        /**
+         * Lorsqu'on clique sur un arbre, on affiche les raisons de son martelage
+         */
         listeArbresMarteles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                 TextView text = view.findViewById(R.id.numero_arbre_traite);
 
+                // requete de récupération des raisons du martelage
                 String numero = text.getText().toString();
                 cur1 = dbHelper.executeQuery("Select *"
                         + " FROM " + DatabaseHelper.RAISON_TABLE
@@ -233,12 +252,14 @@ public class AnalyseListeArbresSelectionnesFragment extends Fragment {
         });
 
 
+        // Requete pour récupérer la liste des arbres martelés
         cur1 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
                 "ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = am." + DatabaseHelper.NUMERO_ARBRE_MART +
                         " AND ap." + DatabaseHelper.NOTE_ECO_ARBRE + " >= " + ChoixMartelageFragment.noteEcologiqueHaute +
                         " ORDER BY CAST(ap." + DatabaseHelper.NUMERO_ARBRE_PARC +" as INTEGER)");
         cur1.moveToFirst();
 
+        // Requete pour récupérer la liste des arbres martelés avec une note écologique > 6 (il sera affiché en rouge)
         cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
                 "ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = am." + DatabaseHelper.NUMERO_ARBRE_MART +
                         " AND ap." + DatabaseHelper.NOTE_ECO_ARBRE + " < " + ChoixMartelageFragment.noteEcologiqueHaute +
@@ -247,6 +268,7 @@ public class AnalyseListeArbresSelectionnesFragment extends Fragment {
 
         nbArbresMarteles = cur1.getCount() + cur2.getCount();
 
+        //Affichage de la liste des arbres martelés
         ArbresMartelesAdapter arbresMartelesAdapterNoteEcoSup = new ArbresMartelesAdapter(mainView.getContext(), cur1, true);
         ArbresMartelesAdapter arbresMartelesAdapter = new ArbresMartelesAdapter(mainView.getContext(), cur2, true);
 
@@ -256,13 +278,22 @@ public class AnalyseListeArbresSelectionnesFragment extends Fragment {
         listeArbresMarteles.setAdapter(mergeAdapter);
     }
 
+
+    /**
+     * Methode permettant de récupérer la liste des arbres conservés dans la base de données locale
+     */
     private void getListeArbresConserves(){
 
+
+        /**
+         * Lorsqu'on clique sur un arbre, on affiche les raisons de sa conservation
+         */
         listeArbresConserves.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                 TextView text = view.findViewById(R.id.numero_arbre_traite);
 
+                // requete de récupération des raisons du martelage
                 String numero = text.getText().toString();
                 cur1 = dbHelper.executeQuery("Select *"
                         + " FROM " + DatabaseHelper.RAISON_TABLE
@@ -285,12 +316,14 @@ public class AnalyseListeArbresSelectionnesFragment extends Fragment {
         });
 
 
+        // Requete pour récupérer la liste des arbres conservés
         cur1 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_CONSERVES_TABLE + " ac",
                 "ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = ac." + DatabaseHelper.NUMERO_ARBRE_CONS +
                         " AND ap." + DatabaseHelper.NOTE_ECO_ARBRE + " >= " + ChoixMartelageFragment.noteEcologiqueHaute +
                         " ORDER BY CAST(ap." + DatabaseHelper.NUMERO_ARBRE_PARC +" as INTEGER)");
         cur1.moveToFirst();
 
+        // Requete pour récupérer la liste des arbres conservés avec une note écologique > 6
         cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_CONSERVES_TABLE + " ac",
                 "ap." + DatabaseHelper.NUMERO_ARBRE_PARC + " = ac." + DatabaseHelper.NUMERO_ARBRE_CONS +
                         " AND ap." + DatabaseHelper.NOTE_ECO_ARBRE + " < " + ChoixMartelageFragment.noteEcologiqueHaute +
@@ -299,6 +332,7 @@ public class AnalyseListeArbresSelectionnesFragment extends Fragment {
 
         nbArbresConserves = cur1.getCount() + cur2.getCount();
 
+        //Affichage de la liste des arbres conservés
         ArbresConservesAdapter arbresConservesAdapterNoteEcoSup = new ArbresConservesAdapter(mainView.getContext(), cur1, true);
         ArbresConservesAdapter arbresConservesAdapter = new ArbresConservesAdapter(mainView.getContext(), cur2, true);
 

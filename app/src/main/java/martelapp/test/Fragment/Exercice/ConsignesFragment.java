@@ -30,7 +30,9 @@ import martelapp.test.Class.OnSwipeTouchListener;
 import martelapp.test.R;
 
 /**
- * Created by cimin on 04/04/2018.
+ * ConsignesFragment est un framgment contenant 2 pages :
+ *              - Général : Consignes générales de l'exercice de martelage.
+ *              - Objectifs : Objectifs de l'exercice de martelage.
  */
 
 public class ConsignesFragment extends Fragment {
@@ -39,9 +41,12 @@ public class ConsignesFragment extends Fragment {
 
     ViewPager viewPager;
 
+    // Barre de navigation entre les pages
     BottomNavigationView bottomNavigationView;
     TextView textViewConsignes, textViewTitleConsignes;
+    // Boutons latéraux permettant de naviguer entre les pages
     ImageButton previous, next;
+    // Bouton permettant d'aller vers le fragment InfosFragment
     Button buttonGoToInfos;
 
     DecimalFormat df;
@@ -55,9 +60,9 @@ public class ConsignesFragment extends Fragment {
     int rotationMin = 0,
         rotationMax = 0;
 
-    double  volumeBoisTotalParcelleHa = 0f;
+    double volumeBoisTotalParcelleHa = 0f;
     double volumeBoisTotalParcelle= 0f;
-    double  surfaceParcelle = 0f;
+    double surfaceParcelle = 0f;
 
     StringBuffer diametreExploitabilite;
     Spanned objectifs;
@@ -70,19 +75,25 @@ public class ConsignesFragment extends Fragment {
 
             dbHelper = new DatabaseHelper(view.getContext());
 
-            textViewConsignes = (TextView) view.findViewById(R.id.textViewConsignes);
+            textViewConsignes = view.findViewById(R.id.textViewConsignes);
             textViewConsignes.setTextSize(22f);
-            textViewTitleConsignes = (TextView) view.findViewById(R.id.titleConsignes);
-            bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation_consignes);
-            previous = (ImageButton) view.findViewById(R.id.previousConsignes);
-            next = (ImageButton) view.findViewById(R.id.nextConsignes);
-            buttonGoToInfos = (Button) view.findViewById(R.id.button_go_to_info);
+            textViewTitleConsignes = view.findViewById(R.id.titleConsignes);
+
+            bottomNavigationView = view.findViewById(R.id.bottom_navigation_consignes);
+
+            previous = view.findViewById(R.id.previousConsignes);
+            next = view.findViewById(R.id.nextConsignes);
+
+            buttonGoToInfos = view.findViewById(R.id.button_go_to_info);
 
             cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
             cur.moveToFirst();
 
+            // récupération du prélèvement minimum et maximum de la base de données locale
             prelevementMin = (int) cur.getFloat(cur.getColumnIndex(DatabaseHelper.PRELEVEMENT_VOLUME_MIN));
             prelevementMax = (int) cur.getFloat(cur.getColumnIndex(DatabaseHelper.PRELEVEMENT_VOLUME_MAX));
+
+            // récupération de la rotation minimum et maximum de la base de données locale
             rotationMin = cur.getInt(cur.getColumnIndex(DatabaseHelper.ROTATION_MIN));
             rotationMax = cur.getInt(cur.getColumnIndex(DatabaseHelper.ROTATION_MAX));
 
