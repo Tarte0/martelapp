@@ -1686,7 +1686,7 @@ public class GrapheHelper {
         ArrayList<PieEntry> entriesVolumeApres = new ArrayList<>();
         ArrayList<String> entriesLabel = new ArrayList<>();
 
-        String[] categorie_bois = {"PB", "BM", "GB"};
+        String[] categorie_bois = {"PB [classe 15 à 25]", "BM [classe 30 à 45]", "GB [classe 50 et sup.]"};
 
         /*
          *  float[][] volumeBois
