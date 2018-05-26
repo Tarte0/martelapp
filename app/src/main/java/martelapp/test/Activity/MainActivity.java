@@ -170,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
                 if(DatabaseHelper.isNetworkAvailable(getApplicationContext())) {
                     Intent intent = new Intent(getApplicationContext(), ChoixParcelleActivity.class);
                     startActivity(intent);
-                    finish();
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "Aucune connexion à internet disponible", Toast.LENGTH_SHORT).show();
@@ -193,7 +192,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), EnSavoirPlusActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
 
