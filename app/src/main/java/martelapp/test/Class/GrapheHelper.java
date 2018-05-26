@@ -50,7 +50,7 @@ import martelapp.test.R;
 
 public class GrapheHelper {
     public static final int PETIT_BOIS = 25;
-    public static final int GROS_BOIS = 40;
+    public static final int GROS_BOIS = 50;
 
 
     public static void getBarChartInfosDiametre(Context context, BarChart barChart){
@@ -1721,13 +1721,13 @@ public class GrapheHelper {
         nbTiges[0][0] = (float) cur1.getCount();
 
         cur1 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE,
-                DatabaseHelper.DIAMETRE_ARBRE + " > " + PETIT_BOIS + " AND " + DatabaseHelper.DIAMETRE_ARBRE + " <= " + GROS_BOIS);
+                DatabaseHelper.DIAMETRE_ARBRE + " > " + PETIT_BOIS + " AND " + DatabaseHelper.DIAMETRE_ARBRE + " < " + GROS_BOIS);
         cur1.moveToFirst();
         nbTiges[1][0] = (float) cur1.getCount();
 
 
         cur1 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE,
-                DatabaseHelper.DIAMETRE_ARBRE + " > " +  GROS_BOIS);
+                DatabaseHelper.DIAMETRE_ARBRE + " >= " +  GROS_BOIS);
         cur1.moveToFirst();
         nbTiges[2][0] = (float) cur1.getCount();
 
@@ -1742,13 +1742,13 @@ public class GrapheHelper {
 
         cur1 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap, " + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
                 "ap." + dbHelper.NUMERO_ARBRE_PARC + " = am." + dbHelper.NUMERO_ARBRE_MART
-                        + " AND " + DatabaseHelper.DIAMETRE_ARBRE + " > " + PETIT_BOIS + " AND " + DatabaseHelper.DIAMETRE_ARBRE + " <= " + GROS_BOIS);
+                        + " AND " + DatabaseHelper.DIAMETRE_ARBRE + " > " + PETIT_BOIS + " AND " + DatabaseHelper.DIAMETRE_ARBRE + " < " + GROS_BOIS);
         cur1.moveToFirst();
         nbTiges[1][1] = nbTiges[1][0] - (float) cur1.getCount();
 
         cur1 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap, " + DatabaseHelper.ARBRES_MARTELES_TABLE + " am",
                 "ap." + dbHelper.NUMERO_ARBRE_PARC + " = am." + dbHelper.NUMERO_ARBRE_MART
-                        + " AND " + DatabaseHelper.DIAMETRE_ARBRE + " > " +  GROS_BOIS);
+                        + " AND " + DatabaseHelper.DIAMETRE_ARBRE + " >= " +  GROS_BOIS);
         cur1.moveToFirst();
         nbTiges[2][1] = nbTiges[2][0] - (float) cur1.getCount();
 
@@ -1827,7 +1827,7 @@ public class GrapheHelper {
 
         pieChartAvant.setTouchEnabled(false);
 
-        pieChartAvant.setExtraOffsets(0f,10f,0f,0f);
+        pieChartAvant.setExtraOffsets(20f,10f,0f,35f);
 
         // Désactiver le trou du pie chart
         pieChartAvant.setDrawHoleEnabled(false);
@@ -1860,7 +1860,7 @@ public class GrapheHelper {
         pieChartApres.getDescription().setPosition(500f,70f);
         pieChartApres.setTouchEnabled(false);
 
-        pieChartApres.setExtraOffsets(35f,10f,0f,35f);
+        pieChartApres.setExtraOffsets(0f,10f,20f,35f);
 
         // Désactiver le trou du pie chart
         pieChartApres.setDrawHoleEnabled(false);
@@ -1879,7 +1879,7 @@ public class GrapheHelper {
         //Pas de légende sur le deuxième graphe
         pieChartApres.getLegend().setEnabled(false);
         // Forme de la légende
-        legendeAvant.setYOffset(20f);
+        legendeAvant.setYOffset(-10f);
         legendeAvant.setForm(Legend.LegendForm.SQUARE);
         legendeAvant.setTextSize(20f);
         legendeAvant.setFormSize(12f);
@@ -1899,7 +1899,7 @@ public class GrapheHelper {
 
         // Set la légende avec les entrées
         legendeAvant.setCustom(legendeEntrees);
-
+        legendeAvant.setOrientation(Legend.LegendOrientation.VERTICAL);
         //legendeAvant.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
 
 

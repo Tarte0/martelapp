@@ -37,6 +37,8 @@ import martelapp.test.R;
 
 public class ConsignesFragment extends Fragment {
 
+    public static final int LIMIT_DIAMETRE_EXPLOIT_AFFICHE = 4;
+
     View view;
 
     ViewPager viewPager;
@@ -114,9 +116,9 @@ public class ConsignesFragment extends Fragment {
                     DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.DIAMETRE_EXPLOIT_TABLE + " de",
                             "ap." + DatabaseHelper.ESSENCE_ARBRE + " = de." + DatabaseHelper.ESSENCE_DIAM_EXPLOIT +
                             " GROUP BY ap." + DatabaseHelper.ESSENCE_ARBRE +
-                            " ORDER BY nb_tiges_par_essence DESC" +
-                            " LIMIT 4");
-            while(cur.moveToNext()){
+                            " ORDER BY nb_tiges_par_essence DESC");
+            int maxAffichees = 0;
+            while(cur.moveToNext() && maxAffichees < LIMIT_DIAMETRE_EXPLOIT_AFFICHE){
                 System.out.println("Essence : " + cur.getString(cur.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE)) + " nb tiges : " + Integer.toString(cur.getInt(0)));
                 cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.DIAMETRE_EXPLOIT_TABLE,
                         DatabaseHelper.ESSENCE_DIAM_EXPLOIT + " = '" + cur.getString(cur.getColumnIndex(DatabaseHelper.ESSENCE_ARBRE)) + "'");
@@ -125,12 +127,20 @@ public class ConsignesFragment extends Fragment {
                 String essence = cur2.getString(cur2.getColumnIndex(DatabaseHelper.ESSENCE_DIAM_EXPLOIT));
                 int diametre = cur2.getInt(cur2.getColumnIndex(DatabaseHelper.DIAMETRE_EXPLOITABILITE));
 
-                diametreExploitabilite.append("<br>" + essence + " : à partir de " + Integer.toString(diametre) + " cm");
+                if(diametre != 0) {
+                    diametreExploitabilite.append("<br>" + essence + " : à partir de " + Integer.toString(diametre) + " cm");
+                    maxAffichees++;
+                }
+
+                cur2.close();
+            }
+
+            if(diametreExploitabilite.length() <= 0){
+                diametreExploitabilite.append("<br>Inconnu");
             }
 
             dbHelper.close();
             cur.close();
-            //cur2.close();
 
             objectifs = Html.fromHtml(
                     "Compte tenu d'une période de rotation fixée entre " + Integer.toString(rotationMin) + " et " + Integer.toString(rotationMax) + " ans et des diamètres d'exploitabilité(*) sur cette parcelle :" +
@@ -144,8 +154,8 @@ public class ConsignesFragment extends Fragment {
                             "<br><br><b>Biodiversité</b>" +
                             "<br>• Conserver sciemment au moins 3 arbres de gros diamètre par hectare." +
                             "<br>• Conserver sciemment au moins 2 arbres porteurs de micros-habitats par hectare." +
-                            "<br>Les arbres ainsi conservés seront immobilisés sur plusieurs dizaines d'années pour permettre la réalisation du stade final du cycle naturel de la forêt, particulièrement favorable à la biodiversité. " +
-                            "<br>Il s'agit de les laisser vieillir jusqu'à leurs écroulements. ");
+                            "<br><br>Les arbres ainsi conservés seront immobilisés sur plusieurs dizaines d'années pour permettre la réalisation du stade final du cycle naturel de la forêt, particulièrement favorable à la biodiversité. " +
+                            "Il s'agit de les laisser vieillir jusqu'à leurs écroulements. ");
 
             //on gere le swipe gauche et droite (un peu brute)
             view.setOnTouchListener(new OnSwipeTouchListener(view.getContext()) {

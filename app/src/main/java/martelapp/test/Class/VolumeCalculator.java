@@ -148,15 +148,13 @@ public class VolumeCalculator {
     public double getVolumeCommercial(Tree tree) {
         double[][] tarifMatFeuillus = getTarifFromName(nomTarifFeuillus);
         double[][] tarifMatResineux = getTarifFromName(nomTarifResineux);
-        if (tree.getEtat().equals(ETAT_VIVANT)) {
-            if (getType(tree).equals("feuillu")) {
-                return getVersionDiametre(tarifMatFeuillus, versionTarifFeuillus, tree.diametre);
-            } else {
-                return getVersionDiametre(tarifMatResineux, versionTarifResineux, tree.diametre);
-            }
+
+        if (getType(tree).equals("feuillu")) {
+            return getVersionDiametre(tarifMatFeuillus, versionTarifFeuillus, tree.diametre);
+        } else {
+            return getVersionDiametre(tarifMatResineux, versionTarifResineux, tree.diametre);
         }
-        //un arbre mort n'a pas de volume commercialisable
-        return 0d;
+
     }
 
     private double[][] getTarifFromName(String nomTarifResineux) {

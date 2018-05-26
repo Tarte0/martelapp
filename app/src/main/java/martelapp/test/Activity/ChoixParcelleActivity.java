@@ -395,7 +395,9 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                 dbHelper.clearTable(DatabaseHelper.DIAMETRE_EXPLOIT_TABLE);
                 dbHelper.clearTable(DatabaseHelper.TARIF_VOLUME_TABLE);
                 dbHelper.clearTable(DatabaseHelper.CONSTANTES_TABLE);
-
+                dbHelper.clearTable(DatabaseHelper.PRIX_BOIS_CHAUFFAGE_TABLE);
+                dbHelper.clearTable(DatabaseHelper.PRIX_BOIS_INDUSTRIE_TABLE);
+                dbHelper.clearTable(DatabaseHelper.PRIX_BOIS_OEUVRE_TABLE);
 
 
                 // Nouvelle instance de VolumeCalculator avec les constantes "constants" et les types de l'arbre selon l'essence "essence_type"
@@ -431,6 +433,31 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                     int rotationMax = dataSnapshot.child(CHAMP_CONSTANTES).child(CHAMP_ROTATION).child(CHAMP_MAX).getValue(Integer.class);
 
                     dbHelper.insertConstante(nom, lieu, altitude, habitat, surface, prelevementMin, prelevementMax, rotationMin, rotationMax);
+
+
+                    DataSnapshot dataPrixBois = dataSnapshot.child(CHAMP_CONSTANTES).child(CHAMP_PRIX).child(CHAMP_BOIS);
+
+                    for( DataSnapshot child : dataPrixBois.child(CHAMP_CHAUFFAGE).getChildren()){
+                        String typeOuEssence = child.getKey();
+                        Double prix = child.getValue(Double.class);
+
+                        dbHelper.insertPrixBoisChauffage(typeOuEssence, prix);
+                    }
+
+                    for( DataSnapshot child : dataPrixBois.child(CHAMP_INDUSTRIE).getChildren()){
+                        String typeOuEssence = child.getKey();
+                        Double prix = child.getValue(Double.class);
+
+                        dbHelper.insertPrixBoisIndustrie(typeOuEssence, prix);
+                    }
+
+                    for( DataSnapshot child : dataPrixBois.child(CHAMP_OEUVRE).getChildren()){
+                        String typeOuEssence = child.getKey();
+                        Double prix = child.getValue(Double.class);
+
+                        dbHelper.insertPrixBoisOeuvre(typeOuEssence, prix);
+                    }
+
 
 
                     for( DataSnapshot child : dataSnapshot.child(CHAMP_CONSTANTES).child(CHAMP_EXPLOITATION).getChildren()){
@@ -602,36 +629,7 @@ public class ChoixParcelleActivity extends AppCompatActivity {
 
                 // Suppression des données de la table CONSTANTES_TABLE et TYPE_ARBRE_TABLE
                 dbHelper.clearTable(DatabaseHelper.TYPE_ARBRE_TABLE);
-                dbHelper.clearTable(DatabaseHelper.PRIX_BOIS_CHAUFFAGE_TABLE);
-                dbHelper.clearTable(DatabaseHelper.PRIX_BOIS_INDUSTRIE_TABLE);
-                dbHelper.clearTable(DatabaseHelper.PRIX_BOIS_OEUVRE_TABLE);
-                /*
-                 *------------------------------
-                 * Récupération des constantes et insertion dans CONSTANTES_TABLE
-                 *------------------------------
-                 */
-                DataSnapshot dataConstantes = dataSnapshot.child(CHAMP_CONSTANTES).child(CHAMP_PRIX).child(CHAMP_BOIS);
 
-                for( DataSnapshot child : dataConstantes.child(CHAMP_CHAUFFAGE).getChildren()){
-                    String typeOuEssence = child.getKey();
-                    Double prix = child.getValue(Double.class);
-
-                    dbHelper.insertPrixBoisChauffage(typeOuEssence, prix);
-                }
-
-                for( DataSnapshot child : dataConstantes.child(CHAMP_INDUSTRIE).getChildren()){
-                    String typeOuEssence = child.getKey();
-                    Double prix = child.getValue(Double.class);
-
-                    dbHelper.insertPrixBoisIndustrie(typeOuEssence, prix);
-                }
-
-                for( DataSnapshot child : dataConstantes.child(CHAMP_OEUVRE).getChildren()){
-                    String typeOuEssence = child.getKey();
-                    Double prix = child.getValue(Double.class);
-
-                    dbHelper.insertPrixBoisOeuvre(typeOuEssence, prix);
-                }
 
                 /*
                  *------------------------------
