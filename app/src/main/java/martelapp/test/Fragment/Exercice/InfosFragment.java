@@ -59,11 +59,14 @@ public class InfosFragment extends Fragment {
     DecimalFormat df;
 
     int altitude = 0,
-            densiteVivantMortPied = 0;
+        densiteVivantMortPied = 0,
+        densiteVivantMortPiedHa = 0;
 
     double surfaceParcelle = 0f,
             volumeVivantMortPied = 0f,
-            volumeMortSol = 0f;
+            volumeVivantMortPiedHa = 0f,
+            volumeMortSol = 0f,
+            volumeMortSolHa = 0f;
 
     String habitat = "";
 
@@ -86,7 +89,7 @@ public class InfosFragment extends Fragment {
             bottomNavigationView = view.findViewById(R.id.bottom_navigation_info);
             previous = view.findViewById(R.id.previousInfo);
             next = view.findViewById(R.id.nextInfo);
-            buttonGoToCarte = view.findViewById((R.id.button_go_to_carte));
+            buttonGoToCarte = view.findViewById(R.id.button_go_to_carte);
             barChartVolume = view.findViewById(R.id.bar_chart_volume_info);
             barChartNoteEco = view.findViewById(R.id.bar_chart_note_eco_info);
             pieChartEssence = view.findViewById(R.id.pie_chart_essence_info);
@@ -102,22 +105,22 @@ public class InfosFragment extends Fragment {
             GrapheHelper.getPieChartInfosEssence(view.getContext(), pieChartEssence);
 
             // Affichage des caractéristiques, on affiche inconnu lorsque le volume de bois mort au sol est inconnu
-            if ((int) volumeMortSol == 0) {
+            if ((int) volumeMortSolHa == 0) {
                 caracteristique = String.format("• altitude : %d mètres\n\n"
                                 + "• habitat naturel : %s\n\n"
                                 + "• surface : %s ha\n\n"
-                                + "• densité (vivants et morts sur pied) : %d tiges/ha\n\n"
-                                + "• volume : %d m3/ha\n\n"
+                                + "• densité (vivants et morts sur pied) : %d tiges/ha (Soit %d tiges pour notre parcelle)\n\n"
+                                + "• volume : %d m3/ha (Soit %d m3 pour notre parcelle)\n\n"
                                 + "• volume de bois mort au sol : inconnu",
-                        altitude, habitat, df.format(surfaceParcelle), densiteVivantMortPied, (int) volumeVivantMortPied);
+                        altitude, habitat, df.format(surfaceParcelle), densiteVivantMortPiedHa, densiteVivantMortPied, (int) volumeVivantMortPiedHa, (int) volumeVivantMortPied);
             } else {
                 caracteristique = String.format("• altitude : %d mètres\n\n"
                                 + "• habitat naturel : %s\n\n"
                                 + "• surface : %s ha\n\n"
-                                + "• densité (vivants et morts sur pied) : %d tiges/ha\n\n"
-                                + "• volume : %d m3/ha\n\n"
-                                + "• volume de bois mort au sol : %d m3/ha",
-                        altitude, habitat, df.format(surfaceParcelle), densiteVivantMortPied, (int) volumeVivantMortPied, (int) volumeMortSol);
+                                + "• densité (vivants et morts sur pied) : %d tiges/ha (Soit %d tiges pour notre parcelle)\n\n"
+                                + "• volume : %d m3/ha (Soit %d m3 pour notre parcelle)\n\n"
+                                + "• volume de bois mort au sol : %d m3/ha (Soit %d m3 pour notre parcelle)",
+                        altitude, habitat, df.format(surfaceParcelle), densiteVivantMortPiedHa, densiteVivantMortPied, (int) volumeVivantMortPiedHa, (int) volumeVivantMortPied, (int) volumeMortSolHa, (int) volumeMortSol);
             }
 
             buttonGoToCarte.setOnClickListener(new View.OnClickListener() {
@@ -333,10 +336,10 @@ public class InfosFragment extends Fragment {
 
         // Valeurs ramenées à l'hectare
         if(surfaceParcelle != 0f) {
-            volumeVivantMortPied = volumeVivantMortPied / surfaceParcelle;
-            volumeMortSol = volumeMortSol / surfaceParcelle;
+            volumeVivantMortPiedHa = volumeVivantMortPied / surfaceParcelle;
+            volumeMortSolHa = volumeMortSol / surfaceParcelle;
 
-            densiteVivantMortPied = (int) (densiteVivantMortPied / surfaceParcelle);
+            densiteVivantMortPiedHa = (int) (densiteVivantMortPied / surfaceParcelle);
         }
         dbHelper.close();
         cur1.close();

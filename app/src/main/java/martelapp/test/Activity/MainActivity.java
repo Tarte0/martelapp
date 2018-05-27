@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Cursor cur;
 
+    TextView textParcelleEnCours;
+    Button buttonContinuerExercice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         //getApplicationContext().deleteDatabase(DatabaseHelper.DATABASE_NAME);
 
-        TextView textParcelleEnCours = findViewById(R.id.text_parcelle_en_cours);
+        textParcelleEnCours = findViewById(R.id.text_parcelle_en_cours);
 
         /*#################################
          *###  Bouton "Nouvel Exercice" ###
@@ -96,32 +98,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        Button buttonContinuerExercice = findViewById(R.id.continuer_exercice);
+        buttonContinuerExercice = findViewById(R.id.continuer_exercice);
 
-        // On vérifie que la base de données locale contient des données
-        if(checkDatabase()) {
-            dbHelper = new DatabaseHelper(getApplicationContext());
-            cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
-            cur.moveToFirst();
-
-            // Affichage du nom et du lieu de la parcelle présente sur la base de données locale
-            textParcelleEnCours.setText("Parcelle actuelle :\n" + cur.getString(cur.getColumnIndex(DatabaseHelper.NOM_PARCELLE)) +
-                                        "\nMarteloscope de " + cur.getString(cur.getColumnIndex(DatabaseHelper.LIEU_PARCELLE)));
-            cur.close();
-            dbHelper.close();
-
-            // On affiche le bouton continuer exercice uniquement si un exercice à déja été réalisé
-            if (checkAncienExercice()) {
-                buttonContinuerExercice.setVisibility(View.VISIBLE);
-            } else {
-                buttonContinuerExercice.setVisibility(View.GONE);
-            }
-
-        } else { // Si aucune parcelle n'est dans la base de données locale, on l'affiche
-            textParcelleEnCours.setText(R.string.aucune_parcelle);
-            buttonContinuerExercice.setVisibility(View.GONE);
-        }
-
+        actualiseTextParcelleEnCours();
 
         /*####################################
          *###  Bouton "Continuer Exercice" ###
@@ -237,5 +216,38 @@ public class MainActivity extends AppCompatActivity {
         dbHelper.close();
 
         return res;
+    }
+
+    private void actualiseTextParcelleEnCours(){
+        // On vérifie que la base de données locale contient des données
+        if(checkDatabase()) {
+            dbHelper = new DatabaseHelper(getApplicationContext());
+            cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
+            cur.moveToFirst();
+
+            // Affichage du nom et du lieu de la parcelle présente sur la base de données locale
+            textParcelleEnCours.setText("Parcelle actuelle :\n" + cur.getString(cur.getColumnIndex(DatabaseHelper.NOM_PARCELLE)) +
+                    "\nMarteloscope de " + cur.getString(cur.getColumnIndex(DatabaseHelper.LIEU_PARCELLE)));
+            cur.close();
+            dbHelper.close();
+
+            // On affiche le bouton continuer exercice uniquement si un exercice à déja été réalisé
+            if (checkAncienExercice()) {
+                buttonContinuerExercice.setVisibility(View.VISIBLE);
+            } else {
+                buttonContinuerExercice.setVisibility(View.GONE);
+            }
+
+        } else { // Si aucune parcelle n'est dans la base de données locale, on l'affiche
+            textParcelleEnCours.setText(R.string.aucune_parcelle);
+            buttonContinuerExercice.setVisibility(View.GONE);
+        }
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        actualiseTextParcelleEnCours();
     }
 }
