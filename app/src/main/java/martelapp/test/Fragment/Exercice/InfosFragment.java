@@ -56,12 +56,6 @@ public class InfosFragment extends Fragment {
     LinearLayout layout_graphe_info_note_eco;
     LinearLayout layout_graphe_info_essence;
 
-    LinearLayout.LayoutParams layoutParamsTextViewInfoCaracteristique;
-    LinearLayout.LayoutParams layoutParamsTextViewInfoGraphe;
-
-    LinearLayout.LayoutParams layoutParamsLinearLayoutGraphe;
-    LinearLayout.LayoutParams layoutParamsLinearLayoutAvecBouton;
-
     DecimalFormat df;
 
     int altitude = 0,
@@ -125,12 +119,6 @@ public class InfosFragment extends Fragment {
                                 + "• volume de bois mort au sol : %d m3/ha",
                         altitude, habitat, df.format(surfaceParcelle), densiteVivantMortPied, (int) volumeVivantMortPied, (int) volumeMortSol);
             }
-
-            layoutParamsTextViewInfoCaracteristique = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 9);
-            layoutParamsTextViewInfoGraphe = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.5f);
-            layoutParamsLinearLayoutGraphe = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 10);
-            layoutParamsLinearLayoutAvecBouton = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 7f);
-
 
             buttonGoToCarte.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -344,11 +332,12 @@ public class InfosFragment extends Fragment {
 
 
         // Valeurs ramenées à l'hectare
-        volumeVivantMortPied = volumeVivantMortPied / surfaceParcelle;
-        volumeMortSol = volumeMortSol / surfaceParcelle;
+        if(surfaceParcelle != 0f) {
+            volumeVivantMortPied = volumeVivantMortPied / surfaceParcelle;
+            volumeMortSol = volumeMortSol / surfaceParcelle;
 
-        densiteVivantMortPied = (int) (densiteVivantMortPied / surfaceParcelle);
-
+            densiteVivantMortPied = (int) (densiteVivantMortPied / surfaceParcelle);
+        }
         dbHelper.close();
         cur1.close();
     }

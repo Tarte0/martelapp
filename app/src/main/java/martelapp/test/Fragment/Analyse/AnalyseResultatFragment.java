@@ -58,7 +58,7 @@ public class AnalyseResultatFragment extends Fragment {
     int     prelevementMin = 0,
             prelevementMax = 0;
 
-    float volumeTotalBoisMartele;
+    float volumeTotalBoisMartele = 0f;
 
     // Volume total de bois sur la parcelle
     double volumeBoisTotalParcelle = 0f;
@@ -66,12 +66,12 @@ public class AnalyseResultatFragment extends Fragment {
     double volumeBoisTotalParcelleHa = 0f;
     double  surfaceParcelle = 0f;
 
-    float volumeMartelePourcent;
+    float volumeMartelePourcent = 0f;
 
     float gainCoupe = 0f;
 
-    int noteEcoAvant, noteEcoMartele;
-    float pourcentageNoteEcoMartelage;
+    int noteEcoAvant = 0, noteEcoMartele = 0;
+    float pourcentageNoteEcoMartelage = 0f;
 
     private boolean respectConsigneViewAdded = false;
     private boolean synthesePictoViewAdded = false;
@@ -244,7 +244,9 @@ public class AnalyseResultatFragment extends Fragment {
                 DatabaseHelper.ARBRES_PARCELLE_TABLE);
         cur.moveToFirst();
         volumeBoisTotalParcelle = cur.getDouble(0);
-        volumeBoisTotalParcelleHa = volumeBoisTotalParcelle / surfaceParcelle;
+        if(surfaceParcelle != 0f) {
+            volumeBoisTotalParcelleHa = volumeBoisTotalParcelle / surfaceParcelle;
+        }
 
         dbHelper.close();
         cur.close();
@@ -264,7 +266,9 @@ public class AnalyseResultatFragment extends Fragment {
 
 
         // On passe le volume de bois martelé en % pour le comparer aux bornes prelevementMin et prelevementMax
-        volumeMartelePourcent = (float)(volumeTotalBoisMartele/volumeBoisTotalParcelle)*100;
+        if(volumeTotalBoisMartele != 0f) {
+            volumeMartelePourcent = (float) (volumeTotalBoisMartele / volumeBoisTotalParcelle) * 100;
+        }
 
         /**
          * Si le prélevement n'est pas dans l'intervalle de volume à prélever, on l'affiche en rouge
@@ -301,7 +305,7 @@ public class AnalyseResultatFragment extends Fragment {
         */
 
 
-        int nbArbresDiamSup50conserve = 0;
+        int nbArbresDiamSup50conserve;
 
         // Nombre d'abres à diametre > 50 Conservé
         cur = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE + " ap," + DatabaseHelper.ARBRES_CONSERVES_TABLE + " ac",
@@ -405,7 +409,9 @@ public class AnalyseResultatFragment extends Fragment {
 
         System.out.println(noteEcoAvant + " - " + noteEcoMartele);
 
-        pourcentageNoteEcoMartelage = ((float)noteEcoMartele / (float)noteEcoAvant) * 100;
+        if(noteEcoAvant != 0) {
+            pourcentageNoteEcoMartelage = ((float) noteEcoMartele / (float) noteEcoAvant) * 100;
+        }
 
         System.out.println(noteEcoAvant + " - " + noteEcoMartele);
 

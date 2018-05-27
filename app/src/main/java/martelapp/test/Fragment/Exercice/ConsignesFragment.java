@@ -108,7 +108,10 @@ public class ConsignesFragment extends Fragment {
                     DatabaseHelper.ARBRES_PARCELLE_TABLE);
             cur.moveToFirst();
             volumeBoisTotalParcelle = cur.getDouble(0);
-            volumeBoisTotalParcelleHa = volumeBoisTotalParcelle / surfaceParcelle;
+
+            if(surfaceParcelle != 0f) {
+                volumeBoisTotalParcelleHa = volumeBoisTotalParcelle / surfaceParcelle;
+            }
 
             diametreExploitabilite = new StringBuffer();
 

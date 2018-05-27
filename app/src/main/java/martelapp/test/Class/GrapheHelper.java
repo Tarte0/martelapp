@@ -1755,20 +1755,22 @@ public class GrapheHelper {
         totalNbTigesApres = nbTiges[0][1] + nbTiges[1][1] + nbTiges[2][1];
 
         // Pourcentage volume Avant
-        nbTiges[0][2] = (nbTiges[0][0] / totalNbTigesAvant) * 100;
+        if(totalNbTigesAvant != 0f) {
+            nbTiges[0][2] = (nbTiges[0][0] / totalNbTigesAvant) * 100;
 
-        nbTiges[1][2] = (nbTiges[1][0] / totalNbTigesAvant) * 100;
+            nbTiges[1][2] = (nbTiges[1][0] / totalNbTigesAvant) * 100;
 
-        nbTiges[2][2] = (nbTiges[2][0] / totalNbTigesAvant) * 100;
-
+            nbTiges[2][2] = (nbTiges[2][0] / totalNbTigesAvant) * 100;
+        }
 
         // Pourcentage volume Apres
-        nbTiges[0][3] = (nbTiges[0][1] / totalNbTigesApres) * 100;
+        if(totalNbTigesApres != 0f) {
+            nbTiges[0][3] = (nbTiges[0][1] / totalNbTigesApres) * 100;
 
-        nbTiges[1][3] = (nbTiges[1][1] / totalNbTigesApres) * 100;
+            nbTiges[1][3] = (nbTiges[1][1] / totalNbTigesApres) * 100;
 
-        nbTiges[2][3] = (nbTiges[2][1] / totalNbTigesApres) * 100;
-
+            nbTiges[2][3] = (nbTiges[2][1] / totalNbTigesApres) * 100;
+        }
 
         for(int i = 0; i < 3; i++){
             entriesVolumeAvant.add(new PieEntry(nbTiges[i][2], i));
@@ -1974,7 +1976,12 @@ public class GrapheHelper {
                 cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.RAISON_TABLE, DatabaseHelper.RAISON + " = '" + raison + "'");
                 cur2.moveToFirst();
                 nbRaisonActuelle = cur2.getCount();
-                percentageRaisonsActuel = ((float) (nbRaisonActuelle) / nbArbresMarteles) * 100;
+                if(nbArbresMarteles != 0) {
+                    percentageRaisonsActuel = ((float) (nbRaisonActuelle) / nbArbresMarteles) * 100;
+                }
+                else{
+                    percentageRaisonsActuel = 0f;
+                }
 
                 // Ajout dans la liste des données du graphe le pourcentage que l'on vient de calculer
                 entriesRaisonPercentage.add(new BarEntry(i, percentageRaisonsActuel));
