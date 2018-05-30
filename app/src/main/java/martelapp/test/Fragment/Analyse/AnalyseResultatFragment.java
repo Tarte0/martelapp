@@ -415,7 +415,7 @@ public class AnalyseResultatFragment extends Fragment {
 
         System.out.println(noteEcoAvant + " - " + noteEcoMartele);
 
-        tvNoteEco.setText(Integer.toString((int)pourcentageNoteEcoMartelage) + "%\nDu total des notes écologiques ont été martelés");
+        tvNoteEco.setText(Integer.toString((int)pourcentageNoteEcoMartelage) + "%\nDu total des notes écologiques a été martelé");
 
         dbHelper.close();
         cur.close();

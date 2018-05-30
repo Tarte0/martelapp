@@ -1,6 +1,6 @@
 <resources>
     <!-- ActivityMain -->
-    <string name="app_name">Martel\'App</string>
+    <string name="app_name">Martel\'app</string>
     <string name="bouton_nouvel_exercice">Nouvel exercice</string>
     <string name="aucune_parcelle">Aucune parcelle sélectionnée</string>
     <string name="bouton_continuer_exercice">Continuer un ancien exercice</string>
@@ -14,7 +14,7 @@
     <string name="pas_de_co">Pas de connexion internet get all parcelle</string>
     <string name="pas_de_co_maj">Pas de connexion internet maj bdd</string>
     <string name="maj_en_cours">Mise à jour en cours</string>
-    <string name="maj_bdd">Mise à jour Parcelle</string>
+    <string name="maj_bdd">Mise à jour de la parcelle</string>
     <string name="retour_main">Retour</string>
     <!-- CHOIX PARCELLE -->
 
