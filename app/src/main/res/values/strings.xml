@@ -18,6 +18,23 @@
     <string name="retour_main">Retour</string>
     <!-- CHOIX PARCELLE -->
 
+    <!-- EN SAVOIR PLUS -->
+    <string name="en_savoir_plus_realisation">Cette application a été réalisée dans le cadre d\'un projet de 3ème année de licence informatique.</string>
+    <string name="en_savoir_plus_client">
+        <b>Parc naturel régional du Massif des Bauges</b>\n\n
+        • Pierre Paccard\n
+        • Mathilde Pantalacci
+    </string>
+    <string name="en_savoir_plus_groupe_projet">
+        <b>Etudiants de l\'Université Savoie Mont-Blanc</b>\n\n
+        • Steeve Ciminera\n
+        • Baptiste Diot\n
+        • Hugues Reynaud\n
+        • Teddy Ruppin\n
+        • Romain Sanchez\n\n
+        Contact : ciminera.steeve@gmail.com
+    </string>
+    <!-- EN SAVOIR PLUS -->
 
     <!-- NOM EQUIPE -->
     <string name="hint_nom_equipe">Nom Equipe</string>
