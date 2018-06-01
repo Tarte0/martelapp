@@ -82,19 +82,21 @@ public class GrapheHelper {
             diametre = cur1.getInt(cur1.getColumnIndex(DatabaseHelper.DIAMETRE_ARBRE));
             entriesDiametre.add(Integer.toString(diametre));
 
-
+            // Récupération du nombre d'arbres vivant pour le diamètre actuel
             cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE,
                     DatabaseHelper.DIAMETRE_ARBRE + " = " + diametre +
                             " AND " + DatabaseHelper.ETAT_ARBRE + " = 'v'");
             cur2.moveToFirst();
             nbArbreVivant = cur2.getCount();
 
+            // Récupération du nombre d'arbres mort sur pied pour le diamètre actuel
             cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE,
                     DatabaseHelper.DIAMETRE_ARBRE + " = " + diametre +
                             " AND " + DatabaseHelper.ETAT_ARBRE + " = 'mp'");
             cur2.moveToFirst();
             nbArbreMortPied = cur2.getCount();
 
+            // Récupération du nombre d'arbres mort au sol pour le diamètre actuel
             cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_PARCELLE_TABLE,
                     DatabaseHelper.DIAMETRE_ARBRE + " = " + diametre +
                             " AND " + DatabaseHelper.ETAT_ARBRE + " = 'ms'");
@@ -181,10 +183,10 @@ public class GrapheHelper {
 
         //barChart.getXAxis().setDrawLabels(true);
 
-        /* ************************ LEGENDE ****************
-         *
-         *
+        /*
+         ************************* LEGENDE *************************
          */
+
         // Récupération de la légende du graphe
         Legend legende = barChart.getLegend();
         // Forme de la légende

@@ -3,7 +3,7 @@ package martelapp.test.Class;
 import java.util.HashMap;
 
 /**
- * Created by Sancho on 28/02/2018.
+ * Classe utilisée pour récupérer une instance d'un arbre de firebase
  */
 
 public class Tree {

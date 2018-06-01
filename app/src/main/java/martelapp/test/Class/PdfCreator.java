@@ -42,7 +42,9 @@ import martelapp.test.Fragment.Analyse.CreationPdfFragment;
 import martelapp.test.R;
 
 /**
- * Created by Baptiste on 20/05/2018.
+ * Crée deux pdf.
+ * Un pdf récapitulatif reprenant les éléments principaux de l'analyse pour impression.
+ * Un autre pdf reprenant tous les éléments de l'analyse.
  */
 
 public class PdfCreator extends AsyncTask<View, String, String>{

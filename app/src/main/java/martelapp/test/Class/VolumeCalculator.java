@@ -1,15 +1,9 @@
 package martelapp.test.Class;
 
-import java.text.Normalizer;
 import java.util.HashMap;
 
 /**
- * Created by cimin on 18/04/2018.
- */
-
-/*
- * classe permettant de calculer les differentes valeurs liées au volume et au prix d'un arbre.
- * on l'initialise avec les constantes nécéssaires sous forme de HashMap ou de tableau.
+ * Classe permettant de calculer les differentes valeurs liées au volume et au prix d'un arbre.
  */
 public class VolumeCalculator {
 

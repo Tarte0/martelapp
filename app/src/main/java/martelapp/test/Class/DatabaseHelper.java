@@ -18,7 +18,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String DATABASE_NAME = "martelapp.db";
     public static final int DATABASE_VERSION = 4;
 
-    // Table "arbres_parcelle"
+    /*
+     * Table "arbres_parcelle"
+     *
+     * Utilisée pour stocker tous les arbres d'une parcelle
+     */
     public static final String ARBRES_PARCELLE_TABLE    = "arbres_parcelle_table";
     public static final String ID_ARBRE_PARC            = "_id";
     public static final String NUMERO_ARBRE_PARC        = "NUMERO";
@@ -34,24 +38,39 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String VOLUME_COMMERCIAL        = "VOLUME_COMMERCIAL";
     public static final String VALEUR_ECONOMIQUE        = "VALEUR_ECONOMIQUE";
 
-    // Table "arbres_marteles"
+    /*
+     * Table "arbres_marteles"
+     *
+     * Utilisée pour stocker tous les arbres martelés d'un exercice
+     */
     public static final String ARBRES_MARTELES_TABLE    = "arbres_marteles_table";
     public static final String ID_ARBRE_MART            = "_id";
     public static final String NUMERO_ARBRE_MART        = "NUMERO";
 
-    // Table "arbres_conserves"
+    /*
+     * Table "arbres_conserves"
+     *
+     * Utilisée pour stocker tous les arbres conservés d'un exercice
+     */
     public static final String ARBRES_CONSERVES_TABLE   = "arbres_conserves_table";
     public static final String ID_ARBRE_CONS            = "_id";
     public static final String NUMERO_ARBRE_CONS        = "NUMERO";
 
-    // Table "raison"
+    /*
+     * Table "raison"
+     *
+     * Utilisée pour stocker les raisons d'un martelage ou d'une conservation d'un arbre
+     */
     public static final String RAISON_TABLE                 = "raison_table";
     public static final String ID_RAISON                    = "_id";
     public static final String NUMERO_ARBRE_TRAITE_RAISON   = "NUMERO_ARBRE_TRAITE_RAISON";
     public static final String RAISON                       = "RAISON";
 
-    // Table "constantes" (Utilisée pour les calculs dans le détail de la parcelle ainsi que
-    //                     l'analyse en fin d'exercice)
+    /*
+     * Table "constantes"
+     *
+     * Utilisée pour stocker les constantes pour un exercice
+     */
     public static final String CONSTANTES_TABLE             = "constantes_table";
     public static final String ID_CONSTANTE                 = "_id";
     public static final String NOM_EQUIPE                   = "NOM_EQUIPE";
@@ -65,25 +84,45 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String ROTATION_MIN                 = "ROTATION_MIN";
     public static final String ROTATION_MAX                 = "ROTATION_MAX";
 
-
+    /*
+     * Table "prix_bois_chauffage"
+     *
+     * Utilisée pour stocker le prix du bois pour l'utilisation "Chauffage" en fonction du type
+     * ou de l'essence d'un arbre
+     */
     public static final String PRIX_BOIS_CHAUFFAGE_TABLE    = "prix_bois_chauffage_table";
     public static final String ID_PRIX_BOIS_CHAUFFAGE       = "_id";
     public static final String TYPE_ESSENCE_ARBRE_CHAUFFAGE = "TYPE_ESSENCE_ARBRE_CHAUFFAGE";
     public static final String PRIX_CHAUFFAGE               = "PRIX_CHAUFFAGE";
 
-
+    /*
+     * Table "prix_bois_industrie"
+     *
+     * Utilisée pour stocker le prix du bois pour l'utilisation "Industrie" en fonction du type
+     * ou de l'essence d'un arbre
+     */
     public static final String PRIX_BOIS_INDUSTRIE_TABLE    = "prix_bois_industrie_table";
     public static final String ID_PRIX_BOIS_INDUSTRIE       = "_id";
     public static final String TYPE_ESSENCE_ARBRE_INDUSTRIE = "TYPE_ESSENCE_ARBRE_INDUSTRIE";
     public static final String PRIX_INDUSTRIE               = "PRIX_INDUSTRIE";
 
+    /*
+     * Table "prix_bois_oeuvre"
+     *
+     * Utilisée pour stocker le prix du bois pour l'utilisation "Oeuvre" en fonction du type
+     * ou de l'essence d'un arbre
+     */
 
     public static final String PRIX_BOIS_OEUVRE_TABLE       = "prix_bois_oeuvre_table";
     public static final String ID_PRIX_BOIS_OEUVRE          = "_id";
     public static final String TYPE_ESSENCE_ARBRE_OEUVRE    = "TYPE_ESSENCE_ARBRE_OEUVRE";
     public static final String PRIX_OEUVRE                  = "PRIX_OEUVRE";
 
-
+    /*
+     * Table "tarif_volume"
+     *
+     * Utilisée pour stocker le nom et la version du tarif pour un type d'arbre donné
+     */
     public static final String TARIF_VOLUME_TABLE       = "tarif_volume_table";
     public static final String ID_TARIF                 = "_id";
     public static final String TYPE_ARBRE_TARIF         = "TYPE_ARBRE";
@@ -91,17 +130,28 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String VERSION_TARIF            = "VERSION_TARIF";
 
 
-    // Table "type_arbre", référençant chaque essence à un certain type d'arbre
+    /*
+     * Table "type_arbre"
+     *
+     * Utilisée pour associer un type d'arbre à chaque essence
+     */
     public static final String TYPE_ARBRE_TABLE         = "type_arbre_table";
     public static final String ID_TYPE                  = "_id";
     public static final String ESSENCE_TYPE             = "ESSENCE_TYPE";
     public static final String TYPE_ARBRE               = "TYPE_ARBRE";
 
+    /*
+     * Table "diametre_exploit"
+     *
+     * Utilisée pour associer un diamètre d'exploitabilité à chaque essence
+     */
     public static final String DIAMETRE_EXPLOIT_TABLE   = "diametre_exploitabilite_table";
     public static final String ID_DIAMETRE_EXPLOIT      = "_id";
     public static final String ESSENCE_DIAM_EXPLOIT     = "ESSENCE_DIAM_EXPLOIT";
     public static final String DIAMETRE_EXPLOITABILITE  = "DIAMETRE_EXPLOITABILITE";
 
+
+    // Constantes des raisons de martelage et de conservation
     public static final String ARBRE_MUR        = "Arbre Mûr";
     public static final String ECLAIRCIE        = "Eclaircie";
     public static final String SANITAIRE        = "Sanitaire";
@@ -271,11 +321,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        System.out.println("Sa passe dans onUpgrade !!!!!!!!!!!!!!");
-        System.out.println("newVersion : " + newVersion);
-        System.out.println("oldVersion : " + oldVersion);
         if(newVersion > oldVersion) {
-            System.out.println("Sa passe dans le drop tout le bordel !!!!!!!!");
             db.execSQL("DROP TABLE IF EXISTS " + ARBRES_PARCELLE_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + ARBRES_MARTELES_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + ARBRES_CONSERVES_TABLE);
@@ -290,6 +336,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             onCreate(db);
         }
     }
+
+
+    /*
+     ***********************************************************************************************
+     ************************************** METHODE INSERTION **************************************
+     ***********************************************************************************************
+     */
 
 
     public boolean insertArbreParcelle(String numero, String essence, int diametre,
@@ -453,6 +506,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL(query);
     }
 
+
+    /*
+     ***********************************************************************************************
+     ************************************** METHODE GET DATA ***************************************
+     ***********************************************************************************************
+     */
+
     public Cursor executeQuery(String query){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cur = db.rawQuery(query, null);
@@ -495,19 +555,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return cur;
     }
 
-    public boolean isEmpty(String table){
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cur = db.rawQuery("SELECT * FROM " + table, null);
-        return cur.getCount() == 0;
-    }
-
-    public void cleanAll(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DROP TABLE IF EXISTS " + ARBRES_PARCELLE_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + ARBRES_MARTELES_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + RAISON_TABLE);
-        onCreate(db);
-    }
+    /*
+     ***********************************************************************************************
+     ************************************ METHODE CLEAN TABLE **************************************
+     ***********************************************************************************************
+     */
 
     public void clearTableExercice(){
         clearTable(ARBRES_MARTELES_TABLE);
@@ -521,6 +573,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL(clearDBQuery);
     }
 
+
+    // Vérifie qu'il y a une connexion à internet
     public static boolean isNetworkAvailable(Context con) {
         try {
             ConnectivityManager cm = (ConnectivityManager) con

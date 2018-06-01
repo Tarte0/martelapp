@@ -2,10 +2,10 @@ package martelapp.test.Class;
 
 import java.util.HashMap;
 import java.util.Iterator;
-/**
- * Created by Sancho on 20/03/2018.
- */
 
+/**
+ * Classe utilisée pour récupérer une instance d'une parcelle depuis firebase
+ */
 public class Parcelle {
 
     public double altitude = 0;
