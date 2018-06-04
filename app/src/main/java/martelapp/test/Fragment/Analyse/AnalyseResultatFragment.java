@@ -175,7 +175,7 @@ public class AnalyseResultatFragment extends Fragment {
                                 layoutRespectConsignes.setVisibility(View.VISIBLE);
                                 layoutSynthesePicto.setVisibility(View.GONE);
 
-                                // ajout de la view au PDF
+                                // Ajout de la view dans la liste des View de AnalyseActivity pour la création des pdf
                                 if(!respectConsigneViewAdded){
                                     ((AnalyseActivity) getActivity()).addViewPdf(layoutRespectConsignes, 0);
                                     respectConsigneViewAdded = true;
@@ -191,7 +191,7 @@ public class AnalyseResultatFragment extends Fragment {
                                 layoutRespectConsignes.setVisibility(View.GONE);
                                 layoutSynthesePicto.setVisibility(View.VISIBLE);
 
-                                // ajout de la view au PDF
+                                // Ajout de la view dans la liste des View de AnalyseActivity pour la création des pdf
                                 if(!synthesePictoViewAdded){
                                     ((AnalyseActivity) getActivity()).addViewPdf(layoutSynthesePicto, 1);
                                     synthesePictoViewAdded = true;

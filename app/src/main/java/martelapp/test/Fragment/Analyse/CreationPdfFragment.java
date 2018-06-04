@@ -1,20 +1,15 @@
 package martelapp.test.Fragment.Analyse;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import martelapp.test.Activity.AnalyseActivity;
 import martelapp.test.R;
 
 /**
- * Created by Baptiste on 20/05/2018.
+ * Fragment utilisé pour le popUp pour afficher "Création des pdf en cours"
  */
 
 public class CreationPdfFragment extends DialogFragment {

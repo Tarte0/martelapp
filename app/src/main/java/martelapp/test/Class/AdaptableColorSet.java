@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Created by cimin on 16/05/2018.
+ * Classe utilisée pour créer des couleurs différentes en fonction du nombre donné en entrée
  */
 
 public class AdaptableColorSet {

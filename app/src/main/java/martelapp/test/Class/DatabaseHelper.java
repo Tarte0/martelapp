@@ -9,7 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 /**
- * Created by Baptiste on 11/03/2018.
+ * Classe de gestion de la base de données SQLite
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper{

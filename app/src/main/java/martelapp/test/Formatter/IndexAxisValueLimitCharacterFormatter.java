@@ -6,7 +6,8 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import java.util.Collection;
 
 /**
- * Created by Baptiste on 24/04/2018.
+ * Formatter utilisé pour les graphes affichant des données sur les axes avec une option de limiter
+ * les caractères
  */
 
 public class IndexAxisValueLimitCharacterFormatter implements IAxisValueFormatter {

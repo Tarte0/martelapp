@@ -9,7 +9,8 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 import java.text.DecimalFormat;
 
 /**
- * Created by Baptiste on 23/04/2018.
+ * Formatter utilisé pour les PieChart pour affiché les valeurs en pourcentage qui sont supérieur à
+ * 5%
  */
 
 public class PercentWithoutSmallValueFormatter implements IValueFormatter, IAxisValueFormatter

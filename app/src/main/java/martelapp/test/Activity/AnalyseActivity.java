@@ -1,35 +1,29 @@
 package martelapp.test.Activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import martelapp.test.Class.PdfCreator;
 import martelapp.test.Fragment.Analyse.AnalyseGrapheCarteFragment;
+import martelapp.test.Fragment.Analyse.AnalyseGrapheNombreTigesFragment;
 import martelapp.test.Fragment.Analyse.AnalyseGrapheRaisonsFragment;
 import martelapp.test.Fragment.Analyse.AnalyseGrapheVolumeFragment;
 import martelapp.test.Fragment.Analyse.AnalyseListeArbresSelectionnesFragment;
 import martelapp.test.Fragment.Analyse.AnalyseResultatFragment;
-import martelapp.test.Fragment.Analyse.AnalyseGrapheNombreTigesFragment;
 import martelapp.test.Fragment.Analyse.CreationPdfFragment;
-import martelapp.test.Fragment.Exercice.ChoixConserverFragment;
 import martelapp.test.R;
 
 /**
@@ -176,6 +170,9 @@ public class AnalyseActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Ouvre un popUp CreationPdfFragment pour indiquer la "Création des pdf en cours"
+     */
     public CreationPdfFragment openCreationPdfPopup(){
         FragmentManager fragmentManager = getSupportFragmentManager();
         CreationPdfFragment newFragment = new CreationPdfFragment();
@@ -186,6 +183,11 @@ public class AnalyseActivity extends AppCompatActivity {
         return newFragment;
     }
 
+
+    /**
+     * Méthode parcourant les pages de l'analyse pour récupérer les Views si ce n'est pas déjà fait
+     * par l'utilisateur et appel l'asyncTask pour la création des deux pdf
+     */
     public void getAllViewAndCreatePdf(){
 
         creationPdfFragment = openCreationPdfPopup();

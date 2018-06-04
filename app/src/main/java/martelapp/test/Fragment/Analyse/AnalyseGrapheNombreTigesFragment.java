@@ -187,7 +187,7 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
 
                                 layoutPieChartNbTige.setVisibility(View.GONE);
 
-                                // ajout de la view au PDF
+                                // Ajout de la view dans la liste des View de AnalyseActivity pour la création des pdf
                                 if(!viewBarChartEssenceAdded){
                                     ((AnalyseActivity) getActivity()).addViewPdf(barChartEssenceAnalyse,3);
                                     viewBarChartEssenceAdded = true;
@@ -211,7 +211,7 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
 
                                 layoutPieChartNbTige.setVisibility(View.GONE);
 
-                                // ajout de la view au PDF
+                                // Ajout de la view dans la liste des View de AnalyseActivity pour la création des pdf
                                 if(!viewBarChartDiametreAdded){
                                     ((AnalyseActivity) getActivity()).addViewPdf(barChartDiametreAnalyse,4);
                                     viewBarChartDiametreAdded = true;
@@ -234,7 +234,7 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
 
                                 layoutPieChartNbTige.setVisibility(View.GONE);
 
-                                // ajout de la view au PDF
+                                // Ajout de la view dans la liste des View de AnalyseActivity pour la création des pdf
                                 if(!viewBarChartNoteEcologiqueAdded){
                                     ((AnalyseActivity) getActivity()).addViewPdf(barChartNoteEcoAnalyse,5);
                                     viewBarChartNoteEcologiqueAdded = true;
@@ -256,7 +256,7 @@ public class AnalyseGrapheNombreTigesFragment extends Fragment {
 
                                 layoutPieChartNbTige.setVisibility(View.VISIBLE);
 
-                                // ajout de la view au PDF
+                                // Ajout de la view dans la liste des View de AnalyseActivity pour la création des pdf
                                 if(!viewPieChartEvolutionAdded){
                                     ((AnalyseActivity) getActivity()).addViewPdf(layoutPieChartNbTige,6);
                                     viewPieChartEvolutionAdded = true;

@@ -1,14 +1,10 @@
 package martelapp.test.Class;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -16,7 +12,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.pdf.PdfDocument;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
@@ -25,19 +20,15 @@ import android.print.pdf.PrintedPdfDocument;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.res.ResourcesCompat;
 import android.view.View;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import martelapp.test.Activity.AnalyseActivity;
-import martelapp.test.Activity.MainActivity;
 import martelapp.test.Fragment.Analyse.CreationPdfFragment;
 import martelapp.test.R;
 

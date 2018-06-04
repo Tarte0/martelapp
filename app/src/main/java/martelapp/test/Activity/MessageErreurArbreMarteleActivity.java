@@ -31,12 +31,13 @@ public class MessageErreurArbreMarteleActivity extends AppCompatActivity {
 
         Button mButton = (Button) findViewById(R.id.badMoveButton);
 
-        /*####################################
-        *###  Bouton "badMoveButton"      ###
-        *####################################
-        *
-        * Bouton permettant de retourner dans le fragment "SelectionArbreFragment"
-        */
+        /*
+         *#####################################
+         *######  Bouton "badMoveButton" ######
+         *#####################################
+         *
+         * Bouton permettant de retourner dans le fragment "SelectionArbreFragment"
+         */
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

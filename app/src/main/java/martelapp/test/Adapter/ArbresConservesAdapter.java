@@ -18,7 +18,7 @@ import martelapp.test.Fragment.Exercice.ChoixMartelageFragment;
 import martelapp.test.R;
 
 /**
- * Created by Baptiste on 09/05/2018.
+ * Adapter pour la listView pour les arbres conservés
  */
 
 public class ArbresConservesAdapter extends CursorAdapter {

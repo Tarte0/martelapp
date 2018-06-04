@@ -30,7 +30,14 @@ public class SelectionArbreFragment extends Fragment {
 
     View mainView;
 
+    /**
+     * EditText indiquant la sélection avec le pavé numérique
+     */
     EditText mEditText;
+
+    /**
+     * Bouton pavé numérique
+     */
     Button mButton0,
             mButton1,
             mButton2,
@@ -221,9 +228,7 @@ public class SelectionArbreFragment extends Fragment {
                     if (mEditText.getText().length() > 0) {
                         String numEntree = mEditText.getText().toString();
 
-                        /*
-                         *  On vérifie si l'arbre selectionné a déjà été martelé
-                         */
+
                         dbHelper = new DatabaseHelper(mainView.getContext());
 
                         query = "SELECT * FROM " + DatabaseHelper.ARBRES_MARTELES_TABLE + " WHERE " +
@@ -232,6 +237,7 @@ public class SelectionArbreFragment extends Fragment {
 
                         cur2 = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.ARBRES_CONSERVES_TABLE, DatabaseHelper.NUMERO_ARBRE_CONS + " = " + numEntree);
 
+                        // Vérification si l'arbre sélectionné a déjà été martelé
                         if (cur1.moveToFirst()) {
                             dejaSelectionneImage.bringToFront();
                             dejaSelectionneImage.setVisibility(View.VISIBLE);
@@ -241,7 +247,9 @@ public class SelectionArbreFragment extends Fragment {
                             tvDejaSelectionne.setVisibility(View.VISIBLE);
                             tvDejaSelectionne.setText(R.string.deja_martele);
                             cleanCard();
-                        } else if (cur2.moveToFirst()) {
+                        }
+                        // Vérification si l'arbre sélectionné a déjà été conservé
+                        else if (cur2.moveToFirst()) {
                             dejaSelectionneImage.setVisibility(View.VISIBLE);
                             dejaSelectionneImage.setImageResource(R.drawable.conserver);
                             dejaSelectionneImage.setColorFilter(dejaSelectionneImage.getContext().getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);

@@ -45,7 +45,7 @@ import martelapp.test.Formatter.WithoutSmallValueFormatter;
 import martelapp.test.R;
 
 /**
- * Created by Baptiste on 18/05/2018.
+ * Classe pour récupérer les données pour les différents graphes de l'application
  */
 
 public class GrapheHelper {

@@ -9,7 +9,7 @@ import java.util.Iterator;
 public class Parcelle {
 
     public double altitude = 0;
-    public HashMap<String, Tree> arbres;
+    public HashMap<String, Arbre> arbres;
     public String habitat;
     public String nom = "";
     public String lieu ="";
@@ -23,7 +23,7 @@ public class Parcelle {
         this.surface = surface;
     }
 
-    public Parcelle(double altitude, String habitat, String nom, String place, double surface, HashMap<String, Tree> trees){
+    public Parcelle(double altitude, String habitat, String nom, String place, double surface, HashMap<String, Arbre> trees){
         this.altitude = altitude;
         this.habitat = habitat;
         this.nom = nom;

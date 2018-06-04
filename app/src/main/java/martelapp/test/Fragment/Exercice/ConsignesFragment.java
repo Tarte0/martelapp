@@ -1,22 +1,15 @@
 package martelapp.test.Fragment.Exercice;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.support.v7.view.menu.MenuItemImpl;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -77,6 +70,8 @@ public class ConsignesFragment extends Fragment {
 
             dbHelper = new DatabaseHelper(view.getContext());
 
+            df = new DecimalFormat("#0.00");
+
             textViewConsignes = view.findViewById(R.id.textViewConsignes);
             textViewConsignes.setTextSize(22f);
             textViewTitleConsignes = view.findViewById(R.id.titleConsignes);
@@ -91,28 +86,35 @@ public class ConsignesFragment extends Fragment {
             cur = dbHelper.getAllDataFromTable(DatabaseHelper.CONSTANTES_TABLE);
             cur.moveToFirst();
 
-            // récupération du prélèvement minimum et maximum de la base de données locale
+
+
+            // Récupération du prélèvement minimum et maximum de la base de données locale
             prelevementMin = (int) cur.getFloat(cur.getColumnIndex(DatabaseHelper.PRELEVEMENT_VOLUME_MIN));
             prelevementMax = (int) cur.getFloat(cur.getColumnIndex(DatabaseHelper.PRELEVEMENT_VOLUME_MAX));
 
-            // récupération de la rotation minimum et maximum de la base de données locale
+
+            // Récupération de la rotation minimum et maximum de la base de données locale
             rotationMin = cur.getInt(cur.getColumnIndex(DatabaseHelper.ROTATION_MIN));
             rotationMax = cur.getInt(cur.getColumnIndex(DatabaseHelper.ROTATION_MAX));
 
+
+            // Récupération de la surface de la parcelle
             surfaceParcelle = cur.getDouble(cur.getColumnIndex(DatabaseHelper.SURFACE_PARCELLE));
 
-            df = new DecimalFormat("#0.00");
 
-
+            // Récupération du volume de bois dans la parcelle
             cur = dbHelper.getDataFromTable("SUM(" + DatabaseHelper.VOLUME_COMMERCIAL + ")",
                     DatabaseHelper.ARBRES_PARCELLE_TABLE);
             cur.moveToFirst();
             volumeBoisTotalParcelle = cur.getDouble(0);
 
+            // Volume de bois ramené à l'hectare
             if(surfaceParcelle != 0f) {
                 volumeBoisTotalParcelleHa = volumeBoisTotalParcelle / surfaceParcelle;
             }
 
+
+            // Récupération et enregistrement dans une String le diamètre d'exploitabilité des essences
             diametreExploitabilite = new StringBuffer();
 
             cur = dbHelper.getDataFromTableWithCondition("COUNT(*) AS nb_tiges_par_essence, ap." + DatabaseHelper.ESSENCE_ARBRE,

@@ -35,7 +35,7 @@ public class AnalyseGrapheRaisonsFragment extends Fragment {
             // ajout du graphique
             GrapheHelper.getBarChartAnalyseRaisons(view.getContext(), barChart);
 
-            // ajout de la view au PDF
+            // Ajout de la view dans la liste des View de AnalyseActivity pour la création des pdf
             if (!viewBarChartRaisonsAdded) {
                 ((AnalyseActivity) getActivity()).addViewPdf(barChart, 7);
                 viewBarChartRaisonsAdded = true;

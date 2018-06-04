@@ -135,18 +135,18 @@ public class VolumeCalculator {
         return getVersionDiametre(tarifMat, version, diametre);
     }
 
-    public String getType(Tree tree) {
-        return essences.get(tree.getEssence()).toLowerCase();
+    public String getType(Arbre arbre) {
+        return essences.get(arbre.getEssence()).toLowerCase();
     }
 
-    public double getVolumeCommercial(Tree tree) {
+    public double getVolumeCommercial(Arbre arbre) {
         double[][] tarifMatFeuillus = getTarifFromName(nomTarifFeuillus);
         double[][] tarifMatResineux = getTarifFromName(nomTarifResineux);
 
-        if (getType(tree).equals("feuillu")) {
-            return getVersionDiametre(tarifMatFeuillus, versionTarifFeuillus, tree.diametre);
+        if (getType(arbre).equals("feuillu")) {
+            return getVersionDiametre(tarifMatFeuillus, versionTarifFeuillus, arbre.diametre);
         } else {
-            return getVersionDiametre(tarifMatResineux, versionTarifResineux, tree.diametre);
+            return getVersionDiametre(tarifMatResineux, versionTarifResineux, arbre.diametre);
         }
 
     }
@@ -167,10 +167,10 @@ public class VolumeCalculator {
     }
 
     //map avec 3 valeurs pour oeuvre, chauffage et industrie
-    public HashMap<String, Double> getVolumeCommercialBois(Tree tree) {
+    public HashMap<String, Double> getVolumeCommercialBois(Arbre arbre) {
         HashMap<String, Double> volComBois = new HashMap<>();
-        double volumeCom = getVolumeCommercial(tree);
-        HashMap<String, Double> utilisationBois = tree.getUtilBoisAsMap();
+        double volumeCom = getVolumeCommercial(arbre);
+        HashMap<String, Double> utilisationBois = arbre.getUtilBoisAsMap();
         volComBois.put(OEUVRE, volumeCom * utilisationBois.get(OEUVRE) / 100);
         volComBois.put(CHAUFFAGE, volumeCom * utilisationBois.get(CHAUFFAGE) / 100);
         volComBois.put(INDUSTRIE, volumeCom * utilisationBois.get(INDUSTRIE) / 100);
@@ -178,7 +178,7 @@ public class VolumeCalculator {
     }
 
     //renvoie le prix pour un des attribut oeuvre, chauffage ou industrie
-    private double getPrixBoisFromAttribute(Tree tree, String utilisationBoisAttribute) {
+    private double getPrixBoisFromAttribute(Arbre arbre, String utilisationBoisAttribute) {
         HashMap<String, Double> prixBois = null;
         switch (utilisationBoisAttribute) {
             case CHAUFFAGE:
@@ -195,36 +195,36 @@ public class VolumeCalculator {
                 break;
         }
 
-        Double prixBoisAttribute = prixBois.get(tree.getEssence());
+        Double prixBoisAttribute = prixBois.get(arbre.getEssence());
         //si il n'y a pas de constante propre a l'essence, on fait selon le type
         if (prixBoisAttribute == null) {
-            prixBoisAttribute = prixBois.get(getType(tree));
+            prixBoisAttribute = prixBois.get(getType(arbre));
         }
         return prixBoisAttribute;
     }
 
     //map avec 3 valeurs pour oeuvre, chauffage et industrie
-    public HashMap<String, Double> getPrixBois(Tree tree) {
+    public HashMap<String, Double> getPrixBois(Arbre arbre) {
         HashMap<String, Double> prixBois = new HashMap<>();
-        prixBois.put(OEUVRE, getPrixBoisFromAttribute(tree, OEUVRE));
-        prixBois.put(CHAUFFAGE, getPrixBoisFromAttribute(tree, CHAUFFAGE));
-        prixBois.put(INDUSTRIE, getPrixBoisFromAttribute(tree, INDUSTRIE));
+        prixBois.put(OEUVRE, getPrixBoisFromAttribute(arbre, OEUVRE));
+        prixBois.put(CHAUFFAGE, getPrixBoisFromAttribute(arbre, CHAUFFAGE));
+        prixBois.put(INDUSTRIE, getPrixBoisFromAttribute(arbre, INDUSTRIE));
         return prixBois;
     }
 
     //map avec 3 valeurs pour oeuvre, chauffage et industrie
-    public HashMap<String, Double> getValeurEcoBois(Tree tree) {
+    public HashMap<String, Double> getValeurEcoBois(Arbre arbre) {
         HashMap<String, Double> valeurEcoBois = new HashMap<>();
-        HashMap<String, Double> volComBois = getVolumeCommercialBois(tree);
-        HashMap<String, Double> prixBois = getPrixBois(tree);
+        HashMap<String, Double> volComBois = getVolumeCommercialBois(arbre);
+        HashMap<String, Double> prixBois = getPrixBois(arbre);
         valeurEcoBois.put(OEUVRE, volComBois.get(OEUVRE) * prixBois.get(OEUVRE));
         valeurEcoBois.put(CHAUFFAGE, volComBois.get(CHAUFFAGE) * prixBois.get(CHAUFFAGE));
         valeurEcoBois.put(INDUSTRIE, volComBois.get(INDUSTRIE) * prixBois.get(INDUSTRIE));
         return valeurEcoBois;
     }
 
-    public double getValeurEco(Tree tree) {
-        HashMap<String, Double> valeurEcoBois = getValeurEcoBois(tree);
+    public double getValeurEco(Arbre arbre) {
+        HashMap<String, Double> valeurEcoBois = getValeurEcoBois(arbre);
         return round(valeurEcoBois.get(OEUVRE) + valeurEcoBois.get(CHAUFFAGE) + valeurEcoBois.get(INDUSTRIE), 2);
     }
 

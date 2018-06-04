@@ -6,7 +6,7 @@ import java.util.HashMap;
  * Classe utilisée pour récupérer une instance d'un arbre de firebase
  */
 
-public class Tree {
+public class Arbre {
 
     public String numero = "",
             essence = "",
@@ -47,10 +47,10 @@ public class Tree {
         }
     }
 
-    public Tree() {
+    public Arbre() {
     }
 
-    public Tree(String numero, int diametre, int noteEcologique, String essence, String etat) {
+    public Arbre(String numero, int diametre, int noteEcologique, String essence, String etat) {
         this.numero = numero;
         this.diametre = diametre;
         this.noteEcologique = noteEcologique;
@@ -58,8 +58,8 @@ public class Tree {
         this.etat = etat;
     }
 
-    public Tree(String numero, int diametre, int noteEcologique, String essence, String etat,
-                double chauffage, double industrie, double oeuvre, double x, double y) {
+    public Arbre(String numero, int diametre, int noteEcologique, String essence, String etat,
+                 double chauffage, double industrie, double oeuvre, double x, double y) {
         this.numero = numero;
         this.diametre = diametre;
         this.noteEcologique = noteEcologique;

@@ -10,57 +10,38 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.HashMap;
-import java.util.Iterator;
-
 import martelapp.test.Class.DatabaseHelper;
-import martelapp.test.Class.Parcelle;
-import martelapp.test.Class.Tree;
-import martelapp.test.Class.VolumeCalculator;
 import martelapp.test.R;
 
 
 /**
- * <b>MainActivity est la première activité lors du lancement de l'application où
- * l'utilisateur peut choisir de commencer un nouvel exercice ou de continuer un
- * exercice en cours </b>
+ * MainActivity est la première activité lors du lancement de l'application.
  *
+ * Plusieurs bouton sont disponibles :
  *
- * <p>
- * Deux boutons sont présent dans cette activité :
- * <ul>
- * <li>Nouvel exercice : Supprime les données SQLITE utilisées pour un exercice et
- * lance NomEquipeActivity pour démarrer un nouvel exercice.
- * Les tables concernées sont ARBRES_MARTELES_TABLE, ARBRES_CONSERVES_TABLE et RAISON_TABLE.</li>
- * <li>Continuer exercice : Lance ExerciceActivity. Ce bouton est une sécurité en cas de crash de
- * l'application ou d'une mauvaise manipulation de l'utilisateur pour qu'il puisse retrouver son
- * exercice en cours.</li>
- * </p>
+ * - Nouvel exercice : Commence un nouvel exercice
  *
- * @see DatabaseHelper
+ * - Continuer un ancien exercice : Reprend un exercice en cours
  *
- * @author Baptiste
- * @version 1.0
+ * - En savoir plus : Mène au information du contexte de la réalisation de l'application
  *
+ * - Un bouton d'option avec une icone d'engrenage : Mene à la sélection d'une parcelle dans ChoixParcelleActivity
  */
 public class MainActivity extends AppCompatActivity {
 
     /**
      * La base de données SQLITE locale
-     *
-     * @see DatabaseHelper
      */
     private DatabaseHelper dbHelper;
 
     private Cursor cur;
 
+    /**
+     * Texte indiquant la parcelle actuellement sélectionnée
+     */
     TextView textParcelleEnCours;
+
+
     Button buttonContinuerExercice;
 
     @Override
@@ -68,9 +49,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //getApplicationContext().deleteDatabase(DatabaseHelper.DATABASE_NAME);
-
         textParcelleEnCours = findViewById(R.id.text_parcelle_en_cours);
+
 
         /*#################################
          *###  Bouton "Nouvel Exercice" ###
@@ -102,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         actualiseTextParcelleEnCours();
 
+
         /*####################################
          *###  Bouton "Continuer Exercice" ###
          *####################################
@@ -130,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         /*####################################
          *###  Bouton "boutonParametres"   ###
          *####################################
@@ -155,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
 
 
         /*####################################
@@ -197,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
         return res;
     }
 
+
     /**
      * Méthode permettant de savoir si un exercicé à déja été réalisé ou non.
      * Pour se faire, on regarde si la base de données locale contient un nom d'équipe.
@@ -218,6 +200,11 @@ public class MainActivity extends AppCompatActivity {
         return res;
     }
 
+
+    /**
+     * Méthode acutalisant le texte indiquant la parcelle actuellement sélectionnée
+     *
+     */
     private void actualiseTextParcelleEnCours(){
         // On vérifie que la base de données locale contient des données
         if(checkDatabase()) {
@@ -238,7 +225,10 @@ public class MainActivity extends AppCompatActivity {
                 buttonContinuerExercice.setVisibility(View.GONE);
             }
 
-        } else { // Si aucune parcelle n'est dans la base de données locale, on l'affiche
+
+        }
+        // Si aucune parcelle n'est dans la base de données locale, on l'affiche
+        else {
             textParcelleEnCours.setText(R.string.aucune_parcelle);
             buttonContinuerExercice.setVisibility(View.GONE);
         }

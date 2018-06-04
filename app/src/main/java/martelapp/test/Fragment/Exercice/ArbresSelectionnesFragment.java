@@ -1,6 +1,5 @@
 package martelapp.test.Fragment.Exercice;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,8 +7,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -178,7 +175,9 @@ public class ArbresSelectionnesFragment extends Fragment {
         this.viewPager = viewPager;
     }
 
-
+    /**
+     * Méthode réactualisant la listView des arbres martelés et conservés
+     */
     public void reload() {
         dbHelper = new DatabaseHelper(mainView.getContext());
 

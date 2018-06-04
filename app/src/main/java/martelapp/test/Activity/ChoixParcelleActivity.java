@@ -1,12 +1,8 @@
 package martelapp.test.Activity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,7 +10,6 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,15 +17,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
+import martelapp.test.Class.Arbre;
 import martelapp.test.Class.DatabaseHelper;
 import martelapp.test.Class.Parcelle;
-import martelapp.test.Class.Tree;
 import martelapp.test.Class.VolumeCalculator;
 import martelapp.test.R;
 
@@ -45,129 +38,24 @@ import martelapp.test.R;
 public class ChoixParcelleActivity extends AppCompatActivity {
 
     /**
-     * Champ de la base de données firebase "metadata" où se trouvent les champs
-     * "constantes" et "essences".
+     * Constantes des noms des champs de la base de données Firebase
      */
     public static final String CHAMP_METADATA           = "metadata";
-
-    /**
-     * Champ de la base de données firebase "parcelles" où se trouvent toutes
-     * les parcelles enregistrées.
-     *
-     * C'est dans ce champ que se trouvent les noms de parcelle à choisir pour changer
-     * la variable NOM_PARCELLE_FIREBASE.
-     */
     public static final String CHAMP_PARCELLES          = "parcelles";
-
-
-    /**
-     * Champ de la base de données firebase "constantes" où se trouvent les champs
-     * "hauteurMoyenne", "prix" et "volume".
-     *
-     */
     public static final String CHAMP_CONSTANTES         = "constantes";
-
-    /**
-     * Champ de la base de données firebase "exploitation"
-     */
     public static final String CHAMP_EXPLOITATION       = "exploitation";
-
-    /**
-     * Champ de la base de données firebase "tarifs"
-     */
     public static final String CHAMP_TARIFS             = "tarifs";
-
-    /**
-     * Champ de la base de données firebase "essences"
-     */
     public static final String CHAMP_ESSENCES           = "essences";
-
-    /**
-     * Champ de la base de données firebase "prelevement"
-     */
     public static final String CHAMP_PRELEVEMENT        = "prelevement";
-
-    /**
-     * Champ de la base de données firebase "rotation"
-     */
-    public static final String CHAMP_ROTATION        = "rotation";
-
-    /**
-     * Champ de la base de données firebase "hauteurMoyenne"
-     */
-    public static final String CHAMP_HAUTEUR_MOYENNE    = "hauteurMoyenne";
-
-    /**
-     * Champ de la base de données firebase "prix"
-     */
+    public static final String CHAMP_ROTATION           = "rotation";
     public static final String CHAMP_PRIX               = "prix";
-
-    /**
-     * Champ de la base de données firebase "volume"
-     */
-    public static final String CHAMP_VOLUME             = "volume";
-
-
-    /**
-     * Champ de la base de données firebase "bois"
-     */
     public static final String CHAMP_BOIS               = "bois";
-
-    /**
-     * Champ de la base de données firebase "commercial"
-     */
-    public static final String CHAMP_COMMERCIAL         = "commercial";
-
-
-    /**
-     * Champ de la base de données firebase "chauffage"
-     */
     public static final String CHAMP_CHAUFFAGE          = "chauffage";
-
-
-    /**
-     * Champ de la base de données firebase "industrie"
-     */
     public static final String CHAMP_INDUSTRIE          = "industrie";
-
-    /**
-     * Champ de la base de données firebase "oeuvre"
-     */
     public static final String CHAMP_OEUVRE             = "oeuvre";
-
-    /**
-     * Champ de la base de données firebase "feuillu"
-     */
     public static final String CHAMP_FEUILLU            = "feuillu";
-
-    /**
-     * Champ de la base de données firebase "résineux"
-     */
     public static final String CHAMP_RESINEUX           = "résineux";
-
-    /**
-     * Champ de la base de données firebase "petitBois"
-     */
-    public static final String CHAMP_PETIT_BOIS         = "petitBois";
-
-    /**
-     * Champ de la base de données firebase "epicéa"
-     */
-    public static final String CHAMP_EPICEA             = "epicéa";
-
-    /**
-     * Champ de la base de données firebase "sapin"
-     */
-    public static final String CHAMP_SAPIN              = "sapin";
-
-    /**
-     * Champ de la base de données firebase "max"
-     */
     public static final String CHAMP_MAX                = "max";
-
-    /**
-     * Champ de la base de données firebase "min"
-     */
     public static final String CHAMP_MIN                = "min";
 
     /**
@@ -195,6 +83,9 @@ public class ChoixParcelleActivity extends AppCompatActivity {
      */
     Button buttonRetour;
 
+    /**
+     * Texte indiquant l'état de mise à jour de la base de données
+     */
     TextView textTemoin;
 
 
@@ -203,9 +94,14 @@ public class ChoixParcelleActivity extends AppCompatActivity {
      */
     private DatabaseReference firebaseDatabase;
 
-    // HashMap contenant le nom des parcelles disponibles dans la base de données Firebase
+    /**
+     * HashMap contenant le nom des parcelles disponibles dans la base de données Firebase
+     */
     HashMap<String, String> idNomParcelle;
 
+    /**
+     * La base de données SQLITE locale
+     */
     DatabaseHelper dbHelper;
 
 
@@ -241,7 +137,7 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                 if(spinnerParcelles.getSelectedItem() != null) {
                     if (DatabaseHelper.isNetworkAvailable(getApplicationContext())) {
                         textTemoin.setText(R.string.maj_en_cours);
-                        miseAJourConstantesTable();
+                        miseAJourMetadata();
                         miseAJourParcelle(idNomParcelle.get(spinnerParcelles.getSelectedItem().toString()));
                     } else {
                         textTemoin.setText(R.string.pas_de_co_maj);
@@ -292,13 +188,10 @@ public class ChoixParcelleActivity extends AppCompatActivity {
     /**
      * Récupère la liste des noms des parcelles présentes dans la base de données Firebase.
      *
-     * <p>
-     * On commence par récupérer les ID et les noms de chaque parcelles disponibles dans notre base Firebase
-     * </p>
+     * On commence par récupérer les ID et les noms de chaque parcelles disponibles dans notre base
+     * Firebase.
      *
-     * <p>
-     * Le spinner contenant la liste des parcelles est alors créé
-     * </p>
+     * Le spinner contenant la liste des parcelles est alors créé.
      */
     public void getAllParcelle(){
         ValueEventListener postListener = new ValueEventListener() {
@@ -338,39 +231,18 @@ public class ChoixParcelleActivity extends AppCompatActivity {
     /**
      * Met à jour ARBRES_PARCELLE_TABLE avec la base de données firebase.
      *
-     * <p>
-     * La méthode commence par supprimer toutes les données que contient ARBRES_PARCELLE_TABLE.
-     * </p>
+     * La méthode commence par supprimer toutes les données de la parcelle actuelle.
      *
-     * <p>
      * La table est mise à jour à partir de la référence firebaseDatabase
      * dans le CHAMP_PARCELLE et récupère toutes les informations
-     * de la parcelle NOM_PARCELLE_FIREBASE dans une instance de la
+     * de la parcelle "parcelle" dans une instance de la
      * classe Parcelle.
-     * </p>
      *
-     * <p>
-     * La méthode récupère également des informations depuis CONSTANTES_TABLE
-     * et TYPE_ARBRE_TABLE pour calculer le volume et la valeur économique d'un
+     * La méthode récupère également toutes les constantes nécessaire
+     * pour calculer le volume et la valeur économique d'un
      * arbre à l'aide de VolumeCalculator.
-     * </p>
      *
-     * <p>
      * Une fois les informations d'un arbre récupérées, elles sont insérées dans la table.
-     * </p>
-     *
-     * @see DatabaseHelper#ARBRES_PARCELLE_TABLE
-     * @see DatabaseHelper#CONSTANTES_TABLE
-     * @see DatabaseHelper#TYPE_ARBRE_TABLE
-     * @see DatabaseHelper#clearTable(String)
-     * @see DatabaseHelper#insertArbreParcelle(String, String, int, int, String , double, double, double, double, double,,double, double)
-     *
-     * @see ChoixParcelleActivity#firebaseDatabase
-     * @see ChoixParcelleActivity#CHAMP_PARCELLES
-     *
-     * @see Parcelle
-     *
-     * @see VolumeCalculator
      *
      */
     public void miseAJourParcelle(String parcelle){
@@ -388,7 +260,7 @@ public class ChoixParcelleActivity extends AppCompatActivity {
 
                 dbHelper = new DatabaseHelper(getApplicationContext());
 
-                // Suppression des données de ARBRES_PARCELLE_TABLE
+                // Suppression des données de la parcelle actuelle
                 dbHelper.clearTable(DatabaseHelper.ARBRES_PARCELLE_TABLE);
                 dbHelper.clearTable(DatabaseHelper.DIAMETRE_EXPLOIT_TABLE);
                 dbHelper.clearTable(DatabaseHelper.TARIF_VOLUME_TABLE);
@@ -398,17 +270,6 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                 dbHelper.clearTable(DatabaseHelper.PRIX_BOIS_OEUVRE_TABLE);
 
 
-                // Nouvelle instance de VolumeCalculator avec les constantes "constants" et les types de l'arbre selon l'essence "essence_type"
-                //VolumeCalculator volumeCalculator = new VolumeCalculator(constants, essence_type);
-
-
-                /*
-                 *----------------------------------------------------------------
-                 * Récupération des arbres de la parcelle, calculs du volume et de
-                 * la valeur économique et insertion dans ARBRES_PARCELLE_TABLE
-                 *----------------------------------------------------------------
-                 */
-
                 // Récupération de la parcelle de la base de données firebase dans la classe Parcelle
                 Parcelle parcelle = dataSnapshot.getValue(Parcelle.class);
 
@@ -417,7 +278,16 @@ public class ChoixParcelleActivity extends AppCompatActivity {
 
 
 
-                    // Mis à jour des informations de la parcelle dans la table CONSTANTES_TABLE
+
+
+                    /*
+                     *##############################################################################
+                     *################## MISE A JOUR DES CONSTANTES DE LA PARCELLE #################
+                     *##############################################################################
+                     */
+
+                    // CONSTANTES GENERALES DE LA PARCELLE
+
                     double altitude = parcelle.altitude;
                     String habitat = parcelle.habitat;
                     double surface = parcelle.surface;
@@ -433,6 +303,8 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                     dbHelper.insertConstante(nom, lieu, altitude, habitat, surface, prelevementMin, prelevementMax, rotationMin, rotationMax);
 
 
+                    // CONSTANTES PRIX BOIS CHAUFFAGE DE LA PARCELLE
+
                     DataSnapshot dataPrixBois = dataSnapshot.child(CHAMP_CONSTANTES).child(CHAMP_PRIX).child(CHAMP_BOIS);
 
                     for( DataSnapshot child : dataPrixBois.child(CHAMP_CHAUFFAGE).getChildren()){
@@ -442,12 +314,20 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                         dbHelper.insertPrixBoisChauffage(typeOuEssence, prix);
                     }
 
+
+
+                    // CONSTANTES PRIX BOIS INDUSTRIE DE LA PARCELLE
+
                     for( DataSnapshot child : dataPrixBois.child(CHAMP_INDUSTRIE).getChildren()){
                         String typeOuEssence = child.getKey();
                         Double prix = child.getValue(Double.class);
 
                         dbHelper.insertPrixBoisIndustrie(typeOuEssence, prix);
                     }
+
+
+
+                    // CONSTANTES PRIX BOIS OEUVRE DE LA PARCELLE
 
                     for( DataSnapshot child : dataPrixBois.child(CHAMP_OEUVRE).getChildren()){
                         String typeOuEssence = child.getKey();
@@ -458,6 +338,8 @@ public class ChoixParcelleActivity extends AppCompatActivity {
 
 
 
+                    // CONSTANTES DIAMETRE D'EXPLOITATBILITE DE LA PARCELLE
+
                     for( DataSnapshot child : dataSnapshot.child(CHAMP_CONSTANTES).child(CHAMP_EXPLOITATION).getChildren()){
                         String essence = child.getKey();
                         Integer diametre = child.getValue(Integer.class);
@@ -466,6 +348,10 @@ public class ChoixParcelleActivity extends AppCompatActivity {
 
                         dbHelper.insertDiametreExploitabilite(essence, diametre);
                     }
+
+
+
+                    // CONSTANTES TARIF VOLUME FEUILLU DE LA PARCELLE
 
                     for( DataSnapshot child : dataSnapshot.child(CHAMP_CONSTANTES).child(CHAMP_TARIFS).child("feuillus").getChildren()){
                         String nomTarif = child.getKey();
@@ -476,6 +362,9 @@ public class ChoixParcelleActivity extends AppCompatActivity {
                         dbHelper.insertTarifVolume(CHAMP_FEUILLU, nomTarif, versionTarif);
                     }
 
+
+
+                    // CONSTANTES TARIF VOLUME RESINEUX DE LA PARCELLE
 
                     for( DataSnapshot child : dataSnapshot.child(CHAMP_CONSTANTES).child(CHAMP_TARIFS).child("resineux").getChildren()){
                         String nomTarif = child.getKey();
@@ -488,68 +377,82 @@ public class ChoixParcelleActivity extends AppCompatActivity {
 
 
 
-                    // Récupération des informations des types de l'arbre selon l'essence depuis TYPE_ARBRE_TABLE
+
+
+
+
+
+                    /*
+                     *##############################################################################
+                     *######## RECUPERATION DES CONSTANTES POUR CALCUL DU VOLUME ET DU PRIX ########
+                     *##############################################################################
+                     */
+
+                    // Récupération des types d'arbres en fonction de l'essence
                     HashMap<String, String> essence_type = new HashMap<>();
                     Cursor cur = dbHelper.getAllDataFromTable(DatabaseHelper.TYPE_ARBRE_TABLE);
                     while(cur.moveToNext()){
                         essence_type.put(cur.getString(cur.getColumnIndex(DatabaseHelper.ESSENCE_TYPE)), cur.getString(cur.getColumnIndex(DatabaseHelper.TYPE_ARBRE)));
                     }
 
+                    // Récupération du prix du bois pour l'utilisation "chauffage" en fonction des essences
                     HashMap<String, Double> prixBoisChauffage = new HashMap<>();
                     cur = dbHelper.getAllDataFromTable(DatabaseHelper.PRIX_BOIS_CHAUFFAGE_TABLE);
                     while(cur.moveToNext()){
                         prixBoisChauffage.put(cur.getString(cur.getColumnIndex(DatabaseHelper.TYPE_ESSENCE_ARBRE_CHAUFFAGE)), cur.getDouble(cur.getColumnIndex(DatabaseHelper.PRIX_CHAUFFAGE)));
                     }
 
+                    // Récupération du prix du bois pour l'utilisation "industrie" en fonction des essences
                     HashMap<String, Double> prixBoisIndustrie = new HashMap<>();
                     cur = dbHelper.getAllDataFromTable(DatabaseHelper.PRIX_BOIS_INDUSTRIE_TABLE);
                     while(cur.moveToNext()){
                         prixBoisIndustrie.put(cur.getString(cur.getColumnIndex(DatabaseHelper.TYPE_ESSENCE_ARBRE_INDUSTRIE)), cur.getDouble(cur.getColumnIndex(DatabaseHelper.PRIX_INDUSTRIE)));
                     }
 
+                    // Récupération du prix du bois pour l'utilisation "oeuvre" en fonction des essences
                     HashMap<String, Double> prixBoisOeuvre = new HashMap<>();
                     cur = dbHelper.getAllDataFromTable(DatabaseHelper.PRIX_BOIS_OEUVRE_TABLE);
                     while(cur.moveToNext()){
                         prixBoisOeuvre.put(cur.getString(cur.getColumnIndex(DatabaseHelper.TYPE_ESSENCE_ARBRE_OEUVRE)), cur.getDouble(cur.getColumnIndex(DatabaseHelper.PRIX_OEUVRE)));
                     }
 
-
+                    // Récupération du nom et de la version du tarif pour le type "resineux"
                     cur = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.TARIF_VOLUME_TABLE,
                             DatabaseHelper.TYPE_ARBRE_TARIF + " = '" + CHAMP_RESINEUX + "'");
                     cur.moveToFirst();
                     String nomTarifResineux = cur.getString(cur.getColumnIndex(DatabaseHelper.NOM_TARIF));
                     int versionTarifResineux = cur.getInt(cur.getColumnIndex(DatabaseHelper.VERSION_TARIF));
 
-
+                    // Récupération du nom et de la version du tarif pour le type "feuillu"
                     cur = dbHelper.getAllDataFromTableWithCondition(DatabaseHelper.TARIF_VOLUME_TABLE,
                             DatabaseHelper.TYPE_ARBRE_TARIF + " = '" + CHAMP_FEUILLU + "'");
                     cur.moveToFirst();
                     String nomTarifFeuillus = cur.getString(cur.getColumnIndex(DatabaseHelper.NOM_TARIF));
                     int versionTarifFeuillus = cur.getInt(cur.getColumnIndex(DatabaseHelper.VERSION_TARIF));
 
-
                     cur.close();
 
+                    // Création d'une instance VolumeCalculator avec toutes les constantes récupérées dans des HashMap
                     VolumeCalculator volumeCalculator = new VolumeCalculator(prixBoisChauffage, prixBoisIndustrie, prixBoisOeuvre, essence_type, nomTarifResineux, versionTarifResineux, nomTarifFeuillus, versionTarifFeuillus);
 
                     /*
                      * Récupération des arbres de la parcelle dans une Hashmap.
                      * Les arbres sont de type Arbre.
                      */
-                    HashMap<String, Tree> arbres_parcelle = parcelle.arbres;
+                    HashMap<String, Arbre> arbres_parcelle = parcelle.arbres;
 
                     // Test si il y a bien des arbres dans la parcelle
                     if(!arbres_parcelle.isEmpty()){
 
                         /*
-                         * Parcours de la Hashmap<String, Tree> contenant tous les arbres,
+                         * Parcours de la Hashmap<String, Arbre> contenant tous les arbres,
                          * calcul leur volume et leur valeur économique et insère toutes
                          * les informations dans ARBRES_PARCELLE_TABLE.
                          */
                         Iterator it = arbres_parcelle.entrySet().iterator();
                         while (it.hasNext()) {
                             HashMap.Entry pair = (HashMap.Entry)it.next();
-                            Tree arbre = (Tree) pair.getValue();
+                            Arbre arbre = (Arbre) pair.getValue();
 
                             Double volumeCom = volumeCalculator.getVolumeCommercial(arbre);
                             Double valeurEco = volumeCalculator.getValeurEco(arbre);
@@ -589,34 +492,20 @@ public class ChoixParcelleActivity extends AppCompatActivity {
     }
 
     /**
-     * Met à jour CONSTANTES_TABLE et TYPE_ARBRE_TABLE avec la base de données firebase.
+     * Met à jour les metadata avec la base de données firebase.
      *
-     * <p>
-     * La méthode commence par supprimer toutes les données que contient CONSTANTES_TABLE et TYPE_ARBRE_TABLE.
-     * </p>
-     *
-     * <p>
      * La table est mise à jour à partir de la référence firebaseDatabase
-     * dans le CHAMP_METADATA et récupère toutes les constantes du CHAMP_CONSTANTES
-     * et le type des arbres selon l'essence du CHAMP_ESSENCES.
-     * </p>
+     * dans le CHAMP_METADATA et récupère le type des arbres selon l'essence du CHAMP_ESSENCES.
+     * Les informations sont ensuite insérées dans TYPE_ARBRE_TABLE.
      *
-     * <p>
-     * Les informations sont ensuite insérées dans CONSTANTES_TABLE et TYPE_ARBRE_TABLE.
-     * </p>
-     *
-     * @see DatabaseHelper#CONSTANTES_TABLE
-     * @see DatabaseHelper#TYPE_ARBRE_TABLE
-     * @see DatabaseHelper#clearTable(String)
-     * @see DatabaseHelper#insertTypeArbre(String, String)
      *
      */
-    public void miseAJourConstantesTable(){
+    public void miseAJourMetadata(){
 
 
         /*
-         * Listener qui récupère toutes les constantes à partir de la base de données firebase
-         * et les enregistrent dans CONSTANTES_TABLE et TYPE_ARBRE_TABLE.
+         * Listener qui récupère toutes les metadata à partir de la base de données firebase
+         * et les enregistrent dans TYPE_ARBRE_TABLE.
          */
         ValueEventListener postListener = new ValueEventListener() {
 
@@ -625,7 +514,7 @@ public class ChoixParcelleActivity extends AppCompatActivity {
 
                 dbHelper = new DatabaseHelper(getApplicationContext());
 
-                // Suppression des données de la table CONSTANTES_TABLE et TYPE_ARBRE_TABLE
+                // Suppression des données de la table TYPE_ARBRE_TABLE
                 dbHelper.clearTable(DatabaseHelper.TYPE_ARBRE_TABLE);
 
 

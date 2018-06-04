@@ -56,6 +56,7 @@ public class AnalyseGrapheCarteFragment extends Fragment {
 
             scatterChart = view.findViewById(R.id.scatter_chart_carte);
 
+            // Ajout de la view dans la liste des View de AnalyseActivity pour la création des pdf
             if (!viewScatterChartCarteAdded) {
                 ((AnalyseActivity) getActivity()).addViewPdf(scatterChart, 8);
                 viewScatterChartCarteAdded = true;
@@ -73,7 +74,6 @@ public class AnalyseGrapheCarteFragment extends Fragment {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(view.getContext(), R.style.AlertDialogCustom));
                 builder.setTitle("Êtes-vous sûr de vouloir terminer l'exercice ?");
-                //builder.setMessage("Vous ne pourrez plus revenir en arrière");
 
                 builder.setPositiveButton("OUI", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

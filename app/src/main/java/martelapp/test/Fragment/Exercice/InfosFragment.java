@@ -96,7 +96,7 @@ public class InfosFragment extends Fragment {
 
             df = new DecimalFormat("#0.00");
 
-
+            // Récupération des caractéristiques de la parcelle
             caracteristiqueParcelle(view.getContext());
 
             // Ajouts des graphiques
@@ -267,8 +267,6 @@ public class InfosFragment extends Fragment {
                                     next.setVisibility(View.INVISIBLE);
 
                                     textViewTitleInfos.setText(R.string.titre_graphe_nbtige_essence_info);
-
-                                    //layoutInfo.setLayoutParams(layoutParamsLinearLayoutAvecBouton);
 
                                     buttonGoToCarte.setVisibility(View.VISIBLE);
 

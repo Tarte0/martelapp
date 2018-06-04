@@ -42,7 +42,7 @@ public class AnalyseGrapheVolumeFragment extends Fragment {
             // Ajout du graphique
             GrapheHelper.getBarChartAnalyseVolume(view.getContext(), barChart);
 
-            // ajout de la view au PDF
+            // Ajout de la view dans la liste des View de AnalyseActivity pour la création des pdf
             if (!viewBarChartVolumeAdded) {
                 ((AnalyseActivity) getActivity()).addViewPdf(barChart, 2);
                 viewBarChartVolumeAdded = true;

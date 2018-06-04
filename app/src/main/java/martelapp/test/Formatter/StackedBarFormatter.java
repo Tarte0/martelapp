@@ -8,7 +8,8 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 import java.text.DecimalFormat;
 
 /**
- * Created by Baptiste on 17/04/2018.
+ * Formatter utilisé pour les BarChart avec plusieurs valeurs sur une bar. Affiche toutes les valeurs
+ * des différents éléments d'une bar au dessus de la bar avec un séparateur "appendix"
  */
 
 public class StackedBarFormatter implements IValueFormatter {
