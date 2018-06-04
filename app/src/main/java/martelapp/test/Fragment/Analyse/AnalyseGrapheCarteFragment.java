@@ -72,7 +72,7 @@ public class AnalyseGrapheCarteFragment extends Fragment {
             public void onClick(View view) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(view.getContext(), R.style.AlertDialogCustom));
-                builder.setTitle("Êtes vous sur de vouloir terminer l'exercice ?");
+                builder.setTitle("Êtes-vous sûr de vouloir terminer l'exercice ?");
                 //builder.setMessage("Vous ne pourrez plus revenir en arrière");
 
                 builder.setPositiveButton("OUI", new DialogInterface.OnClickListener() {
