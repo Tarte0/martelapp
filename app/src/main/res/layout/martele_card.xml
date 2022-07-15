@@ -36,7 +36,11 @@
                     android:layout_weight="10"
                     android:paddingLeft="10dp"
                     android:textColor="@color/colorBlack"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMaxTextSize="30sp"
+                    app:autoSizeMinTextSize="12sp"
+                    app:autoSizeStepGranularity="4sp" />
 
             </LinearLayout>
 
@@ -58,7 +62,11 @@
                     android:text=""
                     android:textAlignment="center"
                     android:textColor="@color/colorWhite"
-                    android:textSize="50sp" />
+                    android:textSize="50sp"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMaxTextSize="50sp"
+                    app:autoSizeMinTextSize="12sp"
+                    app:autoSizeStepGranularity="4sp" />
 
                 <TextView
                     android:id="@+id/details_martele_card"
@@ -68,7 +76,11 @@
                     android:gravity="center_vertical"
                     android:text=""
                     android:textColor="@color/colorWhite"
-                    android:textSize="36sp" />
+                    android:textSize="36sp"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMaxTextSize="50sp"
+                    app:autoSizeMinTextSize="12sp"
+                    app:autoSizeStepGranularity="4sp" />
 
             </LinearLayout>
 

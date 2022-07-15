@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:weightSum="6"
     android:clickable="true"
@@ -36,7 +37,11 @@
                     android:layout_marginTop="4dp"
                     android:text="@string/choix_conserver"
                     android:textColor="@color/colorBlack"
-                    android:textSize="30sp"/>
+                    android:textSize="30sp"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMaxTextSize="50sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeStepGranularity="4sp"/>
 
                 <TextView
                     android:id="@+id/textViewConserverExplication"
@@ -47,7 +52,11 @@
                     android:layout_marginTop="4dp"
                     android:text="@string/raison_conserve_text"
                     android:textColor="@color/colorBlack"
-                    android:textSize="25sp"/>
+                    android:textSize="25sp"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMaxTextSize="50sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeStepGranularity="4sp"/>
 
 
 
@@ -81,7 +90,11 @@
                 android:layout_weight="1"
                 android:backgroundTint="@color/colorPrimary"
                 android:text="Conserver"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMaxTextSize="50sp"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeStepGranularity="4sp"/>
 
             <Button
                 android:id="@+id/cancel"
@@ -91,7 +104,11 @@
                 android:layout_weight="1"
                 android:backgroundTint="@android:color/darker_gray"
                 android:text="Annuler"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMaxTextSize="50sp"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeStepGranularity="4sp" />
 
         </LinearLayout>
 

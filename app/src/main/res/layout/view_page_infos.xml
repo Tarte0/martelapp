@@ -33,7 +33,11 @@
                 android:textAlignment="center"
                 android:gravity="center_vertical"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="36sp" />
+                android:textSize="36sp"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMaxTextSize="50sp"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeStepGranularity="4sp"/>
 
             <LinearLayout
 
@@ -78,7 +82,11 @@
                             android:layout_weight="9"
                             android:text=""
                             android:textColor="@color/colorBlack"
-                            android:textSize="24sp" />
+                            android:textSize="24sp"
+                            app:autoSizeTextType="uniform"
+                            app:autoSizeMaxTextSize="50sp"
+                            app:autoSizeMinTextSize="8sp"
+                            app:autoSizeStepGranularity="4sp"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -96,7 +104,11 @@
                             android:layout_weight="0.5"
                             android:text="@string/axe_volume_m3"
                             android:textColor="@color/colorBlack"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            app:autoSizeTextType="uniform"
+                            app:autoSizeMaxTextSize="50sp"
+                            app:autoSizeMinTextSize="8sp"
+                            app:autoSizeStepGranularity="4sp"/>
 
                         <com.github.mikephil.charting.charts.BarChart
                             android:id="@+id/bar_chart_volume_info"
@@ -121,7 +133,11 @@
                             android:layout_weight="0.5"
                             android:text="@string/axe_nombre_tiges"
                             android:textColor="@color/colorBlack"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            app:autoSizeTextType="uniform"
+                            app:autoSizeMaxTextSize="50sp"
+                            app:autoSizeMinTextSize="8sp"
+                            app:autoSizeStepGranularity="4sp"/>
 
                         <com.github.mikephil.charting.charts.BarChart
                             android:id="@+id/bar_chart_note_eco_info"
@@ -134,23 +150,46 @@
                         android:id="@+id/layout_graphe_info_essence"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="7"
-                        android:orientation="vertical">
+                        android:layout_weight="8"
+                        android:orientation="vertical"
+                        android:weightSum="10">
+
+                        <TextView
+                            android:id="@+id/fake_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.25"
+                            android:text=" "
+                            android:textColor="@color/colorBlack"
+                            android:textSize="18sp"
+                            app:autoSizeTextType="uniform"
+                            app:autoSizeMaxTextSize="50sp"
+                            app:autoSizeMinTextSize="8sp"
+                            app:autoSizeStepGranularity="4sp"/>
 
                         <com.github.mikephil.charting.charts.PieChart
                             android:id="@+id/pie_chart_essence_info"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
+                            android:layout_height="0dp"
+                            android:layout_weight="9.75"
+                            app:autoSizeTextType="uniform"
+                            app:autoSizeMaxTextSize="50sp"
+                            app:autoSizeMinTextSize="8sp"
+                            app:autoSizeStepGranularity="4sp" />
                     </LinearLayout>
 
                     <Button
                         android:id="@+id/button_go_to_carte"
                         style="@style/button_vert"
                         android:layout_width="0dp"
-                        android:layout_height="100dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="bottom|end"
-                        android:layout_weight="3"
-                        android:text="@string/button_go_to_carte" />
+                        android:layout_weight="2"
+                        android:text="@string/button_go_to_carte"
+                        app:autoSizeTextType="uniform"
+                        app:autoSizeMaxTextSize="50sp"
+                        app:autoSizeMinTextSize="8sp"
+                        app:autoSizeStepGranularity="4sp"/>
 
                 </LinearLayout>
 

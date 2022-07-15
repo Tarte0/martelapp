@@ -25,7 +25,11 @@
             android:textColor="@color/colorBlack"
             android:textSize="22sp"
             android:layout_weight="2"
-            android:text="" />
+            android:text=""
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="80sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="4sp"/>
 
         <TextView
             android:id="@+id/AppName"
@@ -38,7 +42,11 @@
             android:textAlignment="center"
             android:textColor="@color/colorPrimary"
             android:textSize="80sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="80sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="4sp"/>
 
         <android.support.v4.widget.Space
             android:layout_width="0dp"
@@ -107,7 +115,11 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_weight="2"
-                android:text="@string/bouton_nouvel_exercice" />
+                android:text="@string/bouton_nouvel_exercice"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMaxTextSize="28sp"
+                app:autoSizeMinTextSize="12sp"
+                app:autoSizeStepGranularity="4sp"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -124,23 +136,31 @@
             android:id="@+id/continuer_exercice"
             style="@style/button_vert"
             android:layout_width="250dp"
-            android:layout_height="70sp"
+            android:layout_height="0dp"
             android:layout_margin="8dp"
             android:text="@string/bouton_continuer_exercice"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="80sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="4sp"/>
 
         <Button
             android:id="@+id/en_savoir_plus"
             style="@style/button_vert"
             android:layout_width="250dp"
-            android:layout_height="70sp"
+            android:layout_height="0dp"
             android:layout_margin="8dp"
             android:text="@string/bouton_en_savoir_plus"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="80sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="4sp"/>
 
     </android.support.constraint.ConstraintLayout>
 

@@ -73,12 +73,16 @@
                             android:text=""
                             android:textAlignment="center"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="36sp" />
+                            android:textSize="36sp"
+                            app:autoSizeTextType="uniform"
+                            app:autoSizeMaxTextSize="50sp"
+                            app:autoSizeMinTextSize="12sp"
+                            app:autoSizeStepGranularity="4sp"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="0.75"
+                            android:layout_weight="1"
                             android:orientation="horizontal"
                             android:padding="8dp"
                             android:weightSum="6">
@@ -95,7 +99,11 @@
                                 android:text="@string/header_Numero"
                                 android:textColor="@android:color/black"
                                 android:textSize="16sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                app:autoSizeTextType="uniform"
+                                app:autoSizeMaxTextSize="50sp"
+                                app:autoSizeMinTextSize="8sp"
+                                app:autoSizeStepGranularity="4sp"/>
 
                             <TextView
                                 android:id="@+id/text_header_essence"
@@ -108,7 +116,11 @@
                                 android:text="@string/header_Essence"
                                 android:textColor="@android:color/black"
                                 android:textSize="16sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                app:autoSizeTextType="uniform"
+                                app:autoSizeMaxTextSize="50sp"
+                                app:autoSizeMinTextSize="8sp"
+                                app:autoSizeStepGranularity="4sp"/>
 
                             <TextView
                                 android:id="@+id/text_header_diametre"
@@ -119,7 +131,11 @@
                                 android:text="@string/header_Diametre"
                                 android:textColor="@android:color/black"
                                 android:textSize="16sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                app:autoSizeTextType="uniform"
+                                app:autoSizeMaxTextSize="50sp"
+                                app:autoSizeMinTextSize="8sp"
+                                app:autoSizeStepGranularity="4sp"/>
 
                             <Space
                                 android:layout_width="0dp"
@@ -135,14 +151,18 @@
                                 android:text="@string/header_NoteEco"
                                 android:textColor="@android:color/black"
                                 android:textSize="16sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                app:autoSizeTextType="uniform"
+                                app:autoSizeMaxTextSize="50sp"
+                                app:autoSizeMinTextSize="8sp"
+                                app:autoSizeStepGranularity="4sp"/>
                         </LinearLayout>
 
                         <ListView
                             android:id="@+id/liste_arbres_marteles_analyse"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="6.5" />
+                            android:layout_weight="6.25" />
 
                         <ListView
                             android:id="@+id/liste_arbres_conserves_analyse"
@@ -157,14 +177,22 @@
                             android:layout_weight="1"
                             android:layout_marginTop="2dp"
                             android:textColor="@color/colorBlack"
-                            android:textSize="30sp" />
+                            android:textSize="30sp"
+                            app:autoSizeTextType="uniform"
+                            app:autoSizeMaxTextSize="50sp"
+                            app:autoSizeMinTextSize="12sp"
+                            app:autoSizeStepGranularity="4sp"/>
 
                         <TextView
                             android:id="@+id/text_couleur_arbre"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:textSize="30sp" />
+                            android:textSize="30sp"
+                            app:autoSizeTextType="uniform"
+                            app:autoSizeMaxTextSize="50sp"
+                            app:autoSizeMinTextSize="12sp"
+                            app:autoSizeStepGranularity="4sp"/>
 
                     </LinearLayout>
 

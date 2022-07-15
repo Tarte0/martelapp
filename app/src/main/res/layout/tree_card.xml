@@ -24,7 +24,11 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textColor="@color/colorBlack"
-            android:textSize="25sp" />
+            android:textSize="25sp"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="50sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="4sp" />
 
         <Space
             android:layout_width="match_parent"
@@ -70,7 +74,11 @@
                     android:text=""
                     android:textAlignment="center"
                     android:textColor="@color/colorBlack"
-                    android:textSize="36sp" />
+                    android:textSize="36sp"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMaxTextSize="50sp"
+                    app:autoSizeMinTextSize="12sp"
+                    app:autoSizeStepGranularity="4sp"  />
 
                 <TextView
                     android:id="@+id/essence_tree_card"
@@ -81,7 +89,11 @@
                     android:paddingLeft="10dp"
                     android:text=""
                     android:textColor="@color/colorBlack"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMaxTextSize="50sp"
+                    app:autoSizeMinTextSize="12sp"
+                    app:autoSizeStepGranularity="4sp"  />
 
                 <TextView
                     android:id="@+id/etat_tree_card"
@@ -92,7 +104,11 @@
                     android:paddingLeft="10dp"
                     android:text=""
                     android:textColor="@color/colorBlack"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMaxTextSize="50sp"
+                    app:autoSizeMinTextSize="12sp"
+                    app:autoSizeStepGranularity="4sp" />
 
                 <TextView
                     android:id="@+id/diametre_tree_card"
@@ -103,7 +119,11 @@
                     android:paddingLeft="10dp"
                     android:text=""
                     android:textColor="@color/colorBlack"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMaxTextSize="50sp"
+                    app:autoSizeMinTextSize="12sp"
+                    app:autoSizeStepGranularity="4sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -145,7 +165,11 @@
                         android:text="@string/textImgBoutonConserver"
                         android:textAlignment="center"
                         android:textColor="@color/colorWhite"
-                        android:textSize="26sp" />
+                        android:textSize="26sp"
+                        app:autoSizeTextType="uniform"
+                        app:autoSizeMaxTextSize="50sp"
+                        app:autoSizeMinTextSize="12sp"
+                        app:autoSizeStepGranularity="4sp" />
 
                 </LinearLayout>
 
@@ -179,7 +203,11 @@
                         android:text="@string/textImgBoutonProchaineFois"
                         android:textAlignment="center"
                         android:textColor="@color/colorWhite"
-                        android:textSize="26sp" />
+                        android:textSize="26sp"
+                        app:autoSizeTextType="uniform"
+                        app:autoSizeMaxTextSize="50sp"
+                        app:autoSizeMinTextSize="12sp"
+                        app:autoSizeStepGranularity="4sp"  />
 
                 </LinearLayout>
 
@@ -214,7 +242,11 @@
                         android:text="@string/textImgBoutonMarteler"
                         android:textAlignment="center"
                         android:textColor="@color/colorWhite"
-                        android:textSize="26sp" />
+                        android:textSize="26sp"
+                        app:autoSizeTextType="uniform"
+                        app:autoSizeMaxTextSize="50sp"
+                        app:autoSizeMinTextSize="12sp"
+                        app:autoSizeStepGranularity="4sp" />
 
                 </LinearLayout>
 

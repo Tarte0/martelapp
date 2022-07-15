@@ -33,7 +33,11 @@
                 android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="36sp" />
+                android:textSize="36sp"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMaxTextSize="50sp"
+                app:autoSizeMinTextSize="12sp"
+                app:autoSizeStepGranularity="4sp"  />
 
             <LinearLayout
 
@@ -80,7 +84,11 @@
                             android:layout_weight="0.5"
                             android:text=""
                             android:textColor="@color/colorBlack"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            app:autoSizeTextType="uniform"
+                            app:autoSizeMaxTextSize="50sp"
+                            app:autoSizeMinTextSize="12sp"
+                            app:autoSizeStepGranularity="4sp" />
 
                         <com.github.mikephil.charting.charts.BarChart
                             android:id="@+id/bar_chart_essence_graphe"

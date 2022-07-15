@@ -30,7 +30,11 @@
                 android:textAlignment="center"
                 android:gravity="center_vertical"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="36sp" />
+                android:textSize="36sp"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMaxTextSize="50sp"
+                app:autoSizeMinTextSize="10sp"
+                app:autoSizeStepGranularity="4sp"/>
 
             <LinearLayout
 
@@ -63,19 +67,28 @@
                         android:id="@+id/textViewConsignes"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="9"
+                        android:layout_weight="8.5"
                         android:text=""
                         android:textColor="@color/colorBlack"
-                        android:textSize="22sp" />
+                        android:textSize="22sp"
+                        app:autoSizeTextType="uniform"
+                        app:autoSizeMaxTextSize="50sp"
+                        app:autoSizeMinTextSize="10sp"
+                        app:autoSizeStepGranularity="4sp"/>
 
                     <Button
                         android:id="@+id/button_go_to_info"
                         style="@style/button_vert"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_gravity="end"
-                        android:layout_weight="1"
-                        android:text="@string/button_go_to_info" />
+                        android:layout_weight="1.5"
+                        android:text="@string/button_go_to_info"
+                        android:textSize="20sp"
+                        app:autoSizeTextType="uniform"
+                        app:autoSizeMaxTextSize="30sp"
+                        app:autoSizeMinTextSize="6sp"
+                        app:autoSizeStepGranularity="4sp"/>
                 </LinearLayout>
 
                 <ImageButton

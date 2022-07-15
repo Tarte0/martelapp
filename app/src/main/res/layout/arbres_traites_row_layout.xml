@@ -20,7 +20,11 @@
         android:layout_gravity="center_vertical"
         android:textSize="30sp"
         android:textStyle="bold"
-        tools:text="numero" />
+        tools:text="numero"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMaxTextSize="30sp"
+        app:autoSizeMinTextSize="8sp"
+        app:autoSizeStepGranularity="4sp"/>
 
     <TextView
         android:id="@+id/essence_arbre_traite"
@@ -32,7 +36,11 @@
         android:layout_weight="2"
         android:textColor="@android:color/black"
         android:textSize="24sp"
-        tools:text="essence" />
+        tools:text="essence"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMaxTextSize="30sp"
+        app:autoSizeMinTextSize="8sp"
+        app:autoSizeStepGranularity="4sp"/>
 
     <TextView
         android:id="@+id/diametre_arbre_traite"
@@ -44,7 +52,11 @@
         android:layout_weight="1"
         android:textColor="@android:color/black"
         android:textSize="24sp"
-        tools:text="diametre" />
+        tools:text="diametre"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMaxTextSize="30sp"
+        app:autoSizeMinTextSize="8sp"
+        app:autoSizeStepGranularity="4sp"/>
 
     <ImageView
         android:id="@+id/image_arbre_traite"
@@ -63,6 +75,10 @@
         android:layout_gravity="center_vertical"
         android:textColor="@android:color/black"
         android:textSize="24sp"
-        tools:text="noteeco"/>
+        tools:text="noteeco"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMaxTextSize="30sp"
+        app:autoSizeMinTextSize="8sp"
+        app:autoSizeStepGranularity="4sp"/>
 
 </LinearLayout>
