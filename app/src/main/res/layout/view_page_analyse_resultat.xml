@@ -58,7 +58,11 @@
                         android:gravity="left|bottom"
                         android:text=""
                         android:textColor="@color/colorBlack"
-                        android:textSize="30sp" />
+                        android:textSize="30sp"
+                        app:autoSizeTextType="uniform"
+                        app:autoSizeMaxTextSize="50sp"
+                        app:autoSizeMinTextSize="8sp"
+                        app:autoSizeStepGranularity="4sp"/>
 
 
                     <LinearLayout
@@ -93,7 +97,11 @@
                                 android:gravity="center|left"
                                 android:text=""
                                 android:textColor="@color/colorBlack"
-                                android:textSize="30sp" />
+                                android:textSize="30sp"
+                                app:autoSizeTextType="uniform"
+                                app:autoSizeMaxTextSize="50sp"
+                                app:autoSizeMinTextSize="8sp"
+                                app:autoSizeStepGranularity="4sp"/>
                         </LinearLayout>
 
 
@@ -121,7 +129,11 @@
                                 android:gravity="center|left"
                                 android:text=""
                                 android:textColor="@color/colorBlack"
-                                android:textSize="30sp" />
+                                android:textSize="30sp"
+                                app:autoSizeTextType="uniform"
+                                app:autoSizeMaxTextSize="50sp"
+                                app:autoSizeMinTextSize="8sp"
+                                app:autoSizeStepGranularity="4sp"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -148,7 +160,11 @@
                                 android:gravity="center|left"
                                 android:text=""
                                 android:textColor="@color/colorBlack"
-                                android:textSize="30sp" />
+                                android:textSize="30sp"
+                                app:autoSizeTextType="uniform"
+                                app:autoSizeMaxTextSize="50sp"
+                                app:autoSizeMinTextSize="8sp"
+                                app:autoSizeStepGranularity="4sp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -187,7 +203,11 @@
                             android:gravity="center|left"
                             android:text=""
                             android:textColor="@color/colorBlack"
-                            android:textSize="30sp" />
+                            android:textSize="30sp"
+                            app:autoSizeTextType="uniform"
+                            app:autoSizeMaxTextSize="50sp"
+                            app:autoSizeMinTextSize="8sp"
+                            app:autoSizeStepGranularity="4sp"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -214,7 +234,11 @@
                             android:gravity="center|left"
                             android:text=""
                             android:textColor="@color/colorBlack"
-                            android:textSize="30sp" />
+                            android:textSize="30sp"
+                            app:autoSizeTextType="uniform"
+                            app:autoSizeMaxTextSize="50sp"
+                            app:autoSizeMinTextSize="8sp"
+                            app:autoSizeStepGranularity="4sp"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -241,7 +265,11 @@
                             android:gravity="center|left"
                             android:text=""
                             android:textColor="@color/colorBlack"
-                            android:textSize="30sp" />
+                            android:textSize="30sp"
+                            app:autoSizeTextType="uniform"
+                            app:autoSizeMaxTextSize="50sp"
+                            app:autoSizeMinTextSize="8sp"
+                            app:autoSizeStepGranularity="4sp"/>
                     </LinearLayout>
 
                 </LinearLayout>

@@ -23,7 +23,11 @@
             android:text="@string/titre_coupe_volume"
             android:textAlignment="center"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="36sp"/>
+            android:textSize="36sp"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="50sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="4sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +44,11 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:textColor="@color/colorBlack"
-                android:text="@string/axe_volume_m3" />
+                android:text="@string/axe_volume_m3"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMaxTextSize="50sp"
+                app:autoSizeMinTextSize="12sp"
+                app:autoSizeStepGranularity="4sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

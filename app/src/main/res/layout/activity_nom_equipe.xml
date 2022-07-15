@@ -34,7 +34,11 @@
             android:inputType="textPersonName"
             android:selectAllOnFocus="true"
             android:textSize="35sp"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorPrimary"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="80sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="4sp"/>
 
         <android.support.v4.widget.Space
             android:layout_width="0dp"
@@ -51,7 +55,11 @@
             android:layout_marginRight="8dp"
             android:scaleType="fitEnd"
             android:text="@string/bouton_commencer"
-            android:textSize="35sp" />
+            android:textSize="35sp"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="30sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="4sp"/>
     </LinearLayout>
 
     <TextView
@@ -63,7 +71,11 @@
         android:layout_weight="1"
         android:text=""
         android:textColor="@color/pdfGrey"
-        android:textSize="25sp"/>
+        android:textSize="25sp"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMaxTextSize="30sp"
+        app:autoSizeMinTextSize="12sp"
+        app:autoSizeStepGranularity="4sp"/>
 
     <android.support.v4.widget.Space
         android:layout_width="match_parent"

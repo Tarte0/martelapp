@@ -30,7 +30,11 @@
             android:lines="1"
             android:maxLines="1"
             android:textColor="@color/colorBlack"
-            android:textSize="36sp" />
+            android:textSize="36sp"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="30sp"
+            app:autoSizeMinTextSize="8sp"
+            app:autoSizeStepGranularity="4sp" />
 
 
     </LinearLayout>
@@ -52,7 +56,11 @@
             android:layout_below="@id/editText"
             android:layout_weight="1"
             android:text="7"
-            />
+
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="50sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="4sp" />
 
         <Button
             android:id="@+id/buttonEight"
@@ -60,7 +68,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="8"/>
+            android:text="8"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="50sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="4sp" />
 
         <Button
             android:id="@+id/buttonNine"
@@ -68,7 +80,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="9"/>
+            android:text="9"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="50sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="4sp" />
 
     </LinearLayout>
 
@@ -87,7 +103,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="4"/>
+            android:text="4"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="50sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="4sp" />
 
         <Button
             android:id="@+id/buttonFive"
@@ -95,7 +115,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="5"/>
+            android:text="5"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="50sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="4sp" />
 
         <Button
             android:id="@+id/buttonSix"
@@ -103,7 +127,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="6"/>
+            android:text="6"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="50sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="4sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -121,7 +149,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="1"/>
+            android:text="1"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="50sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="4sp" />
 
         <Button
             android:id="@+id/buttonTwo"
@@ -129,7 +161,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="2"/>
+            android:text="2"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="50sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="4sp" />
 
         <Button
             android:id="@+id/buttonThree"
@@ -137,7 +173,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="3"/>
+            android:text="3"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="50sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="4sp" />
 
     </LinearLayout>
 
@@ -157,7 +197,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="X"/>
+            android:text="X"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="50sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="4sp" />
 
         <Button
             android:id="@+id/buttonZero"
@@ -165,7 +209,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="0"/>
+            android:text="0"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="50sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="4sp" />
 
         <Button
             android:id="@+id/buttonDel"
@@ -173,7 +221,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="←"/>
+            android:text="←"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="50sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="4sp" />
 
     </LinearLayout>
 
@@ -190,7 +242,11 @@
             style="@style/button_rouge_recherche"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Rechercher"/>
+            android:text="Rechercher"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="50sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="4sp" />
 
     </LinearLayout>
 

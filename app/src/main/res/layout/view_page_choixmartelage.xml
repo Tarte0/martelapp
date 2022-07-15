@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:weightSum="6"
     android:clickable="true"
@@ -32,7 +33,11 @@
                 android:layout_marginTop="4dp"
                 android:textSize="36sp"
                 android:textColor="@color/colorBlack"
-                android:text="@string/choix_raison_martelage" />
+                android:text="@string/choix_raison_martelage"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMaxTextSize="50sp"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeStepGranularity="4sp"/>
 
             <CheckBox
                 android:id="@+id/arbreMur"
@@ -43,7 +48,11 @@
                 android:gravity="left|center"
                 android:layoutDirection="ltr"
                 android:text="@string/raison_1"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMaxTextSize="50sp"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeStepGranularity="4sp"/>
 
             <CheckBox
                 android:id="@+id/eclaircie"
@@ -53,7 +62,11 @@
                 android:gravity="left|center"
                 android:layoutDirection="ltr"
                 android:text="@string/raison_2"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMaxTextSize="50sp"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeStepGranularity="4sp"/>
 
             <CheckBox
                 android:id="@+id/sanitaire"
@@ -63,7 +76,11 @@
                 android:gravity="left|center"
                 android:layoutDirection="ltr"
                 android:text="@string/raison_3"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMaxTextSize="50sp"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeStepGranularity="4sp"/>
 
             <CheckBox
                 android:id="@+id/regeneration"
@@ -73,7 +90,11 @@
                 android:gravity="left|center"
                 android:layoutDirection="ltr"
                 android:text="@string/raison_4"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMaxTextSize="50sp"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeStepGranularity="4sp"/>
 
             <CheckBox
                 android:id="@+id/exploitation"
@@ -83,7 +104,11 @@
                 android:gravity="left|center"
                 android:layoutDirection="ltr"
                 android:text="@string/raison_5"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMaxTextSize="50sp"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeStepGranularity="4sp"/>
 
         </LinearLayout>
 
@@ -115,7 +140,11 @@
             android:layout_weight="1"
             android:backgroundTint="@color/colorPrimary"
             android:text="Marteler"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="50sp"
+            app:autoSizeMinTextSize="8sp"
+            app:autoSizeStepGranularity="4sp"/>
 
         <Button
             android:id="@+id/cancel"
@@ -125,7 +154,11 @@
             android:layout_weight="1"
             android:backgroundTint="@android:color/darker_gray"
             android:text="Annuler"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="50sp"
+            app:autoSizeMinTextSize="8sp"
+            app:autoSizeStepGranularity="4sp"/>
 
     </LinearLayout>
 

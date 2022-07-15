@@ -17,18 +17,23 @@
         android:id="@+id/bubbleText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="50dp"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="@string/angry_response"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/insecte"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMaxTextSize="80sp"
+        app:autoSizeMinTextSize="12sp"
+        app:autoSizeStepGranularity="4sp"/>
 
     <ImageView
         android:id="@+id/imageView4"
@@ -51,6 +56,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/insecte"
         app:layout_constraintStart_toEndOf="@+id/imageView4"
-        android:textColor="@color/colorWhite"/>
+        android:textColor="@color/colorWhite"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMaxTextSize="80sp"
+        app:autoSizeMinTextSize="12sp"
+        app:autoSizeStepGranularity="4sp"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/colorBackground"
     android:weightSum="10">
@@ -15,7 +16,11 @@
         android:gravity="bottom"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="36sp"
-        android:text="@string/titre_carte" />
+        android:text="@string/titre_carte"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMaxTextSize="50sp"
+        app:autoSizeMinTextSize="8sp"
+        app:autoSizeStepGranularity="4sp"/>
 
     <com.github.mikephil.charting.charts.BubbleChart
         android:id="@+id/bubble_chart_parcelle"
